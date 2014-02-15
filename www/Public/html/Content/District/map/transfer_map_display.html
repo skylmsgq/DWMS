@@ -1,6 +1,8 @@
-<div class="panel panel-primary">
+<div class="panel panel-primary" id="div_map">
     <div class="panel panel-heading" style="margin-bottom:1px">
-        <h3 class="panel-title">地 图</h3>
+        <h3 class="panel-title" style="float:left">地 图</h3>
+        <button type="button" class="btn btn-default" id="toFullScreen" onclick="toFullScreen();" style="float:right">全屏</button>
+        <button type="button" class="btn btn-default" id="exitFullScreen" onclick="exitFullScreen();" style="float:right;display:none;">退出全屏</button>
     </div>
     <div class="panel-body">
         <div class="input-group">
@@ -95,7 +97,7 @@ function transferWarning() {
         url: "{:U('Home/DistrictMap/ajax_gps_data')}",
         timeout: 5000,
         success: function(gps_data) {
-            console.log(gps_data);
+            // console.log(gps_data);
 
             if (typeof(label) != 'undefined') {
                 map_display.removeOverlay(label);
@@ -115,12 +117,12 @@ function transferWarning() {
 
             var iconPoint = new BMap.Point(lng, lat);
             if (distance < warningDistance) {
-                var lorryIcon = new BMap.Icon("__PUBLIC__/image/lorry_green.png", new BMap.Size(40, 40), {
+                var lorryIcon = new BMap.Icon("__PUBLIC__/image/truck_green.png", new BMap.Size(32, 40), {
                     // 指定定位位置。
                     // 当标注显示在地图上时，其所指向的地理位置距离图标左上
                     // 角各偏移10像素和25像素。您可以看到在本例中该位置即是
                     // 图标中央下端的尖角位置。
-                    offset: new BMap.Size(20, 20),
+                    offset: new BMap.Size(16, 20),
                     // 设置图片偏移。
                     // 当您需要从一幅较大的图片中截取某部分作为标注图标时，您
                     // 需要指定大图的偏移位置，此做法与css sprites技术类似。
@@ -129,12 +131,12 @@ function transferWarning() {
                 var warningText = "偏离" + distance + "千米，安全。";
 
             } else if (distance > warningDistance && distance < dangerDistance) {
-                var lorryIcon = new BMap.Icon("__PUBLIC__/image/lorry_yellow.png", new BMap.Size(40, 40), {
+                var lorryIcon = new BMap.Icon("__PUBLIC__/image/truck_yellow.png", new BMap.Size(32, 40), {
                     // 指定定位位置。
                     // 当标注显示在地图上时，其所指向的地理位置距离图标左上
                     // 角各偏移10像素和25像素。您可以看到在本例中该位置即是
                     // 图标中央下端的尖角位置。
-                    offset: new BMap.Size(20, 20),
+                    offset: new BMap.Size(16, 20),
                     // 设置图片偏移。
                     // 当您需要从一幅较大的图片中截取某部分作为标注图标时，您
                     // 需要指定大图的偏移位置，此做法与css sprites技术类似。
@@ -142,12 +144,12 @@ function transferWarning() {
                 });
                 var warningText = "偏离" + distance + "千米，注意！";
             } else {
-                var lorryIcon = new BMap.Icon("__PUBLIC__/image/lorry_red.png", new BMap.Size(40, 40), {
+                var lorryIcon = new BMap.Icon("__PUBLIC__/image/truck_red.png", new BMap.Size(32, 40), {
                     // 指定定位位置。
                     // 当标注显示在地图上时，其所指向的地理位置距离图标左上
                     // 角各偏移10像素和25像素。您可以看到在本例中该位置即是
                     // 图标中央下端的尖角位置。
-                    offset: new BMap.Size(20, 20),
+                    offset: new BMap.Size(16, 20),
                     // 设置图片偏移。
                     // 当您需要从一幅较大的图片中截取某部分作为标注图标时，您
                     // 需要指定大图的偏移位置，此做法与css sprites技术类似。
@@ -203,5 +205,57 @@ function transferWarning() {
 
 transferWarning();
 var intervalWarning = setInterval("transferWarning()", 15000);
+
+var containerHeight = $('#div_container').css("height");
+var containerWidth = $('#div_container').css("width");
+
+function toFullScreen() {
+    $('#div_header').css("display", "none");
+    $('#div_footer').css("display", "none");
+    $('#div_sidebar').css("display", "none");
+    $('#div_content').toggleClass('col-md-9');
+    var windowHeight = $(window).height();
+    var windowWidth = $(window).width();
+
+    $('#div_container').css("height", windowHeight + "px");
+    $('#div_container').css("width", windowWidth + "px");
+
+    //var divMap = $('#div_map');
+    //divMap.css("height", "auto");
+    //divMap.css("width", "auto");
+    $('#map_container').css("height", windowHeight + "px");
+
+    /*divMap.css("margin-top", "0px");
+    divMap.css("margin-right", "0px");
+    divMap.css("margin-bottom", "0px");
+    divMap.css("margin-left", "0px");*/
+
+    $('#toFullScreen').css("display", "none");
+    $('#exitFullScreen').css("display", "inline");
+
+    /*alert("$(window).height(): " + $(window).height() +
+        "$(window).width(): " + $(window).width() +
+        "document.documentElement.clientHeight: " + document.documentElement.clientHeight +
+        "document.documentElement.clientWidth: " + document.documentElement.clientWidth +
+        "document.body.clientHeight: " + document.body.clientHeight +
+        "document.body.clientWidth: " + document.body.clientWidth);*/
+
+}
+
+function exitFullScreen(){
+    $('#div_header').css("display", "inherit");
+    $('#div_footer').css("display", "inherit");
+    $('#div_sidebar').css("display", "inherit");
+    $('#div_content').toggleClass('col-md-9');
+
+    $('#div_container').css("height", containerHeight);
+    $('#div_container').css("width", containerWidth);
+
+    var windowHeight = $(window).height();
+    $("#map_container").css("height", "" + windowHeight - 350 + "px");
+
+    $('#toFullScreen').css("display", "inline");
+    $('#exitFullScreen').css("display", "none");
+}
 
 </script>
