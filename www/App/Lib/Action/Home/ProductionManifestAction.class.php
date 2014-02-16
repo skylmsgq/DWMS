@@ -108,6 +108,73 @@ class ProductionManifestAction extends CommonAction{
 		$this->ajaxReturn( $tmp_content );
 	}
 
+	// 转移联单->转移联单查询->修改提交
+    public function transfer_manifest_query_modified($manifest_id="") {
+		$manifest = M( 'manifest' ); // 实例化record对象
+		$manifest->create(); // 根据表单提交的POST数据创建数据对象
+		$manifest->manifest_id = $manifest_id;
+		$time = date( 'Y-m-d H:i:s', time() );
+		$manifest->manifest_modify_time = $time;
+		$manifest_status_old = I( 'post.manifest_status_old' );
+		switch ( $manifest_status_old ) {
+		case '0':
+			$manifest_status = 0;
+			break;
+		case '4':
+			$manifest_status = 5;
+			break;
+		case '5':
+			$manifest_status = 5;
+			break;
+		default:
+			$manifest_status = -1;
+			break;
+		}
+		$manifest->manifest_status = $manifest_status;
+		$result = $manifest->save(); // 根据条件保存修改的数据
+
+		if ( $result ) {
+			$this->ajaxReturn( 1, '修改成功！', 1 );
+		} else {
+			$this->ajaxReturn( 0, '修改失败！', 0 );
+		}
+	}
+
+
+	// 转移联单->转移联单查询->修改信息页
+	public function transfer_manifest_query_submit($manifest_id="") {
+		$manifest = M( 'manifest' )->where( array( 'manifest_id' =>$manifest_id ) )->find();
+		$production_unit = M( 'production_unit' )->where( array( 'production_unit_id' => session( 'production_unit_id' ) ) )->find();
+		$this->manifest = $manifest;
+		$this->production_unit = $production_unit;
+
+		$manifest_id_json = json_encode( $manifest_id );
+		$manifest_status_json = json_encode( $manifest['manifest_status'] );
+
+		$tmp_content=$this->fetch( './Public/html/Content/Production/manifest/transfer_manifest_query_submit.html' );
+		$tmp_content = "<script>manifest_id_json = $manifest_id_json; manifest_status_json = $manifest_status_json; </script> $tmp_content";
+		$this->ajaxReturn( $tmp_content );
+	}
+
+	// 转移联单->转移联单查询->提交联单
+	public function transfer_manifest_query_submited($manifest_id="") {
+		$manifest_status_old = I( 'post.manifest_status_old' );
+		switch ( $manifest_status_old ) {
+		case '0':
+			$manifest_status = 1;
+			break;
+		case '5':
+			$manifest_status = 2;
+			break;
+		default:
+			$manifest_status = -1;
+			break;
+		}
+		$manifest = M( 'manifest' ); 
+		$data['manifest_id'] = $manifest_id;
+		$data['manifest_status'] = $manifest_status;
+		$manifest->save( $data );
+	}
 }
 
 	
