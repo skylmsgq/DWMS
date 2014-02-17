@@ -46,24 +46,20 @@ function setTable() {
                 itemData[0] = "接受单位";
                 break;
             default:
-                itemData[0] = "老胡你胖了";
                 break;
         }
 
 
-        itemData[1] = record_json[idx].company_name;
-        itemData[2] = record_json[idx].company_username;
+        itemData[1] = record_json[idx].unit_name;
+        itemData[2] = record_json[idx].unit_username;
         itemData[4] = '<a href="#" onclick="fetch_model_page(\'./' + tmp_page_name + '?record_id=' + record_json[idx].user_id + '\')"><span class="label label-info"><span class="glyphicon glyphicon-paperclip"></span> 查看</span><a>';
 
         if (record_json[idx].is_verify == "0") {
             itemData[3] = "未验证";
             itemData[6] = '<a href="#" onclick="ajaxAction(0,' + record_json[idx].user_id + ',1)"><span class="label label-primary"><span class="glyphicon glyphicon-paperclip"></span> 通过</span><a>';
-
-
         } else {
             itemData[3] = "已验证";
             itemData[6] = "";
-
         }
 
 
@@ -83,9 +79,7 @@ function setTable() {
         "aaData": tableData,
         "aoColumns": [{
                 "sTitle": "企业类型"
-            },
-
-            {
+            },{
                 "sTitle": "企业名称"
             }, {
                 "sTitle": "用户名称"
@@ -130,11 +124,9 @@ setTable();
 function ajaxAction(actionID, userIdx, actionValue) {
 
     postdata = {};
-    if (actionID == 0) //is_verify
-    {
+    if (actionID == 0) {    //is_verify
         postdata.action = "verify";
-    } else if (actionID == 1) //lock
-    {
+    } else if (actionID == 1) { //lock
         postdata.action = "lock";
     }
     postdata.value = "" + actionValue;

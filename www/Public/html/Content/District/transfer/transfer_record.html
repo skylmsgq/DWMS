@@ -32,7 +32,7 @@ function setTable() {
         var itemData = new Array();
         itemData[0] = "" + record_json[idx].record_code;
         itemData[1] = "" + record_json[idx].record_date;
-        itemData[2] = "" + unit_json;
+        itemData[2] = "" + record_json[idx].production_unit_name;
         switch (record_json[idx].record_status) {
             case '0':
                 itemData[3] = "<span class='label label-primary'>已保存未提交</span>";
@@ -65,7 +65,7 @@ function setTable() {
         }, {
             "sTitle": "备案日期"
         }, {
-            "sTitle": "单位名称"
+            "sTitle": "生产单位名称"
         }, {
             "sTitle": "备案状态"
         }, {

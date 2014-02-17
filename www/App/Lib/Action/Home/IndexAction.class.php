@@ -31,7 +31,7 @@ class IndexAction extends Action{
 		if ( $user['lock'] ) {
 			$this->error( '用户被锁定' );
 		}
-		//更新数据库中的上次登录时间和登录IP
+		//更新数据库中的本次登录时间和登录IP
 		$current_login_time = date( 'Y-m-d H:i:s', time() );
 		$current_login = array(
 			'user_id' => $user['user_id'],
@@ -43,10 +43,10 @@ class IndexAction extends Action{
 		session( 'user_id', $user['user_id'] );
 		session( 'user_type', $user['user_type'] );
 		session( 'username', $user['username'] );
-		session( 'last_login_time', $user['last_login_time'] );
-		session( 'current_login_time', $user['current_login_time'] );
-		session( 'last_login_ip', $user['last_login_ip'] );
-		session( 'current_login_ip', $user['current_login_ip'] );
+		//session( 'last_login_time', $user['last_login_time'] );
+		session( 'current_login_time', $current_login['current_login_time'] );
+		//session( 'last_login_ip', $user['last_login_ip'] );
+		session( 'current_login_ip', $current_login['current_login_ip'] );
 
 		//重定向页面
 		switch ( session( 'user_type' ) ) {
@@ -66,16 +66,19 @@ class IndexAction extends Action{
 			$this->redirect( 'Home/LoginDistrict/homepage' );
 			break;
 		case 5:
-			$unit = M('production_unit')->where( array( 'user_id' => session( 'user_id' ) ) )->find();
-			session('production_unit_id', $unit['production_unit_id']);
-
 			$this->redirect( 'Home/LoginProduction/homepage' );
 			break;
 		case 6:
+			$unit = M('transport_unit')->where( array( 'user_id' => session( 'user_id' ) ) )->find();
+			session('transport_unit_id', $unit['transport_unit_id']);
+			
 			$this->redirect( 'Home/LoginTransport/transport' );
 			break;
 		case 7:
-			$this->redirect( 'Home/LoginReception/reception' );
+			$unit = M('reception_unit')->where( array( 'user_id' => session( 'user_id' ) ) )->find();
+			session('reception_unit_id', $unit['reception_unit_id']);
+
+			$this->redirect( 'Home/LoginReception/homepage' );
 			break;
 		default:
 			$this->redirect( 'Home/Index/index' );

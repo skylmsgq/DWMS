@@ -1,0 +1,76 @@
+		select
+		`user`.`user_id` AS `user_id`,
+		`user`.`username` AS `username`,
+		`user`.`user_type` AS `user_type`,
+		`production_unit`.`production_unit_name` AS `production_unit_name`,
+		`production_unit`.`production_unit_code` AS `production_unit_code`,
+		`production_unit`.`production_unit_username` AS `production_unit_username`,
+		`production_unit`.`waste_location_county` AS `waste_location_county`,
+		`production_unit`.`production_unit_jurisdiction` AS `production_unit_jurisdiction`,
+		`user`.`is_verify` AS `is_verify`,
+		`user`.`lock` AS `lock` from (`user` join `production_unit`) where (`user`.`user_id` = `production_unit`.`user_id`)
+
+		select
+		`user`.`user_id` AS `user_id`,
+		`user`.`username` AS `username`,
+		`user`.`user_type` AS `user_type`,
+		`transport_unit`.`transport_unit_name` AS `transport_unit_name`,
+		`transport_unit`.`transport_unit_code` AS `transport_unit_code`,
+		`transport_unit`.`transport_unit_username` AS `transport_unit_username`,
+		`transport_unit`.`transport_unit_county` AS `transport_unit_county`,
+		`transport_unit`.`transport_unit_jurisdiction` AS `transport_unit_jurisdiction`,
+		`user`.`is_verify` AS `is_verify`,
+		`user`.`lock` AS `lock` from (`user` join `transport_unit`) where (`user`.`user_id` = `transport_unit`.`user_id`)
+
+		select
+		`user`.`user_id` AS `user_id`,
+		`user`.`username` AS `username`,
+		`user`.`user_type` AS `user_type`,
+		`reception_unit`.`reception_unit_name` AS `reception_unit_name`,
+		`reception_unit`.`reception_unit_code` AS `reception_unit_code`,
+		`reception_unit`.`reception_unit_username` AS `reception_unit_username`,
+		`reception_unit`.`reception_unit_county` AS `reception_unit_county`,
+		`reception_unit`.`reception_unit_jurisdiction` AS `reception_unit_jurisdiction`,
+		`user`.`is_verify` AS `is_verify`,
+		`user`.`lock` AS `lock` from (`user` join `reception_unit`) where (`user`.`user_id` = `reception_unit`.`user_id`)
+
+		(select
+			`production_user`.`user_id` AS `user_id`,
+			`production_user`.`username` AS `username`,
+			`production_user`.`user_type` AS `user_type`,
+			`production_user`.`production_unit_name` AS `unit_name`,
+			`production_user`.`production_unit_code` AS `unit_code`,
+			`production_user`.`production_unit_username` AS `unit_username`,
+			`production_user`.`waste_location_county` AS `location_county`,
+			`production_user`.`production_unit_jurisdiction` AS `unit_jurisdiction`,
+			`production_user`.`is_verify` AS `is_verify`,
+			`production_user`.`lock` AS `lock` from `production_user`) union
+		(select
+			`transport_user`.`user_id` AS `user_id`,
+			`transport_user`.`username` AS `username`,
+			`transport_user`.`user_type` AS `user_type`,
+			`transport_user`.`transport_unit_name` AS `unit_name`,
+			`transport_user`.`transport_unit_code` AS `unit_code`,
+			`transport_user`.`transport_unit_username` AS `unit_username`,
+			`transport_user`.`transport_unit_county` AS `location_county`,
+			`transport_user`.`transport_unit_jurisdiction` AS `unit_jurisdiction`,
+			`transport_user`.`is_verify` AS `is_verify`,
+			`transport_user`.`lock` AS `lock` from `transport_user`) union
+		(select
+			`reception_user`.`user_id` AS `user_id`,
+			`reception_user`.`username` AS `username`,
+			`reception_user`.`user_type` AS `user_type`,
+			`reception_user`.`reception_unit_name` AS `unit_name`,
+			`reception_user`.`reception_unit_code` AS `unit_code`,
+			`reception_user`.`reception_unit_username` AS `unit_username`,
+			`reception_user`.`reception_unit_county` AS `location_county`,
+			`reception_user`.`reception_unit_jurisdiction` AS `unit_jurisdiction`,
+			`reception_user`.`is_verify` AS `is_verify`,
+			`reception_user`.`lock` AS `lock` from `reception_user`)
+			
+			
+		SELECT `user`.`user_id`, `username`, `user_type`, `production_unit_name` AS `unit_name`, `production_unit_code` AS `unit_code`, `production_unit_username` AS `unit_username`, `waste_location_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN production_unit ON user.user_id = production_unit.user_id;
+		
+		SELECT `user`.`user_id`, `username`, `user_type`, `transport_unit_name` AS `unit_name`, `transport_unit_code` AS `unit_code`, `transport_unit_username` AS `unit_username`, `transport_unit_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN transport_unit ON user.user_id = transport_unit.user_id;
+		
+		SELECT `user`.`user_id`, `username`, `user_type`, `reception_unit_name` AS `unit_name`, `reception_unit_code` AS `unit_code`, `reception_unit_username` AS `unit_username`, `reception_unit_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN reception_unit ON user.user_id = reception_unit.user_id

@@ -11,15 +11,15 @@ class DistrictReceptionAction extends CommonAction{
 
 	// 危废处置单位->企业基本信息->企业基本信息
 	public function reception_basic_information(){
-		$reception_unit = M( 'reception_unit' )->getField( 'reception_unit_id,reception_unit_name,reception_unit_address,reception_unit_county,reception_unit_jurisdiction' );
-		$reception_unit_table = json_encode( $reception_unit );
+		$reception_unit = M( 'reception_unit' )->where( array( 'jurisdiction_id' => session( 'jurisdiction_id' ) ) )->getField( 'reception_unit_id,reception_unit_name,reception_unit_address,reception_unit_county' );
+		$reception_unit_json = json_encode( $reception_unit );
 		$tmp_content=$this->fetch( './Public/html/Content/District/reception/reception_basic_information.html' );
-		$tmp_content = "<script>reception_table_json = $reception_unit_table;</script> $tmp_content";
+		$tmp_content = "<script>reception_unit_json = $reception_unit_json;</script> $tmp_content";
 		$this->ajaxReturn( $tmp_content );
 	}
 
-	// 危废处置单位->企业基本信息->企业基本信息->详情
-	public function reception_basic_information_page(){
+	// 危废处置单位->企业基本信息->企业基本信息：详情
+	public function reception_basic_information_page($record_id=""){
 		$reception_unit = M( 'reception_unit' )->where( array( 'reception_unit_id' => $record_id ) )->find();
 		$this->unit = $reception_unit;
 		$tmp_content=$this->fetch( './Public/html/Content/District/reception/reception_basic_information_page.html' );

@@ -28,13 +28,12 @@
 <script type="text/javascript">
 function setTable() {
     var tableData = new Array();
-    console.log(record_json);
-    console.log(unit_name_json);
+    // console.log(record_json);
     for (var idx in record_json) {
         var itemData = new Array();
         itemData[0] = "" + record_json[idx].record_code;
         itemData[1] = "" + record_json[idx].record_date;
-        itemData[2] = "" + unit_name_json[record_json[idx].production_unit_id];
+        itemData[2] = "" + record_json[idx].production_unit_name;
         switch (record_json[idx].record_status) {
             case '0':
                 itemData[3] = "<span class='label label-primary'>已保存未提交</span>";
@@ -76,7 +75,7 @@ function setTable() {
         "bPaginate": true, //翻页功能
         "bLengthChange": true, //改变每页显示数据数量
         "bFilter": true, //过滤功能
-        "bSort": false, //排序功能
+        "bSort": true, //排序功能
         "bInfo": true, //页脚信息
         "bAutoWidth": true, //自动宽度
         "bStateSave": true, //状态保存，使用了翻页或者改变了每页显示数据数量，会保存在cookie中，下回访问时会显示上一次关闭页面时的内容。

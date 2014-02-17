@@ -11,15 +11,15 @@ class DistrictTransportAction extends CommonAction{
 
 	// 危废运输单位->企业基本信息->企业基本信息
 	public function transport_basic_information(){
-		$transport_unit = M( 'transport_unit' )->getField( 'transport_unit_id,transport_unit_name,transport_unit_address,transport_unit_county,transport_unit_jurisdiction' );
-		$transport_unit_table = json_encode( $transport_unit );
+		$transport_unit = M( 'transport_unit' )->where( array( 'jurisdiction_id' => session( 'jurisdiction_id' ) ) )->getField( 'transport_unit_id,transport_unit_name,transport_unit_address,transport_unit_county' );
+		$transport_unit_json = json_encode( $transport_unit );
 		$tmp_content=$this->fetch( './Public/html/Content/District/transport/transport_basic_information.html' );
-		$tmp_content = "<script>transport_table_json = $transport_unit_table;</script> $tmp_content";
+		$tmp_content = "<script>transport_unit_json = $transport_unit_json;</script> $tmp_content";
 		$this->ajaxReturn( $tmp_content );
 	}
 
-	// 危废运输单位->企业基本信息->企业基本信息->详情
-	public function transport_basic_information_page(){
+	// 危废运输单位->企业基本信息->企业基本信息：详情
+	public function transport_basic_information_page($record_id=""){
 		$transport_unit = M( 'transport_unit' )->where( array( 'transport_unit_id' => $record_id ) )->find();
 		$this->unit = $transport_unit;
 		$tmp_content=$this->fetch( './Public/html/Content/District/transport/transport_basic_information_page.html' );

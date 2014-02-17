@@ -87,7 +87,7 @@ class ProductionRecordAction extends CommonAction{
 		$record_status_old = I( 'post.record_status_old' );
 		switch ( $record_status_old ) {
 		case '0':
-			$record_status = 0;
+			$record_status = 0;                                                    
 			break;
 		case '3':
 			$record_status = 4;
