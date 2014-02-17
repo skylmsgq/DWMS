@@ -141,7 +141,7 @@ class ProductionManifestAction extends CommonAction{
 	}
 
 
-	// 转移联单->转移联单查询->修改信息页
+	// 转移联单->转移联单查询->提交信息页
 	public function transfer_manifest_query_submit($manifest_id="") {
 		$manifest = M( 'manifest' )->where( array( 'manifest_id' =>$manifest_id ) )->find();
 		$production_unit = M( 'production_unit' )->where( array( 'production_unit_id' => session( 'production_unit_id' ) ) )->find();
