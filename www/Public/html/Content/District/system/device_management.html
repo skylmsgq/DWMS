@@ -13,7 +13,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="myModalLabel">审核备案</h4>
+                <h4 class="modal-title" id="myModalLabel">设备管理</h4>
             </div>
             <div class="modal-body" id="model-content">
             </div>
@@ -28,47 +28,58 @@
 <script type="text/javascript">
 function setTable() {
     var tableData = new Array();
-    // console.log(record_json);
+    //console.log(record_json);
     for (var idx in record_json) {
+        var itemDetail = '<a href="#" onclick="fetch_model_page(\'./device_management_detail?record_id=' + record_json[idx].device_id + '\')"><span class="label label-info"><span class="glyphicon glyphicon-paperclip"></span> 详情</span><a>';
+        var itemModify = ' <a href="#" onclick="fetch_model_page(\'./device_management_modify?record_id=' + record_json[idx].device_id + '\')"><span class="label label-warning"><span class="glyphicon glyphicon-paperclip"></span> 修改</span><a>';
         var itemData = new Array();
-        itemData[0] = "" + record_json[idx].record_code;
-        itemData[1] = "" + record_json[idx].record_date;
-        itemData[2] = "" + record_json[idx].production_unit_name;
-        switch (record_json[idx].record_status) {
+        itemData[0] = "" + record_json[idx].device_name;
+        itemData[1] = "" + record_json[idx].device_type;
+        itemData[2] = "" + record_json[idx].device_serial_num;
+        switch (record_json[idx].ownership_type) {
             case '0':
-                itemData[3] = "<span class='label label-primary'>已保存未提交</span>";
+                itemData[3] = "<span>系统管理员</span>";
                 break;
             case '1':
-                itemData[3] = "<span class='label label-warning'>已提交待审核</span>";
+                itemData[3] = "<span>国家环保部</span>";
                 break;
             case '2':
-                itemData[3] = "<span class='label label-success'>已提交已审核</span>";
+                itemData[3] = "<span>省环保厅</span>";
                 break;
             case '3':
-                itemData[3] = "<span class='label label-danger'>未通过待修改</span>";
+                itemData[3] = "<span>市环保局</span>";
                 break;
             case '4':
-                itemData[3] = "<span class='label label-primary'>已修改未提交</span>";
+                itemData[3] = "<span>区环保局</span>";
+                break;
+            case '5':
+                itemData[3] = "<span>生产单位</span>";
+                break;
+            case '6':
+                itemData[3] = "<span>运输单位</span>";
+                break;
+            case '7':
+                itemData[3] = "<span>接受单位</span>";
                 break;
             default:
-                itemData[3] = "<span class='label label-danger'>备案状态错误</span>";
+                itemData[3] = "<span>归属错误！</span>";
                 break;
         }
 
-        itemData[4] = '<a href="#" onclick="fetch_model_page(\'./transfer_record_management_page?record_id=' + record_json[idx].record_id + '\')"><span class="label label-info"><span class="glyphicon glyphicon-wrench"></span> 操作</span><a>';
+        itemData[4] = itemDetail + itemModify;
         tableData.push(itemData);
     }
 
     $('#table-container').dataTable({
         "aaData": tableData,
         "aoColumns": [{
-            "sTitle": "备案编号"
+            "sTitle": "名称"
         }, {
-            "sTitle": "备案日期"
+            "sTitle": "类型"
         }, {
-            "sTitle": "产生单位名称"
+            "sTitle": "序列号"
         }, {
-            "sTitle": "备案状态"
+            "sTitle": "归属类型"
         }, {
             "sTitle": "操作"
         }],
@@ -103,6 +114,7 @@ setTable();
 
 function fetch_model_page(ajaxURL) {
     $('#myModal').modal("show");
+
     $("#model-content").html('<center style="margin-top:20px"><h4>努力地加载中...</h4><div class="progress progress-striped active" style="width: 50%"><div class="progress-bar"  role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div></div></center>');
 
     $.ajax({
@@ -121,5 +133,4 @@ function fetch_model_page(ajaxURL) {
     });
 
 }
-
 </script>

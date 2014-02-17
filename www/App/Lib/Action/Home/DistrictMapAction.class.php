@@ -11,6 +11,7 @@ class DistrictMapAction extends CommonAction{
 
 	// 转移地图->地图展示->转移地图展示
 	public function transfer_map_display() {
+
 		$vehicle = M( 'vehicle' );
 		$vehicle_operating = $vehicle->where( 'vehicle_status=2' );
 		$vehicle_info = $vehicle_operating->find();
@@ -133,6 +134,12 @@ class DistrictMapAction extends CommonAction{
 		}else {
 			$this->show( "fail" );
 		}
+	}
+
+	// 转移地图->路线规划->路线车辆绑定
+	public function route_vehicle_binding(){
+		$tmp_content=$this->fetch( './Public/html/Content/District/map/route_vehicle_binding.html' );
+		$this->ajaxReturn( $tmp_content );
 	}
 
 	// 转移地图->路线查询->运输路线查询
