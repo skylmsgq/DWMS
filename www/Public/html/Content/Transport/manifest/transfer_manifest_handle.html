@@ -32,7 +32,7 @@ console.log(unit_json);
 function setTable() {
     var tableData = new Array();
     for (var idx in manifest_json) {
-        var itemRequest = '<a href="#" onclick="fetch_model_page(\'./transfer_manifest_request_page?manifest_id=' + manifest_json[idx].manifest_id + '\')"><span class="label label-info"><span class="glyphicon glyphicon-paperclip"></span> 填写</span><a>';
+        var itemRequest = '<a href="#" onclick="fetch_model_page(\'./transfer_manifest_handle_request?manifest_id=' + manifest_json[idx].manifest_id + '\')"><span class="label label-info"><span class="glyphicon glyphicon-paperclip"></span> 填写</span><a>';
         var itemModify = ' <a href="#" onclick="fetch_model_page(\'./transfer_manifest_handle_modify?manifest_id=' + manifest_json[idx].manifest_id + '\')"><span class="label label-warning"><span class="glyphicon glyphicon-paperclip"></span> 修改</span><a>';
         var itemSubmit = ' <a href="#" onclick="fetch_model_page(\'./transfer_manifest_handle_submit?manifest_id=' + manifest_json[idx].manifest_id + '\')"><span class="label label-warning"><span class="glyphicon glyphicon-paperclip"></span> 提交</span><a>';
         
