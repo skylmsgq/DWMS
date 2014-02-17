@@ -78,7 +78,7 @@ class IndexAction extends Action{
 			$unit = M('reception_unit')->where( array( 'user_id' => session( 'user_id' ) ) )->find();
 			session('reception_unit_id', $unit['reception_unit_id']);
 
-			$this->redirect( 'Home/LoginReception/reception' );
+			$this->redirect( 'Home/LoginReception/homepage' );
 			break;
 		default:
 			$this->redirect( 'Home/Index/index' );

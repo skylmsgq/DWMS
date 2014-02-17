@@ -67,7 +67,7 @@
                 <tr>
                     <td>产生单位</td>
                     <td>
-                        {$manifest.transport_unit_name}
+                        {$manifest.production_unit_name}
                     </td>
                     <td>接受单位</td>
                     <td>
@@ -126,7 +126,7 @@
                 <tr>
                     <td>第一承运人姓名</td>
                     <td>
-                        <input type="text" name="carrier_1_name" class="form-control input-sm" placeholder="第一承运人姓名" value="{$manifest.carrier_1_name}">  
+                        <input type="text" name="carrier_1_name" class="form-control input-sm" placeholder="第一承运人姓名">  
                     </td>
                     <td>第一承运人工号</td>
                     <td>
@@ -225,7 +225,7 @@ function ajaxAction() {
 
     $.ajax({
         type: "post",
-        url: "transfer_manifest_request_form?manifest_id=" + manifest_id_json,
+        url: "transfer_manifest_handle_request_form?manifest_id=" + manifest_id_json,
         timeout: 2000,
         data: form_serialize + '&manifest_status_old=' + manifest_status_json,
         success: function(data) {

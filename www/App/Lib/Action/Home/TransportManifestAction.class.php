@@ -9,7 +9,7 @@ class TransportManifestAction extends CommonAction{
 		$this->display( './Public/html/Content/Transport/manifest/manifest_sidebar.html' );
 	}
 // 转移联单->转移联单处理
-	public function transfer_manifest_request() {
+	public function transfer_manifest_handle() {
 		//$manifest = M( 'manifest' )->where( array( array('transport_unit_id' => session( 'transport_unit_id' ) ), array('manifest_status' => 1,'manifest_status' => 2,'or') ) )->getField( 'manifest_id,manifest_num,manifest_add_time,manifest_status' );
 		$manifest = M( 'manifest' );
 		$condition['transport_unit_id'] = session('transport_unit_id');
@@ -32,7 +32,7 @@ class TransportManifestAction extends CommonAction{
 	}
 
 // 转移联单->转移联单处理->填写页
-	public function transfer_manifest_request_page($manifest_id=""){
+	public function transfer_manifest_handle_request($manifest_id=""){
 		$manifest = M( 'manifest' )->where( array( 'manifest_id' =>$manifest_id ) )->find();
 		$transport_unit = M( 'transport_unit' )->where( array( 'transport_unit_id' => session('transport_unit_id' ) ) )->find();
 		
@@ -42,7 +42,7 @@ class TransportManifestAction extends CommonAction{
 		$this->manifest = $manifest;
 		$this->transport_unit = $transport_unit;
 
-		$tmp_content=$this->fetch( './Public/html/Content/Transport/manifest/transfer_manifest_request_page.html' );
+		$tmp_content=$this->fetch( './Public/html/Content/Transport/manifest/transfer_manifest_handle_request.html' );
 		$tmp_content = "<script>manifest_id_json = $manifest_id_json; manifest_status_json = $manifest_status_json;</script> $tmp_content";
 		$this->ajaxReturn( $tmp_content );
 	}
@@ -85,7 +85,7 @@ class TransportManifestAction extends CommonAction{
 	// 	}
 		
 	// }
-	public function transfer_manifest_request_form($manifest_id="") {
+	public function transfer_manifest_handle_request_form($manifest_id="") {
 		$manifest = M( 'manifest' ); // 实例化record对象
 		$manifest->create(); // 根据表单提交的POST数据创建数据对象
 		$manifest->manifest_id = $manifest_id;
