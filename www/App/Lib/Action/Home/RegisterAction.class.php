@@ -24,7 +24,7 @@ class RegisterAction extends Action{
 		}
 	}
 
-	public function do_reg( $id=0 ) {
+	public function do_reg( $id='' ) {
 		switch ( $id ) {
 		case 'production':
 			$postData=( I( 'post.' ) );

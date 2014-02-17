@@ -19,7 +19,7 @@
 
     <script type="text/javascript" src="__PUBLIC__/js/jquery-2.0.3.min.js"></script>
     <script type="text/javascript" src="__PUBLIC__/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="__PUBLIC__/js/jquery-validate.min.js" ></script>
+    <script type="text/javascript" src="__PUBLIC__/js/jquery-validate.min.js"></script>
 
 </head>
 
@@ -31,35 +31,45 @@
             </div>
             <div class="panel-body" style="">
 
-                <form role="form" method="post" id="receptionForm" action="{:U('Home/Register/do_reg',array('id'=>'reception'))}" >
+                <form role="form" method="post" id="receptionForm" action="{:U('Home/Register/do_reg',array('id'=>'reception'))}">
 
                     <div class="table-responsive">
                         <big>
-                           <div class="alert alert-info">账户信息</div>
-                    <table class="table table-striped table-bordered table-hover table-condensed">
-                     <tr>
-                                <td> 用户名</td>
-                                <td> <input type="text" class="form-control required-cn" name="username" id="username" placeholder="用户名"></td>
-                    </tr>
-                    <tr>
-                                <td> 密码</td>
-                                <td> <input type="password" class="form-control required-cn" name="password" id="password" placeholder="密码"></td>
-                    </tr>
-                     <tr>
-                                <td> 确认密码</td>
-                                <td> <input type="password" class="form-control required-cn pwdEqual" id="re-password" placeholder="确认密码"></td>
-                    </tr>
-                    <tr>
-                                <td> 电子邮件</td>
-                                <td> <input type="email" class="form-control" name="email" id="email" placeholder="电子邮件"></td>
-                    </tr>
-                    <tr>
-                                <td> 手机号码</td>
-                                <td> <input type="text" class="form-control" name="phone_num" id="phone_num" placeholder="手机号码"></td>
-                    </tr>
-                    </table>
-     <div class="alert alert-info">企业信息</div>
-     <table class="table table-striped table-bordered table-hover table-condensed">
+                            <div class="alert alert-info">账户信息</div>
+                            <table class="table table-striped table-bordered table-hover table-condensed">
+                                <tr>
+                                    <td>用户名</td>
+                                    <td>
+                                        <input type="text" class="form-control required-cn" name="username" id="username" placeholder="用户名">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>密码</td>
+                                    <td>
+                                        <input type="password" class="form-control required-cn" name="password" id="password" placeholder="密码">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>确认密码</td>
+                                    <td>
+                                        <input type="password" class="form-control required-cn pwdEqual" id="re-password" placeholder="确认密码">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>电子邮件</td>
+                                    <td>
+                                        <input type="email" class="form-control" name="email" id="email" placeholder="电子邮件">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>手机号码</td>
+                                    <td>
+                                        <input type="text" class="form-control" name="phone_num" id="phone_num" placeholder="手机号码">
+                                    </td>
+                                </tr>
+                            </table>
+                            <div class="alert alert-info">企业信息</div>
+                            <table class="table table-striped table-bordered table-hover table-condensed">
 
                                 <tr>
                                     <td>接受单位名称</td>
@@ -104,7 +114,7 @@
                                 <tr>
                                     <td>接受单位管辖权属</td>
                                     <td>
-                                        <input type="text" class="form-control input-md required-cn" name="reception_unit_jurisdiction" id="reception_unit_jurisdiction">
+                                        <input type="text" class="form-control input-md required-cn" name="jurisdiction_id" id="jurisdiction_id">
                                     </td>
                                     <td>接受单位所属行业</td>
                                     <td>
@@ -206,10 +216,10 @@
                         <button type="submit" class="btn btn-warning btn-lg">提交</button>
                     </center>
                 </form>
-				<script type="text/javascript" src="__PUBLIC__/js/jquery-myvalidate.js"></script>
-				<script>
-				$("#receptionForm").validate();
-				</script>
+                <script type="text/javascript" src="__PUBLIC__/js/jquery-myvalidate.js"></script>
+                <script>
+                $("#receptionForm").validate();
+                </script>
 
 
 
