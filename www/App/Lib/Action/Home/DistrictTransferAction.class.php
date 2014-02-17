@@ -11,14 +11,14 @@ class DistrictTransferAction extends CommonAction{
 
 	// 危废转移->转移备案管理->转移备案
 	public function transfer_record(){
-		$record = M( 'record' )->where( 'record_status>0' )->getField( 'record_id,record_code,record_date,record_status' );
-		$record_json = json_encode( $record );
-
-		$unit_name = M( 'production_unit' )->getField( 'production_unit_name' );
-		$unit_json = json_encode( $unit_name );
+		$record = M( 'record' );
+		$condition['jurisdiction_id'] = array('EQ', session( 'jurisdiction_id' ) );
+		$condition['record_status'] = array('GT', 0);
+		$join = $record->join( 'production_unit ON record.production_unit_id = production_unit.production_unit_id' )->where( $condition )->select();
+		$record_json = json_encode( $join );
 
 		$tmp_content=$this->fetch( './Public/html/Content/District/transfer/transfer_record.html' );
-		$tmp_content = "<script>record_json = $record_json; unit_json = $unit_json; </script> $tmp_content";
+		$tmp_content = "<script>record_json = $record_json; </script> $tmp_content";
 		$this->ajaxReturn( $tmp_content );
 	}
 
@@ -26,14 +26,14 @@ class DistrictTransferAction extends CommonAction{
 	public function transfer_record_page($record_id=""){
 		$record = M( 'record' )->where( array( 'record_id' =>$record_id ) )->find();
 		$production_unit = M( 'production_unit' )->where( array( 'production_unit_id' => $record['production_unit_id'] ) )->find();
+		$transport_unit = M( 'transport_unit' )->where( array( 'transport_unit_id' => $record['transport_unit_id'] ) )->find();
+		$reception_unit = M( 'reception_unit' )->where( array( 'reception_unit_id' => $record['reception_unit_id'] ) )->find();
 		$this->record = $record;
-		$this->unit = $production_unit;
-
-		//$record_id_json = json_encode( $record_id );
-		//$record_status_json = json_encode( $record['record_status'] );
+		$this->production_unit = $production_unit;
+		$this->transport_unit = $transport_unit;
+		$this->reception_unit = $reception_unit;
 
 		$tmp_content=$this->fetch( './Public/html/Content/District/transfer/transfer_record_page.html' );
-		//$tmp_content = "<script>record_id_json = $record_id_json; record_status_json = $record_status_json; </script> $tmp_content";
 		$this->ajaxReturn( $tmp_content );
 	}
 
