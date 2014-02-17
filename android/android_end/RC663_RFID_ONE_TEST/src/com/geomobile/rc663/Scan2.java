@@ -147,7 +147,10 @@ public class Scan2 extends ScanActivity implements OnClickListener {
     	public void parseJSON(String value) throws JSONException
     	{
     		JSONObject jObject = new JSONObject(value);
-    		activity.popupEditText(sn, "原先数值: " + jObject.getString("total"), jObject);
+    		if (jObject.getString("way").equals("0"))
+    		activity.popupEditText(sn, "原先数值: " + jObject.getString("total")+"公斤", jObject);
+    		if (jObject.getString("way").equals("1"))
+        		activity.popupEditText(sn, "原先数值: " + jObject.getString("total")+"个", jObject);
     	}
     	
     	public void httpRequestDidFinish(int success, String value)

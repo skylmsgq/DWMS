@@ -5,6 +5,18 @@
 require('AllFunction.php');
 class AndroidApiAction extends Action{
 	
+	//登录
+	public function login()
+	{
+		$postData=$_POST['txt_json'];
+		echo urldecode(json_encode(login($postData)));
+	}
+	//查看rfid对应信息
+	public function check()
+	{
+		$postData=$_POST['txt_json'];
+		echo urldecode(json_encode(check($postData)));
+	}
 	// 获取废物的名称
 	public function getWasteName($imei=0){
 		echo urldecode(json_encode(getWasteName($imei)));

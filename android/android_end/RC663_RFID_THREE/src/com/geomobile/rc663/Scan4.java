@@ -8,23 +8,17 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.media.Ringtone;
-import android.media.RingtoneManager;
-import android.net.Uri;
+import android.content.Intent;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
@@ -32,20 +26,24 @@ import org.json.*;
 
 public class Scan4 extends ScanActivity implements OnClickListener {
     /** Called when the activity is first created. */	
+	public final static String EXTRA_MESSAGE = "MESSAGE";
 	private static final String TAG = "rc663_15693_java";
 	private static final String PW_DEV = "/proc/driver/as3992";
 	private Iso15693_native dev = new Iso15693_native();
 	private Button get_info;
-	private TextView main_info;
+	public TextView main_info;
 	private DeviceControl power;
 	public String myTitle = "环保局查看";
 	public String myURL =  "";	
 	private String imei = "";
 	private Activity activity_this=this;
+	public String sn;
+	public boolean swh;
+	private IOCallback submitController = null;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.myURL = getString(R.string.url_prefix) + "wasteIn";
+        this.myURL =getString(R.string.url_prefix)+"check" ;
         setContentView(R.layout.scan34);    
         TelephonyManager telephonyManager = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
         this.imei = telephonyManager.getDeviceId();
@@ -113,6 +111,41 @@ public class Scan4 extends ScanActivity implements OnClickListener {
     		
     	}
     }
+    
+    public class SubmitCallbackController implements IOCallback {
+    	Scan4 activity;
+    	ProgressDialog progDialog;
+    	List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+    	public SubmitCallbackController(Scan4 activity, JSONObject postJson) {
+    		this.activity = activity;
+    		NameValuePair postContent = new BasicNameValuePair("txt_json", postJson.toString());
+    		nameValuePairs.add(postContent);
+    		new LongRunningGetIO(activity.myURL, nameValuePairs, this).execute();
+    		
+    		progDialog = ProgressDialog.show(activity, "正在查询",
+    	            "请稍候...", true);
+    	}
+    	private void parseJSON(String value)
+    	{
+    		Log.d(TAG, value);
+    		ErrorParser.parse(activity, value);
+    		
+    		Log.d(TAG, "finish ");
+    	}
+    	
+    	public void httpRequestDidFinish(int success, String value) {
+    		progDialog.dismiss();
+    		
+    		this.parseJSON(value);
+    	//	main_info.setText(sn);
+    		if (swh)
+    		{Intent intent = new Intent(activity, show.class);
+    		intent.putExtra("result", sn);
+    		startActivity(intent);}
+	        activity.submitController = null;
+    	}
+    }
+    
     @Override
     public void onBackPressed() {
     	AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -138,30 +171,26 @@ public class Scan4 extends ScanActivity implements OnClickListener {
 		if(arg0 == get_info)
 		{
 			Log.d(TAG, "get_info clicked");
+			swh=false;
 			main_info.setText("");
-			final ProgressDialog scanningDialog = ProgressDialog.show(this, "正在扫描 RFID 设备",
-    	            "请稍候...", true);
-			Thread newThread = new Thread() {
-				@Override
-				public void run() {
-					try {
-						sleep(1000);
-						scanningDialog.dismiss();
-					} catch (InterruptedException e) {
-						scanningDialog.dismiss();
-						e.printStackTrace();
-					}
-				}
-			};
-			newThread.start();
-			String sn = Scanner.scan();
+			sn = Scanner.scan();
 			if(sn == null) {
 				this.alertMessage("未找到 RFID 设备");
 				return;
 			}
-			for (int i=0;i<6;i++)
-				{sn+=sn;}
-			main_info.setText(sn);
+			
+		    JSONObject myupload = new JSONObject();
+		    try {
+				myupload.put("rfid", sn);
+				myupload.put("imei", this.imei);
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		    sn+="\n";
+		   // sn="RFID: "+sn;
+		    if(submitController == null) submitController = new SubmitCallbackController(this, myupload);
+	
 		} 
 	}
     

@@ -37,6 +37,10 @@
         <activity
             android:name="com.geomobile.rc663.Scan4"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
+        </activity>  
+        <activity
+            android:name="com.geomobile.rc663.show"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
         </activity>              
     </application>
 </manifest>
