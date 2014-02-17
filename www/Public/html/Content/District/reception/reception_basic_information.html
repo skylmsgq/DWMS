@@ -28,13 +28,13 @@
 <script type="text/javascript">
 function setTable() {
     var tableData = new Array();
-    for (var idx in reception_table_json) {
+    for (var idx in reception_unit_json) {
         var itemData = new Array();
-        itemData[0] = "" + reception_table_json[idx].reception_unit_name;
-        itemData[1] = "" + reception_table_json[idx].reception_unit_address;
-        itemData[2] = "" + reception_table_json[idx].reception_unit_county;
-        itemData[3] = "" + reception_table_json[idx].reception_unit_jurisdiction;
-        itemData[4] = '<a href="#" onclick="fetch_model_page(\'./reception_basic_information_page?record_id=' + reception_table_json[idx].reception_unit_id + '\')"><span class="label label-info"><span class="glyphicon glyphicon-wrench"></span> 详情</span><a>';
+        itemData[0] = "" + reception_unit_json[idx].reception_unit_name;
+        itemData[1] = "" + reception_unit_json[idx].reception_unit_address;
+        itemData[2] = "" + reception_unit_json[idx].reception_unit_county;
+        itemData[3] = "{$Think.session.jurisdiction_name|default='环保局'}";
+        itemData[4] = '<a href="#" onclick="fetch_model_page(\'./reception_basic_information_page?record_id=' + reception_unit_json[idx].reception_unit_id + '\')"><span class="label label-info"><span class="glyphicon glyphicon-wrench"></span> 详情</span><a>';
         tableData.push(itemData);
     }
 

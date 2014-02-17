@@ -11,29 +11,27 @@ class DistrictBusinessAction extends CommonAction{
 
 	// 业务办理->待办业务->转移备案管理
 	public function transfer_record_management() {
-		$record = M( 'record' )->where( 'record_status>0' )->getField( 'record_id,production_unit_id,record_code,record_date,record_status' );
-		$record_json = json_encode( $record );
+		$record = M( 'record' );
+		$condition['jurisdiction_id'] = array('EQ', session( 'jurisdiction_id' ) );
+		$condition['record_status'] = array('GT', 0);
+		$join = $record->join( 'production_unit ON record.production_unit_id = production_unit.production_unit_id' )->where( $condition )->select();
+		$record_json = json_encode( $join );
 
-		$unit_name = M( 'production_unit' )->getField( 'production_unit_id, production_unit_name' );
-		$unit_name_json = json_encode( $unit_name );
-
-		if ( $record_json == null ) {
-			$this->ajaxReturn( "备案表没有找到：" .  $record_json );
-		} else if ( $unit_name_json == null ) {
-				$this->ajaxReturn( "生产单位表没有找到：" .  $record_json );
-			} else {
-			$tmp_content=$this->fetch( './Public/html/Content/District/business/transfer_record_management.html' );
-			$tmp_content = "<script>record_json = $record_json; unit_name_json = $unit_name_json; </script> $tmp_content";
-			$this->ajaxReturn( $tmp_content );
-		}
+		$tmp_content=$this->fetch( './Public/html/Content/District/business/transfer_record_management.html' );
+		$tmp_content = "<script>record_json = $record_json; </script> $tmp_content";
+		$this->ajaxReturn( $tmp_content );
 	}
 
 	// 业务办理->待办业务->转移备案管理：详细信息页
 	public function transfer_record_management_page($record_id="") {
 		$record = M( 'record' )->where( array( 'record_id' =>$record_id ) )->find();
 		$production_unit = M( 'production_unit' )->where( array( 'production_unit_id' => $record['production_unit_id'] ) )->find();
+		$transport_unit = M( 'transport_unit' )->where( array( 'transport_unit_id' => $record['transport_unit_id'] ) )->find();
+		$reception_unit = M( 'reception_unit' )->where( array( 'reception_unit_id' => $record['reception_unit_id'] ) )->find();
 		$this->record = $record;
-		$this->unit = $production_unit;
+		$this->production_unit = $production_unit;
+		$this->transport_unit = $transport_unit;
+		$this->reception_unit = $reception_unit;
 
 		$record_id_json = json_encode( $record_id );
 		$record_status_json = json_encode( $record['record_status'] );
@@ -64,7 +62,7 @@ class DistrictBusinessAction extends CommonAction{
 		// $manifest_json = json_encode( $manifest );
 		$manifest = M( 'manifest' )->where( 'manifest_status>0' )->getField( 'manifest_id,production_unit_id,transport_unit_id,reception_unit_id,manifest_num,manifest_add_time,manifest_status' );
 		$manifest_json = json_encode( $manifest );
-		
+
 		$production_unit_name = M( 'production_unit' )->getField( 'production_unit_id,production_unit_name' );
 		$production_unit_name_json = json_encode( $production_unit_name );
 
@@ -98,7 +96,7 @@ class DistrictBusinessAction extends CommonAction{
 		$tmp_content = "<script>manifest_id_json = $manifest_id_json; manifest_status_json = $manifest_status_json; </script> $tmp_content";
 		$this->ajaxReturn( $tmp_content );
 	}
-	
+
 	// 业务办理->待办业务->转移联单管理：审核
 	public function transfer_manifest_management_audit($manifest_id="") {
 		$manifest_status = I( 'post.manifest_status' );
@@ -116,8 +114,30 @@ class DistrictBusinessAction extends CommonAction{
 
 	// 业务办理->待办业务->企业用户管理
 	public function enterprise_user_management() {
-		$record = M( 'alluser' )->select();
-		$record_json = json_encode( $record );
+
+		/*$productionModel = new Model();
+		$transportModel = new Model();
+		$receptionModel = new Model();
+
+		$production_user = $productionModel->query("SELECT `user`.`user_id`, `username`, `user_type`, `production_unit_name` AS `unit_name`, `production_unit_code` AS `unit_code`, `production_unit_username` AS `unit_username`, `waste_location_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN production_unit ON user.user_id = production_unit.user_id");
+
+		$transport_user = $transportModel->query("SELECT `user`.`user_id`, `username`, `user_type`, `transport_unit_name` AS `unit_name`, `transport_unit_code` AS `unit_code`, `transport_unit_username` AS `unit_username`, `transport_unit_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN transport_unit ON user.user_id = transport_unit.user_id");
+
+		$reception_user = $receptionModel->query("SELECT `user`.`user_id`, `username`, `user_type`, `reception_unit_name` AS `unit_name`, `reception_unit_code` AS `unit_code`, `reception_unit_username` AS `unit_username`, `reception_unit_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN reception_unit ON user.user_id = reception_unit.user_id");*/
+
+		/*$userModel = new Model();
+		$all_user = $userModel->union("SELECT `user`.`user_id`, `username`, `user_type`, `production_unit_name` AS `unit_name`, `production_unit_code` AS `unit_code`, `production_unit_username` AS `unit_username`, `waste_location_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN production_unit ON user.user_id = production_unit.user_id")->union("SELECT `user`.`user_id`, `username`, `user_type`, `transport_unit_name` AS `unit_name`, `transport_unit_code` AS `unit_code`, `transport_unit_username` AS `unit_username`, `transport_unit_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN transport_unit ON user.user_id = transport_unit.user_id")->union("SELECT `user`.`user_id`, `username`, `user_type`, `reception_unit_name` AS `unit_name`, `reception_unit_code` AS `unit_code`, `reception_unit_username` AS `unit_username`, `reception_unit_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN reception_unit ON user.user_id = reception_unit.user_id")->select();*/
+
+		$userModel = new Model();
+		$all_user = $userModel->query("
+			(SELECT `user`.`user_id`, `username`, `user_type`, `production_unit_name` AS `unit_name`, `production_unit_code` AS `unit_code`, `production_unit_username` AS `unit_username`, `waste_location_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN production_unit ON user.user_id = production_unit.user_id)
+			UNION
+			(SELECT `user`.`user_id`, `username`, `user_type`, `transport_unit_name` AS `unit_name`, `transport_unit_code` AS `unit_code`, `transport_unit_username` AS `unit_username`, `transport_unit_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN transport_unit ON user.user_id = transport_unit.user_id)
+			UNION
+			(SELECT `user`.`user_id`, `username`, `user_type`, `reception_unit_name` AS `unit_name`, `reception_unit_code` AS `unit_code`, `reception_unit_username` AS `unit_username`, `reception_unit_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN reception_unit ON user.user_id = reception_unit.user_id)");
+
+		$record_json = json_encode( $all_user );
+
 		$tmp_content=$this->fetch( './Public/html/Content/District/business/enterprise_user_management.html' );
 
 		$tmp_content="<script>record_json=$record_json; </script> $tmp_content";
