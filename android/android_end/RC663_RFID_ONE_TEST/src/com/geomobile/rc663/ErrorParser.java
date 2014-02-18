@@ -15,9 +15,10 @@ public class ErrorParser {
 					JSONObject jj = jArr.getJSONObject(i);
 					errmsg += jj.getString("des");
 					try {
+						if (jj.has("rfid"))
 						errmsg += ": " + jj.getString("rfid");
 					} catch (JSONException e) {
-						
+						activity.alertMessage(e.toString());						
 					}
 					
 					errmsg += "\n";
@@ -25,9 +26,11 @@ public class ErrorParser {
 			} else {
 				errmsg += ((JSONObject)(jObject.get("error"))).getString("des");
 				try {
-					errmsg += ": " + ((JSONObject)(jObject.get("error"))).getString("rfid");
+					JSONObject obj=(JSONObject)(jObject.get("error"));
+					if (obj.has("rfid"))
+					errmsg += ": " + obj.getString("rfid");
 				} catch (JSONException e) {
-					
+					activity.alertMessage(e.toString());
 				}
 			}
 			activity.alertMessage(errmsg);
