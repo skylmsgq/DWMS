@@ -105,12 +105,9 @@ class DistrictMapAction extends CommonAction{
 
 	// 转移地图->路线规划->运输路线规划，百度API规划路线：生产单位->接受单位
 	public function transfer_route_plan_3() {
-		// $record = M( 'vehicle_gps_transport' )->where( "vehicle_status=0" )->select();
-		// $record_json = json_encode( $record );
-
-		$production_unit = M( 'production_unit' )->select();
+		$production_unit = M( 'production_unit' )->where( array( 'jurisdiction_id' => session( 'jurisdiction_id' ) ) )->select();
 		$production_unit_json = json_encode( $production_unit );
-		$reception_unit = M( 'reception_unit' )->select();
+		$reception_unit = M( 'reception_unit' )->where( array( 'jurisdiction_id' => session( 'jurisdiction_id' ) ) )->select();
 		$reception_unit_json = json_encode( $reception_unit );
 
 		$tmp_content=$this->fetch( './Public/html/Content/District/map/transfer_route_plan_3.html' );
@@ -120,8 +117,13 @@ class DistrictMapAction extends CommonAction{
 
 	// 转移地图->路线规划->运输路线规划：ajax传回路线数据
 	public function ajax_transfer_route_receiver() {
-		$table=M( "route" );
-		if ( $table ) {
+		$route=M( "route" );
+		$condition['production_unit_id'] = array( 'EQ', I( 'post.production_unit_id' ) );
+		$condition['reception_unit_id'] = array( 'EQ', I( 'post.reception_unit_id' ) );
+		$result = $route->where( $condition )->find();
+		if ( $result ) {
+			$this->ajaxReturn( 'exist' );
+		} else {
 			$data["production_unit_id"] = I( 'post.production_unit_id' );
 			$data["reception_unit_id"] = I( 'post.reception_unit_id' );
 			$data["route_lng_lat"]=I( 'post.route_lng_lat' );
@@ -129,23 +131,55 @@ class DistrictMapAction extends CommonAction{
 			$data["route_add_time"]=$time;
 			$data["route_modify_time"]=$time;
 			$data["route_status"]=0;
-			$table->add( $data );
+			$result = $route->add( $data );
+			if ( $result ) {
+				$this->ajaxReturn( "success" );
+			}else {
+				$this->ajaxReturn( "fail" );
+			}
+		}
+	}
+
+	// 转移地图->路线规划->路线车辆绑定
+	public function route_vehicle_binding(){
+		$condition['jurisdiction_id'] = array( 'EQ', session( 'jurisdiction_id' ) );
+		$production_unit = M( 'production_unit' )->where( $condition )->getField( 'production_unit_id, production_unit_name' );
+		$reception_unit = M( 'reception_unit' )->where( $condition )->getField( 'reception_unit_id, reception_unit_name' );
+		$condition['vehicle_status'] = array( 'EQ', 0 );
+		$vehicle = M( 'vehicle' )->join( 'transport_unit ON vehicle.transport_unit_id = transport_unit.transport_unit_id' )->where( $condition )->getField( 'vehicle_id, vehicle_type, vehicle_num' );
+		$production_unit_json = json_encode( $production_unit );
+		$reception_unit_json = json_encode( $reception_unit );
+		$vehicle_json = json_encode($vehicle);
+		if ( $production_unit_json && $reception_unit_json ) {
+			$tmp_content=$this->fetch( './Public/html/Content/District/map/route_vehicle_binding.html' );
+			$tmp_content = "<script>production_unit_json=$production_unit_json; reception_unit_json=$reception_unit_json; vehicle_json=$vehicle_json; </script> $tmp_content";
+			$this->ajaxReturn( $tmp_content );
+			$this->show( 'succ' );
+		} else {
+			$this->show( 'fail' );
+		}
+	}
+
+	// 转移地图->路线规划->路线车辆绑定：绑定
+	public function ajax_route_vehicle_binding(){
+		$correlation = M( 'route_vehicle' );
+		$data['route_id'] = I( 'post.route_id' );
+		$data['vehicle_id'] = I( 'post.vehicle_id' );
+		$time = date( 'Y-m-d H:i:s', time() );
+		$data['correlation_add_time'] = $time;
+		$data['correlation_status'] = 0;
+		$result = $correlation->add( $data );
+		if ( $result ) {
 			$this->show( "succ" );
 		}else {
 			$this->show( "fail" );
 		}
 	}
 
-	// 转移地图->路线规划->路线车辆绑定
-	public function route_vehicle_binding(){
-		$tmp_content=$this->fetch( './Public/html/Content/District/map/route_vehicle_binding.html' );
-		$this->ajaxReturn( $tmp_content );
-	}
-
 	// 转移地图->路线查询->运输路线查询
 	public function transfer_route_query() {
-		$production_unit = M( 'production_unit' )->getField( 'production_unit_id, production_unit_name' );
-		$reception_unit = M( 'reception_unit' )->getField( 'reception_unit_id, reception_unit_name' );
+		$production_unit = M( 'production_unit' )->where( array( 'jurisdiction_id' => session( 'jurisdiction_id' ) ) )->getField( 'production_unit_id, production_unit_name' );
+		$reception_unit = M( 'reception_unit' )->where( array( 'jurisdiction_id' => session( 'jurisdiction_id' ) ) )->getField( 'reception_unit_id, reception_unit_name' );
 		$production_unit_json = json_encode( $production_unit );
 		$reception_unit_json = json_encode( $reception_unit );
 		if ( $production_unit_json && $reception_unit_json ) {
