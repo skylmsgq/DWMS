@@ -41,19 +41,19 @@ function setTable() {
         itemData[2] = "" + unit_json;
         switch (manifest_json[idx].manifest_status) {
             case '4':
-                itemData[3] = "<span class='label label-primary'>未填写</span>";
+                itemData[3] = "<span class='label label-warning'>未填写</span>";
                 itemData[4] = "" + itemRequest;
                 break;
             case '9':
-                itemData[3] = "<span class='label label-warning'>已保存未提交</span>";
+                itemData[3] = "<span class='label label-primary'>已保存未提交</span>";
                 itemData[4] = "" + itemModify + itemSubmit;
                 break;
             case '10':
-                itemData[3] = "<span class='label label-primary'>已提交待审核</span>";
+                itemData[3] = "<span class='label label-warning'>已提交待审核</span>";
                 itemData[4] = "";
                 break;
             case '12':
-                itemData[3] = "<span class='label label-primary'>未通过待修改</span>";
+                itemData[3] = "<span class='label label-danger>未通过待修改</span>";
                 itemData[4] = "" + itemModify;
                 break;
             case '13':

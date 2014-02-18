@@ -67,17 +67,17 @@
                 <tr>
                     <td>运输单位</td>
                     <td>
-                        {$record.transport_unit_name}
+                        {$record.transport_unit_id}
                     </td>
                     <td>接受单位</td>
                     <td>
-                        {$record.reception_unit_name}
+                        {$record.reception_unit_id}
                     </td>
                 </tr>                 
                 <tr>
                     <td>危废编号</td>
                     <td>
-                        {$record.waste_code}
+                        {$record.waste_id}
                     </td>
                     <td>危废重量</td>
                     <td>
@@ -128,7 +128,7 @@
 </center>
 
 <script type="text/javascript">
-
+console.log(record_json);
 function ajaxAction(actionID,transport_unit_name) {
      switch (actionID) {
         case 0:
@@ -145,11 +145,10 @@ function ajaxAction(actionID,transport_unit_name) {
 
     $.ajax({
         type: "post",
-        url: "transfer_manifest_request_form",
+        url: "transfer_manifest_request_form?record_id=" + record_json.record_id,
         timeout: 2000,
         // data: $('#manifest_request').serialize() + '&manifest_status=' + actionID +'&reception_unit_name=' + + '&transport_unit_name=' + transport_unit_name ,
-        data: $('#manifest_request').serialize() + '&manifest_status=' + actionID,
-    
+        data: $('#manifest_request').serialize() + '&manifest_status=' + actionID  + '&transport_unit_id=' + record_json.transport_unit_id + '&reception_unit_id=' + record_json.reception_unit_id + '&waste_id=' + record_json.waste_id + '&waste_weight=' + record_json.predict_output_weight,
         success: function(data) {
             switch (actionID) {
                 case 0:
@@ -166,6 +165,10 @@ function ajaxAction(actionID,transport_unit_name) {
                     break;
             }
             $('input').val('');
+            $('#myModal').modal('hide');
+            $('#myModal').on('hidden.bs.modal', function(e) {
+                refresh_page();
+            });
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) {
             alert('保存失败，请重新保存。');

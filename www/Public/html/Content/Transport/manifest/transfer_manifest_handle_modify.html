@@ -104,11 +104,11 @@
                     </td>
                 </tr>
                     <tr>
-                    <td>第一承运人姓名</td>
+                    <td>第二承运人姓名</td>
                     <td>
                         <input type="text" name="carrier_2_name" class="form-control input-sm" placeholder="{$manifest.carrier_2_name}" value="{$manifest.carrier_2_name}">  
                     </td>
-                    <td>第一承运人工号</td>
+                    <td>第二承运人工号</td>
                     <td>
                         <input type="text" name="carrier_2_num" class="form-control input-sm" placeholder="{$manifest.carrier_2_num}" value="{$manifest.carrier_2_num}">  
                     </td>
@@ -118,7 +118,7 @@
                     <td>
                         <input type="text" name="transport_date_2" class="form-control input-sm" placeholder="{$manifest.transport_date_2}" value="{$manifest.transport_date_2}">  
                     </td>
-                    <td>车辆1 ID</td>
+                    <td>车辆2 ID</td>
                     <td>
                         <input type="text" name="vehicle_id_2" class="form-control input-sm" placeholder="{$manifest.vehicle_id_2}" value="{$manifest.vehicle_id_2}">  
                     </td>
@@ -154,9 +154,10 @@
     <button class="btn btn-warning btn-lg" onclick="ajaxAction()">修改联单</button>
     <button class="btn btn-info btn-lg" onclick="$('#myModal').modal('hide');">关闭页面</button>
 </center>
+
 <script type="text/javascript">
-console.log($transport_unit);
-console.log($manifest);
+// console.log($transport_unit);
+// console.log(manifest_id_json);
 function ajaxAction() {
     var form_serialize = "" + $('#manifest_modify').serialize();
 
