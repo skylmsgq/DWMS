@@ -42,39 +42,20 @@ function setTable() {
         itemData[4] = "" + itemDetail;
         switch (manifest_json[idx].manifest_status) {
             case '0':
-                itemData[3] = "<span class='label label-primary'>产生单位已保存未提交</span>";
+                itemData[3] = "<span class='label label-primary'>已保存未提交</span>";
                 itemData[4] += itemModify + itemSubmit;
                 break;
             case '1':
-                itemData[3] = "<span class='label label-warning'>生产单位已提交运输单位未填写</span>";
-                break;
-            case '2':
-                itemData[3] = "<span class='label label-success'>运输单位已填写未审核</span>";
-                break;
-            case '3':
-                itemData[3] = "<span class='label label-danger'>已审核处置单位未确认</span>";
-                break;
-            case '4':
-                itemData[3] = "<span class='label label-primary'>未通过生产单位待修改</span>";
-                itemData[4] += itemModify;
-                break;
-            case '5':
-                itemData[3] = "<span class='label label-primary'>生产单位已修改待审核</span>";
-                itemData[4] += itemModify + itemSubmit;
-                break;
-            case '6':
-                itemData[3] = "<span class='label label-primary'>处置单位已确认未审核</span>";
+                itemData[3] = "<span class='label label-warning'>已提交待审核</span>";
                 break;
             case '7':
-                itemData[3] = "<span class='label label-primary'>已审核已通过</span>";
+                itemData[3] = "<span class='label label-danger'>未通过待修改</span>";
+                itemData[4] += itemModify;
                 break;
             case '8':
-                itemData[3] = "<span class='label label-primary'>未通过处置单位待修改</span>";
+                itemData[3] = "<span class='label label-primary'>已修改未提交</span>";
+                itemData[4] += itemModify + itemSubmit;
                 break;
-            case '9':
-                itemData[3] = "<span class='label label-primary'>处置单位已修改待审核</span>";
-                break;
-
             default:
                 itemData[3] = "<span class='label label-danger'>备案状态错误</span>";
                 break;

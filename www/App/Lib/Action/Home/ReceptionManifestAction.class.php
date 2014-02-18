@@ -44,38 +44,22 @@ class ReceptionManifestAction extends CommonAction{
 // 转移联单->转移联单处理->填写页->保存
 	public function transfer_manifest_handle_request_form($manifest_id="") {
 		$manifest = M( 'manifest' ); // 实例化record对象
-		$manifest->create(); // 根据表单提交的POST数据创建数据对象
-		$manifest->manifest_id = $manifest_id;
 		$time = date( 'Y-m-d H:i:s', time() );
-		$manifest->manifest_modify_time = $time;
+		$data['manifest_modify_time'] = $time;
+		$data = I( 'post.' );
 		$manifest_status_old = I( 'post.manifest_status_old' );
 		switch ( $manifest_status_old ) {
-		case '1':
-			$manifest_status = 2;
-			break;
-		case '2':
-			$manifest_status = 3;
-			break;
-		case '5':
-			$manifest_status = 5;
+		case '4':
+			$manifest_status = 9;
 			break;
 		default:
 			$manifest_status = -1;
 			break;
 		}
-		$manifest->manifest_status = $manifest_status;
-		$result = $manifest->save(); // 根据条件保存修改的数据
+		$data['manifest_status'] = $manifest_status;
+		$manifest->where( array( 'manifest_id' =>$manifest_id ) )->save( $data ); // 根据条件保存修改的数据
 
-		if ( $result ) {
-			$this->ajaxReturn( 1, '修改成功！', 1 );
-		} else {
-			$this->ajaxReturn( 0, '修改失败！', 0 );
-		}
 	}
-
-
-
-
 
 // 转移联单->转移联单处理->修改页
 
@@ -97,19 +81,26 @@ class ReceptionManifestAction extends CommonAction{
 // 转移联单->转移联单处理->修改页->保存	
 	public function transfer_manifest_handle_modified($manifest_id="") {
 		$manifest = M( 'manifest' ); // 实例化record对象
-		 // 根据表单提交的POST数据创建数据对象
-		$manifest->manifest_id = $manifest_id;
 		$time = date( 'Y-m-d H:i:s', time() );
-		$manifest->manifest_modify_time = $time;
-		$manifest->manifest_status = 2;
-	
-		$result = $manifest->where('manifest_id = $manifest_id')->save(); // 根据条件保存修改的数据
-
-		if ( $result ) {
-			$this->ajaxReturn( 1, '修改成功！', 1 );
-		} else {
-			$this->ajaxReturn( 0, '修改失败！', 0 );
+		$data['manifest_modify_time'] = $time;
+		$data = I( 'post.' );
+		$manifest_status_old = I( 'post.manifest_status_old' );
+		switch ( $manifest_status_old ) {
+		case '9':
+			$manifest_status = 10;
+			break;
+		case '12':
+			$manifest_status = 13;
+			break;
+		case '13':
+			$manifest_status = 10;
+			break;	
+		default:
+			$manifest_status = -1;
+			break;
 		}
+		$data['manifest_status'] = $manifest_status;
+		$manifest->where( array( 'manifest_id' =>$manifest_id ) )->save( $data );
 	}
 
 // 转移联单->转移联单处理->提交页
