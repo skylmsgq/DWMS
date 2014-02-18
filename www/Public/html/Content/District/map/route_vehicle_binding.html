@@ -1,1 +1,178 @@
-<h1>转移地图->路线规划->路线车辆绑定</h1>
+<div class="panel panel-primary">
+    <div class="panel panel-heading" style="margin-bottom:1px">
+        <h3 class="panel-title">地 图</h3>
+    </div>
+    <div class="panel panel-body" style="margin-bottom:1px">
+    	<div id="noSelectionAlert"></div>
+        <div class="row">
+            <div class="col-md-2">
+                <label class="sr-only" for="selectProductionUnit">产生单位：</label>
+                <select class="form-control" id="selectProductionUnit">
+                    <option>请选择生产单位</option>
+                </select>
+            </div>
+            <div class="col-md-2">
+                <label class="sr-only" for="selectReceptionUnit">接受单位：</label>
+                <select class="form-control" id="selectReceptionUnit">
+                    <option>请选择接受单位</option>
+                </select>
+            </div>
+            <div class="col-md-1">
+                <button class="btn btn-info" id="searchRoute" onclick="searchRoute();">确认</button>
+            </div>
+            <div class="col-md-2">
+                <label class="sr-only" for="selectRoute">路线：</label>
+                <select class="form-control" id="selectRoute">
+                    <option>请选择路线</option>
+                </select>
+            </div>
+            <div class="col-md-1">
+                <button class="btn btn-success" id="seeRoute" onclick="">查看</button>
+            </div>
+            <div class="col-md-2">
+                <label class="sr-only" for="selectVehicle">车辆：</label>
+                <select class="form-control" id="selectVehicle">
+                    <option>请选择运输车辆</option>
+                </select>
+            </div>
+            <div class="col-md-1">
+                <button class="btn btn-warning" id="routeVehicleBinding" onclick="routeVehicleBinding();">绑定</button>
+            </div>
+        </div>
+        <div id="map_container" style="width:auto">地图加载中...</div>
+    </div>
+</div>
+
+<script type="text/javascript">
+if (typeof(intervalWarning) != 'undefined') {
+    clearInterval(intervalWarning);
+}
+
+function setBMap() {
+
+    var windowHeight = $(window).height();
+    $("#map_container").css("height", "" + windowHeight - 350 + "px");
+
+    map_display = new BMap.Map("map_container"); // 创建Map实例
+    map_display.centerAndZoom("上海", 13); // 初始化地图,设置中心点坐标和地图级别
+    map_display.addControl(new BMap.NavigationControl()); // 添加默认缩放平移控件
+    map_display.addControl(new BMap.ScaleControl()); // 添加默认比例尺控件
+    map_display.addControl(new BMap.OverviewMapControl()); //添加默认缩略地图控件
+    map_display.enableScrollWheelZoom(); //启用滚轮放大缩小
+    map_display.addControl(new BMap.MapTypeControl()); // 添加默认地图控件
+    map_display.setCurrentCity("上海"); // 设置地图显示的城市 此项是必须设置的
+
+    for (var idx in production_unit_json) {
+        $('#selectProductionUnit').append('<option id="" value="' + idx + '">' + production_unit_json[idx] + '</option>');
+    }
+    for (var idx in reception_unit_json) {
+        $('#selectReceptionUnit').append('<option id="" value="' + idx + '">' + reception_unit_json[idx] + '</option>');
+    }
+    for (var idx in vehicle_json) {
+        $('#selectVehicle').append('<option id="" value="' + vehicle_json[idx].vehicle_id + '">' + vehicle_json[idx].vehicle_type + ' ' + vehicle_json[idx].vehicle_num + '</option>');
+    }
+
+}
+
+function loadScript() {
+    var script = document.createElement("script");
+    script.src = "http://api.map.baidu.com/api?v=2.0&ak=KDdzQZSRLv89h4yrti56L5Gy&callback=setBMap";
+    document.body.appendChild(script);
+}
+
+loadScript();
+
+function myAlert(msg) {
+    $("#noSelectionAlert").html('<div class="alert alert-warning alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>错误: </strong> ' + msg + ' </div>');
+}
+
+function myAlertSucc(msg) {
+    $("#noSelectionAlert").html('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>状态: </strong> ' + msg + ' </div>');
+}
+
+function searchRoute() {
+    $.ajax({
+        type: 'post',
+        url: "{:U('Home/DistrictMap/ajax_search_route')}",
+        dataType: 'json',
+        data: {
+            "production_unit_id": $('#selectProductionUnit').val(),
+            "reception_unit_id": $('#selectReceptionUnit').val()
+        },
+        success: function(route_json) {
+            // console.log(route_json);
+            // route_json_eval = eval("(" + route_json + ")");
+            // route_json_eval = eval("(" + route_json_eval + ")");
+            route_json_eval = JSON.parse(route_json);
+            // console.log(route_json_eval);
+            $('#selectRoute').html('<option>请选择路线</option>');
+            for (var idx in route_json_eval) {
+                $('#selectRoute').append('<option value="' + route_json_eval[idx].route_id + '">' + route_json_eval[idx].route_id + '</option>');
+            }
+            // js.lang.String.call(String.prototype);
+            $('#seeRoute').click(function() {
+                // console.log(route_json_eval[0].route_lng_lat);
+                // console.log(route_json_eval[0].route_lng_lat.replace(/&quot;/g, '"'));
+                // console.log(JSON.parse(route_json_eval[0].route_lng_lat.replace(/&quot;/g, '"')));
+                map_display.clearOverlays();
+                for (var idx in route_json_eval) {
+                    if (route_json_eval[idx].route_id == $('#selectRoute').val()) {
+                        route_decode = route_json_eval[idx].route_lng_lat.replace(/&quot;/g, '"');
+                        route_decode_json = JSON.parse(route_decode);
+
+                        var pointArray = new Array();
+                        var lng, lat;
+                        for (var pointIdx in route_decode_json) {
+                            lng = route_decode_json[pointIdx].lng;
+                            lat = route_decode_json[pointIdx].lat;
+                            pointArray.push(new BMap.Point(lng, lat));
+                        }
+                        var polyline = new BMap.Polyline(pointArray, {
+                            strokeColor: "blue",
+                            strokeWeight: 6,
+                            strokeOpacity: 0.8
+                        });
+                        map_display.addOverlay(polyline);
+                        $(".anchorBL").hide();
+                    }
+                }
+
+            })
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+            console.log("获取路线失败。");
+            console.log("Error:Ajax_Content_Load" + errorThrown);
+            console.log("XMLHttpRequest.status:" + XMLHttpRequest.status);
+            console.log("XMLHttpRequest.readyState:" + XMLHttpRequest.readyState);
+            console.log("textStatus:" + textStatus);
+        }
+    });
+}
+
+function routeVehicleBinding() {
+    $.ajax({
+        type: 'post',
+        url: "{:U('Home/DistrictMap/ajax_route_vehicle_binding')}",
+        dataType: 'json',
+        data: {
+            "route_id": $('#selectRoute').val(),
+            "vehicle_id": $('#selectVehicle').val()
+        },
+        success: function(data) {
+        	if (data == "succ") {
+                myAlertSucc("绑定成功");
+            } else {
+                myAlert("绑定失败");
+            }
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+            console.log("获取路线失败。");
+            console.log("Error:Ajax_Content_Load" + errorThrown);
+            console.log("XMLHttpRequest.status:" + XMLHttpRequest.status);
+            console.log("XMLHttpRequest.readyState:" + XMLHttpRequest.readyState);
+            console.log("textStatus:" + textStatus);
+        }
+
+    })
+}
+</script>

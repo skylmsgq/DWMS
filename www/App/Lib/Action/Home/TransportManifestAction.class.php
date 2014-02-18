@@ -21,11 +21,11 @@ class TransportManifestAction extends CommonAction{
 		// $map['transport_unit_id'] = session('transport_unit_id');
 		$manifest_data = $manifest->where($condition)->getField( 'manifest_id,manifest_num,manifest_add_time,manifest_status' );
 
-		$manifest_json = json_encode( $manifest_data ); 
+		$manifest_json = json_encode( $manifest_data );
 
 		$unit_name = M( 'transport_unit' )->where( array( 'transport_unit_id' => session( 'transport_unit_id' ) ) )->getField( 'transport_unit_name' );
 		$unit_json = json_encode( $unit_name );
-		
+
 		$tmp_content=$this->fetch( './Public/html/Content/Transport/manifest/transfer_manifest_handle.html' );
 		$tmp_content = "<script>manifest_json = $manifest_json;  unit_json = $unit_json;</script> $tmp_content";
 		$this->ajaxReturn( $tmp_content );
@@ -35,7 +35,7 @@ class TransportManifestAction extends CommonAction{
 	public function transfer_manifest_handle_request($manifest_id=""){
 		$manifest = M( 'manifest' )->where( array( 'manifest_id' =>$manifest_id ) )->find();
 		$transport_unit = M( 'transport_unit' )->where( array( 'transport_unit_id' => session('transport_unit_id' ) ) )->find();
-		
+
 		$manifest_id_json = json_encode($manifest_id);
 		$manifest_status_json = json_encode($manifest['manifest_status']);
 
@@ -56,7 +56,7 @@ class TransportManifestAction extends CommonAction{
 	// 	$manifest->manifest_id = $manifest_id;
 	// 	$time = date( 'Y-m-d H:i:s', time() );
 	// 	$manifest->manifest_modify_time = $time;
-		
+
 	// 	$manifest_status_old = I( 'post.manifest_status_old' );
 	// 	switch ( $manifest_status_old ) {
 	// 	case '1':
@@ -65,7 +65,7 @@ class TransportManifestAction extends CommonAction{
 	// 	case '2':
 	// 		$manifest_status = 3;
 	// 		break;
-		
+
 	// 	default:
 	// 		$manifest_status = -1;
 	// 		break;
@@ -73,7 +73,7 @@ class TransportManifestAction extends CommonAction{
 	// 	// $data['manifest_id'] = $manifest_id;
 	// 	// $data['manifest_status'] = $manifest_status;
 	// 	// $manifest->save($data); // 根据条件保存修改的数据
-		
+
 	// 	$manifest->manifest_status = $manifest_status;
 	// 	$result = $manifest->save();
 	// 	// $result = $manifest->where('manifest_id = $manifest_id')->save(); // 根据条件保存修改的数据
@@ -83,7 +83,7 @@ class TransportManifestAction extends CommonAction{
 	// 	} else {
 	// 		$this->ajaxReturn( 0, '保存失败！', 0 );
 	// 	}
-		
+
 	// }
 	public function transfer_manifest_handle_request_form($manifest_id="") {
 		$manifest = M( 'manifest' ); // 实例化record对象
@@ -125,7 +125,7 @@ class TransportManifestAction extends CommonAction{
 	public function transfer_manifest_handle_modify($manifest_id=""){
 		$manifest = M( 'manifest' )->where( array( 'manifest_id' =>$manifest_id ) )->find();
 		$transport_unit = M( 'transport_unit' )->where( array( 'transport_unit_id' => session('transport_unit_id' ) ) )->find();
-		
+
 		$manifest_id_json = json_encode($manifest_id);
 		$manifest_status_json = json_encode($manifest['manifest_status']);
 
@@ -137,7 +137,7 @@ class TransportManifestAction extends CommonAction{
 		$this->ajaxReturn( $tmp_content );
 	}
 
-// 转移联单->转移联单处理->修改页->保存	
+// 转移联单->转移联单处理->修改页->保存
 	public function transfer_manifest_handle_modified($manifest_id="") {
 		$manifest = M( 'manifest' ); // 实例化record对象
 		 // 根据表单提交的POST数据创建数据对象
@@ -145,7 +145,7 @@ class TransportManifestAction extends CommonAction{
 		$time = date( 'Y-m-d H:i:s', time() );
 		$manifest->manifest_modify_time = $time;
 		$manifest->manifest_status = 2;
-	
+
 		$result = $manifest->where('manifest_id = $manifest_id')->save(); // 根据条件保存修改的数据
 
 		if ( $result ) {
@@ -159,7 +159,7 @@ class TransportManifestAction extends CommonAction{
 	public function transfer_manifest_handle_submit($manifest_id="") {
 		$manifest = M( 'manifest' )->where( array( 'manifest_id' =>$manifest_id ) )->find();
 		$transport_unit = M( 'transport_unit' )->where( array( 'transport_unit_id' => session('transport_unit_id' ) ) )->find();
-		
+
 		$manifest_id_json = json_encode($manifest_id);
 		$manifest_status_json = json_encode($manifest['manifest_status']);
 
@@ -173,7 +173,7 @@ class TransportManifestAction extends CommonAction{
 
 // 转移联单->转移联单处理->提交页->提交联单
 	public function transfer_manifest_handle_submited($manifest_id="") {
-		$manifest = M( 'manifest' ); 
+		$manifest = M( 'manifest' );
 		$data['manifest_id'] = $manifest_id;
 		$data['manifest_status'] = 3;
 		$manifest->save( $data );
@@ -192,11 +192,11 @@ class TransportManifestAction extends CommonAction{
 		// $map['transport_unit_id'] = session('transport_unit_id');
 		$manifest_data = $manifest->where($condition)->getField( 'manifest_id,manifest_num,manifest_add_time,manifest_status' );
 
-		$manifest_json = json_encode( $manifest_data ); 
+		$manifest_json = json_encode( $manifest_data );
 
 		$unit_name = M( 'transport_unit' )->where( array( 'transport_unit_id' => session( 'transport_unit_id' ) ) )->getField( 'transport_unit_name' );
 		$unit_json = json_encode( $unit_name );
-		
+
 		$tmp_content=$this->fetch( './Public/html/Content/Transport/manifest/transfer_manifest_query.html' );
 		$tmp_content = "<script>manifest_json = $manifest_json;  unit_json = $unit_json;</script> $tmp_content";
 		$this->ajaxReturn( $tmp_content );
@@ -211,6 +211,11 @@ class TransportManifestAction extends CommonAction{
 
 		$tmp_content=$this->fetch( './Public/html/Content/Transport/manifest/transfer_manifest_query_detail.html' );
 		$this->ajaxReturn( $tmp_content );
+	}
+
+	// 转移联单->转移联单->联单路线查询
+	public function manifest_route_query(){
+
 	}
 }
 ?>
