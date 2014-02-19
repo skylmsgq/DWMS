@@ -1,0 +1,64 @@
+query
+$User = M("User"); // 实例化User对象
+$User->where('type=1 AND status=1')->select(); 
+
+$User = M("User"); // 实例化User对象
+$condition['name'] = 'thinkphp';
+$condition['status'] = 1;
+ // 把查询条件传入查询方法
+$User->where($condition)->select(); 
+
+$User = M("User"); // 实例化User对象
+$map['id'] = array('neq',1);
+$map['name'] = 'ok';
+$map['_string'] = 'status=1 AND score>10';
+$User->where($map)->select(); 
+
+最后得到的查询条件就成了：
+( `id` != 1 ) AND ( `name` = 'ok' ) AND ( status=1 AND score>10 )
+
+$Model = new Model() // 实例化一个model对象 没有对应任何数据表
+$Model->query("select * from think_user where status=1");
+
+update
+ $Form = M("Form"); 
+ // 更改title值
+$Form->where('id=5')->setField('title','ThinkPHP');
+
+    $User = M("User"); // 实例化User对象
+    $User->where('id=5')->setInc('score',3); // 用户的积分加3
+    $User->where('id=5')->setInc('score'); // 用户的积分加1
+    $User->where('id=5')->setDec('score',5); // 用户的积分减5
+    $User->where('id=5')->setDec('score'); // 用户的积分减1
+
+
+$Model = new Model() // 实例化一个model对象 没有对应任何数据表
+$Model->execute("update think_user set name='thinkPHP' where status=1");
+
+delete
+$User = M("User"); // 实例化User对象
+$User->where('id=5')->delete(); // 删除id为5的用户数据
+$User->delete('1,2,5'); // 删除主键为1,2和5的用户数据
+$User->where('status=0')->delete(); // 删除所有状态为0的用户数据
+
+add
+$Form   =   D('Form');
+$Form->title  =   'ThinkPHP';
+$Form->content    =   '表单内容';
+$Form->add();
+
+$Form   =   D('Form');
+$data['title']  =   'ThinkPHP';
+$data['content']    =   '表单内容';
+$Form->add($data);
+
+
+	try {
+		$device=M("device");	
+	} catch (Exception $e) {
+		$error->code = 7;
+		$error->des = urlencode('数据库连接失败');
+		$resdata->error = $error;
+		return $resdata;
+	}
+	
