@@ -12,64 +12,57 @@
             <div class="col-md-1">大于</div>
             <input type="text" class="col-md-1" id="dangerDistance" value="0.6" placeholder="">
             <div class="col-md-2">千米时报警</div>
-            <button type="button" class="col-md-1 btn btn-success btn-xs" id="setting">设置</button>
+            <button type="button" class="col-md-1 btn btn-success btn-xs" id="setting" onclick="setting();">设置</button>
         </div>
-
         <div id="map_container" style="width:auto">地图加载中...</div>
     </div>
 </div>
 
 <script type="text/javascript" src="__PUBLIC__/js/shortestDist.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/fullscreen.js"></script>
 
 <script type="text/javascript">
-function setBMap() {
+var route_decode_json = new Array();
+var markerList = new Array();
+var polylineList = new Array();
+var messageContent = new Array();
+var infoWindowOption = new Array();
+var infoWindowContent = new Array();
 
+var warningDistance = 0.3;
+var dangerDistance = 0.6;
+
+function setBMap() {
     var windowHeight = $(window).height();
     $("#map_container").css("height", "" + windowHeight - 350 + "px");
 
-    map_display = new BMap.Map("map_container"); // 创建Map实例
-    map_display.centerAndZoom("上海", 11); // 初始化地图,设置中心点坐标和地图级别
-    map_display.addControl(new BMap.NavigationControl()); // 添加默认缩放平移控件
-    map_display.addControl(new BMap.ScaleControl()); // 添加默认比例尺控件
-    map_display.addControl(new BMap.OverviewMapControl()); //添加默认缩略地图控件
-    map_display.enableScrollWheelZoom(); //启用滚轮放大缩小
-    map_display.addControl(new BMap.MapTypeControl()); // 添加默认地图控件
-    map_display.setCurrentCity("上海"); // 设置地图显示的城市 此项是必须设置的
-    var  mapStyle ={
+    BaiduMap = new BMap.Map("map_container"); // 创建Map实例
+    BaiduMap.centerAndZoom("上海", 11); // 初始化地图,设置中心点坐标和地图级别
+    BaiduMap.addControl(new BMap.NavigationControl()); // 添加默认缩放平移控件
+    BaiduMap.addControl(new BMap.ScaleControl()); // 添加默认比例尺控件
+    BaiduMap.addControl(new BMap.OverviewMapControl()); //添加默认缩略地图控件
+    BaiduMap.enableScrollWheelZoom(); //启用滚轮放大缩小
+    BaiduMap.addControl(new BMap.MapTypeControl()); // 添加默认地图控件
+    BaiduMap.setCurrentCity("上海"); // 设置地图显示的城市 此项是必须设置的
+    var mapStyle = {
         features: ["road", "building", "water", "land", "point"],
-        style : "light"
-    }
-    map_display.setMapStyle(mapStyle);
-    // console.log( route_json );
-    // console.log("route_json:" + route_json);
-    // route_json_eval = eval("(" + route_json + ")");
-    // route_json_eval = JSON.parse(route_json);
-    // console.log(route_json_eval);
-    route_decode = route_json.route_lng_lat.replace(/&quot;/g, '"');
-    // route_decode = route_json_eval.route_lng_lat.replace(/&quot;/g, '"');
-    // console.log( route_decode );
-    // console.log("route_decode" + route_decode);
-    route_decode_json = JSON.parse(route_decode);
-    // console.log(route_decode_json);
-    // console.log("route_decode_json" + route_decode_json);
-    var pointArray = new Array();
-    var lng, lat;
-    for (var pointIdx in route_decode_json) {
-        lng = route_decode_json[pointIdx].lng;
-        lat = route_decode_json[pointIdx].lat;
-        pointArray.push(new BMap.Point(lng, lat));
-    }
-    var polyline = new BMap.Polyline(pointArray, {
-        strokeColor: "blue",
-        strokeWeight: 5, // 折线的宽度，以像素为单位。
-        strokeOpacity: 0.8 // 折线的透明度，取值范围0 - 1。
+        style: "light"
+    };
+    BaiduMap.setMapStyle(mapStyle);
+
+    BaiduMap.addEventListener("click", function() {
+        while (polyline = polylineList.pop()) {
+            BaiduMap.removeOverlay(polyline);
+        }
     });
-    map_display.addOverlay(polyline);
+
+    /*for (var idx in route_json) {
+        route_decode_json[idx] = JSON.parse(route_json[idx].route_lng_lat.replace(/&quot;/g, '"'));
+    }*/
+    //console.log(join_json);
+    //console.log(route_json);
+
     $(".anchorBL").hide();
-
-    // console.log(vehicle_info_json);
-    // console.log(transport_unit_json);
-
 }
 
 function loadScript() {
@@ -80,122 +73,109 @@ function loadScript() {
 
 loadScript();
 
-var warningDistance = 0.3;
-var dangerDistance = 0.6;
-$('#setting').click(function() {
-    if ($('#warningDistance').val() == null) {
-        warningDistance = 0.3;
-    } else {
-        warningDistance = $('#warningDistance').val();
-    }
-    if ($('#dangerDistance').val() == null) {
-        dangerDistance = 0.6;
-    } else {
-        dangerDistance = $('#dangerDistance').val();
-    }
-})
-
 function transferWarning() {
     $.ajax({
         type: "GET",
         url: "{:U('Home/DistrictMap/ajax_gps_data')}",
         timeout: 5000,
-        success: function(gps_data) {
-            // console.log(gps_data);
+        success: function(gps_data_array) {
+            // console.log(gps_data_array);
 
-            if (typeof(label) != 'undefined') {
-                map_display.removeOverlay(label);
-            }
-            if (typeof(marker) != 'undefined') {
-                map_display.removeOverlay(marker);
+            while (marker = markerList.pop()) {
+                BaiduMap.removeOverlay(marker);
             }
 
-            var lng = gps_data.bmap_longitude;
-            var lat = gps_data.bmap_latitude;
-            var gps_lng_lat = {
-                "lng": lng,
-                "lat": lat
-            };
-            distance = shortestDist(gps_lng_lat, route_decode_json);
-            distance = Math.round(distance * 1000) / 1000;
+            for (var idx in gps_data_array) {
 
-            var iconPoint = new BMap.Point(lng, lat);
-            if (distance < warningDistance) {
-                var lorryIcon = new BMap.Icon("__PUBLIC__/image/truck_green.png", new BMap.Size(32, 40), {
-                    // 指定定位位置。
-                    // 当标注显示在地图上时，其所指向的地理位置距离图标左上
-                    // 角各偏移10像素和25像素。您可以看到在本例中该位置即是
-                    // 图标中央下端的尖角位置。
-                    offset: new BMap.Size(16, 20),
-                    // 设置图片偏移。
-                    // 当您需要从一幅较大的图片中截取某部分作为标注图标时，您
-                    // 需要指定大图的偏移位置，此做法与css sprites技术类似。
-                    imageOffset: new BMap.Size(0, 0) // 设置图片偏移
+                var lng = gps_data_array[idx].lng;
+                var lat = gps_data_array[idx].lat;
+                var gps_lng_lat = {
+                    "lng": lng,
+                    "lat": lat
+                };
+
+                route_decode_json[idx] = JSON.parse(route_json[idx].route_lng_lat.replace(/&quot;/g, '"'));
+                var distance = shortestDist(gps_lng_lat, route_decode_json[idx]);
+                distance = Math.round(distance * 1000) / 1000;
+
+                var iconPoint = new BMap.Point(lng, lat);
+                if (distance < warningDistance) {
+                    var lorryIcon = new BMap.Icon("__PUBLIC__/image/truck_green.png", new BMap.Size(32, 40), {
+                        // 指定定位位置。
+                        // 当标注显示在地图上时，其所指向的地理位置距离图标左上
+                        // 角各偏移16像素和20像素。您可以看到在本例中该位置即是
+                        // 图标中央下端的尖角位置。
+                        offset: new BMap.Size(16, 20),
+                        // 设置图片偏移。
+                        // 当您需要从一幅较大的图片中截取某部分作为标注图标时，您
+                        // 需要指定大图的偏移位置，此做法与css sprites技术类似。
+                        imageOffset: new BMap.Size(0, 0) // 设置图片偏移
+                    });
+                    var warningText = "<p style='color:#00FF00;'>偏离" + distance + "千米，安全。</p>";
+
+                } else if (distance > warningDistance && distance < dangerDistance) {
+                    var lorryIcon = new BMap.Icon("__PUBLIC__/image/truck_yellow.png", new BMap.Size(32, 40), {
+                        offset: new BMap.Size(16, 20),
+                        imageOffset: new BMap.Size(0, 0) // 设置图片偏移
+                    });
+                    var warningText = "<p style='color:#FFFF00;'>偏离" + distance + "千米，注意！</p>";
+                } else {
+                    var lorryIcon = new BMap.Icon("__PUBLIC__/image/truck_red.png", new BMap.Size(32, 40), {
+                        offset: new BMap.Size(16, 20),
+                        imageOffset: new BMap.Size(0, 0) // 设置图片偏移
+                    });
+                    var warningText = "<p style='color:#FF0000;'>偏离" + distance + "千米，报警!</p>";
+                }
+
+                // 创建标注对象并添加到地图
+                var marker = new BMap.Marker(iconPoint, {
+                    icon: lorryIcon,
+                    title: "危废运输车辆"
                 });
-                var warningText = "偏离" + distance + "千米，安全。";
+                marker.setTitle(idx);
+                BaiduMap.addOverlay(marker);
+                markerList.push(marker);
 
-            } else if (distance > warningDistance && distance < dangerDistance) {
-                var lorryIcon = new BMap.Icon("__PUBLIC__/image/truck_yellow.png", new BMap.Size(32, 40), {
-                    // 指定定位位置。
-                    // 当标注显示在地图上时，其所指向的地理位置距离图标左上
-                    // 角各偏移10像素和25像素。您可以看到在本例中该位置即是
-                    // 图标中央下端的尖角位置。
-                    offset: new BMap.Size(16, 20),
-                    // 设置图片偏移。
-                    // 当您需要从一幅较大的图片中截取某部分作为标注图标时，您
-                    // 需要指定大图的偏移位置，此做法与css sprites技术类似。
-                    imageOffset: new BMap.Size(0, 0) // 设置图片偏移
+                var geoCoder = new BMap.Geocoder();
+                var pointLocation = "";
+                geoCoder.getLocation(iconPoint, function(rs) {
+                    var addComp = rs.addressComponents;
+                    pointLocation = "" + addComp.province + addComp.city + addComp.district + addComp.street + addComp.streetNumber;
                 });
-                var warningText = "偏离" + distance + "千米，注意！";
-            } else {
-                var lorryIcon = new BMap.Icon("__PUBLIC__/image/truck_red.png", new BMap.Size(32, 40), {
-                    // 指定定位位置。
-                    // 当标注显示在地图上时，其所指向的地理位置距离图标左上
-                    // 角各偏移10像素和25像素。您可以看到在本例中该位置即是
-                    // 图标中央下端的尖角位置。
-                    offset: new BMap.Size(16, 20),
-                    // 设置图片偏移。
-                    // 当您需要从一幅较大的图片中截取某部分作为标注图标时，您
-                    // 需要指定大图的偏移位置，此做法与css sprites技术类似。
-                    imageOffset: new BMap.Size(0, 0) // 设置图片偏移
-                });
-                var warningText = "偏离" + distance + "千米，报警!";
-            }
 
-            // 创建标注对象并添加到地图
-            marker = new BMap.Marker(iconPoint, {
-                icon: lorryIcon,
-                title: "危废运输车辆"
-            });
-            map_display.addOverlay(marker);
+                messageContent[idx] = "车辆牌照为：" + join_json[idx].vehicle_num + "的" + join_json[idx].vehicle_type + "，大致位置为：" + pointLocation;
 
-            var geoCoder = new BMap.Geocoder();
-            var pointLocation = "";
-            geoCoder.getLocation(iconPoint, function(rs) {
-                var addComp = rs.addressComponents;
-                pointLocation = "" + addComp.province + addComp.city + addComp.district + addComp.street + addComp.streetNumber;
-            });
-
-            marker.addEventListener("click", function() {
-                var messageContent = "车辆牌照为：" + vehicle_info_json.vehicle_num + "的" + vehicle_info_json.vehicle_type + "，大致位置为：" + pointLocation;
-                var infoWindowOption = {
+                infoWindowOption[idx] = {
                     width: 0, // 信息窗口宽度
                     height: 0, // 信息窗口高度
-                    title: "运输车辆牌照：" + vehicle_info_json.vehicle_num, // 信息窗口标题
-                    message: messageContent
-                }
-                var infoWindowContent = "<p>运输车辆类型：" + vehicle_info_json.vehicle_type + "</p><p>运输单位名称：" + transport_unit_json.transport_unit_name + "</p><p>运输单位地址：" + transport_unit_json.transport_unit_address + "</p><p>运输单位电话：" + transport_unit_json.transport_unit_phone + "</p><p>运输单位环保联系人姓名：" + transport_unit_json.transport_unit_contacts_name + "</p><p>运输单位环保联系人电话：" + transport_unit_json.transport_unit_contacts_phone;
+                    title: warningText, // 信息窗口标题
+                    message: messageContent[idx]
+                };
+                infoWindowContent[idx] = "<p>运输车辆牌照：" + join_json[idx].vehicle_num + "</p><p>运输车辆类型：" + join_json[idx].vehicle_type + "</p><p>运输单位名称：" + join_json[idx].transport_unit_name + "</p><p>运输单位地址：" + join_json[idx].transport_unit_address + "</p><p>运输单位电话：" + join_json[idx].transport_unit_phone + "</p><p>运输单位环保联系人姓名：" + join_json[idx].transport_unit_contacts_name + "</p><p>运输单位环保联系人电话：" + join_json[idx].transport_unit_contacts_phone;
 
-                var infoWindow = new BMap.InfoWindow(infoWindowContent, infoWindowOption); // 创建信息窗口对象
-                map_display.openInfoWindow(infoWindow, marker.getPosition()); // 打开信息窗口
-            });
+                marker.addEventListener("click", function() {
+                    // 创建信息窗口对象
+                    BaiduMap.openInfoWindow(new BMap.InfoWindow(infoWindowContent[this.getTitle() - '0'], infoWindowOption[this.getTitle() - '0']), this.getPosition()); // 打开信息窗口
+                });
 
-            var labelPoint = new BMap.Point(lng, lat);
-
-            label = new BMap.Label(warningText, {
-                position: labelPoint
-            });
-            map_display.addOverlay(label);
+                marker.addEventListener("rightclick", function() {
+                    var idx = this.getTitle() - '0';
+                    var pointArray = new Array();
+                    var lng, lat;
+                    for (var pointIdx in route_decode_json[idx]) {
+                        lng = route_decode_json[idx][pointIdx].lng;
+                        lat = route_decode_json[idx][pointIdx].lat;
+                        pointArray.push(new BMap.Point(lng, lat));
+                    }
+                    var polyline = new BMap.Polyline(pointArray, {
+                        strokeColor: "blue",
+                        strokeWeight: 5, // 折线的宽度，以像素为单位。
+                        strokeOpacity: 0.8 // 折线的透明度，取值范围0 - 1。
+                    });
+                    BaiduMap.addOverlay(polyline);
+                    polylineList.push(polyline);
+                });
+            }
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) {
             console.log("获取 GPS数据 失败");
@@ -210,62 +190,17 @@ function transferWarning() {
 transferWarning();
 var intervalWarning = setInterval("transferWarning()", 15000);
 
-var containerHeight = $('#div_container').css("height");
-var containerWidth = $('#div_container').css("width");
-
-function toFullScreen() {
-    map_display.disableAutoResize();
-    var curPixel = map_display.pointToPixel(map_display.getCenter());
-    var newPixel = new BMap.Pixel(curPixel.x - 135, curPixel.y - 99);
-    var newCenter = map_display.pixelToPoint(newPixel);
-    $('#div_header').css("display", "none");
-    $('#div_footer').css("display", "none");
-    $('#div_sidebar').css("display", "none");
-    //$('#div_row').removeClass('row');
-    $('#div_input-group').css("display", "none");
-    $('#div_content').removeClass('col-md-9');
-    $('#content-container-panel').removeClass('panel-body');
-
-    var windowHeight = $(window).height();
-    var windowWidth = $(window).width();
-
-    $('#div_container').css("height", windowHeight + "px");
-    $('#div_container').css("width", windowWidth - 4 + "px");
-
-    $('#map_container').css("height", windowHeight - 70 - 4 + "px");
-
-    $('#toFullScreen').css("display", "none");
-    $('#exitFullScreen').css("display", "inline");
-    map_display.checkResize();
-    map_display.setCenter(newCenter);
-    map_display.enableAutoResize();
-
-}
-
-function exitFullScreen(){
-    map_display.disableAutoResize();
-    var curPixel = map_display.pointToPixel(map_display.getCenter());
-    var newPixel = new BMap.Pixel(curPixel.x + 135, curPixel.y + 99);
-    var newCenter = map_display.pixelToPoint(newPixel);
-    $('#div_header').css("display", "inherit");
-    $('#div_footer').css("display", "inherit");
-    $('#div_sidebar').css("display", "inherit");
-    //$('#div_row').addClass('row');
-    $('#div_input-group').css("display", "inherit");
-    $('#div_content').addClass('col-md-9');
-    $('#content-container-panel').addClass('panel-body');
-
-    $('#div_container').css("height", containerHeight);
-    $('#div_container').css("width", containerWidth);
-
-    var windowHeight = $(window).height();
-    $("#map_container").css("height", "" + windowHeight - 350 + "px");
-
-    $('#toFullScreen').css("display", "inline");
-    $('#exitFullScreen').css("display", "none");
-    map_display.checkResize();
-    map_display.setCenter(newCenter);
-    map_display.enableAutoResize();
+function setting() {
+    if ($('#warningDistance').val() == null) {
+        warningDistance = 0.3;
+    } else {
+        warningDistance = $('#warningDistance').val();
+    }
+    if ($('#dangerDistance').val() == null) {
+        dangerDistance = 0.6;
+    } else {
+        dangerDistance = $('#dangerDistance').val();
+    }
 }
 
 </script>

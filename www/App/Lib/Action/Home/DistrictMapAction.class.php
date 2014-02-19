@@ -13,58 +13,47 @@ class DistrictMapAction extends CommonAction{
 	public function transfer_map_display() {
 
 		$vehicle = M( 'vehicle' );
-		$vehicle_operating = $vehicle->where( 'vehicle_status=2' );
-		$vehicle_info = $vehicle_operating->find();
-		$vehicle_info_json = json_encode( $vehicle_info );
+		$condition['vehicle_status'] = array( 'EQ', 2 );
+		$condition['jurisdiction_id'] = array( 'EQ', session( 'jurisdiction_id' ) );
+		$join = $vehicle->join( 'transport_unit ON vehicle.transport_unit_id = transport_unit.transport_unit_id' )->where( $condition )->select();
+		$join_json = json_encode( $join );
 
-		$vehicle_id = $vehicle_operating->getField( 'vehicle_id' );
-		$ownership_id = $vehicle_operating->getField( 'ownership_id' );
-		$transport_unit = M( 'transport_unit' )->where( array( 'transport_unit_id' => $ownership_id ) )->find();
-		$transport_unit_json = json_encode( $transport_unit );
-
-		if ( !$vehicle_id ) {
-			$this->ajaxReturn( "没找到车辆表ID:" . $vehicle_id );
-		}
-		/*foreach ($vehicle as $vehicle_idx) {
-			$route_id = M( 'route_vehicle' )->where( 'vehicle_id=$vehicle_idx->vehicle_id' )->getField('route_id');
-			$route = M( 'route' )->where( 'route_id=$route_id' )->find();
-		}*/
-		$route_id = M( 'route_vehicle' )->where( array( 'vehicle_id' => $vehicle_id ) )->getField( 'route_id' );
-		if ( !$route_id ) {
-			$this->ajaxReturn( "没找到路线ID:" . $route_id );
-		}
-		$route = M( 'route' )->where( array( 'route_id' => $route_id ) )->find();
-		if ( !$route ) {
-			$this->ajaxReturn( "没找到路线:" . $route );
-		}
-		$route_json = json_encode( $route );
+		$route_vehicle = M( 'route_vehicle' );
+		$route_vehicle_join = $route_vehicle->join( 'route ON route_vehicle.route_id = route.route_id' )->join( 'vehicle ON route_vehicle.vehicle_id = vehicle.vehicle_id' )->where( $condition )->select();
+		$route_vehicle_join_json = json_encode( $route_vehicle_join );
 
 		$tmp_content=$this->fetch( './Public/html/Content/District/map/transfer_map_display.html' );
-		$tmp_content = "<script>transport_unit_json=$transport_unit_json; vehicle_info_json=$vehicle_info_json; route_json=$route_json; </script> $tmp_content";
+		$tmp_content = "<script>join_json=$join_json; route_json=$route_vehicle_join_json</script> $tmp_content";
 		$this->ajaxReturn( $tmp_content );
 	}
 
 	// 转移地图->地图展示->转移地图展示：获取实时GPS数据
 	public function ajax_gps_data() {
-		$vehicle_gps_id = M( 'vehicle' )->where( 'vehicle_status=2' )->getField( 'vehicle_gps_id' );
-		if ( !$vehicle_gps_id ) {
-			$this->ajaxReturn( "没找到车辆表GPS的ID:" . $vehicle_gps_id );
+		$vehicle = M( 'vehicle' );
+		$condition['vehicle_status'] = array( 'EQ', 2 );
+		$condition['jurisdiction_id'] = array( 'EQ', session( 'jurisdiction_id' ) );
+		$join = $vehicle->join( 'device ON vehicle.device_id = device.device_id' )->where( $condition )->field( 'vehicle_id, device_serial_num' )->select();
+
+		for ($idx=0; $idx < count($join); $idx++) {
+			$gps_table_name = 'gps_' . $join[$idx]['device_serial_num'];
+			$gps = M( $gps_table_name );
+			$gps_max_id = $gps->where( array( 'status' => 0 ) )->max( 'id' );
+			$gps_lng_lat = $gps->where( array( 'id' => $gps_max_id ) )->field( 'bmap_longitude, bmap_latitude')->select();
+			$gps_data = array( 'vehicle_id' => $join[$idx]['vehicle_id'], 'lng' => $gps_lng_lat[0]['bmap_longitude'], 'lat' => $gps_lng_lat[0]['bmap_latitude'] );
+			$gps_data_array[$idx] = $gps_data;
 		}
-		$device_serial_num = M( 'device' )->where( array( 'device_id' => $vehicle_gps_id ) )->getField( 'device_serial_num' );
-		if ( !$device_serial_num ) {
-			$this->ajaxReturn( "没找到设备表GPS的序列号:" . $device_serial_num );
-		}
-		$gps_table_name = 'gps_' . $device_serial_num;
-		// $gps_table_name = 'gps_308033501795';
-		$gps = M( $gps_table_name );
-		$gps_max_id = $gps->where( 'status=0' )->max( 'id' );
-		$gps_data = $gps->where( array( 'id' => $gps_max_id ) )->find();
-		$this->ajaxReturn( $gps_data, 'JSON' );
+		$this->ajaxReturn( $gps_data_array );
 	}
 
 	// 转移地图->地图展示->仓库地图展示
 	public function warehouse_map_display() {
-		$tmp_content=$this->fetch( './Public/html/Content/District/map/warehouse_map_display.html' );
+		$condition['jurisdiction_id'] = array( 'EQ', session( 'jurisdiction_id' ) );
+		$production_unit = M( 'production_unit' )->where( $condition )->select();
+		$reception_unit = M( 'reception_unit' )->where( $condition )->select();
+		$production_unit_json = json_encode( $production_unit );
+		$reception_unit_json = json_encode( $reception_unit );
+		$tmp_content = $this->fetch( './Public/html/Content/District/map/warehouse_map_display.html' );
+		$tmp_content = "<script> production_unit_json = $production_unit_json; reception_unit_json = $reception_unit_json; </script> $tmp_content";
 		$this->ajaxReturn( $tmp_content );
 	}
 
@@ -126,7 +115,9 @@ class DistrictMapAction extends CommonAction{
 		} else {
 			$data["production_unit_id"] = I( 'post.production_unit_id' );
 			$data["reception_unit_id"] = I( 'post.reception_unit_id' );
-			$data["route_lng_lat"]=I( 'post.route_lng_lat' );
+			$data["jurisdiction_id"] = session( 'jurisdiction_id' );
+			$data["route_lng_lat"] = I( 'post.route_lng_lat' );
+			$data["route_detail"] = I( 'post.route_detail' );
 			$time = date( 'Y-m-d H:i:s', time() );
 			$data["route_add_time"]=$time;
 			$data["route_modify_time"]=$time;
@@ -176,7 +167,7 @@ class DistrictMapAction extends CommonAction{
 		}
 	}
 
-	// 转移地图->路线查询->运输路线查询
+	// 转移地图->路线管理->运输路线查询
 	public function transfer_route_query() {
 		$production_unit = M( 'production_unit' )->where( array( 'jurisdiction_id' => session( 'jurisdiction_id' ) ) )->getField( 'production_unit_id, production_unit_name' );
 		$reception_unit = M( 'reception_unit' )->where( array( 'jurisdiction_id' => session( 'jurisdiction_id' ) ) )->getField( 'reception_unit_id, reception_unit_name' );
@@ -187,11 +178,11 @@ class DistrictMapAction extends CommonAction{
 			$tmp_content = "<script>production_unit_json=$production_unit_json; reception_unit_json=$reception_unit_json; </script> $tmp_content";
 			$this->ajaxReturn( $tmp_content );
 		} else {
-			$this->show( 'fail' );
+			$this->ajaxReturn( 'fail' );
 		}
 	}
 
-	// 转移地图->地图展示->转移地图展示：查找路线
+	// 转移地图->地图管理->运输路线查询：查找路线
 	public function ajax_search_route() {
 		$route = M( 'route' )->where( array( 'production_unit_id' => I( 'post.production_unit_id' ), 'reception_unit_id' => I( 'post.reception_unit_id' ) ) )->select();
 		// $route = htmlspecialchars_decode($route);
@@ -203,6 +194,16 @@ class DistrictMapAction extends CommonAction{
 
 		//$route_json = stripslashes($route_json);
 		$this->ajaxReturn( $route_json, 'JSON' );
+	}
+
+	// 转移地图->地图管理->运输路线查询：删除路线
+	public function ajax_delete_route(){
+		$route = M( 'route' )->where( array( 'route_id' => I( 'post.route_id' ) ) )->delete();
+		if ( $route ) {
+			$this->ajaxReturn( 'success' );
+		} else {
+			$this->ajaxReturn( 'fail' );
+		}
 	}
 
 }

@@ -7,24 +7,24 @@
         <div class="row">
             <div class="col-md-4">
                 <label class="sr-only" for="selectProductionUnit">产生单位：</label>
-                <select class="form-control" id="selectProductionUnit">
+                <select class="form-control input-sm" id="selectProductionUnit">
                     <option>请选择生产单位</option>
                 </select>
             </div>
             <div class="col-md-4">
                 <label class="sr-only" for="selectReceptionUnit">接受单位：</label>
-                <select class="form-control" id="selectReceptionUnit">
+                <select class="form-control input-sm" id="selectReceptionUnit">
                     <option>请选择接受单位</option>
                 </select>
             </div>
             <div class="col-md-1">
-                <button type="button" class="btn btn-default btn-sm" onclick="search();">查询</button>
+                <button type="button" class="btn btn-info btn-sm" onclick="search();">查询</button>
             </div>
             <div class="col-md-1">
-                <button type="button" class="btn btn-default btn-sm" id="clearButton" onclick="map_plan.clearOverlays();">清除</button>
+                <button type="button" class="btn btn-warning btn-sm" id="clearButton" onclick="BaiduMap.clearOverlays();">清除</button>
             </div>
             <div class="col-md-1">
-                <button type="button" class="btn btn-default btn-sm" onclick="submit();">提交</button>
+                <button type="button" class="btn btn-success btn-sm" onclick="submit();">提交</button>
             </div>
         </div>
         <div id="map_container" style="width:auto"></div>
@@ -37,16 +37,24 @@ if (typeof(intervalWarning) != 'undefined') {
 }
 
 var path = '';
+var route_detail = '';
 var searchComplete = function(results) {
-    if (transit.getStatus() != BMAP_STATUS_SUCCESS) {
+    if (transit.getStatus() == BMAP_STATUS_SUCCESS) {
+        // 获取第一条方案
+        var plan = results.getPlan(0);
+        // 获取方案的驾车线路
+        var route = plan.getRoute(0);
+        // 获取驾车路线的经纬度坐标
+        path = route.getPath();
+        var steps = [];
+        for (var i = 0; i < route.getNumSteps(); i++) {
+            var step = route.getStep(i);
+            steps.push((i + 1) + ". " + step.getDescription());
+        }
+        route_detail = steps.join('<br/>');
+    } else {
         return;
     }
-
-    var plan = results.getPlan(0);
-    var route = plan.getRoute(0);
-    path = route.getPath();
-    //console.log(path[0].lng);
-    //console.log(path[0].lat);
 };
 
 function search() {
@@ -73,14 +81,14 @@ function setBMap() {
     var windowHeight = $(window).height();
     $("#map_container").css("height", "" + windowHeight - 350 + "px");
 
-    map_plan = new BMap.Map("map_container"); // 创建Map实例
-    map_plan.centerAndZoom("上海", 13); // 初始化地图,设置中心点坐标和地图级别
-    map_plan.addControl(new BMap.NavigationControl()); // 添加默认缩放平移控件
-    map_plan.addControl(new BMap.ScaleControl()); // 添加默认比例尺控件
-    map_plan.addControl(new BMap.OverviewMapControl()); //添加默认缩略地图控件
-    map_plan.enableScrollWheelZoom(); //启用滚轮放大缩小
-    map_plan.addControl(new BMap.MapTypeControl()); // 添加默认地图控件
-    map_plan.setCurrentCity("上海"); // 设置地图显示的城市 此项是必须设置的
+    BaiduMap = new BMap.Map("map_container"); // 创建Map实例
+    BaiduMap.centerAndZoom("上海", 13); // 初始化地图,设置中心点坐标和地图级别
+    BaiduMap.addControl(new BMap.NavigationControl()); // 添加默认缩放平移控件
+    BaiduMap.addControl(new BMap.ScaleControl()); // 添加默认比例尺控件
+    BaiduMap.addControl(new BMap.OverviewMapControl()); //添加默认缩略地图控件
+    BaiduMap.enableScrollWheelZoom(); //启用滚轮放大缩小
+    BaiduMap.addControl(new BMap.MapTypeControl()); // 添加默认地图控件
+    BaiduMap.setCurrentCity("上海"); // 设置地图显示的城市 此项是必须设置的
 
     //console.log(production_unit_json);
     for (var idx in production_unit_json) {
@@ -90,14 +98,16 @@ function setBMap() {
         $('#selectReceptionUnit').append('<option id="" value="' + reception_unit_json[idx].reception_unit_id + '">' + reception_unit_json[idx].reception_unit_name + '</option>');
     }
 
-    transit = new BMap.DrivingRoute(map_plan, {
+    var options = {
         renderOptions: {
-            map: map_plan,
-            autoViewport: true,
+            map: BaiduMap,
+            autoViewport: false, //启用自动调整地图层级，当指定了搜索结果所展现的地图时有效。
             enableDragging: true //起终点可进行拖拽
         },
         onSearchComplete: searchComplete,
-    });
+    };
+
+    transit = new BMap.DrivingRoute(BaiduMap, options);
     // transit.search($('#startPoint').val(), $('#endPoint').val());
 }
 
@@ -133,10 +143,11 @@ function submit() {
         data: {
             "production_unit_id": $('#selectProductionUnit').val(),
             "reception_unit_id": $('#selectReceptionUnit').val(),
-            "route_lng_lat": JSON.stringify(BMapPointArray)
+            "route_lng_lat": JSON.stringify(BMapPointArray),
+            "route_detail": route_detail
         },
         success: function(data) {
-            switch ( data ) {
+            switch (data) {
                 case 'exist':
                     myAlert("此生产单位到此接受单位的路线已存在");
                     break;
