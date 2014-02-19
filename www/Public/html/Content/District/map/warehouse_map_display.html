@@ -1,6 +1,6 @@
-<div class="panel panel-primary" id="div_map" style="margin-bottom:0px;">
+<div class="panel panel-primary" style="margin-bottom:0px;">
     <div class="panel panel-heading" style="margin-bottom:0px; height:40px;">
-        <h3 class="panel-title" style="float:left;">地 图</h3>
+        <h3 class="panel-title" style="float:left;">仓库地图展示</h3>
         <button type="button" class="btn btn-default btn-xs" id="toFullScreen" onclick="toFullScreen();" style="float:right;">全屏</button>
         <button type="button" class="btn btn-default btn-xs" id="exitFullScreen" onclick="exitFullScreen();" style="float:right;display:none;">退出全屏</button>
     </div>
@@ -9,20 +9,20 @@
             <div class="col-md-3">
                 <div class="input-group">
                     <span class="input-group-addon">
-                        <input type="checkbox" name="checkbox" class="active" id="productionUnit">
+                        <input type="checkbox" name="checkbox" checked="true" id="productionUnit" onclick="">
                     </span>
                     <span class="form-control  input-sm">
-                        生产单位
+                       &nbsp; 生产单位
                     </span>
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="input-group">
                     <span class="input-group-addon">
-                        <input type="checkbox" name="checkbox" class="active" id="receptionUnit">
+                        <input type="checkbox" name="checkbox" checked="true" id="receptionUnit" onclick="">
                     </span>
                     <span class="form-control input-sm">
-                        接受单位
+                       &nbsp; 接受单位
                     </span>
                 </div>
             </div>
@@ -167,5 +167,29 @@ function loadScript() {
 }
 
 loadScript();
+
+$('#productionUnit').on('click',function(){
+    if ($(this).is(':checked')) {
+        for (var idx in markerList_p) {
+            BaiduMap.addOverlay(markerList_p[idx]);
+        }
+    } else {
+        for (var idx in markerList_p) {
+            BaiduMap.removeOverlay(markerList_p[idx]);
+        }
+    }
+});
+
+$('#receptionUnit').on('click',function(){
+    if ($(this).is(':checked')) {
+        for (var idx in markerList_r) {
+            BaiduMap.addOverlay(markerList_r[idx]);
+        }
+    } else {
+        for (var idx in markerList_r) {
+            BaiduMap.removeOverlay(markerList_r[idx]);
+        }
+    }
+});
 
 </script>

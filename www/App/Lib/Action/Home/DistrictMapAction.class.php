@@ -94,9 +94,10 @@ class DistrictMapAction extends CommonAction{
 
 	// 转移地图->路线规划->运输路线规划，百度API规划路线：生产单位->接受单位
 	public function transfer_route_plan_3() {
-		$production_unit = M( 'production_unit' )->where( array( 'jurisdiction_id' => session( 'jurisdiction_id' ) ) )->select();
+		$condition['jurisdiction_id'] = array( 'EQ', session( 'jurisdiction_id' ) );
+		$production_unit = M( 'production_unit' )->where( $condition )->select();
 		$production_unit_json = json_encode( $production_unit );
-		$reception_unit = M( 'reception_unit' )->where( array( 'jurisdiction_id' => session( 'jurisdiction_id' ) ) )->select();
+		$reception_unit = M( 'reception_unit' )->where( $condition )->select();
 		$reception_unit_json = json_encode( $reception_unit );
 
 		$tmp_content=$this->fetch( './Public/html/Content/District/map/transfer_route_plan_3.html' );
@@ -109,6 +110,7 @@ class DistrictMapAction extends CommonAction{
 		$route=M( "route" );
 		$condition['production_unit_id'] = array( 'EQ', I( 'post.production_unit_id' ) );
 		$condition['reception_unit_id'] = array( 'EQ', I( 'post.reception_unit_id' ) );
+		$condition['route_status'] = 0;
 		$result = $route->where( $condition )->find();
 		if ( $result ) {
 			$this->ajaxReturn( 'exist' );
@@ -119,9 +121,9 @@ class DistrictMapAction extends CommonAction{
 			$data["route_lng_lat"] = I( 'post.route_lng_lat' );
 			$data["route_detail"] = I( 'post.route_detail' );
 			$time = date( 'Y-m-d H:i:s', time() );
-			$data["route_add_time"]=$time;
-			$data["route_modify_time"]=$time;
-			$data["route_status"]=0;
+			$data["route_add_time"] = $time;
+			$data["route_modify_time"] = $time;
+			$data["route_status"] = 0;
 			$result = $route->add( $data );
 			if ( $result ) {
 				$this->ajaxReturn( "success" );
@@ -184,7 +186,10 @@ class DistrictMapAction extends CommonAction{
 
 	// 转移地图->地图管理->运输路线查询：查找路线
 	public function ajax_search_route() {
-		$route = M( 'route' )->where( array( 'production_unit_id' => I( 'post.production_unit_id' ), 'reception_unit_id' => I( 'post.reception_unit_id' ) ) )->select();
+		$condition['production_unit_id'] = array( 'EQ', I( 'post.production_unit_id' ) );
+		$condition['reception_unit_id'] = array( 'EQ', I( 'post.reception_unit_id' ) );
+		$condition['route_status'] = 0;
+		$route = M( 'route' )->where( $condition )->select();
 		// $route = htmlspecialchars_decode($route);
 		// $route = stripslashes($route);
 
@@ -198,7 +203,10 @@ class DistrictMapAction extends CommonAction{
 
 	// 转移地图->地图管理->运输路线查询：删除路线
 	public function ajax_delete_route(){
-		$route = M( 'route' )->where( array( 'route_id' => I( 'post.route_id' ) ) )->delete();
+		$time = date( 'Y-m-d H:i:s', time() );
+		$data['route_delete_time'] = $time;
+		$data['route_status'] = 1;
+		$route = M( 'route' )->where( array( 'route_id' => I( 'post.route_id' ) ) )->save( $data );
 		if ( $route ) {
 			$this->ajaxReturn( 'success' );
 		} else {
