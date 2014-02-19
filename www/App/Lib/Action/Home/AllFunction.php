@@ -225,6 +225,7 @@ function check($json_string)
 		$resultData->carnum=$carnum;		
 		return $resultData;
 }
+
 function bindRfid($json_string){
 		$con = mysql_connect("10.50.6.70","root","root1234");
 	if (!$con)
@@ -337,7 +338,6 @@ function bindRfid($json_string){
 			$resultData->code = 200;
 			return $resultData;
 		}
-
 }
 
 function addWaste($json_string){
