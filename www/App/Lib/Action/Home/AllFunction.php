@@ -2,31 +2,27 @@
 date_default_timezone_set("PRC");
 function login($json_string)
 {
-	$code=0;
-	$con = mysql_connect("10.50.6.70","root","root1234");
-	if (!$con)
-	  {
-	  	$code=1;
-	  	return $code;
-	  }
-		mysql_query("set names 'utf8'");
-		mysql_select_db("dwms", $con);
-		if(ini_get("magic_quotes_gpc")=="1")
+	if(ini_get("magic_quotes_gpc")=="1")
 		 {
 		  $json_string=stripslashes($json_string);
 		 }
-		$json_data = json_decode($json_string);
-		$username=$json_data->user;
-		$password=$json_data->pass;
-		$imei=$json_data->imei;
-		$type=$json_data->type;
+	$code=0;
+	$json_data = json_decode($json_string);
+	$username=$json_data->user;
+	$password=$json_data->pass;
+	$imei=$json_data->imei;
+	$type=$json_data->type;
 	$password=md5($password);
-
-	$query=mysql_query("SELECT * from user where username='$username' and password='$password'");
-	if(mysql_num_rows($query)>0)
+	try
+	{$User=M("user");}
+	catch (Exception $e)
+	{$code=1; return $code;}
+	$query1=$User->where("username='$username' and password='$password'")->find();
+	if($query1)
 	{
-		$q2=mysql_query("SELECT * from device where device_serial_num='$imei' and ownership_type='$type'");
-		if (mysql_num_rows($q2)>0)
+		$device=M("device");
+		$q2=$device->where(" device_serial_num='$imei' and ownership_type='$type'")->find();
+		if ($q2)
 			return  $code;
 		else
 			{$code=2; return  $code;}
@@ -36,63 +32,53 @@ function login($json_string)
 }
 function check($json_string)
 {
-	$con = mysql_connect("10.50.6.70","root","root1234");
-	if (!$con)
-	  {
-	  	$error->code = 7;
+	if(ini_get("magic_quotes_gpc")=="1")
+		 {
+		  $json_string=stripslashes($json_string);
+		 }
+	try {
+		$device=M("device");	
+	} catch (Exception $e) {
+		$error->code = 7;
 		$error->des = urlencode('数据库连接失败');
 		$resdata->error = $error;
 		return $resdata;
-	  }
-	mysql_query("set names 'utf8'");
-	mysql_select_db("dwms", $con);
-	if(ini_get("magic_quotes_gpc")=="1")
-	{
-		$json_string=stripslashes($json_string);
 	}
 	$json_data = json_decode($json_string);
 	$rfid=$json_data->rfid;
 	$imei=$json_data->imei;
-		$result = mysql_query("SELECT ownership_type, ownership_id FROM device WHERE device_serial_num='".$imei."'");
-		$userId = null;
-		$receivingId = null;
-		$ownershipType = null;
-		 if(!mysql_num_rows($result)){
-			 $error->code = 0;
-			 $error->des = urlencode('企业没有绑定手持设备');
-			 $resdata->error = $error;
-			 return $resdata;
+	$result = $device->where(" device_serial_num='$imei'")->find();		
+	 if(!$result){
+		 $error->code = 0;
+		 $error->des = urlencode('企业没有绑定手持设备');
+		 $resdata->error = $error;
+		 return $resdata;
 		}
-	//echo mysql_num_rows($result);
-		while($row = mysql_fetch_array($result))
-		  {
-		  $userId = $row['ownership_id'];
-		  $ownershipType = $row['ownership_type'];
-		  }
-		$resultData->code=200;
-		if($ownershipType != 4){
-			$error->code = 19;
-			$error->des = urlencode('该企业不是区环保局');
-			$resdata->error = $error;
-			 return $resdata;
-		}
-		$result2 = mysql_query("SELECT * FROM rfid WHERE rfid_id='".$rfid."'");
-		if(!mysql_num_rows($result2)){
+	$userId = $result['ownership_id'];
+	$ownershipType = $result['ownership_type'];
+	$resultData->code=200;
+	if($ownershipType != 4){
+		$error->code = 19;
+		$error->des = urlencode('该企业不是区环保局');
+		$resdata->error = $error;
+		 return $resdata;
+	}
+	$rfidtable=M('rfid');
+	$result2 = $rfidtable->where(" rfid_id='$rfid'")->find();
+		if(!$result2){
 			$error->code = 8;
 			$error->des = urlencode('RFID标签没有绑定废物');
 			$resdata->error = $error;
 			return $resdata;
-		}
-		while($row = mysql_fetch_array($result2))
-			{
-				$rfid_stat = $row['rfid_status'];
-				$transfer_stat = $row['transfer_status'];
-				$wasteId = $row['waste_id'];
-				$addWay = $row['add_method'];
-				$total = $row['waste_total'];
-				$record_id=$row['record_id'];
-				$manifest_id=$row['manifest_id'];
-			}
+		}	
+		$rfid_stat = $result2['rfid_status'];
+		$transfer_stat = $result2['transfer_status'];
+		$wasteId = $result2['waste_id'];
+		$addWay = $result2['add_method'];
+		$total = $result2['waste_total'];
+		$record_id=$result2['record_id'];
+		$manifest_id=$result2['manifest_id'];
+			
 		if ($addWay==0)
 			$resultData->addway=urlencode('桶装');
 		else
@@ -119,126 +105,105 @@ function check($json_string)
 			 		return $resultData;
 			}
 		$resultData->hasrecord=1;		
-
-		$result3=mysql_query("SELECT * from record where record_id='$record_id'");
-		if(!mysql_num_rows($result3))
+		$recordtable=M('record');
+		$result3=$recordtable->where(" record_id='$record_id'")->find();
+		if(!$result3)
 		{
 			$error->code = 19;
 			$error->des = urlencode('备案信息有误，不存在对应备案');
 			$resdata->error = $error;
 			return $resdata;
-		}
-		while($row = mysql_fetch_array($result3))
-			{
-				$pid=$row['production_unit_id'];
-				$tid=$row['transport_unit_id'];
-				$rid=$row['reception_unit_id'];
-			}
-		$result4=mysql_query("SELECT production_unit_name from production_unit where production_unit_id='$pid'");
-		if(!mysql_num_rows($result4))
+		}	
+		$pid=$result3['production_unit_id'];
+		$tid=$result3['transport_unit_id'];
+		$rid=$result3['reception_unit_id'];
+		$putable=M('production_unit');
+		$result4=$putable->where(" production_unit_id='$pid'")->find();
+		if(!$result4)
 		{
 			$error->code = 21;
 			$error->des = urlencode('没有对应生产企业');
 			$resdata->error = $error;
 			return $resdata;
 		}
-		while($row = mysql_fetch_array($result4))
-			{
-				$pname=$row['production_unit_name'];
-			}
-			$resultData->pname=$pname;
-		$result5=mysql_query("SELECT reception_unit_name from reception_unit where reception_unit_id='$rid'");
-		if(!mysql_num_rows($result5))
+		$pname=$result4['production_unit_name'];			
+		$resultData->pname=$pname;
+		$rcptable=M('reception_unit');
+		$result5=$rcptable->where(" reception_unit_id='$rid'")->find();
+		if(!$result5)
 		{
 			$error->code = 22;
 			$error->des = urlencode('没有对应处置企业');
 			$resdata->error = $error;
 			return $resdata;
-		}
-		while($row = mysql_fetch_array($result5))
-			{
-				$rname=$row['reception_unit_name'];
-			}
-			$resultData->rname=$rname;
-		$result6=mysql_query("SELECT transport_unit_name from transport_unit where transport_unit_id='$tid'");
-		if(!mysql_num_rows($result6))
+		}	
+		$rname=$result5['reception_unit_name'];	
+		$resultData->rname=$rname;
+		$tptable=M('transport_unit');
+		$result6=$tptable->where(" transport_unit_id='$tid'")->find();
+		if(!$result6)
 		{
 			$error->code = 23;
 			$error->des = urlencode('没有对应运输企业');
 			$resdata->error = $error;
 			return $resdata;
-		}
-		while($row = mysql_fetch_array($result6))
-			{
-				$tname=$row['transport_unit_name'];
-			}
-			$resultData->tname=$tname;
-			//echo $wasteId;
-		$result7=mysql_query("SELECT waste_name from waste where waste_id='$wasteId'");
-		if(!mysql_num_rows($result7))
+		}		
+		$tname=$result6['transport_unit_name'];
+		$resultData->tname=$tname;
+		$wstable=M('waste');
+		$result7=$wstable->where(" waste_id='$wasteId'")->find();
+		if(!$result7)
 		{
 			$error->code = 24;
 			$error->des = urlencode('没有对应废物类型');
 			$resdata->error = $error;
 			return $resdata;
 		}
-		while($row = mysql_fetch_array($result7))
-			{
-				$wname=$row['waste_name'];
-			}
+		$wname=$result7['waste_name'];
 		$resultData->wname=$wname;
-		
 		if (!isset($manifest_id))
 			{$resultData->hasmanifest=0;		
-			 		return $resultData;
+			 	return $resultData;
 			}
-			$resultData->hasmanifest=1;		
-
-		$result8=mysql_query("SELECT * from manifest where manifest_id='$manifest_id'");
-		if(!mysql_num_rows($result8))
+		$resultData->hasmanifest=1;		
+		$mnftable=M('manifest');
+		$result8=$mnftable->where(" manifest_id='$manifest_id'")->find();
+		if(!$result8)
 		{
 			$error->code = 20;
 			$error->des = urlencode('联单信息有误，不存在对应联单');
 			$resdata->error = $error;
 			return $resdata;
 		}
-		while($row = mysql_fetch_array($result8))
-			{
-				$driver=$row['carrier_1_name'];
-				$driver_id=$row['carrier_1_num'];
-				$carid=$row['vehicle_id_1'];
-			}
+		$driver=$result8['carrier_1_name'];
+		$driver_id=$result8['carrier_1_num'];
+		$carid=$result8['vehicle_id_1'];
 		$resultData->driver=$driver;		
 		$resultData->driver_id=$driver_id;		
-		$result9=mysql_query("SELECT vehicle_num from vehicle where vehicle_id='$carid'");
-		if(!mysql_num_rows($result9))
+		$vtable=M('vehicle');
+		$result9=$vtable->where(" vehicle_id='$carid'")->find();
+		if(!$result9)
 		{
 			$error->code = 25;
 			$error->des = urlencode('没有对应车辆');
 			$resdata->error = $error;
 			return $resdata;
 		}
-		while($row = mysql_fetch_array($result9))
-			{
-				$carnum=$row['vehicle_num'];
-			}
+		$carnum=$row['vehicle_num'];
 		$resultData->carnum=$carnum;		
 		return $resultData;
 }
 
 function bindRfid($json_string){
-		$con = mysql_connect("10.50.6.70","root","root1234");
-	if (!$con)
-	  {
-		$error->code = 7;
-		$error->des = urlencode('数据库连接失败');
-		$resdata->error = $error;
-		return $resdata;
-	  }
-		mysql_query("set names 'utf8'");
-		mysql_select_db("dwms", $con);
-		//$json_string = $_POST['txt_json'];
-		//$json_string = file_get_contents("php://input");
+		try {
+			$rfidtable=M("rfid");	
+		} 	
+		catch (Exception $e) {
+			$error->code = 7;
+			$error->des = urlencode('数据库连接失败');
+			$resdata->error = $error;
+			return $resdata;
+			}
 		 if(ini_get("magic_quotes_gpc")=="1")
 		 {
 		  $json_string=stripslashes($json_string);
@@ -246,34 +211,16 @@ function bindRfid($json_string){
 		$json_data = json_decode($json_string);
 		$wasteBind = $json_data->wasteBindList;
 		$imei = $json_data->imei;
-		function isNotExist($rfid){
-			$result = mysql_query("SELECT * FROM rfid WHERE rfid_id='".$rfid."'");
-			if (!mysql_num_rows($result))
-				{
-					return true;
-				}
-			else
-				{
-					return false;
-				}
-		}
-		
-		$result = mysql_query("SELECT ownership_type, ownership_id FROM device WHERE device_serial_num='".$imei."'");
-		$userId = null;
-		$productionId = null;
-		$ownershipType = null;
-		if(!mysql_num_rows($result)){
+		$devtable=M('device');
+		$result = $devtable->where(" device_serial_num='$imei'")->find();
+		if(!$result){
 			$error->code = 0;
 			$error->des = urlencode('企业没有绑定手持设备');
 			$resdata->error = $error;
 			return $resdata;
-		}
-		
-		while($row = mysql_fetch_array($result))
-		  {
-		  $userId = $row['ownership_id'];
-		  $ownershipType = $row['ownership_type'];
-		  }
+		} 
+		  $userId = $result['ownership_id'];
+		  $ownershipType = $result['ownership_type']; 
 		
 		if($ownershipType != 5){
 			$error->code = 17;
@@ -281,19 +228,18 @@ function bindRfid($json_string){
 			$resdata->error = $error;
 			return $resdata;
 		}
-		
-		$result1 = mysql_query("SELECT production_unit_id FROM production_unit WHERE production_unit_id='".$userId."'");
-		if(!mysql_num_rows($result1)){
+		// ???add test to check if this is the right production unit!!!
+		// detail need to clarify later
+		$pdutable=M('production_unit');
+		$result1 = $pdutable->where(" production_unit_id='$userId'")->find();
+		if(!$result1){
 			$error->code = 2;
 			$error->des = urlencode('该用户没有企业');
 			$resdata->error = $error;
 			return $resdata;
 		}
+		  $productionId = $result1['production_unit_id'];
 		
-		while($row = mysql_fetch_array($result1))
-		{
-		  $productionId = $row['production_unit_id'];
-		}
 		$productionUnit = "production_unit_".$productionId;
 		
 		$key = 0;
@@ -302,18 +248,30 @@ function bindRfid($json_string){
 			$wasteId = $wasteRfid->wasteid;
 			$addWay = $wasteRfid->addway;
 			$time = date("Y-m-d H:i:s");
-			if(isNotExist($rfid)){
-				$sql1 = "INSERT INTO rfid (rfid_id, waste_id, add_date_time,rfid_status,add_method,ownership_id,waste_total) VALUES ('$rfid','$wasteId','$time','0','$addWay','$userId','0')";
-				if (!mysql_query($sql1,$con))
+			if(!$rfidtable->where("rfid_id='$rfid'")->find()){
+				$data['rfid_id']=$rfid;
+				$data['waste_id']=$wasteId;
+				$data['add_date_time']=$time;
+				$data['rfid_status']=0;
+				$data['add_method']=$addWay;
+				$data['production_unit_id']=$userId;
+				$data['waste_total']=0;
+				$resultx=$rfidtable->add($data);
+				if (!$resultx)
 				  {
-					//die(mysql_error());
 					$error[$key]->code = 3;
 					$error[$key]->des = urlencode('写入RFID数据库失败');
 					$error[$key]->rfid = $rfid;
 					$key++;
-				  }else{
-				  $sql2 = "INSERT INTO $productionUnit (rfid_id, waste_id, add_date_time,android_num) VALUES ('$rfid', '$wasteId', '$time','$imei')";
-				  if (!mysql_query($sql2,$con))
+				  }
+				else{
+				$data['rfid_id']=$rfid;
+				$data['waste_id']=$wasteId;
+				$data['add_date_time']=$time;
+				$data['android_num']=$imei;
+				$pdut=M($productionUnit);
+				$resultx=$pdut->add($data);
+				  if (!$resultx)
 					 {
 						$error[$key]->code = 4;
 						$error[$key]->des = urlencode('写入企业库存数据失败');
@@ -328,9 +286,7 @@ function bindRfid($json_string){
 				$error[$key]->rfid = $rfid;
 				$key++;
 			}
-			
 		}
-		mysql_close($con);
 		if(isset($error)){
 			$newerror['error'] = $error;
 			return $newerror;
@@ -341,17 +297,7 @@ function bindRfid($json_string){
 }
 
 function addWaste($json_string){
-	$con = mysql_connect("10.50.6.70","root","root1234");
-	if (!$con)
-	  {
-		$error->code = 7;
-		$error->des = urlencode('数据库连接失败');
-		$resdata->error = $error;
-		return $resdata;
-	  }
-	mysql_query("set names 'utf8'");
-	mysql_select_db("dwms", $con);
-	//$json_string = $_POST['txt_json'];
+	
 	 if(ini_get("magic_quotes_gpc")=="1")
 	{
 	  $json_string=stripslashes($json_string);
@@ -361,12 +307,22 @@ function addWaste($json_string){
 	$wasteid = $json_data->wasteid;
 	$imei = $json_data->imei;
 	$addway = $json_data->addway;
-	$addnum = $json_data->addnum;
-	
+	$addnum = $json_data->addnum;	
 	$column = null;
+		try {
+			$devtable=M("device");	
+		} 	
+		catch (Exception $e) {
+			$error->code = 7;
+			$error->des = urlencode('数据库连接失败');
+			$error->rfid=$rfid;
+			$resdata->error = $error;
+			return $resdata;
+			}
 	if($addnum<=0 or !is_numeric($addnum)){
 		$error->code = 16;
 		$error->des = urlencode('输入的数值必须为正数');
+		$error->rfid=$rfid;
 		$resdata->error = $error;
 		return $resdata;
 	}
@@ -376,92 +332,91 @@ function addWaste($json_string){
 		$column = 'add_num';
 		$addnum = ceil($addnum);
 	}
-
-		$result = mysql_query("SELECT ownership_type, ownership_id FROM device WHERE device_serial_num='".$imei."'");
+ 	$result=$devtable->where("device_serial_num='$imei'")->find();
+		
 		$userId = null;
 		$productionId = null;
 		$ownershipType = null;
-		if(!mysql_num_rows($result)){
+		if(!$result){
 			$error->code = 0;
 			$error->des = urlencode('企业没有绑定手持设备');
+			$error->rfid=$rfid;
 			$resdata->error = $error;
 			return $resdata;
-		}
-		
-		while($row = mysql_fetch_array($result))
-		  {
-		  $userId = $row['ownership_id'];
-		  $ownershipType = $row['ownership_type'];
-		  }
+		}	
+		  $userId = $result['ownership_id'];
+		  $ownershipType = $result['ownership_type'];
 		
 		if($ownershipType != 5){
 			$error->code = 17;
 			$error->des = urlencode('该企业不是产生单位');
+			$error->rfid=$rfid;
 			$resdata->error = $error;
 			return $resdata;
 		}
-	$result1 = mysql_query("SELECT production_unit_id FROM production_unit WHERE production_unit_id='".$userId."'");
+	$pdutable=M('production_unit');
+	$result1 = $pdutable->where(" production_unit_id='$userId'")->find();
 
-	if(!mysql_num_rows($result1)){
+	if(!$result1){
 				$error->code = 2;
 				$error->des = urlencode('该用户没有企业');
+				$error->rfid=$rfid;
 				$resdata->error = $error;
 				return $resdata;
 	}
-
-
-	while($row = mysql_fetch_array($result1))
-	{
-	  $productionId = $row['production_unit_id'];
-	}
+	$productionId = $result1['production_unit_id'];
 	$productionUnit = "production_unit_".$productionId;
 
-
 	$time = date("Y-m-d H:i:s");
-	$result2 = mysql_query("SELECT * FROM rfid WHERE rfid_id='".$rfid."'");
-	if(!mysql_num_rows($result2)){
+	$rfidtable=M('rfid');
+
+	$result2 = $rfidtable->where(" rfid_id='$rfid'")->find();
+	if(!$result2){
 		$error->code = 8;
 		$error->des = urlencode('RFID标签没有绑定废物');
+		$error->rfid=$rfid;
 		$resdata->error = $error;
 		return $resdata;
 	}
 	$wasteTotal = 0;
-	while($row = mysql_fetch_array($result2))
-		  {
-			  $wasteTotal = $row['waste_total'];
-			  $wasteStatus = $row['rfid_status'];
-		  }
+	  $wasteTotal = $result2['waste_total'];
+	  $wasteStatus = $result2['rfid_status'];
+
 	if($wasteStatus==1 or $wasteStatus==2){
 		$error->code = 12;
 		$error->des = urlencode('废物已出库');
+		$error->rfid=$rfid;
 		$resdata->error = $error;
 		return $resdata;
 	}
-		  
-		  
+	  
 	//echo $wasteTotal;
 	$wasteTotal = $wasteTotal + $addnum;
-	$sql1 = "UPDATE rfid SET modify_date_time = '$time',rfid_status = 3, waste_total = '$wasteTotal' WHERE rfid_id = '$rfid' AND waste_id = '$wasteid'";
-	
+	$Model = new Model() ;// 实例化一个model对象 没有对应任何数据表
+	$result3=$Model->execute("UPDATE rfid SET modify_date_time = '$time',rfid_status = 3, waste_total = '$wasteTotal' WHERE rfid_id = '$rfid' AND waste_id = '$wasteid'");
+
 	$key = 0;
-	if (!mysql_query($sql1,$con))
+	if (!$result3)
 	{
 		$error[$key]->code = 3;
 		$error[$key]->des = urlencode('更新RFID数据库失败');
 		$error[$key]->rfid = $rfid;
 		$key++;
 	}else{
-		$sql2 = "INSERT INTO $productionUnit (rfid_id, waste_id, add_date_time,android_num,$column) VALUES ('$rfid', '$wasteid', '$time','$imei','$addnum')";
-		if (!mysql_query($sql2,$con))
+		$data['rfid_id']=$rfid;
+		$data['waste_id']=$wasteid;
+		$data['add_date_time']=$time;
+		$data['android_num']=$imei;
+		$data[$column]=$addnum;
+		$pdut=M($productionUnit);
+		$resultx=$pdut->add($data);
+		if (!$resultx)
 		{
 			$error[$key]->code = 4;
 			$error[$key]->des = urlencode('写入企业库存数据失败');
 			$error[$key]->rfid = $rfid;
 		}
 	}
-	
-
-	mysql_close($con);
 	if(isset($error)){
 				$newerror['error'] = $error;
 				return $newerror;
@@ -472,99 +427,80 @@ function addWaste($json_string){
 }
 
 function getRfidWasteName($rfid,$imei){
-	$con = mysql_connect("10.50.6.70","root","root1234");
-	if (!$con)
-	  {
-	  	$error->code = 7;
-		$error->des = urlencode('数据库连接失败');
-		$resdata->error = $error;
-		return $resdata;
-	  }
-	mysql_query("set names 'utf8'");
-	mysql_select_db("dwms", $con);
-	// $rfid = $_GET["rfid"];
-	// $imei = $_GET["imei"];
-	
-	$result = mysql_query("SELECT ownership_id FROM device WHERE device_serial_num='".$imei."'") or die(mysql_error());
+	try {
+			$devtable=M("device");	
+		} 	
+		catch (Exception $e) {
+			$error->code = 7;
+			$error->des = urlencode('数据库连接失败');
+			$error->rfid=$rfid;
+			$resdata->error = $error;
+			return $resdata;
+			}
+	$result = $devtable->where(" device_serial_num='$imei'")->find();
 	$userId = null;
 	$productionId = null;
-	if(!mysql_num_rows($result)){
+	if(!$result){
 				$error->code = 0;
 				$error->des = urlencode('企业没有绑定手持设备');
 				$resdata->error = $error;
 				return $resdata;
 	}
-	
-	
-	$result1 = mysql_query("SELECT * FROM rfid WHERE rfid_id='".$rfid."'");
+	$rfidtable=M('rfid');
+	$result1 = $rfidtable->where("rfid_id='$rfid'")->find();
 	$wasteId = null;
 	$addWay = null;
-	if(!mysql_num_rows($result1)){
+	if(!$result1){
 		$error->code = 8;
 		$error->des = urlencode('RFID标签没有绑定废物');
 		$resdata->error = $error;
 		return $resdata;
 		
 	}else{
-		while($row = mysql_fetch_array($result1))
-		  {
-			  $wasteId = $row['waste_id'];
-			  $wasteWay = $row['add_method'];
-			  $wasteTotal = $row['waste_total'];
-		  }
-		$result2 = mysql_query("SELECT waste_name FROM waste WHERE waste_id='".$wasteId."'");
-		if(!mysql_num_rows($result2)){
+		$wasteId = $result1['waste_id'];
+		$wasteWay = $result1['add_method'];
+		$wasteTotal = $result1['waste_total'];
+		$wastable=M('waste');
+		$result2 = $wastable->where(" waste_id='$wasteId'")->find();
+		if(!$result2){
 			$error->code = 9;
 			$error->des = urlencode('没有这个危废物');
 			$resdata->error = $error;
 			return $resdata;
 		}
-		while($row = mysql_fetch_array($result2))
-		  {
-			$wasteName = urlencode($row['waste_name']);
-		  }
+			$wasteName = urlencode($result2['waste_name']);
+		  
 		$newData['name'] =  $wasteName;
 		$newData['id'] = $wasteId;
 		$newData['way'] = $wasteWay;
 		$newData['total'] = $wasteTotal;
 		return $newData;
-	
 	}
-	mysql_close($con);
-
 }
-
 function getWasteName($imei){
-
-	$con = mysql_connect("10.50.6.70","root","root1234");
-	if (!$con)
-	  {
-		$error->code = 7;
-		$error->des = urlencode('数据库连接失败');
-		$resdata->error = $error;
-		return $resdata;
-	  }
-	mysql_query("set names 'utf8'");
-	mysql_select_db("dwms", $con);
-	//$imei = $_GET["imei"];
-
-	$result = mysql_query("SELECT ownership_type, ownership_id FROM device WHERE device_serial_num='".$imei."'");
+	try {
+			$devtable=M("device");	
+		} 	
+		catch (Exception $e) {
+			$error->code = 7;
+			$error->des = urlencode('数据库连接失败');
+			$error->rfid=$rfid;
+			$resdata->error = $error;
+			return $resdata;
+			}
+	$result = $devtable->where(" device_serial_num='$imei'")->find();
 	$userId = null;
 	$wasteArray = array();
 	$wasteName = null;
 	$ownershipType = null;
-	if(!mysql_num_rows($result)){
+	if(!$result){
 		$error->code = 0;
 		$error->des = urlencode('企业没有绑定手持设备');
 		$resdata->error = $error;
 		return $resdata;
 	}
-	while($row = mysql_fetch_array($result))
-	  {
-	  $userId = $row['ownership_id'];
-	  $ownershipType = $row['ownership_type'];
-	  //echo $userId;
-	  }
+	  $userId = $result['ownership_id'];
+	  $ownershipType = $result['ownership_type'];
 	  
 	if($ownershipType != 5){
 		$error->code = 17;
@@ -572,47 +508,39 @@ function getWasteName($imei){
 		$resdata->error = $error;
 		return $resdata;
 	}
-	$result1 = mysql_query("SELECT production_unit_waste FROM production_unit WHERE production_unit_id='".$userId."'");
-
-	if(!mysql_num_rows($result1)){
+	$pdutable=M('production_unit');
+	$result1 = $pdutable->where(" production_unit_id='$userId'")->find();
+	if(!$result1){
 		$error->code = 1;
 		$error->des = urlencode('企业没有注册危险固废');
 		$resdata->error = $error;
 		return $resdata;
 	}
-
-	while($row = mysql_fetch_array($result1))
-	  {
-	  $wasteArray = split(",",$row['production_unit_waste']);
-	  }
+	  $wasteArray = split(",",$result1['production_unit_waste']);
+	  $wastable=M('waste');
 	foreach ($wasteArray as $key => $value) {
-		//echo $value;
-		$result2 = mysql_query("SELECT waste_name FROM waste WHERE waste_id='".$value."'");
-		while($row = mysql_fetch_array($result2))
-	  {
-		$wasteName = urlencode($row['waste_name']);
-	  }
+		$result2 = $wastable->where(" waste_id='$value'")->find();
+		$wasteName = urlencode($result2['waste_name']);
 		$newDate[$key]['name'] =  $wasteName;
 		$newDate[$key]['id'] = $value;
 	}
 	$resultData['code'] = 200;
 	$resultData['wasteOptions'] = $newDate;
-	mysql_close($con);
 	return $resultData;
 }
 
 function wasteIn($json_string){
-	$con = mysql_connect("10.50.6.70","root","root1234");
-	if (!$con)
-	  {
-	  	$error->code = 7;
-		$error->des = urlencode('数据库连接失败');
-		$resdata->error = $error;
-		return $resdata;
-	  }
-	mysql_query("set names 'utf8'");
-	mysql_select_db("dwms", $con);
-	//$json_string = $_POST['txt_json'];
+	try {
+			$devtable=M("device");	
+		} 	
+		catch (Exception $e) {
+			$error->code = 7;
+			$error->des = urlencode('数据库连接失败');
+			$error->rfid=$rfid;
+			$resdata->error = $error;
+			return $resdata;
+			}
+
 	if(ini_get("magic_quotes_gpc")=="1")
 	{
 		$json_string=stripslashes($json_string);
@@ -620,22 +548,19 @@ function wasteIn($json_string){
 	$json_data = json_decode($json_string);
 	$rfidList = $json_data->rfidlist;
 	$imei = $json_data->imei;
-	$result = mysql_query("SELECT ownership_type, ownership_id FROM device WHERE device_serial_num='".$imei."'");
+	$result = $devtable->where(" device_serial_num='$imei'")->find();
 		$userId = null;
 		$receivingId = null;
 		$ownershipType = null;
-		if(!mysql_num_rows($result)){
+		if(!$result){
 			$error->code = 0;
 			$error->des = urlencode('企业没有绑定手持设备');
 			$resdata->error = $error;
 			return $resdata;
 		}
-		
-		while($row = mysql_fetch_array($result))
-		  {
-		  $userId = $row['ownership_id'];
-		  $ownershipType = $row['ownership_type'];
-		  }
+		  $userId = $result['ownership_id'];
+		  $ownershipType = $result['ownership_type'];
+		  
 		
 		if($ownershipType != 7){
 			$error->code = 18;
@@ -643,40 +568,32 @@ function wasteIn($json_string){
 			$resdata->error = $error;
 			return $resdata;
 		}
-	
-	$result1 = mysql_query("SELECT reception_unit_id FROM reception_unit WHERE reception_unit_id='".$userId."'");
-
-	if(!mysql_num_rows($result1)){
+	$rcptable=M('reception_unit');
+	$result1 = $rcptable->where(" reception_unit_id='$userId'")->find();
+	if(!$result1){
 				$error->code = 2;
 				$error->des = urlencode('该用户没有企业');
 				$resdata->error = $error;
 				return $resdata;
 	}
-
-
-	while($row = mysql_fetch_array($result1))
-	{
-	  $receivingId = $row['reception_unit_id'];
-	}
+	  $receivingId = $result1['reception_unit_id'];
 	$receivingUnit = "reception_unit_".$receivingId;
-	
 	$key = 0;
+	$rfidtable=M('rfid');
 	foreach($rfidList as $rfidobj){
 		$rfid = $rfidobj->rfid;
-		$result2 = mysql_query("SELECT * FROM rfid WHERE rfid_id='".$rfid."'");
-		if(!mysql_num_rows($result2)){
+
+		$result2 = $rfidtable->where("rfid_id='$rfid'")->find();
+		if(!$result2){
 			$error[$key]->code = 8;
 			$error[$key]->des = urlencode('RFID标签没有绑定废物');
 			$error[$key]->rfid = $rfid;
 			$key++;
-		}else{
-			while($row = mysql_fetch_array($result2))
-			{
-				$stat = $row['rfid_status'];
-				$wasteId = $row['waste_id'];
-				$addWay = $row['add_method'];
-				$total = $row['waste_total'];
-			}
+		}else{			
+				$stat = $result2['rfid_status'];
+				$wasteId = $result2['waste_id'];
+				$addWay = $result2['add_method'];
+				$total = $result2['waste_total'];
 			if($stat==2){
 				$error[$key]->code = 15;
 				$error[$key]->des = urlencode('废物已经入库');
@@ -695,16 +612,24 @@ function wasteIn($json_string){
 					$column = 'total_num';
 				}
 				$time = date("Y-m-d H:i:s");
-				$sql3 = "UPDATE rfid SET modify_date_time = '$time',rfid_status = 2,ownership_id = '$userId' WHERE rfid_id = '$rfid'";
-				if (!mysql_query($sql3,$con))
+				$Model = new Model() ;			
+				$sql3 = "UPDATE rfid SET modify_date_time = '$time',rfid_status = 2,reception_unit_id = '$userId' WHERE rfid_id = '$rfid'";
+				$resultx=$Model->execute($sql3);
+				if (!$resultx)
 				{
 					$error[$key]->code = 3;
 					$error[$key]->des = urlencode('更新RFID数据库失败');
 					$error[$key]->rfid = $rfid;
 					$key++;
 				}else{
-					$sql4 = "INSERT INTO $receivingUnit (rfid_id, waste_id, receive_date_time,android_num,$column) VALUES ('$rfid', '$wasteId', '$time','$imei','$total')";
-					if (!mysql_query($sql4,$con))
+					$data['rfid_id']=$rfid;
+					$data['waste_id']=$wasteId;
+					$data['receive_date_time']=$time;
+					$data['android_num']=$imei;
+					$data[$column]=$total;
+					$rcut=M($receivingUnit);
+					$resulty=$rcut->add($data);
+					if (!$resulty)
 					{
 						$error[$key]->code = 13;
 						$error[$key]->des = urlencode('更新仓库数据失败');
@@ -716,7 +641,6 @@ function wasteIn($json_string){
 			}
 		}
 	}
-	mysql_close($con);
 	if(isset($error)){
 			$newerror['error'] = $error;
 			return $newerror;
@@ -727,17 +651,17 @@ function wasteIn($json_string){
 }
 
 function wasteOut($json_string){
-	$con = mysql_connect("10.50.6.70","root","root1234");
-	if (!$con)
-	  {
-	  	$error->code = 7;
-		$error->des = urlencode('数据库连接失败');
-		$resdata->error = $error;
-		return $resdata;
-	  }
-	mysql_query("set names 'utf8'");
-	mysql_select_db("dwms", $con);
-	//$json_string = $_POST['txt_json'];
+	try {
+			$devtable=M("device");	
+		} 	
+		catch (Exception $e) {
+			$error->code = 7;
+			$error->des = urlencode('数据库连接失败');
+			$error->rfid=$rfid;
+			$resdata->error = $error;
+			return $resdata;
+			}
+
 	if(ini_get("magic_quotes_gpc")=="1")
 	{
 		$json_string=stripslashes($json_string);
@@ -745,22 +669,20 @@ function wasteOut($json_string){
 	$json_data = json_decode($json_string);
 	$rfidList = $json_data->rfidlist;
 	$imei = $json_data->imei;
-	$result = mysql_query("SELECT ownership_type, ownership_id FROM device WHERE device_serial_num='".$imei."'");
+	$result = $devtable->where(" device_serial_num='$imei'")->find();
 		$userId = null;
 		$productionId = null;
 		$ownershipType = null;
-		if(!mysql_num_rows($result)){
+		if(!$result){
 			$error->code = 0;
 			$error->des = urlencode('企业没有绑定手持设备');
 			$resdata->error = $error;
 			return $resdata;
 		}
 		
-		while($row = mysql_fetch_array($result))
-		  {
-		  $userId = $row['ownership_id'];
-		  $ownershipType = $row['ownership_type'];
-		  }
+		  $userId = $result['ownership_id'];
+		  $ownershipType = $result['ownership_type'];
+		
 		
 		if($ownershipType != 5){
 			$error->code = 17;
@@ -769,29 +691,26 @@ function wasteOut($json_string){
 			return $resdata;
 		}
 		  
-		
-	$result1 = mysql_query("SELECT production_unit_id FROM production_unit WHERE production_unit_id='".$userId."'");
-	if(!mysql_num_rows($result1)){
+		$pdutable=M('production_unit');
+	$result1 = $pdutable->where(" production_unit_id='$userId'")->find();
+	if(!$result1){
 		$error->code = 2;
 		$error->des = urlencode('该用户没有企业');
 		$resdata->error = $error;
 		return $resdata;
 	}
-	
 	$key = 0;
+	$rfidtable=M('rfid');
 	foreach($rfidList as $rfidobj){
 		$rfid = $rfidobj->rfid;
-		$result2 = mysql_query("SELECT * FROM rfid WHERE rfid_id='".$rfid."'");
-		if(!mysql_num_rows($result2)){
+		$result2 = $rfidtable->where(" rfid_id='$rfid'")->find();
+		if(!$result2){
 			$error[$key]->code = 8;
 			$error[$key]->des = urlencode('RFID标签没有绑定废物');
 			$error[$key]->rfid = $rfid;
 			$key++;
 		}else{
-			while($row = mysql_fetch_array($result2))
-			{
-				$stat = $row['rfid_status'];
-			}
+				$stat = $result2['rfid_status'];
 			if($stat==1 or $stat ==2){
 				$error[$key]->code = 12;
 				$error[$key]->des = urlencode('废物已经出库');
@@ -804,8 +723,10 @@ function wasteOut($json_string){
 				$key++;
 			}else{
 				$time = date("Y-m-d H:i:s");
+				$Model = new Model() ;			
 				$sql1 = "UPDATE rfid SET modify_date_time = '$time',rfid_status = 1 WHERE rfid_id = '$rfid'";
-				if (!mysql_query($sql1,$con))
+				$resultx=$Model->execute($sql1);
+				if (!$resultx)
 				{
 					$error[$key]->code = 3;
 					$error[$key]->des = urlencode('更新RFID数据库失败');
@@ -815,7 +736,6 @@ function wasteOut($json_string){
 			}
 		}
 	}
-	mysql_close($con);
 	if(isset($error)){
 			$newerror['error'] = $error;
 			return $newerror;
@@ -824,5 +744,4 @@ function wasteOut($json_string){
 			return $resultData;
 	}
 }
-
 ?>
