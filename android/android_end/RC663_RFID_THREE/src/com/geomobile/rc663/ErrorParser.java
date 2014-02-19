@@ -15,7 +15,7 @@ public class ErrorParser {
 				try {
 					errmsg += ": " + ((JSONObject)(jObject.get("error"))).getString("des");
 				} catch (JSONException e) {
-					activity.alertMessage("parse error");
+					activity.alertMessage(e.toString());
 				}
 			activity.alertMessage(errmsg);
 		} catch (JSONException e) {

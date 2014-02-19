@@ -149,8 +149,12 @@ public class Scan2 extends ScanActivity implements OnClickListener {
     		JSONObject jObject = new JSONObject(value);
     		if (jObject.getString("way").equals("0"))
     		activity.popupEditText(sn, "原先数值: " + jObject.getString("total")+"公斤", jObject);
-    		if (jObject.getString("way").equals("1"))
+    		else if (jObject.getString("way").equals("1"))
         		activity.popupEditText(sn, "原先数值: " + jObject.getString("total")+"个", jObject);
+    		else
+    		{
+    			activity.alertMessage("出现错误" + value);
+    		}
     	}
     	
     	public void httpRequestDidFinish(int success, String value)
