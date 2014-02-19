@@ -22,7 +22,7 @@
 <script type="text/javascript" src="__PUBLIC__/js/fullscreen.js"></script>
 
 <script type="text/javascript">
-var route_decode_json = new Array();
+var route_decode_object = new Array();
 var markerList = new Array();
 var polylineList = new Array();
 var messageContent = new Array();
@@ -56,12 +56,6 @@ function setBMap() {
         }
     });
 
-    /*for (var idx in route_json) {
-        route_decode_json[idx] = JSON.parse(route_json[idx].route_lng_lat.replace(/&quot;/g, '"'));
-    }*/
-    //console.log(join_json);
-    //console.log(route_json);
-
     $(".anchorBL").hide();
 }
 
@@ -94,8 +88,8 @@ function transferWarning() {
                     "lat": lat
                 };
 
-                route_decode_json[idx] = JSON.parse(route_json[idx].route_lng_lat.replace(/&quot;/g, '"'));
-                var distance = shortestDist(gps_lng_lat, route_decode_json[idx]);
+                route_decode_object[idx] = JSON.parse(route_json[idx].route_lng_lat.replace(/&quot;/g, '"'));
+                var distance = shortestDist(gps_lng_lat, route_decode_object[idx]);
                 distance = Math.round(distance * 1000) / 1000;
 
                 var iconPoint = new BMap.Point(lng, lat);
@@ -162,9 +156,9 @@ function transferWarning() {
                     var idx = this.getTitle() - '0';
                     var pointArray = new Array();
                     var lng, lat;
-                    for (var pointIdx in route_decode_json[idx]) {
-                        lng = route_decode_json[idx][pointIdx].lng;
-                        lat = route_decode_json[idx][pointIdx].lat;
+                    for (var pointIdx in route_decode_object[idx]) {
+                        lng = route_decode_object[idx][pointIdx].lng;
+                        lat = route_decode_object[idx][pointIdx].lat;
                         pointArray.push(new BMap.Point(lng, lat));
                     }
                     var polyline = new BMap.Polyline(pointArray, {
