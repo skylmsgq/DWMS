@@ -33,13 +33,14 @@ public class ErrorParser {
 						activity.sn+="重量: "+jObject.getString("total")+"公斤\n";
 						else if (jObject.getString("addway").equals("袋装"))
 						activity.sn+="数量: "+jObject.getString("total")+"个\n";
+					if (jObject.has("wname"))
+						activity.sn+="废物类型: "+jObject.getString("wname")+"\n";	
 					}
 				if (jObject.getString("hasrecord").equals("0"))
 					activity.sn+="无备案信息\n";
 				else
 				{
-					if (jObject.has("wname"))
-						activity.sn+="废物类型: "+jObject.getString("wname")+"\n";	
+					
 					if (jObject.has("pname"))
 						activity.sn+="生产单位: "+jObject.getString("pname")+"\n";
 					if (jObject.has("tname"))

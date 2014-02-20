@@ -7,6 +7,7 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.DialogInterface.OnCancelListener;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
 import android.text.method.ScrollingMovementMethod;
@@ -133,15 +134,23 @@ public class Scan2 extends ScanActivity implements OnClickListener {
     	Scan2 activity;
     	String sn;
     	ProgressDialog progDialog;
+    	LongRunningGetIO running;
     	List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-    	public FetchItemCallbackController(Scan2 activity, String sn) {
+    	public FetchItemCallbackController(final Scan2 activity, String sn) {
     		this.sn = sn;
     		this.activity = activity;
     
-    		new LongRunningGetIO(getString(R.string.url_prefix) + "getRfidWasteName?imei=" + activity.imei + "&rfid=" + sn, nameValuePairs, this).execute();
+    		running=new LongRunningGetIO(getString(R.string.url_prefix) + "getRfidWasteName?imei=" + activity.imei + "&rfid=" + sn, nameValuePairs, this);
+    		running.execute();
     		
     		progDialog = ProgressDialog.show(activity, "正在获取信息",
-    	            "请稍候...", true);
+    	            "请稍候...", true,true,new OnCancelListener(){
+    			public void onCancel(DialogInterface pd)//fecth只是读取，可以取消
+    			{
+    				running.handleOnBackButton();
+    				activity.fetchController = null;
+    			}
+    		} );
     	}
     	
     	public void parseJSON(String value) throws JSONException
@@ -172,10 +181,14 @@ public class Scan2 extends ScanActivity implements OnClickListener {
 						JSONArray jArr = (JSONArray)jObject.get("error");
 						for(int i = 0; i < jArr.length(); i++) {
 							JSONObject jj = jArr.getJSONObject(i);
+							if (jj.has("rfid"))
 							errmsg += jj.getString("rfid") + ": " + jj.getString("des") + "\n";
 						}
 					} else {
-						errmsg += ((JSONObject)(jObject.get("error"))).getString("rfid") + ": " + ((JSONObject)(jObject.get("error"))).getString("des") + "\n";
+						JSONObject jj=(JSONObject)(jObject.get("error"));
+						if (jj.has("rfid"))
+						errmsg += jj.getString("rfid")+": " ; 
+						errmsg+=  jj.getString("des") + "\n";
 					}
 					activity.alertMessage(errmsg);
 				} catch (JSONException e1) {
@@ -196,15 +209,17 @@ public class Scan2 extends ScanActivity implements OnClickListener {
     public class SubmitCallbackController implements IOCallback {
     	Scan2 activity;
     	ProgressDialog progDialog;
+    	LongRunningGetIO running;
     	List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-    	public SubmitCallbackController(Scan2 activity, JSONObject postJson) {
+    	public SubmitCallbackController(final Scan2 activity, JSONObject postJson) {
     		this.activity = activity;
     		NameValuePair postContent = new BasicNameValuePair("txt_json", postJson.toString());
     		nameValuePairs.add(postContent);
-    		new LongRunningGetIO(getString(R.string.url_prefix) + "addWaste", nameValuePairs, this).execute();
+    		running=new LongRunningGetIO(getString(R.string.url_prefix) + "addWaste", nameValuePairs, this);
+    		running.execute();
     		
     		progDialog = ProgressDialog.show(activity, "正在上传",
-    	            "请稍候...", true);
+    	            "请稍候...", true);//会修改数据库，不能取消
     	}
     	private void parseJSON(String value)
     	{

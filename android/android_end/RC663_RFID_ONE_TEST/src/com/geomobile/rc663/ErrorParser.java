@@ -40,7 +40,7 @@ public class ErrorParser {
 			if(value.contains("error")) {
 				activity.alertMessage("未知错误" + value);
 			} else {
-				activity.alertMessage("上传成功" + value);
+				activity.alertMessage("上传成功" );
 			}
 		}
 	}
