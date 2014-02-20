@@ -4,18 +4,32 @@
  */
 class RegisterAction extends Action{
 	public function index( $id="" ) {
+		$enterprise_scale = M( 'enterprise_scale' )->select();
+		$county_code = M( 'county_code' )->where('county_id < 34')->select();
+		$enterprise_register_type = M( 'enterprise_register_type' )->select();
+		$waste = M( 'waste' )->select();
+
+
+		$this->enterprise_scale = $enterprise_scale;
+		$this->county_code = $county_code;
+		$this->enterprise_register_type = $enterprise_register_type;
+		$this->waste = $waste;
 		switch ( $id ) {
 
 		case 'production':
-			$this->display( './Register/register_production' );
+			
+			$tmp_content = $this->fetch( "./App/Tpl/Home/Register/register_production.html" );
+			$this->show( $tmp_content );
 			break;
 
 		case 'transport':
-			$this->display( './Register/register_transport' );
+			$tmp_content = $this->fetch( "./App/Tpl/Home/Register/register_transport.html" );
+			$this->show( $tmp_content );
 			break;
 
 		case 'reception':
-			$this->display( './Register/register_reception' );
+			$tmp_content = $this->fetch( "./App/Tpl/Home/Register/register_reception.html" );
+			$this->show( $tmp_content );
 			break;
 
 		default:
@@ -23,6 +37,39 @@ class RegisterAction extends Action{
 			break;
 		}
 	}
+
+	public function select_city_name(){
+		$county_code = M( 'county_code' )->where( array('county_up_id'=> I('post.id') ) )->select();
+		if ($county_code) {
+			$city_name_json = json_encode( $county_code );
+			$this->ajaxReturn( $city_name_json, 'JSON');
+		} else {
+			$this->ajaxReturn( "区县代码未找到" );
+		}
+		
+	}
+
+	public function select_county_name(){
+		$county_code = M( 'county_code' )->where( array('county_up_id'=> I('post.id') ) )->select();
+		if ($county_code) {
+			$county_name_json = json_encode( $county_code );
+			$this->ajaxReturn( $county_name_json, 'JSON');
+		} else {
+			$this->ajaxReturn( "区县代码未找到" );
+		}
+		
+	}
+
+	public function select_code_jurisdiction(){
+		// $county_code = M( 'county_code' )->where( array('county_id'=> I('post.id') ) )->select();
+		$jurisdiction = M( 'jurisdiction' )->where( array('county_id'=> I('post.id') ) )->select();
+		// $county_code_json = json_encode( $county_code );
+		$jurisdiction_json = json_encode( $jurisdiction );
+		// $this->ajaxReturn( $county_code_json,'JSON' );
+		$this->ajaxReturn( $jurisdiction_json,'JSON' );
+
+	}
+
 
 	public function do_reg( $id='' ) {
 		switch ( $id ) {
