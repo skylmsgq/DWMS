@@ -12,7 +12,7 @@
                         <input type="checkbox" name="checkbox" checked="true" id="productionUnit" onclick="">
                     </span>
                     <span class="form-control  input-sm">
-                       &nbsp; 生产单位
+                        &nbsp; 生产单位
                     </span>
                 </div>
             </div>
@@ -22,7 +22,7 @@
                         <input type="checkbox" name="checkbox" checked="true" id="receptionUnit" onclick="">
                     </span>
                     <span class="form-control input-sm">
-                       &nbsp; 接受单位
+                        &nbsp; 接受单位
                     </span>
                 </div>
             </div>
@@ -34,7 +34,6 @@
 <script type="text/javascript" src="__PUBLIC__/js/fullscreen.js"></script>
 
 <script type="text/javascript">
-
 if (typeof(intervalWarning) != 'undefined') {
     clearInterval(intervalWarning);
 }
@@ -104,11 +103,12 @@ function setBMap() {
             // title: "", // 信息窗口标题
             message: messageContent_p[idx]
         };
-        infoWindowContent_p[idx] = "<p>生产单位名称：" + production_unit_json[idx].production_unit_name + "</p>";
+        infoWindowContent_p[idx] = "<p>生产单位名称：" + production_unit_json[idx].production_unit_name + "</p><p>生产单位电话：" + production_unit_json[idx].production_unit_phone + "</p><p>生产单位地址：" + production_unit_json[idx].production_unit_address + "</p><p>环保联系人姓名：" + production_unit_json[idx].production_unit_contacts_name + "</p><p>环保联系人电话：" + production_unit_json[idx].production_unit_contacts_phone;
 
-        marker.addEventListener("click", function() {
-            // 创建信息窗口对象
+        marker.addEventListener("click", function(e) {
+
             BaiduMap.openInfoWindow(new BMap.InfoWindow(infoWindowContent_p[this.getTitle() - '0'], infoWindowOption_p[this.getTitle() - '0']), this.getPosition()); // 打开信息窗口
+
         });
     }
 
@@ -151,9 +151,10 @@ function setBMap() {
         };
         infoWindowContent_r[idx] = "<p>生产单位名称：" + reception_unit_json[idx].reception_unit_name + "</p>";
 
-        marker.addEventListener("click", function() {
-            // 创建信息窗口对象
+        marker.addEventListener("click", function(e) {
+
             BaiduMap.openInfoWindow(new BMap.InfoWindow(infoWindowContent_r[this.getTitle() - '0'], infoWindowOption_r[this.getTitle() - '0']), this.getPosition()); // 打开信息窗口
+
         });
     }
 
@@ -168,28 +169,31 @@ function loadScript() {
 
 loadScript();
 
-$('#productionUnit').on('click',function(){
+$('#productionUnit').on('click', function() {
     if ($(this).is(':checked')) {
         for (var idx in markerList_p) {
-            BaiduMap.addOverlay(markerList_p[idx]);
+            // BaiduMap.addOverlay(markerList_p[idx]);
+            markerList_p[idx].show();
         }
     } else {
         for (var idx in markerList_p) {
-            BaiduMap.removeOverlay(markerList_p[idx]);
+            // BaiduMap.removeOverlay(markerList_p[idx]);
+            markerList_p[idx].hide();
         }
     }
 });
 
-$('#receptionUnit').on('click',function(){
+$('#receptionUnit').on('click', function() {
     if ($(this).is(':checked')) {
         for (var idx in markerList_r) {
-            BaiduMap.addOverlay(markerList_r[idx]);
+            // BaiduMap.addOverlay(markerList_r[idx]);
+            markerList_r[idx].show();
         }
     } else {
         for (var idx in markerList_r) {
-            BaiduMap.removeOverlay(markerList_r[idx]);
+            // BaiduMap.removeOverlay(markerList_r[idx]);
+            markerList_r[idx].hide();
         }
     }
 });
-
 </script>

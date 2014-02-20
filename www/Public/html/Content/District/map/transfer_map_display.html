@@ -99,7 +99,7 @@ function transferWarning() {
                         // 当标注显示在地图上时，其所指向的地理位置距离图标左上
                         // 角各偏移16像素和20像素。您可以看到在本例中该位置即是
                         // 图标中央下端的尖角位置。
-                        offset: new BMap.Size(16, 20),
+                        offset: new BMap.Size(16, 40),
                         // 设置图片偏移。
                         // 当您需要从一幅较大的图片中截取某部分作为标注图标时，您
                         // 需要指定大图的偏移位置，此做法与css sprites技术类似。
@@ -109,13 +109,13 @@ function transferWarning() {
 
                 } else if (distance > warningDistance && distance < dangerDistance) {
                     var lorryIcon = new BMap.Icon("__PUBLIC__/image/truck_yellow.png", new BMap.Size(32, 40), {
-                        offset: new BMap.Size(16, 20),
+                        offset: new BMap.Size(16, 40),
                         imageOffset: new BMap.Size(0, 0) // 设置图片偏移
                     });
                     var warningText = "<p style='color:#FFFF00;'>偏离" + distance + "千米，注意！</p>";
                 } else {
                     var lorryIcon = new BMap.Icon("__PUBLIC__/image/truck_red.png", new BMap.Size(32, 40), {
-                        offset: new BMap.Size(16, 20),
+                        offset: new BMap.Size(16, 40),
                         imageOffset: new BMap.Size(0, 0) // 设置图片偏移
                     });
                     var warningText = "<p style='color:#FF0000;'>偏离" + distance + "千米，报警!</p>";
@@ -147,12 +147,14 @@ function transferWarning() {
                 };
                 infoWindowContent[idx] = "<p>运输车辆牌照：" + join_json[idx].vehicle_num + "</p><p>运输车辆类型：" + join_json[idx].vehicle_type + "</p><p>运输单位名称：" + join_json[idx].transport_unit_name + "</p><p>运输单位地址：" + join_json[idx].transport_unit_address + "</p><p>运输单位电话：" + join_json[idx].transport_unit_phone + "</p><p>运输单位环保联系人姓名：" + join_json[idx].transport_unit_contacts_name + "</p><p>运输单位环保联系人电话：" + join_json[idx].transport_unit_contacts_phone;
 
-                marker.addEventListener("click", function() {
-                    // 创建信息窗口对象
+                marker.addEventListener("click", function(e) {
+
                     BaiduMap.openInfoWindow(new BMap.InfoWindow(infoWindowContent[this.getTitle() - '0'], infoWindowOption[this.getTitle() - '0']), this.getPosition()); // 打开信息窗口
+
                 });
 
-                marker.addEventListener("rightclick", function() {
+                marker.addEventListener("rightclick", function(e) {
+
                     var idx = this.getTitle() - '0';
                     var pointArray = new Array();
                     var lng, lat;
@@ -168,6 +170,7 @@ function transferWarning() {
                     });
                     BaiduMap.addOverlay(polyline);
                     polylineList.push(polyline);
+
                 });
             }
         },
@@ -196,5 +199,4 @@ function setting() {
         dangerDistance = $('#dangerDistance').val();
     }
 }
-
 </script>
