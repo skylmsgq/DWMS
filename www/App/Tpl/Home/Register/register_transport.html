@@ -111,12 +111,8 @@ function sel_city(province_id){
                 county_name = JSON.parse(county_name_json);
                 $('#county_name').html('<option>请选择所在区县</option>');
                 for (var idx in county_name) {
-                $('#county_name').append('<option value="' + county_name[idx].county_id + '">' + county_name[idx].county_name + '</option>');
+                $('#county_name').append('<option value="' + county_name[idx].county_name + '">' + county_name[idx].county_name + '</option>');
                 }
-                $('#transport_unit_county_code').html('<option>区县代码</option>');
-                for (var idx in county_name) {
-                $('#transport_unit_county_code').append('<option value="' + county_name[idx].county_code + '">' + county_name[idx].county_code + '</option>');
-                }   
             },
             error: function(XMLHttpRequest, textStatus, errorThrown) {
                 console.log("Error:Ajax_Content_Load" + errorThrown);
@@ -127,14 +123,14 @@ function sel_city(province_id){
          });
     }
 
-    function county_code_jurisdiction(county_id){
-        console.log(county_id);
+    function county_code_jurisdiction(county_name){
+        console.log(county_name);
         $.ajax({
             type: "post",
             url: "{:U('Home/Register/select_code_jurisdiction')}",
             dataType: "json",
             data:{
-                'id': county_id
+                'name': county_name
             },
             success: function(jurisdiction_json) {
                 // county_code = JSON.parse(county_code_json);
@@ -145,8 +141,35 @@ function sel_city(province_id){
                 jurisdiction = JSON.parse(jurisdiction_json);  
                 $('#jurisdiction_id').html('<option>管辖权属</option>');
                 for (var idx in jurisdiction) {
-                $('#jurisdiction_id').append('<option value="' + jurisdiction[idx].jurisdiction_name + '">' + jurisdiction[idx].jurisdiction_name + '</option>');
+                $('#jurisdiction_id').append('<option value="' + jurisdiction[idx].jurisdiction_id + '">' + jurisdiction[idx].jurisdiction_name + '</option>');
                 }
+
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                console.log("Error:Ajax_Content_Load" + errorThrown);
+                console.log("XMLHttpRequest.status:" + XMLHttpRequest.status);
+                console.log("XMLHttpRequest.readyState:" + XMLHttpRequest.readyState);
+                console.log("textStatus:" + textStatus);
+            }
+        });
+    $.ajax({
+            type: "post",
+            url: "{:U('Home/Register/select_code')}",
+            dataType: "json",
+            data:{
+                'name': county_name
+            },
+            success: function(code_json) {
+                // county_code = JSON.parse(county_code_json);
+                // $('#waste_location_county_code').html('<option>区县代码</option>');
+                // for (var idx in county_code) {
+                // $('#waste_location_county_code').append('<option value="' + county_code[idx].county_id + '">' + county_name[idx].county_code + '</option>');
+                // }
+                code = JSON.parse(code_json);  
+                $('#transport_unit_county_code').html('<option>区县代码</option>');
+                for (var idx in county_name) {
+                $('#transport_unit_county_code').append('<option value="' + code[idx].county_code + '">' + code[idx].county_code + '</option>');
+                }   
 
             },
             error: function(XMLHttpRequest, textStatus, errorThrown) {
@@ -381,11 +404,11 @@ function sel_city(province_id){
                                 <tr>
                                     <td>许可证发证日期</td>
                                     <td>
-                                        <input type="text" class="form-control input-md required-cn" name="license_issuing_date" id="license_issuing_date">
+                                        <input type="date" class="form-control input-md required-cn" name="license_issuing_date" id="license_issuing_date">
                                     </td>
                                     <td>许可证有效期至</td>
                                     <td>
-                                        <input type="text" class="form-control input-md required-cn" name="license_expiry_date" id="license_expiry_date">
+                                        <input type="date" class="form-control input-md required-cn" name="license_expiry_date" id="license_expiry_date">
                                     </td>
                                 </tr>
                                 <tr>
