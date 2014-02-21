@@ -72,9 +72,11 @@ public class login extends ScanActivity implements OnClickListener {
     		}else if(value.equals("1"))
     			DialogUtil.showDialog(my, "服务器错误", false);
     		else if(value.equals("2"))
-    			DialogUtil.showDialog(my, "该设备不具备使用权限", false);
+    			DialogUtil.showDialog(my, "该设备未注册", false);
     		else if (value.equals("3"))
     			DialogUtil.showDialog(my, "用户名或密码错误", false);
+    		else if (value.equals("4"))
+    			DialogUtil.showDialog(my, "该帐号无在此设备上运行此软件的权限", false);
     		else
     			DialogUtil.showDialog(my, value, false);
 	        activity.submitController = null;
@@ -111,8 +113,8 @@ public class login extends ScanActivity implements OnClickListener {
 				try {
 					myupload.put("user", username);
 					myupload.put("pass", pwd);
-					myupload.put("type", 7);
 					myupload.put("imei", imei);
+					myupload.put("type", 7);
 				} catch (JSONException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

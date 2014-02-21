@@ -12,6 +12,9 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.params.HttpParams;
 import org.apache.http.protocol.BasicHttpContext;
 import org.apache.http.protocol.HttpContext;
 
@@ -28,7 +31,10 @@ public class LongRunningGetIO extends AsyncTask <Void, Void, String> {
 		this.url = url;
 		this.callback = callback;
 	}
-	
+	public void handleOnBackButton()
+	{
+		this.cancel(true);
+	}
 	protected String getASCIIContentFromEntity(HttpEntity entity) throws IllegalStateException, IOException {
 		InputStream in = entity.getContent();
 		StringBuffer out = new StringBuffer();
@@ -42,6 +48,9 @@ public class LongRunningGetIO extends AsyncTask <Void, Void, String> {
 	}
 	@Override
 	protected String doInBackground(Void... params) {
+		HttpParams httpParameters = new BasicHttpParams();
+		HttpConnectionParams.setConnectionTimeout(httpParameters, 10000);
+		HttpConnectionParams.setSoTimeout(httpParameters, 10000);
 		HttpClient httpClient = new DefaultHttpClient();
 		HttpContext localContext = new BasicHttpContext();
 		HttpPost httpPost = new HttpPost(this.url);

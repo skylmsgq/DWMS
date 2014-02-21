@@ -7,6 +7,7 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.DialogInterface.OnCancelListener;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
@@ -327,8 +328,9 @@ public class ScanAndUpload extends ScanActivity implements OnClickListener {
     public class SubmitCallbackController implements IOCallback {
     	ScanAndUpload activity;
     	ProgressDialog progDialog;
+    	LongRunningGetIO running;
     	List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-    	public SubmitCallbackController(ScanAndUpload activity, JSONArray postJson) {
+    	public SubmitCallbackController(final ScanAndUpload activity, JSONArray postJson) {
     		this.activity = activity;
     		JSONObject newPostJson = new JSONObject();
     		try {
@@ -341,7 +343,8 @@ public class ScanAndUpload extends ScanActivity implements OnClickListener {
     		NameValuePair postContent = new BasicNameValuePair("txt_json", newPostJson.toString());
     		Log.d(TAG, newPostJson.toString());
     		nameValuePairs.add(postContent);
-    		new LongRunningGetIO(getString(R.string.url_prefix) + "bindRfid", nameValuePairs, this).execute();
+    		running=new LongRunningGetIO(getString(R.string.url_prefix) + "bindRfid", nameValuePairs, this);
+    		running.execute();
     		
     		progDialog = ProgressDialog.show(activity, "正在上传",
     	            "请稍候...", true);

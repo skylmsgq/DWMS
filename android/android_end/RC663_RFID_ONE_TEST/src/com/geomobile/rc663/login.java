@@ -14,12 +14,14 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ScrollView;
 
 
 public class login extends ScanActivity implements OnClickListener {
@@ -73,9 +75,11 @@ public class login extends ScanActivity implements OnClickListener {
     		}else if(value.equals("1"))
     			DialogUtil.showDialog(my, "服务器错误", false);
     		else if(value.equals("2"))
-    			DialogUtil.showDialog(my, "该设备不具备使用权限", false);
+    			DialogUtil.showDialog(my, "该设备未注册", false);
     		else if (value.equals("3"))
     			DialogUtil.showDialog(my, "用户名或密码错误", false);
+    		else if (value.equals("4"))
+    			DialogUtil.showDialog(my, "该帐号无在此设备上运行此软件的权限", false);
     		else
     			DialogUtil.showDialog(my, value, false);
 	        activity.submitController = null;
@@ -102,6 +106,8 @@ public class login extends ScanActivity implements OnClickListener {
 	@Override
 	public void onClick(View arg0) {
 		// TODO Auto-generated method stub		
+	   
+    
 		if(arg0 == bnlogin) {			
 			//test user authentication 
 			if (validate())

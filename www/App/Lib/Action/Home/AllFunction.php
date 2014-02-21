@@ -18,17 +18,89 @@ function login($json_string)
 	catch (Exception $e)
 	{$code=1; return $code;}
 	$query1=$User->where("username='$username' and password='$password'")->find();
-	if($query1)
+	if($query1)// no such user
 	{
+		$user_id=$query1['user_id'];
+		$user_type=$query1['user_type'];
+		if ($user_type==0)
+			return $code;
+		if ($user_type<=4)
+			$table="agency";
+		else if ($user_type==5)
+			$table="production_unit";
+		else if ($user_type==6)
+			$table="transport_unit";
+		else if ($user_type==7)
+			$table="reception_unit";
+		$deeptable=M($table);
+		$queryid=$deeptable->where("user_id='$user_id'")->find();
+		$own_id=$queryid[$table.'_id'];
 		$device=M("device");
-		$q2=$device->where(" device_serial_num='$imei' and ownership_type='$type'")->find();
-		if ($q2)
-			return  $code;
+		$q2=$device->where(" device_serial_num='$imei'")->find();
+		if ($q2)//no such device
+			{
+				$ano_type=$q2['ownership_type'];
+				$ano_id=$q2['ownership_id'];
+				if ($own_id==$ano_id && $ano_type==$user_type && $user_type==$type)// correct user
+				return  $code;
+				else
+					{$code=4; return $code;}
+			}
 		else
 			{$code=2; return  $code;}
 	}
 	else
 		{$code=3; return $code;}
+}
+function checkout($json_string)
+{
+	if(ini_get("magic_quotes_gpc")=="1")
+		 {
+		  $json_string=stripslashes($json_string);
+		 }
+	try {
+		$rfidtable=M("rfid");	
+	} catch (Exception $e) {
+		$error->code = 7;
+		$error->des = urlencode('数据库连接失败');
+		$resdata->error = $error;
+		return $resdata;
+	}
+	$json_data = json_decode($json_string);
+	$rfid=$json_data->rfid;
+	$result=$rfidtable->where("rfid_id='$rfid'")->find();
+	if (!$result)
+	{
+		$error->code = 8;
+		$error->des = urlencode('RFID标签没有绑定废物');
+		$resdata->error = $error;
+		return $resdata;
+	}
+	$status=$result['rfid_status'];
+	$total=$result['waste_total'];
+	$addway=$result['add_method'];
+	$manifest_id=$result['manifest_id'];
+	$resultData->rfid=$rfid;
+	$resultData->status=$status;
+	$resultData->total=$total;
+	$resultData->addway=$addway;
+	
+	$resultData->code=200;
+	if (!isset($manifest_id))
+	return $resultData;
+	$resultData->manifest_id=$manifest_id;
+	$mnftable=M('manifest');
+	$result1=$mnftable->where("manifest_id='$manifest_id'")->find();
+	if (!$result1)
+	{
+		$error->code = 20;
+		$error->des = urlencode('联单信息有误，不存在对应联单');
+		$resdata->error = $error;
+		return $resdata;
+	}
+	$mstatus=$result1['manifest_status'];
+	$resultData->mstatus=$mstatus;
+	return $resultData;
 }
 function check($json_string)
 {
@@ -99,6 +171,17 @@ function check($json_string)
 			$resultData->tstatus=urlencode('不可修改，备案审核已通过');
 		
 		$resultData->total=$total;
+		$wstable=M('waste');
+		$result7=$wstable->where(" waste_id='$wasteId'")->find();
+		if(!$result7)
+		{
+			$error->code = 24;
+			$error->des = urlencode('没有对应废物类型');
+			$resdata->error = $error;
+			return $resdata;
+		}
+		$wname=$result7['waste_name'];
+		$resultData->wname=$wname;
 
 		if (!isset($record_id))
 			{$resultData->hasrecord=0;		
@@ -150,17 +233,7 @@ function check($json_string)
 		}		
 		$tname=$result6['transport_unit_name'];
 		$resultData->tname=$tname;
-		$wstable=M('waste');
-		$result7=$wstable->where(" waste_id='$wasteId'")->find();
-		if(!$result7)
-		{
-			$error->code = 24;
-			$error->des = urlencode('没有对应废物类型');
-			$resdata->error = $error;
-			return $resdata;
-		}
-		$wname=$result7['waste_name'];
-		$resultData->wname=$wname;
+		
 		if (!isset($manifest_id))
 			{$resultData->hasmanifest=0;		
 			 	return $resultData;
@@ -189,7 +262,7 @@ function check($json_string)
 			$resdata->error = $error;
 			return $resdata;
 		}
-		$carnum=$row['vehicle_num'];
+		$carnum=$result9['vehicle_num'];
 		$resultData->carnum=$carnum;		
 		return $resultData;
 }

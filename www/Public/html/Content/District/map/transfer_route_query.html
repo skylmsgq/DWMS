@@ -19,19 +19,10 @@
                     <option>请选择接受单位</option>
                 </select>
             </div>
-            <div class="col-md-1">
-                <button class="btn btn-info btn-sm" id="searchRoute" onclick="searchRoute();">确认</button>
+            <div class="col-md-2">
+                <button class="btn btn-info btn-sm" id="searchRoute" onclick="searchRoute();">查询</button>
             </div>
-            <div class="col-md-3">
-                <label class="sr-only" for="selectRoute">路线：</label>
-                <select class="form-control input-sm" id="selectRoute">
-                    <option>请选择路线</option>
-                </select>
-            </div>
-            <div class="col-md-1">
-                <button class="btn btn-success btn-sm" id="seeRoute" onclick="">查看</button>
-            </div>
-            <div class="col-md-1">
+            <div class="col-md-2">
                 <button class="btn btn-danger btn-sm" id="deleteRoute" onclick="deleteRoute();">删除</button>
             </div>
         </div>
@@ -39,13 +30,14 @@
     </div>
 </div>
 
+<script type="text/javascript" src="__PUBLIC__/js/myAlert.js"></script>
+
 <script type="text/javascript">
 if (typeof(intervalWarning) != 'undefined') {
     clearInterval(intervalWarning);
 }
 
 function setBMap() {
-
     var windowHeight = $(window).height();
     $("#map_container").css("height", "" + windowHeight - 350 + "px");
 
@@ -57,6 +49,11 @@ function setBMap() {
     BaiduMap.enableScrollWheelZoom(); //启用滚轮放大缩小
     BaiduMap.addControl(new BMap.MapTypeControl()); // 添加默认地图控件
     BaiduMap.setCurrentCity("上海"); // 设置地图显示的城市 此项是必须设置的
+    var mapStyle = {
+        features: ["road", "building", "water", "land", "point"],
+        style: "normal"
+    };
+    BaiduMap.setMapStyle(mapStyle);
 
     for (var idx in production_unit_json) {
         $('#selectProductionUnit').append('<option id="" value="' + idx + '">' + production_unit_json[idx] + '</option>');
@@ -64,7 +61,6 @@ function setBMap() {
     for (var idx in reception_unit_json) {
         $('#selectReceptionUnit').append('<option id="" value="' + idx + '">' + reception_unit_json[idx] + '</option>');
     }
-
 }
 
 function loadScript() {
@@ -74,14 +70,6 @@ function loadScript() {
 }
 
 loadScript();
-
-function myAlert(msg) {
-    $("#noSelectionAlert").html('<div class="alert alert-warning alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>错误: </strong> ' + msg + ' </div>');
-}
-
-function myAlertSucc(msg) {
-    $("#noSelectionAlert").html('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>状态: </strong> ' + msg + ' </div>');
-}
 
 function searchRoute() {
     $.ajax({
@@ -93,48 +81,33 @@ function searchRoute() {
             "reception_unit_id": $('#selectReceptionUnit').val()
         },
         success: function(route_json) {
-            // console.log(route_json);
-            // route_json_eval = eval("(" + route_json + ")");
-            // route_json_eval = eval("(" + route_json_eval + ")");
-            console.log(route_json);
-            route_json_eval = JSON.parse(route_json);
-            // console.log(route_json_eval);
-            $('#selectRoute').html('<option>请选择路线</option>');
-            for (var idx in route_json_eval) {
-                $('#selectRoute').append('<option value="' + route_json_eval[idx].route_id + '">' + route_json_eval[idx].route_id + '</option>');
-            }
-            // js.lang.String.call(String.prototype);
-            $('#seeRoute').click(function() {
-                // console.log(route_json_eval[0].route_lng_lat);
-                // console.log(route_json_eval[0].route_lng_lat.replace(/&quot;/g, '"'));
-                // console.log(JSON.parse(route_json_eval[0].route_lng_lat.replace(/&quot;/g, '"')));
-                BaiduMap.clearOverlays();
-                for (var idx in route_json_eval) {
-                    if (route_json_eval[idx].route_id == $('#selectRoute').val()) {
-                        route_decode = route_json_eval[idx].route_lng_lat.replace(/&quot;/g, '"');
-                        route_decode_json = JSON.parse(route_decode);
-
-                        var pointArray = new Array();
-                        var lng, lat;
-                        for (var pointIdx in route_decode_json) {
-                            lng = route_decode_json[pointIdx].lng;
-                            lat = route_decode_json[pointIdx].lat;
-                            pointArray.push(new BMap.Point(lng, lat));
-                        }
-                        var polyline = new BMap.Polyline(pointArray, {
-                            strokeColor: "blue",
-                            strokeWeight: 6,
-                            strokeOpacity: 0.8
-                        });
-                        BaiduMap.addOverlay(polyline);
-                        $(".anchorBL").hide();
-                    }
+            BaiduMap.clearOverlays();
+            if (route_json == 'fail') {
+                myAlertFail("此生产单位至此接受单位的路线不存在，请先规划")
+            } else {
+                var route_object = JSON.parse(route_json);
+                route_id = route_object.route_id;
+                var route_decode = route_object.route_lng_lat.replace(/&quot;/g, '"');
+                var route_decode_object = JSON.parse(route_decode);
+                var pointArray = new Array();
+                var lng, lat;
+                for (var pointIdx in route_decode_object) {
+                    lng = route_decode_object[pointIdx].lng;
+                    lat = route_decode_object[pointIdx].lat;
+                    pointArray.push(new BMap.Point(lng, lat));
                 }
+                var polyline = new BMap.Polyline(pointArray, {
+                    strokeColor: "blue",
+                    strokeWeight: 6,
+                    strokeOpacity: 0.8
+                });
+                BaiduMap.addOverlay(polyline);
+            }
 
-            })
+            $(".anchorBL").hide();
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) {
-            console.log("获取路线失败。");
+            myAlertFail("获取路线失败");
             console.log("Error:Ajax_Content_Load" + errorThrown);
             console.log("XMLHttpRequest.status:" + XMLHttpRequest.status);
             console.log("XMLHttpRequest.readyState:" + XMLHttpRequest.readyState);
@@ -149,18 +122,18 @@ function deleteRoute() {
         url: "{:U('Home/DistrictMap/ajax_delete_route')}",
         dataType: 'json',
         data: {
-            "route_id": $('#selectRoute').val()
+            "route_id": route_id
         },
         success: function(data) {
             if (data == "success") {
                 myAlertSucc("删除成功");
                 BaiduMap.clearOverlays();
             } else {
-                myAlert("删除失败");
+                myAlertFail("删除失败");
             }
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) {
-            console.log("获取路线失败。");
+            myAlertFail("删除路线失败");
             console.log("Error:Ajax_Content_Load" + errorThrown);
             console.log("XMLHttpRequest.status:" + XMLHttpRequest.status);
             console.log("XMLHttpRequest.readyState:" + XMLHttpRequest.readyState);
@@ -169,4 +142,5 @@ function deleteRoute() {
 
     })
 }
+
 </script>

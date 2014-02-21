@@ -4,7 +4,7 @@
         <button type="button" class="btn btn-default btn-xs" id="toFullScreen" onclick="toFullScreen();" style="float:right;">全屏</button>
         <button type="button" class="btn btn-default btn-xs" id="exitFullScreen" onclick="exitFullScreen();" style="float:right;display:none;">退出全屏</button>
     </div>
-    <div class="panel-body">
+    <div class="panel panel-body" style="margin-bottom:1px">
         <div class="row" id="div_input-group">
             <div class="col-md-2">当偏移距离大于</div>
             <input type="text" class="col-md-1" id="warningDistance" value="0.3" placeholder="">
@@ -12,7 +12,7 @@
             <div class="col-md-1">大于</div>
             <input type="text" class="col-md-1" id="dangerDistance" value="0.6" placeholder="">
             <div class="col-md-2">千米时报警</div>
-            <button type="button" class="col-md-1 btn btn-success btn-xs" id="setting" onclick="setting();">设置</button>
+            <button type="button" class="col-md-1 btn btn-success btn-sm" id="setting" onclick="setting();">设置</button>
         </div>
         <div id="map_container" style="width:auto">地图加载中...</div>
     </div>
@@ -22,7 +22,7 @@
 <script type="text/javascript" src="__PUBLIC__/js/fullscreen.js"></script>
 
 <script type="text/javascript">
-var route_decode_json = new Array();
+var route_decode_object = new Array();
 var markerList = new Array();
 var polylineList = new Array();
 var messageContent = new Array();
@@ -56,12 +56,6 @@ function setBMap() {
         }
     });
 
-    /*for (var idx in route_json) {
-        route_decode_json[idx] = JSON.parse(route_json[idx].route_lng_lat.replace(/&quot;/g, '"'));
-    }*/
-    //console.log(join_json);
-    //console.log(route_json);
-
     $(".anchorBL").hide();
 }
 
@@ -94,8 +88,8 @@ function transferWarning() {
                     "lat": lat
                 };
 
-                route_decode_json[idx] = JSON.parse(route_json[idx].route_lng_lat.replace(/&quot;/g, '"'));
-                var distance = shortestDist(gps_lng_lat, route_decode_json[idx]);
+                route_decode_object[idx] = JSON.parse(route_json[idx].route_lng_lat.replace(/&quot;/g, '"'));
+                var distance = shortestDist(gps_lng_lat, route_decode_object[idx]);
                 distance = Math.round(distance * 1000) / 1000;
 
                 var iconPoint = new BMap.Point(lng, lat);
@@ -105,7 +99,7 @@ function transferWarning() {
                         // 当标注显示在地图上时，其所指向的地理位置距离图标左上
                         // 角各偏移16像素和20像素。您可以看到在本例中该位置即是
                         // 图标中央下端的尖角位置。
-                        offset: new BMap.Size(16, 20),
+                        anchor: new BMap.Size(16, 40),
                         // 设置图片偏移。
                         // 当您需要从一幅较大的图片中截取某部分作为标注图标时，您
                         // 需要指定大图的偏移位置，此做法与css sprites技术类似。
@@ -115,13 +109,13 @@ function transferWarning() {
 
                 } else if (distance > warningDistance && distance < dangerDistance) {
                     var lorryIcon = new BMap.Icon("__PUBLIC__/image/truck_yellow.png", new BMap.Size(32, 40), {
-                        offset: new BMap.Size(16, 20),
+                        anchor: new BMap.Size(16, 40),
                         imageOffset: new BMap.Size(0, 0) // 设置图片偏移
                     });
                     var warningText = "<p style='color:#FFFF00;'>偏离" + distance + "千米，注意！</p>";
                 } else {
                     var lorryIcon = new BMap.Icon("__PUBLIC__/image/truck_red.png", new BMap.Size(32, 40), {
-                        offset: new BMap.Size(16, 20),
+                        anchor: new BMap.Size(16, 40),
                         imageOffset: new BMap.Size(0, 0) // 设置图片偏移
                     });
                     var warningText = "<p style='color:#FF0000;'>偏离" + distance + "千米，报警!</p>";
@@ -153,18 +147,20 @@ function transferWarning() {
                 };
                 infoWindowContent[idx] = "<p>运输车辆牌照：" + join_json[idx].vehicle_num + "</p><p>运输车辆类型：" + join_json[idx].vehicle_type + "</p><p>运输单位名称：" + join_json[idx].transport_unit_name + "</p><p>运输单位地址：" + join_json[idx].transport_unit_address + "</p><p>运输单位电话：" + join_json[idx].transport_unit_phone + "</p><p>运输单位环保联系人姓名：" + join_json[idx].transport_unit_contacts_name + "</p><p>运输单位环保联系人电话：" + join_json[idx].transport_unit_contacts_phone;
 
-                marker.addEventListener("click", function() {
-                    // 创建信息窗口对象
+                marker.addEventListener("click", function(e) {
+
                     BaiduMap.openInfoWindow(new BMap.InfoWindow(infoWindowContent[this.getTitle() - '0'], infoWindowOption[this.getTitle() - '0']), this.getPosition()); // 打开信息窗口
+
                 });
 
-                marker.addEventListener("rightclick", function() {
+                marker.addEventListener("rightclick", function(e) {
+
                     var idx = this.getTitle() - '0';
                     var pointArray = new Array();
                     var lng, lat;
-                    for (var pointIdx in route_decode_json[idx]) {
-                        lng = route_decode_json[idx][pointIdx].lng;
-                        lat = route_decode_json[idx][pointIdx].lat;
+                    for (var pointIdx in route_decode_object[idx]) {
+                        lng = route_decode_object[idx][pointIdx].lng;
+                        lat = route_decode_object[idx][pointIdx].lat;
                         pointArray.push(new BMap.Point(lng, lat));
                     }
                     var polyline = new BMap.Polyline(pointArray, {
@@ -174,6 +170,7 @@ function transferWarning() {
                     });
                     BaiduMap.addOverlay(polyline);
                     polylineList.push(polyline);
+
                 });
             }
         },
@@ -202,5 +199,4 @@ function setting() {
         dangerDistance = $('#dangerDistance').val();
     }
 }
-
 </script>
