@@ -8,6 +8,7 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.DialogInterface.OnCancelListener;
 import android.content.Intent;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
@@ -31,7 +32,7 @@ public class Scan4 extends ScanActivity implements OnClickListener {
 	private static final String PW_DEV = "/proc/driver/as3992";
 	private Iso15693_native dev = new Iso15693_native();
 	private Button get_info;
-	public TextView main_info;
+	//public TextView main_info;
 	private DeviceControl power;
 	public String myTitle = "环保局查看";
 	public String myURL =  "";	
@@ -53,13 +54,14 @@ public class Scan4 extends ScanActivity implements OnClickListener {
         get_info.setEnabled(true);
         
 
-        main_info = (TextView)findViewById(R.id.textView_15693_info);
-        main_info.setMovementMethod(ScrollingMovementMethod.getInstance());
+       // main_info = (TextView)findViewById(R.id.textView_15693_info);
+        //main_info.setMovementMethod(ScrollingMovementMethod.getInstance());
       
         power = new DeviceControl();
         if(power.DeviceOpen(PW_DEV) < 0)
         {
-        	main_info.setText(R.string.msg_error_power);
+        	this.alertMessage(getString(R.string.msg_error_power));
+        	//main_info.setText(R.string.msg_error_power);
         	return;
         }
         Log.d(TAG, "open file ok");
@@ -67,7 +69,8 @@ public class Scan4 extends ScanActivity implements OnClickListener {
         if(power.PowerOnDevice() < 0)
         {
         	power.DeviceClose();
-        	main_info.setText(R.string.msg_error_power);
+        	this.alertMessage(getString(R.string.msg_error_power));
+//        	main_info.setText(R.string.msg_error_power);
         	return;
         }
         Log.d(TAG, "open power ok");
@@ -83,7 +86,8 @@ public class Scan4 extends ScanActivity implements OnClickListener {
         {
         	power.PowerOffDevice();
         	power.DeviceClose();
-        	main_info.setText(R.string.msg_error_dev);
+        	this.alertMessage(getString(R.string.msg_error_dev));
+//        	main_info.setText(R.string.msg_error_dev);
         	return;
         }
         Log.d(TAG, "init ok");
@@ -100,11 +104,11 @@ public class Scan4 extends ScanActivity implements OnClickListener {
     }
 
     
-    public void debugMessage(String msg)
-    {
-    	TextView main_info = (TextView)findViewById(R.id.textView_15693_info);
-		main_info.setText(msg);
-    }
+//    public void debugMessage(String msg)
+//    {
+//    	//TextView main_info = (TextView)findViewById(R.id.textView_15693_info);
+//	//	main_info.setText(msg);
+//    }
     
     public class NullCallback implements IOCallback {
     	public void httpRequestDidFinish(int success, String value) {
@@ -116,14 +120,22 @@ public class Scan4 extends ScanActivity implements OnClickListener {
     	Scan4 activity;
     	ProgressDialog progDialog;
     	List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-    	public SubmitCallbackController(Scan4 activity, JSONObject postJson) {
+    	LongRunningGetIO running;
+    	public SubmitCallbackController(final Scan4 activity, JSONObject postJson) {
     		this.activity = activity;
     		NameValuePair postContent = new BasicNameValuePair("txt_json", postJson.toString());
     		nameValuePairs.add(postContent);
-    		new LongRunningGetIO(activity.myURL, nameValuePairs, this).execute();
+    		running=new LongRunningGetIO(activity.myURL, nameValuePairs, this);
+    		running.execute();
     		
     		progDialog = ProgressDialog.show(activity, "正在查询",
-    	            "请稍候...", true);
+    	            "请稍候...", true, true, new OnCancelListener(){
+    			public void onCancel(DialogInterface pd)
+    			{
+    				running.handleOnBackButton();
+    				activity.submitController = null;
+    			}
+    		});
     	}
     	private void parseJSON(String value)
     	{
@@ -142,7 +154,7 @@ public class Scan4 extends ScanActivity implements OnClickListener {
     		{Intent intent = new Intent(activity, show.class);
     		intent.putExtra("result", sn);
     		startActivity(intent);}
-	        activity.submitController = null;
+    		activity.submitController = null;
     	}
     }
     
@@ -172,7 +184,7 @@ public class Scan4 extends ScanActivity implements OnClickListener {
 		{
 			Log.d(TAG, "get_info clicked");
 			swh=false;
-			main_info.setText("");
+		//	main_info.setText("");
 			sn = Scanner.scan();
 			if(sn == null) {
 				this.alertMessage("未找到 RFID 设备");

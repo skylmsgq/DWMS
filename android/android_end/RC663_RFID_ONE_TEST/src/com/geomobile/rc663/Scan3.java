@@ -7,6 +7,7 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.DialogInterface.OnCancelListener;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
@@ -48,20 +49,20 @@ public class Scan3 extends ScanActivity implements OnClickListener {
 	private ListView listView;
 	public String myTitle = "出库扫描";
 	public String myURL =  "";
-	
+	public String myURL_check="";
 
 	private String imei = "";
 	private ArrayAdapter adapter;
 	// private String[] myStringArray = {"gen1", "gen2"};
 	private List<String> items = new ArrayList<String>();
-	private IOCallback optionFetch, submitController = null;
+	private IOCallback optionFetch, submitController,checkController = null;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.myURL = getString(R.string.url_prefix) + "wasteOut";
         setContentView(R.layout.scan34);
-        
+        this.myURL_check=getString(R.string.url_prefix) + "checkOut";
         TelephonyManager telephonyManager = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
         this.imei = telephonyManager.getDeviceId();
         ((TextView)findViewById(R.id.textView_addNew)).setText(myTitle);
@@ -206,12 +207,14 @@ public class Scan3 extends ScanActivity implements OnClickListener {
     public class SubmitCallbackController implements IOCallback {
     	Scan3 activity;
     	ProgressDialog progDialog;
+    	LongRunningGetIO running;
     	List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-    	public SubmitCallbackController(Scan3 activity, JSONObject postJson) {
+    	public SubmitCallbackController(final Scan3 activity, JSONObject postJson) {
     		this.activity = activity;
     		NameValuePair postContent = new BasicNameValuePair("txt_json", postJson.toString());
     		nameValuePairs.add(postContent);
-    		new LongRunningGetIO(activity.myURL, nameValuePairs, this).execute();
+    		running=new LongRunningGetIO(activity.myURL, nameValuePairs, this);
+    		running.execute();
     		
     		progDialog = ProgressDialog.show(activity, "正在上传",
     	            "请稍候...", true);
@@ -231,7 +234,89 @@ public class Scan3 extends ScanActivity implements OnClickListener {
 	        activity.submitController = null;
     	}
     }
-    
+    public class CheckCallbackController implements IOCallback {
+    	Scan3 activity;
+    	ProgressDialog progDialog;
+    	LongRunningGetIO running;
+    	List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+    	public CheckCallbackController(final Scan3 activity, JSONObject postJson) {
+    		this.activity = activity;
+    		NameValuePair postContent = new BasicNameValuePair("txt_json", postJson.toString());
+    		nameValuePairs.add(postContent);
+    		running=new LongRunningGetIO(activity.myURL_check, nameValuePairs, this);
+    		running.execute();
+    		progDialog = ProgressDialog.show(activity, "正在扫描",
+    	            "请稍候...", true, true, new OnCancelListener(){
+    			public void onCancel(DialogInterface pd)
+    			{
+    				running.handleOnBackButton();
+    				activity.checkController = null;
+    			}
+    		});
+    	}
+    	private void parseJSON(String value)
+    	{
+    		Log.d(TAG, value);
+    		JSONObject jObject;
+    		// add parse later
+    		try{
+    			jObject = new JSONObject(value);
+    			String errmsg = ((JSONObject)(jObject.get("error"))).getString("des");
+    			activity.alertMessage(errmsg);
+    		}
+    		catch(Exception e)
+    		{
+    			
+    			String rfid, addway, total, status;
+    			try
+    			{
+    			jObject = new JSONObject(value);
+    			rfid=jObject.getString("rfid");
+    			 addway=jObject.getString("addway");
+    			 total=jObject.getString("total");
+    			 status=jObject.getString("status");
+    			if (status.equals("3"))
+    				{
+    				if(!jObject.has("manifest_id"))
+    					activity.alertMessage("无联单信息，不可出库");
+    				else
+    				{
+    					int temp=Integer.parseInt(jObject.getString("mstatus"));
+    					if (temp==4 || temp>=9)
+    					{
+    						String res=rfid;
+    						if (addway.equals("0"))
+    							res+=" "+total+"公斤";
+    						else if (addway.equals("1"))
+    							res+=" "+total+"个";
+    						activity.addNewItemToList(res);
+        				}
+    					else
+    						activity.alertMessage("当前联单状态不允许出库");
+    				}
+    				
+    				}
+    			else if (status.equals("0"))
+    				activity.alertMessage("废物为空");
+    			else 
+    				activity.alertMessage("废物已经出库");
+    			}
+    			catch(Exception e1)
+    			{
+    				activity.alertMessage(e1.toString());
+    			}
+    		}
+    		
+    	}
+    	
+    	public void httpRequestDidFinish(int success, String value) {
+    		progDialog.dismiss();
+    		
+    		this.parseJSON(value);
+	        
+	        activity.checkController = null;
+    	}
+    }
     
 	@Override
 	public void onClick(View arg0) {
@@ -261,8 +346,17 @@ public class Scan3 extends ScanActivity implements OnClickListener {
 				this.alertMessage("未找到 RFID 设备");
 				return;
 			}
+		    JSONObject myupload= new JSONObject();
+	        try {
+				myupload.put("rfid", sn);
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				Log.d(TAG, "parse error");
+				e.printStackTrace();
+			}
+	        if(checkController == null) checkController = new CheckCallbackController(this, myupload);
+		    adapter.notifyDataSetChanged();
 			
-			this.addNewItemToList(sn);
 		
 
 		} else if(arg0 == submit) {
@@ -275,6 +369,7 @@ public class Scan3 extends ScanActivity implements OnClickListener {
 			Iterator it = items.iterator();
 		    while (it.hasNext()) {
 		        String thissn = (String)it.next();
+		        thissn=thissn.split(" ")[0];
 		        JSONObject newObj = new JSONObject();
 		        try {
 					newObj.put("rfid", thissn);
