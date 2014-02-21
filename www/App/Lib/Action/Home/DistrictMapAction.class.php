@@ -79,7 +79,12 @@ class DistrictMapAction extends CommonAction{
 		$where['datetime'] = array( array( 'EGT', I( 'post.beginDate' ) ), array('ELT', I( 'post.endDate' ) ) );
 		$where['status'] = 0;
 		$gps_data = M( 'gps_' . $device_serial_num )->where( $where )->field( 'id, bmap_longitude, bmap_latitude, speed' )->select();
-		$this->ajaxReturn( $gps_data );
+		if ($gps_data) {
+			$this->ajaxReturn( $gps_data );
+		} else {
+			$this->ajaxReturn( 'fail' );
+		}
+
 	}
 
 	// 转移地图->地图展示->仓库地图展示

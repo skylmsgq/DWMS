@@ -10,13 +10,13 @@
             <div class="col-md-2">
                 <label class="sr-only" for="selectTransportUnit">运输单位：</label>
                 <select class="form-control input-sm" id="selectTransportUnit" onchange="getVehicleList();">
-                    <option>请选择运输单位</option>
+                    <option value='-1'>请选择运输单位</option>
                 </select>
             </div>
             <div class="col-md-2">
                 <label class="sr-only" for="selectVehicle">运输车辆：</label>
                 <select class="form-control input-sm" id="selectVehicle">
-                    <option>请选择运输车辆</option>
+                    <option value='-1'>请选择运输车辆</option>
                 </select>
             </div>
             <div class="col-md-3">
@@ -68,7 +68,6 @@ function setBMap() {
     };
     BaiduMap.setMapStyle(mapStyle);
 
-    // console.log(transport_unit_json);
     var selectTransportUnit = $('#selectTransportUnit');
     for (var idx in transport_unit_json) {
         selectTransportUnit.append('<option id="" value="' + transport_unit_json[idx].transport_unit_id + '">' + transport_unit_json[idx].transport_unit_name + '</option>');
@@ -86,6 +85,10 @@ function loadScript() {
 loadScript();
 
 function getVehicleList() {
+    if ($('#selectTransportUnit').val() == '-1') {
+        myAlertFail('请先选择运输单位');
+        return;
+    }
     $.ajax({
         type: "POST",
         url: "{:U('Home/DistrictMap/ajax_get_vehicle_list')}",
@@ -94,18 +97,19 @@ function getVehicleList() {
             "transport_unit_id": $('#selectTransportUnit').val()
         },
         success: function(vehicleList) {
-            var selectVehicle = $('#selectVehicle');
-            selectVehicle.html('<option>请选择运输车辆</option>');
-            if (vehicleList != 'fail') {
-                for (var idx in transport_unit_json) {
-                    selectVehicle.append('<option id="" value="' + vehicleList[idx].vehicle_id + '">车牌号为：' + vehicleList[idx].vehicle_num + '的' + vehicleList[idx].vehicle_type + '</option>');
-                }
-            } else {
+            if (vehicleList == 'fail') {
                 myAlertFail("获取车辆列表失败");
+                return;
             }
+            var selectVehicle = $('#selectVehicle');
+            selectVehicle.html("<option value='-1'>请选择运输车辆</option>");
+            for (var idx in transport_unit_json) {
+                selectVehicle.append('<option id="" value="' + vehicleList[idx].vehicle_id + '">车牌号为：' + vehicleList[idx].vehicle_num + '的' + vehicleList[idx].vehicle_type + '</option>');
+            }
+
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) {
-            myAlertFail("获取车辆列表失败");
+            myAlertFail("获取车辆列表ajax请求失败");
             console.log("Error:Ajax_Content_Load" + errorThrown);
             console.log("XMLHttpRequest.status:" + XMLHttpRequest.status);
             console.log("XMLHttpRequest.readyState:" + XMLHttpRequest.readyState);
@@ -115,6 +119,18 @@ function getVehicleList() {
 }
 
 function getVehicleRoute() {
+    if ($('#selectTransportUnit').val() == '-1') {
+        myAlertFail('请先选择运输单位');
+        return;
+    }
+    if ($('#selectVehicle').val() == '-1') {
+        myAlertFail('请先选择运输车辆');
+        return;
+    }
+    if ($('#beginDate').val() == '' || $('#endDate').val() == '') {
+        myAlertFail('请先选择历史回放起始日期和终止日期');
+        return;
+    }
     $.ajax({
         type: "POST",
         url: "{:U('Home/DistrictMap/ajax_get_vehicle_route')}",
@@ -125,10 +141,14 @@ function getVehicleRoute() {
             "endDate": $('#endDate').val()
         },
         success: function(gps_data) {
+            if (gps_data == 'fail') {
+                myAlertFail("获取车辆历史数据失败");
+                return;
+            }
             BaiduMap.clearOverlays();
             var iconPoint = new BMap.Point(gps_data[0].bmap_longitude, gps_data[0].bmap_latitude);
             var lorryIcon = new BMap.Icon("__PUBLIC__/image/truck_green.png", new BMap.Size(32, 40), {
-                offset: new BMap.Size(16, 40),
+                anchor: new BMap.Size(16, 40),
                 imageOffset: new BMap.Size(0, 0)
             });
             var vehicleMarker = new BMap.Marker(iconPoint, {
@@ -161,7 +181,7 @@ function getVehicleRoute() {
             setTimeout(playback(0), 100);
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) {
-            myAlertFail("获取车辆历史数据失败");
+            myAlertFail("获取车辆历史数据ajax请求失败");
             console.log("Error:Ajax_Content_Load" + errorThrown);
             console.log("XMLHttpRequest.status:" + XMLHttpRequest.status);
             console.log("XMLHttpRequest.readyState:" + XMLHttpRequest.readyState);
