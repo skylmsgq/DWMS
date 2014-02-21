@@ -4,7 +4,7 @@
         <button type="button" class="btn btn-default btn-xs" id="toFullScreen" onclick="toFullScreen();" style="float:right;">全屏</button>
         <button type="button" class="btn btn-default btn-xs" id="exitFullScreen" onclick="exitFullScreen();" style="float:right;display:none;">退出全屏</button>
     </div>
-    <div class="panel-body">
+    <div class="panel panel-body" style="margin-bottom:1px">
         <div class="row" id="div_input-group">
             <div class="col-md-2">当偏移距离大于</div>
             <input type="text" class="col-md-1" id="warningDistance" value="0.3" placeholder="">
@@ -12,7 +12,7 @@
             <div class="col-md-1">大于</div>
             <input type="text" class="col-md-1" id="dangerDistance" value="0.6" placeholder="">
             <div class="col-md-2">千米时报警</div>
-            <button type="button" class="col-md-1 btn btn-success btn-xs" id="setting" onclick="setting();">设置</button>
+            <button type="button" class="col-md-1 btn btn-success btn-sm" id="setting" onclick="setting();">设置</button>
         </div>
         <div id="map_container" style="width:auto">地图加载中...</div>
     </div>
