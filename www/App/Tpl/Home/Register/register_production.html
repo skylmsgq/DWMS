@@ -60,12 +60,9 @@
                 county_name = JSON.parse(county_name_json);
                 $('#county_name').html('<option>请选择所在区县</option>');
                 for (var idx in county_name) {
-                $('#county_name').append('<option value="' + county_name[idx].county_id + '">' + county_name[idx].county_name + '</option>');
+                $('#county_name').append('<option value="' + county_name[idx].county_name + '">' + county_name[idx].county_name + '</option>');
                 }
-                $('#waste_location_county_code').html('<option>区县代码</option>');
-                for (var idx in county_name) {
-                $('#waste_location_county_code').append('<option value="' + county_name[idx].county_code + '">' + county_name[idx].county_code + '</option>');
-                }   
+                
             },
             error: function(XMLHttpRequest, textStatus, errorThrown) {
                 console.log("Error:Ajax_Content_Load" + errorThrown);
@@ -76,14 +73,14 @@
          });
     }
 
-    function county_code_jurisdiction(county_id){
-        console.log(county_id);
+    function county_code_jurisdiction(county_name){
+        console.log(county_name);
         $.ajax({
             type: "post",
             url: "{:U('Home/Register/select_code_jurisdiction')}",
             dataType: "json",
             data:{
-                'id': county_id
+                'name': county_name
             },
             success: function(jurisdiction_json) {
                 // county_code = JSON.parse(county_code_json);
@@ -94,8 +91,36 @@
                 jurisdiction = JSON.parse(jurisdiction_json);  
                 $('#jurisdiction_id').html('<option>管辖权属</option>');
                 for (var idx in jurisdiction) {
-                $('#jurisdiction_id').append('<option value="' + jurisdiction[idx].jurisdiction_name + '">' + jurisdiction[idx].jurisdiction_name + '</option>');
+                $('#jurisdiction_id').append('<option value="' + jurisdiction[idx].jurisdiction_id + '">' + jurisdiction[idx].jurisdiction_name + '</option>');
                 }
+
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                console.log("Error:Ajax_Content_Load" + errorThrown);
+                console.log("XMLHttpRequest.status:" + XMLHttpRequest.status);
+                console.log("XMLHttpRequest.readyState:" + XMLHttpRequest.readyState);
+                console.log("textStatus:" + textStatus);
+            }
+        });
+
+    $.ajax({
+            type: "post",
+            url: "{:U('Home/Register/select_code')}",
+            dataType: "json",
+            data:{
+                'name': county_name
+            },
+            success: function(code_json) {
+                // county_code = JSON.parse(county_code_json);
+                // $('#waste_location_county_code').html('<option>区县代码</option>');
+                // for (var idx in county_code) {
+                // $('#waste_location_county_code').append('<option value="' + county_code[idx].county_id + '">' + county_name[idx].county_code + '</option>');
+                // }
+                code = JSON.parse(code_json);  
+                $('#waste_location_county_code').html('<option>区县代码</option>');
+                for (var idx in county_name) {
+                $('#waste_location_county_code').append('<option value="' + code[idx].county_code + '">' + code[idx].county_code + '</option>');
+                }   
 
             },
             error: function(XMLHttpRequest, textStatus, errorThrown) {
@@ -195,7 +220,7 @@
                                     </td> -->
                                     <td>产废设施所属省</td>
                                     <td>
-                                         <select type="text" class="form-control input-md required-cn" name="production_unit_province" id="province_name" onchange="sel_city(this.options[this.options.selectedIndex].value)">
+                                         <select type="text" class="form-control input-md required-cn" id="province_name" onchange="sel_city(this.options[this.options.selectedIndex].value)">
                                           <option value="1">{$county_code[0].county_name}</option>
                                           <option value="2">{$county_code[1].county_name}</option>
                                           <option value="3">{$county_code[2].county_name}</option>
@@ -233,8 +258,7 @@
                                     </td>
                                     <td>产废设施所属市</td>
                                     <td>
-                                        <label class="sr-only" for="city_name">所在市：</label>
-                                        <select type="text" class="form-control input-md required-cn" name="production_unit_city" id="city_name" onchange="sel_county(this.options[this.options.selectedIndex].value)">
+                                        <select type="text" class="form-control input-md required-cn" id="city_name" onchange="sel_county(this.options[this.options.selectedIndex].value)">
                                             <option>请选择所在市</option>
                                         </select>
                                         <!-- <input type="text" class="form-control input-md required-cn" name="waste_location" id="waste_location"> -->
@@ -243,24 +267,26 @@
                                 <tr>
                                     <td>产废设施所属区县</td>
                                     <td>
-                                        <label class="sr-only" for="county_name">所在县：</label>
                                         <select type="text" class="form-control input-md required-cn" name="waste_location_county" id="county_name" onchange="county_code_jurisdiction(this.options[this.options.selectedIndex].value)">
                                             <option>请选择所在区县</option>
                                         </select>
+                                    </td>
+                                    <td>产废设施所在地</td>
+                                    <td>
+                                        <input type="text" class="form-control input-md required-cn" name="waste_location" id="waste_location">
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>产废设施所在区县代码</td>
                                     <td>
-<!--                                         <input type="text" class="form-control input-md required-cn" name="waste_location_county_code" id="waste_location_county_code">
- -->                                    <label class="sr-only" for="waste_location_county_code">区县代码：</label>
-                                        <select type="text" class="form-control input-md required-cn" name="waste_location_county_code" id="waste_location_county_code">
+<!--                                    <input type="text" class="form-control input-md required-cn" name="waste_location_county_code" id="waste_location_county_code">
+ -->                   
+                                    <select type="text" class="form-control input-md required-cn" name="waste_location_county_code" id="waste_location_county_code">
                                             <option>区县代码</option>
                                         </select>                                    
                                     </td>
                                     <td>产生单位管辖权属</td>
                                     <td>
-                                        <label class="sr-only" for="jurisdiction_id">管辖权属：</label>
                                         <select type="text" class="form-control input-md required-cn" name="jurisdiction_id" id="jurisdiction_id">
                                             <option>管辖权属</option>
                                         </select>
@@ -310,14 +336,15 @@
                                     </td>
                                     <td>产生单位企业规模</td>
                                     <td>
-                                        <select type="text" class="form-control input-md" name="roduction_unit_enterprise_scale" id="roduction_unit_enterprise_scale">
-                                        <option>{$enterprise_scale[0].enterprise_scale_name}</option>
-                                        <option>{$enterprise_scale[1].enterprise_scale_name}</option>
-                                        <option>{$enterprise_scale[2].enterprise_scale_name}</option>
-                                        <option>{$enterprise_scale[3].enterprise_scale_name}</option>
-                                        <option>{$enterprise_scale[4].enterprise_scale_name}</option>
-                                        <option>{$enterprise_scale[5].enterprise_scale_name}</option>
-                                        <option>{$enterprise_scale[6].enterprise_scale_name}</option>
+                                        <!-- <select type="text" class="form-control input-md" name="production_unit_enterprise_scale" id="production_unit_enterprise_scale"> -->
+                                        <select type="text" class="form-control input-md required-cn" name="production_unit_enterprise_scale" id="production_unit_enterprise_scale">
+                                            <option>{$enterprise_scale[0].enterprise_scale_name}</option>
+                                            <option>{$enterprise_scale[1].enterprise_scale_name}</option>
+                                            <option>{$enterprise_scale[2].enterprise_scale_name}</option>
+                                            <option>{$enterprise_scale[3].enterprise_scale_name}</option>
+                                            <option>{$enterprise_scale[4].enterprise_scale_name}</option>
+                                            <option>{$enterprise_scale[5].enterprise_scale_name}</option>
+                                            <option>{$enterprise_scale[6].enterprise_scale_name}</option>
                                         </select>  
                                     </td>
                                 </tr>
@@ -328,7 +355,7 @@
                                     </td>
                                     <td>产生单位环保联系人电话</td>
                                     <td>
-                                        <input type="text" class="form-control input-md required-cn" name="roduction_unit_contacts_phone" id="roduction_unit_contacts_phone">
+                                        <input type="text" class="form-control input-md required-cn" name="production_unit_contacts_phone" id="production_unit_contacts_phone">
                                     </td>
                                 </tr>
                                 <tr>
@@ -338,7 +365,7 @@
                                     </td>
                                     <td>产生单位法人姓名</td>
                                     <td>
-                                        <input type="text" class="form-control input-md required-cn" name="roduction_unit_legal_person_name" id="roduction_unit_legal_person_name">
+                                        <input type="text" class="form-control input-md required-cn" name="production_unit_legal_person_name" id="production_unit_legal_person_name">
                                     </td>
                                 </tr>
                                 <tr>
@@ -366,36 +393,36 @@
                                     <td>
                                         <input type="text" class="form-control input-md number-cn" name="production_unit_latitude" id="production_unit_latitude">
                                     </td>
-                                    <td>产生单位主要危废物</td>
+                                    <td>产生单位主要危废物代码</td>
                                     <td>
-                                        <!-- <select type="text" class="form-control input-md" name="production_unit_waste" id="production_unit_waste">
-                                            <option>{$waste[0].waste_id}</option>
-                                            <option>{$waste[1].waste_id}</option>
-                                            <option>{$waste[2].waste_id}</option>
-                                            <option>{$waste[3].waste_id}</option>
-                                            <option>{$waste[4].waste_id}</option>
-                                            <option>{$waste[5].waste_id}</option>
-                                            <option>{$waste[6].waste_id}</option>
-                                            <option>{$waste[7].waste_id}</option>
-                                            <option>{$waste[8].waste_id}</option>
-                                            <option>{$waste[9].waste_id}</option>
-                                            <option>{$waste[10].waste_id}</option>
-                                            <option>{$waste[11].waste_id}</option>
-                                            <option>{$waste[12].waste_id}</option>
-                                            <option>{$waste[13].waste_id}</option>
-                                            <option>{$waste[14].waste_id}</option>
-                                            <option>{$waste[15].waste_id}</option>
-                                            <option>{$waste[16].waste_id}</option>
-                                            <option>{$waste[17].waste_id}</option>
-                                            <option>{$waste[18].waste_id}</option>
-                                            <option>{$waste[19].waste_id}</option>
-                                            <option>{$waste[20].waste_id}</option>
-                                            <option>{$waste[21].waste_id}</option>
-                                            <option>{$waste[22].waste_id}</option>
-                                            <option>{$waste[23].waste_id}</option>
-                                            <option>{$waste[24].waste_id}</option>
-                                        </select> -->
-                                        <input type="text" class="form-control input-md" name="production_unit_waste" id="production_unit_waste">
+                                        <select type="text" class="form-control input-md" name="production_unit_waste" id="production_unit_waste">
+                                            <option>{$waste[0].waste_code}</option>
+                                            <option>{$waste[1].waste_code}</option>
+                                            <option>{$waste[2].waste_code}</option>
+                                            <option>{$waste[3].waste_code}</option>
+                                            <option>{$waste[4].waste_code}</option>
+                                            <option>{$waste[5].waste_code}</option>
+                                            <option>{$waste[6].waste_code}</option>
+                                            <option>{$waste[7].waste_code}</option>
+                                            <option>{$waste[8].waste_code}</option>
+                                            <option>{$waste[9].waste_code}</option>
+                                            <option>{$waste[10].waste_code}</option>
+                                            <option>{$waste[11].waste_code}</option>
+                                            <option>{$waste[12].waste_code}</option>
+                                            <option>{$waste[13].waste_code}</option>
+                                            <option>{$waste[14].waste_code}</option>
+                                            <option>{$waste[15].waste_code}</option>
+                                            <option>{$waste[16].waste_code}</option>
+                                            <option>{$waste[17].waste_code}</option>
+                                            <option>{$waste[18].waste_code}</option>
+                                            <option>{$waste[19].waste_code}</option>
+                                            <option>{$waste[20].waste_code}</option>
+                                            <option>{$waste[21].waste_code}</option>
+                                            <option>{$waste[22].waste_code}</option>
+                                            <option>{$waste[23].waste_code}</option>
+                                            <option>{$waste[24].waste_code}</option>
+                                        </select>
+                                        <!-- <input type="text" class="form-control input-md" name="production_unit_waste" id="production_unit_waste"> -->
                                     </td>
                                 </tr>
                             </table>
