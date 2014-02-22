@@ -1,6 +1,5 @@
 <include file="./Public/html/Content/District/district_config.html" />
 <script type="text/javascript">
-
 DWMS_page_config.pageid = 1;
 
 DWMS_sidebar_config = {
@@ -9,11 +8,19 @@ DWMS_sidebar_config = {
         "sidebar_group_title": "地图展示",
         "sidebar_group_content": [{
             "id": 0,
-            "name": "转移地图展示",
+            "name": "转移地图实时展示",
             "url": "{:U('Home/DistrictMap/transfer_map_display')}"
-        },{
+        }, {
             "id": 1,
-            "name": "仓库地图展示",
+            "name": "指定车辆历史回放",
+            "url": "{:U('Home/DistrictMap/designate_vehicle_playback')}"
+        }, {
+            "id": 2,
+            "name": "转移地图历史回放",
+            "url": "{:U('Home/DistrictMap/transfer_map_playback')}"
+        }, {
+            "id": 3,
+            "name": "仓库地图实时展示",
             "url": "{:U('Home/DistrictMap/warehouse_map_display')}"
         }]
     }, {
@@ -23,14 +30,13 @@ DWMS_sidebar_config = {
             "id": 0,
             "name": "运输路线规划",
             "url": "{:U('Home/DistrictMap/transfer_route_plan')}"
-        },{
+        }, {
             "id": 1,
             "name": "运输路线查询",
             "url": "{:U('Home/DistrictMap/transfer_route_query')}"
         }]
     }]
 }
-
 </script>
 
 <div class="row" id="div_row">

@@ -49,6 +49,11 @@ function setBMap() {
     BaiduMap.enableScrollWheelZoom(); //启用滚轮放大缩小
     BaiduMap.addControl(new BMap.MapTypeControl()); // 添加默认地图控件
     BaiduMap.setCurrentCity("上海"); // 设置地图显示的城市 此项是必须设置的
+    var mapStyle = {
+        features: ["road", "building", "water", "land", "point"],
+        style: "normal"
+    };
+    BaiduMap.setMapStyle(mapStyle);
 
     for (var idx in production_unit_json) {
         $('#selectProductionUnit').append('<option id="" value="' + idx + '">' + production_unit_json[idx] + '</option>');
@@ -137,4 +142,5 @@ function deleteRoute() {
 
     })
 }
+
 </script>

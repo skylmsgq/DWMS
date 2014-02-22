@@ -62,11 +62,21 @@ class RegisterAction extends Action{
 
 	public function select_code_jurisdiction(){
 		// $county_code = M( 'county_code' )->where( array('county_id'=> I('post.id') ) )->select();
-		$jurisdiction = M( 'jurisdiction' )->where( array('county_id'=> I('post.id') ) )->select();
+		$jurisdiction = M( 'jurisdiction' )->where( array('county_name'=> I('post.name') ) )->select();
 		// $county_code_json = json_encode( $county_code );
 		$jurisdiction_json = json_encode( $jurisdiction );
 		// $this->ajaxReturn( $county_code_json,'JSON' );
 		$this->ajaxReturn( $jurisdiction_json,'JSON' );
+
+	}
+
+	public function select_code(){
+		// $county_code = M( 'county_code' )->where( array('county_id'=> I('post.id') ) )->select();
+		$county_code = M( 'county_code' )->where( array('county_name'=> I('post.name') ) )->select();
+		// $county_code_json = json_encode( $county_code );
+		$code_json = json_encode( $county_code );
+		// $this->ajaxReturn( $county_code_json,'JSON' );
+		$this->ajaxReturn( $code_json,'JSON' );
 
 	}
 

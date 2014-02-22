@@ -1,0 +1,164 @@
+<div class="panel panel-primary" id="div_map" style="margin-bottom:0px;">
+    <div class="panel panel-heading" style="margin-bottom:0px; height:40px;">
+        <h3 class="panel-title" style="float:left;">转移地图历史回放</h3>
+        <button type="button" class="btn btn-default btn-xs" id="toFullScreen" onclick="toFullScreen();" style="float:right;">全屏</button>
+        <button type="button" class="btn btn-default btn-xs" id="exitFullScreen" onclick="exitFullScreen();" style="float:right;display:none;">退出全屏</button>
+    </div>
+    <div class="panel panel-body" style="margin-bottom:1px">
+        <div id="noSelectionAlert"></div>
+        <div class="row">
+            <div class="col-md-3">
+                <input type="date" id="beginDate" value="2014-01-13">
+            </div>
+            <div class="col-md-3">
+                <input type="date" id="endDate" value="2014-01-14">
+            </div>
+            <div class="col-md-2">
+                <label class="sr-only" for="selectSpeed">回放速度：</label>
+                <select class="form-control input-sm" id="selectSpeed">
+                    <option value='1'>慢</option>
+                    <option value='2' selected="selected">中</option>
+                    <option value='4'>快</option>
+                </select>
+            </div>
+            <div class="col-md-2">
+                <button type="button" class="btn btn-info btn-sm" onclick="getVehicleRoutes();">回放</button>
+            </div>
+        </div>
+        <div id="map_container" style="width:auto">地图加载中...</div>
+    </div>
+</div>
+
+<script type="text/javascript" src="__PUBLIC__/js/shortestDist.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/fullscreen.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/myAlert.js"></script>
+
+<script type="text/javascript">
+if (typeof(intervalWarning) != 'undefined') {
+    clearInterval(intervalWarning);
+}
+
+function setBMap() {
+    var windowHeight = $(window).height();
+    $("#map_container").css("height", "" + windowHeight - 350 + "px");
+
+    BaiduMap = new BMap.Map("map_container"); // 创建Map实例
+    BaiduMap.centerAndZoom("上海", 11); // 初始化地图,设置中心点坐标和地图级别
+    BaiduMap.addControl(new BMap.NavigationControl()); // 添加默认缩放平移控件
+    BaiduMap.addControl(new BMap.ScaleControl()); // 添加默认比例尺控件
+    BaiduMap.addControl(new BMap.OverviewMapControl()); //添加默认缩略地图控件
+    BaiduMap.enableScrollWheelZoom(); //启用滚轮放大缩小
+    BaiduMap.addControl(new BMap.MapTypeControl()); // 添加默认地图控件
+    BaiduMap.setCurrentCity("上海"); // 设置地图显示的城市 此项是必须设置的
+    var mapStyle = {
+        features: ["road", "building", "water", "land", "point"],
+        style: "light"
+    };
+    BaiduMap.setMapStyle(mapStyle);
+
+    $(".anchorBL").hide();
+}
+
+function loadScript() {
+    var script = document.createElement("script");
+    script.src = "http://api.map.baidu.com/api?v=2.0&ak=KDdzQZSRLv89h4yrti56L5Gy&callback=setBMap";
+    document.body.appendChild(script);
+}
+
+loadScript();
+
+function getVehicleRoutes() {
+    if ($('#beginDate').val() == '' || $('#endDate').val() == '') {
+        myAlertFail('请先选择历史回放起始日期和终止日期');
+        return;
+    }
+    $.ajax({
+        type: "POST",
+        url: "{:U('Home/DistrictMap/ajax_get_vehicle_routes')}",
+        timeout: 5000,
+        data: {
+            "beginDate": $('#beginDate').val(),
+            "endDate": $('#endDate').val()
+        },
+        success: function(gps_route_array) {
+            if (gps_route_array == 'fail') {
+                myAlertFail("获取转移地图历史数据失败");
+                return;
+            }
+            console.log(gps_route_array);
+            BaiduMap.clearOverlays();
+
+            var lorryIconGreen = new BMap.Icon("__PUBLIC__/image/truck_green.png", new BMap.Size(32, 40), {
+                anchor: new BMap.Size(16, 40),
+                imageOffset: new BMap.Size(0, 0)
+            });
+            var lorryIconYellow = new BMap.Icon("__PUBLIC__/image/truck_yellow.png", new BMap.Size(32, 40), {
+                anchor: new BMap.Size(16, 40),
+                imageOffset: new BMap.Size(0, 0)
+            });
+            var lorryIconRed = new BMap.Icon("__PUBLIC__/image/truck_red.png", new BMap.Size(32, 40), {
+                anchor: new BMap.Size(16, 40),
+                imageOffset: new BMap.Size(0, 0)
+            });
+
+            var vehicleMarkerList = new Array();
+            var longestRouteLength = 0;
+            for (var idx in gps_route_array) {
+                if (!gps_route_array[idx]) {
+                    continue;
+                }
+                if (gps_route_array[idx].length > longestRouteLength) {
+                    longestRouteLength = gps_route_array[idx].length;
+                }
+                var iconPoint = new BMap.Point(gps_route_array[idx][0].bmap_longitude, gps_route_array[idx][0].bmap_latitude);
+                var vehicleMarker = new BMap.Marker(iconPoint, {
+                    icon: lorryIconGreen,
+                    title: "危废运输车辆"
+                });
+                BaiduMap.addOverlay(vehicleMarker);
+                vehicleMarkerList.push(vehicleMarker);
+            }
+
+            function playback(dataIdx) {
+                var speedFactor = $('#selectSpeed').val();
+                for (var idx in gps_route_array) {
+                    if (!gps_route_array[idx][dataIdx]) {
+                        continue;
+                    }
+                    var newPoint = new BMap.Point(gps_route_array[idx][dataIdx].bmap_longitude, gps_route_array[idx][dataIdx].bmap_latitude);
+                    vehicleMarkerList[idx].setPosition(newPoint);
+                    offsetDistance = gps_route_array[idx][dataIdx].offset_distance;
+                    if (offsetDistance < 0.5) {
+                        vehicleMarkerList[idx].setIcon(lorryIconGreen);
+                    } else if ((offsetDistance >= 0.5) && (offsetDistance < 1)) {
+                        vehicleMarkerList[idx].setIcon(lorryIconYellow);
+                    } else {
+                        vehicleMarkerList[idx].setIcon(lorryIconRed);
+                    }
+                    if (gps_route_array[idx][dataIdx].speed <= 20) {
+                        var intervalTime = 200 / speedFactor;
+                    } else {
+                        var intervalTime = 4000 / gps_route_array[idx][dataIdx].speed / speedFactor;
+                    }
+                }
+                if (dataIdx < longestRouteLength) {
+                    setTimeout(function() {
+                        ++dataIdx;
+                        playback(dataIdx);
+                    }, intervalTime);
+                } else {
+                    return;
+                }
+            }
+            setTimeout(playback(0), 100);
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+            myAlertFail("获取转移地图历史数据ajax请求失败");
+            console.log("Error:Ajax_Content_Load" + errorThrown);
+            console.log("XMLHttpRequest.status:" + XMLHttpRequest.status);
+            console.log("XMLHttpRequest.readyState:" + XMLHttpRequest.readyState);
+            console.log("textStatus:" + textStatus);
+        }
+    });
+}
+</script>
