@@ -18,7 +18,7 @@
     </div>
 </div>
 
-<script type="text/javascript" src="__PUBLIC__/js/shortestDist.js"></script>
+<!-- <script type="text/javascript" src="__PUBLIC__/js/shortestDist.js"></script> -->
 <script type="text/javascript" src="__PUBLIC__/js/fullscreen.js"></script>
 
 <script type="text/javascript">
@@ -56,6 +56,10 @@ function setBMap() {
         }
     });
 
+    for (var idx in route_json) {
+        route_decode_object[idx] = JSON.parse(route_json[idx].route_lng_lat.replace(/&quot;/g, '"'));
+    }
+
     $(".anchorBL").hide();
 }
 
@@ -73,14 +77,11 @@ function transferWarning() {
         url: "{:U('Home/DistrictMap/ajax_gps_data')}",
         timeout: 5000,
         success: function(gps_data_array) {
-            // console.log(gps_data_array);
-
             while (marker = markerList.pop()) {
                 BaiduMap.removeOverlay(marker);
             }
 
             for (var idx in gps_data_array) {
-
                 var lng = gps_data_array[idx].lng;
                 var lat = gps_data_array[idx].lat;
                 var gps_lng_lat = {
@@ -88,8 +89,8 @@ function transferWarning() {
                     "lat": lat
                 };
 
-                route_decode_object[idx] = JSON.parse(route_json[idx].route_lng_lat.replace(/&quot;/g, '"'));
-                var distance = shortestDist(gps_lng_lat, route_decode_object[idx]);
+                //var distance = shortestDist(gps_lng_lat, route_decode_object[idx]);
+                var distance = gps_data_array[idx].offset_distance;
                 distance = Math.round(distance * 1000) / 1000;
 
                 var iconPoint = new BMap.Point(lng, lat);

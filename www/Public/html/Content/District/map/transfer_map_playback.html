@@ -1,31 +1,19 @@
 <div class="panel panel-primary" id="div_map" style="margin-bottom:0px;">
     <div class="panel panel-heading" style="margin-bottom:0px; height:40px;">
-        <h3 class="panel-title" style="float:left;">指定车辆历史回放</h3>
+        <h3 class="panel-title" style="float:left;">转移地图历史回放</h3>
         <button type="button" class="btn btn-default btn-xs" id="toFullScreen" onclick="toFullScreen();" style="float:right;">全屏</button>
         <button type="button" class="btn btn-default btn-xs" id="exitFullScreen" onclick="exitFullScreen();" style="float:right;display:none;">退出全屏</button>
     </div>
     <div class="panel panel-body" style="margin-bottom:1px">
         <div id="noSelectionAlert"></div>
         <div class="row">
-            <div class="col-md-2">
-                <label class="sr-only" for="selectTransportUnit">运输单位：</label>
-                <select class="form-control input-sm" id="selectTransportUnit" onchange="getVehicleList();">
-                    <option value='-1'>请选择运输单位</option>
-                </select>
-            </div>
-            <div class="col-md-2">
-                <label class="sr-only" for="selectVehicle">运输车辆：</label>
-                <select class="form-control input-sm" id="selectVehicle">
-                    <option value='-1'>请选择运输车辆</option>
-                </select>
-            </div>
             <div class="col-md-3">
                 <input type="date" id="beginDate" value="2014-01-13">
             </div>
             <div class="col-md-3">
                 <input type="date" id="endDate" value="2014-01-14">
             </div>
-            <div class="col-md-1">
+            <div class="col-md-2">
                 <label class="sr-only" for="selectSpeed">回放速度：</label>
                 <select class="form-control input-sm" id="selectSpeed">
                     <option value='1'>慢</option>
@@ -33,8 +21,8 @@
                     <option value='4'>快</option>
                 </select>
             </div>
-            <div class="col-md-1">
-                <button type="button" class="btn btn-info btn-sm" onclick="getVehicleRoute();">回放</button>
+            <div class="col-md-2">
+                <button type="button" class="btn btn-info btn-sm" onclick="getVehicleRoutes();">回放</button>
             </div>
         </div>
         <div id="map_container" style="width:auto">地图加载中...</div>
@@ -68,11 +56,6 @@ function setBMap() {
     };
     BaiduMap.setMapStyle(mapStyle);
 
-    var selectTransportUnit = $('#selectTransportUnit');
-    for (var idx in transport_unit_json) {
-        selectTransportUnit.append('<option id="" value="' + transport_unit_json[idx].transport_unit_id + '">' + transport_unit_json[idx].transport_unit_name + '</option>');
-    }
-
     $(".anchorBL").hide();
 }
 
@@ -84,95 +67,84 @@ function loadScript() {
 
 loadScript();
 
-function getVehicleList() {
-    if ($('#selectTransportUnit').val() == '-1') {
-        myAlertFail('请先选择运输单位');
-        return;
-    }
-    $.ajax({
-        type: "POST",
-        url: "{:U('Home/DistrictMap/ajax_get_vehicle_list')}",
-        timeout: 2000,
-        data: {
-            "transport_unit_id": $('#selectTransportUnit').val()
-        },
-        success: function(vehicleList) {
-            if (vehicleList == 'fail') {
-                myAlertFail("获取车辆列表失败");
-                return;
-            }
-            var selectVehicle = $('#selectVehicle');
-            selectVehicle.html("<option value='-1'>请选择运输车辆</option>");
-            for (var idx in transport_unit_json) {
-                selectVehicle.append('<option id="" value="' + vehicleList[idx].vehicle_id + '">车牌号为：' + vehicleList[idx].vehicle_num + '的' + vehicleList[idx].vehicle_type + '</option>');
-            }
-
-        },
-        error: function(XMLHttpRequest, textStatus, errorThrown) {
-            myAlertFail("获取车辆列表ajax请求失败");
-            console.log("Error:Ajax_Content_Load" + errorThrown);
-            console.log("XMLHttpRequest.status:" + XMLHttpRequest.status);
-            console.log("XMLHttpRequest.readyState:" + XMLHttpRequest.readyState);
-            console.log("textStatus:" + textStatus);
-        }
-    });
-}
-
-function getVehicleRoute() {
-    if ($('#selectTransportUnit').val() == '-1') {
-        myAlertFail('请先选择运输单位');
-        return;
-    }
-    if ($('#selectVehicle').val() == '-1') {
-        myAlertFail('请先选择运输车辆');
-        return;
-    }
+function getVehicleRoutes() {
     if ($('#beginDate').val() == '' || $('#endDate').val() == '') {
         myAlertFail('请先选择历史回放起始日期和终止日期');
         return;
     }
     $.ajax({
         type: "POST",
-        url: "{:U('Home/DistrictMap/ajax_get_vehicle_route')}",
-        timeout: 2000,
+        url: "{:U('Home/DistrictMap/ajax_get_vehicle_routes')}",
+        timeout: 5000,
         data: {
-            "vehicle_id": $('#selectVehicle').val(),
             "beginDate": $('#beginDate').val(),
             "endDate": $('#endDate').val()
         },
-        success: function(gps_data) {
-            if (gps_data == 'fail') {
-                myAlertFail("获取车辆历史数据失败");
+        success: function(gps_route_array) {
+            if (gps_route_array == 'fail') {
+                myAlertFail("获取转移地图历史数据失败");
                 return;
             }
+            console.log(gps_route_array);
             BaiduMap.clearOverlays();
-            var iconPoint = new BMap.Point(gps_data[0].bmap_longitude, gps_data[0].bmap_latitude);
-            var lorryIcon = new BMap.Icon("__PUBLIC__/image/truck_green.png", new BMap.Size(32, 40), {
+
+            var lorryIconGreen = new BMap.Icon("__PUBLIC__/image/truck_green.png", new BMap.Size(32, 40), {
                 anchor: new BMap.Size(16, 40),
                 imageOffset: new BMap.Size(0, 0)
             });
-            var vehicleMarker = new BMap.Marker(iconPoint, {
-                icon: lorryIcon,
-                title: "危废运输车辆"
+            var lorryIconYellow = new BMap.Icon("__PUBLIC__/image/truck_yellow.png", new BMap.Size(32, 40), {
+                anchor: new BMap.Size(16, 40),
+                imageOffset: new BMap.Size(0, 0)
             });
-            BaiduMap.addOverlay(vehicleMarker);
-            var routeLength = gps_data.length;
-            var gpsIdx = 1;
+            var lorryIconRed = new BMap.Icon("__PUBLIC__/image/truck_red.png", new BMap.Size(32, 40), {
+                anchor: new BMap.Size(16, 40),
+                imageOffset: new BMap.Size(0, 0)
+            });
 
-            function playback(gpsIdx) {
-                var newPoint = new BMap.Point(gps_data[gpsIdx].bmap_longitude, gps_data[gpsIdx].bmap_latitude);
-                vehicleMarker.setPosition(newPoint);
-                var speedFactor = $('#selectSpeed').val();
-                if (gps_data[gpsIdx].speed <= 20) {
-                    var intervalTime = 200 / speedFactor;
-                } else {
-                    var intervalTime = 4000 / gps_data[gpsIdx].speed / speedFactor;
+            var vehicleMarkerList = new Array();
+            var longestRouteLength = 0;
+            for (var idx in gps_route_array) {
+                if (!gps_route_array[idx]) {
+                    continue;
                 }
+                if (gps_route_array[idx].length > longestRouteLength) {
+                    longestRouteLength = gps_route_array[idx].length;
+                }
+                var iconPoint = new BMap.Point(gps_route_array[idx][0].bmap_longitude, gps_route_array[idx][0].bmap_latitude);
+                var vehicleMarker = new BMap.Marker(iconPoint, {
+                    icon: lorryIconGreen,
+                    title: "危废运输车辆"
+                });
+                BaiduMap.addOverlay(vehicleMarker);
+                vehicleMarkerList.push(vehicleMarker);
+            }
 
-                if (gpsIdx < routeLength) {
+            function playback(dataIdx) {
+                var speedFactor = $('#selectSpeed').val();
+                for (var idx in gps_route_array) {
+                    if (!gps_route_array[idx][dataIdx]) {
+                        continue;
+                    }
+                    var newPoint = new BMap.Point(gps_route_array[idx][dataIdx].bmap_longitude, gps_route_array[idx][dataIdx].bmap_latitude);
+                    vehicleMarkerList[idx].setPosition(newPoint);
+                    offsetDistance = gps_route_array[idx][dataIdx].offset_distance;
+                    if (offsetDistance < 0.5) {
+                        vehicleMarkerList[idx].setIcon(lorryIconGreen);
+                    } else if ((offsetDistance >= 0.5) && (offsetDistance < 1)) {
+                        vehicleMarkerList[idx].setIcon(lorryIconYellow);
+                    } else {
+                        vehicleMarkerList[idx].setIcon(lorryIconRed);
+                    }
+                    if (gps_route_array[idx][dataIdx].speed <= 20) {
+                        var intervalTime = 200 / speedFactor;
+                    } else {
+                        var intervalTime = 4000 / gps_route_array[idx][dataIdx].speed / speedFactor;
+                    }
+                }
+                if (dataIdx < longestRouteLength) {
                     setTimeout(function() {
-                        ++gpsIdx;
-                        playback(gpsIdx);
+                        ++dataIdx;
+                        playback(dataIdx);
                     }, intervalTime);
                 } else {
                     return;
@@ -181,7 +153,7 @@ function getVehicleRoute() {
             setTimeout(playback(0), 100);
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) {
-            myAlertFail("获取车辆历史数据ajax请求失败");
+            myAlertFail("获取转移地图历史数据ajax请求失败");
             console.log("Error:Ajax_Content_Load" + errorThrown);
             console.log("XMLHttpRequest.status:" + XMLHttpRequest.status);
             console.log("XMLHttpRequest.readyState:" + XMLHttpRequest.readyState);
