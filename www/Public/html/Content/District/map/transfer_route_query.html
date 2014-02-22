@@ -36,6 +36,9 @@
 if (typeof(intervalWarning) != 'undefined') {
     clearInterval(intervalWarning);
 }
+if (typeof(playbackTimeout) != 'undefined') {
+    clearTimeout(playbackTimeout);
+}
 
 function setBMap() {
     var windowHeight = $(window).height();

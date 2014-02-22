@@ -7,10 +7,10 @@
     <div class="panel panel-body" style="margin-bottom:1px">
         <div class="row" id="div_input-group">
             <div class="col-md-2">当偏移距离大于</div>
-            <input type="text" class="col-md-1" id="warningDistance" value="0.3" placeholder="">
+            <input type="text" class="col-md-1" id="warningDistance" value="0.5" placeholder="">
             <div class="col-md-3">千米时提醒</div>
             <div class="col-md-1">大于</div>
-            <input type="text" class="col-md-1" id="dangerDistance" value="0.6" placeholder="">
+            <input type="text" class="col-md-1" id="dangerDistance" value="1.0" placeholder="">
             <div class="col-md-2">千米时报警</div>
             <button type="button" class="col-md-1 btn btn-success btn-sm" id="setting" onclick="setting();">设置</button>
         </div>
@@ -22,6 +22,10 @@
 <script type="text/javascript" src="__PUBLIC__/js/fullscreen.js"></script>
 
 <script type="text/javascript">
+if (typeof(playbackTimeout) != 'undefined') {
+    clearTimeout(playbackTimeout);
+}
+
 var route_decode_object = new Array();
 var markerList = new Array();
 var polylineList = new Array();
@@ -29,8 +33,8 @@ var messageContent = new Array();
 var infoWindowOption = new Array();
 var infoWindowContent = new Array();
 
-var warningDistance = 0.3;
-var dangerDistance = 0.6;
+var warningDistance = 0.5;
+var dangerDistance = 1.0;
 
 function setBMap() {
     var windowHeight = $(window).height();
@@ -155,7 +159,6 @@ function transferWarning() {
                 });
 
                 marker.addEventListener("rightclick", function(e) {
-
                     var idx = this.getTitle() - '0';
                     var pointArray = new Array();
                     var lng, lat;
@@ -190,12 +193,12 @@ var intervalWarning = setInterval("transferWarning()", 15000);
 
 function setting() {
     if ($('#warningDistance').val() == null) {
-        warningDistance = 0.3;
+        warningDistance = 0.5;
     } else {
         warningDistance = $('#warningDistance').val();
     }
     if ($('#dangerDistance').val() == null) {
-        dangerDistance = 0.6;
+        dangerDistance = 1.0;
     } else {
         dangerDistance = $('#dangerDistance').val();
     }

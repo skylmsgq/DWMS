@@ -20,10 +20,10 @@
                 </select>
             </div>
             <div class="col-md-3">
-                <input type="date" id="beginDate" value="2014-01-13">
+                <input type="date" class="form-control input-sm" id="beginDate" value="2014-01-13">
             </div>
             <div class="col-md-3">
-                <input type="date" id="endDate" value="2014-01-14">
+                <input type="date" class="form-control input-sm" id="endDate" value="2014-01-14">
             </div>
             <div class="col-md-1">
                 <label class="sr-only" for="selectSpeed">回放速度：</label>
@@ -48,6 +48,12 @@
 <script type="text/javascript">
 if (typeof(intervalWarning) != 'undefined') {
     clearInterval(intervalWarning);
+}
+if (typeof(timeout) != 'undefined') {
+    clearTimeout(timeout);
+}
+if (typeof(playbackTimeout) != 'undefined') {
+    clearTimeout(playbackTimeout);
 }
 
 function setBMap() {
@@ -187,7 +193,7 @@ function getVehicleRoute() {
                     var intervalTime = 4000 / gps_data[dataIdx].speed / speedFactor;
                 }
                 if (dataIdx < routeLength) {
-                    setTimeout(function() {
+                    playbackTimeout = setTimeout(function() {
                         ++dataIdx;
                         playback(dataIdx);
                     }, intervalTime);

@@ -37,6 +37,9 @@
 if (typeof(intervalWarning) != 'undefined') {
     clearInterval(intervalWarning);
 }
+if (typeof(playbackTimeout) != 'undefined') {
+    clearTimeout(playbackTimeout);
+}
 
 var markerList_p = new Array();
 var messageContent_p = new Array();
