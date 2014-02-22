@@ -235,12 +235,24 @@ public class Scan4 extends ScanActivity implements OnClickListener {
     			 status=jObject.getString("status");
     			if (status.equals("1"))
     				{
-    				String res=rfid;
-    				if (addway.equals("0"))
-    					res+=" "+total+"公斤";
-    				else if (addway.equals("1"))
-    					res+=" "+total+"个";
-    				activity.addNewItemToList(res);
+    				
+    				if(!jObject.has("manifest_id"))
+    					activity.alertMessage("无联单信息，不可出库");
+    				else
+    				{
+    					int temp=Integer.parseInt(jObject.getString("mstatus"));
+    					if (temp==11)
+    					{
+    						String res=rfid;
+    						if (addway.equals("0"))
+    							res+=" "+total+"公斤";
+    						else if (addway.equals("1"))
+    							res+=" "+total+"个";
+    						activity.addNewItemToList(res);
+        				}
+    					else
+    						activity.alertMessage("当前联单状态不允许出库");
+    				}
     				}
     			else if (status.equals("2"))
     				activity.alertMessage("废物已经入库");
