@@ -1,0 +1,1 @@
+<?php if (!defined('THINK_PATH')) exit();?><h1>危废库存->危废在库查询</h1>

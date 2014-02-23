@@ -84,14 +84,6 @@ DWMS_sidebar_config = {
             "url": "<?php echo U('Home/ProductionWarehouse/storage_input_management');?>"
         }, {
             "id": 1,
-            "name": "危废在库查询",
-            "url": "<?php echo U('Home/ProductionWarehouse/storage_query');?>"
-        }, {
-            "id": 2,
-            "name": "危废出库管理",
-            "url": "<?php echo U('Home/ProductionWarehouse/storage_output_management');?>"
-        }, {
-            "id": 3,
             "name": "危废处置管理",
             "url": "#"
         }]
