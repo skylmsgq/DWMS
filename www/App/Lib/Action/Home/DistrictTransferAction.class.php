@@ -39,21 +39,17 @@ class DistrictTransferAction extends CommonAction{
 
 	// 危废转移->转移联单管理->生产单位转移联单
 	public function production_transfer_manifest(){
-		// $production_transfer_manifest = M( 'manifest' )->where( 'manifest_status=1 or manifest_status=4 or manifest_status=5' )->getField( 'manifest_id,manifest_num,manifest_add_time,manifest_status' );
-		// $production_transfer_manifest_json = json_encode( $production_transfer_manifest );
 		$manifest = M( 'manifest' );
 		$condition['jurisdiction_id'] = array('EQ', session( 'jurisdiction_id' ) );
 		$condition['_string'] = 'manifest_status=1 or manifest_status=4 or manifest_status=5';
 		$production_transfer_manifest = $manifest->join( 'production_unit ON manifest.production_unit_id = production_unit.production_unit_id' )->where( $condition )->select();
 		$production_transfer_manifest_json = json_encode( $production_transfer_manifest );
 
-		// $unit_name = M( 'production_unit' )->getField( 'production_unit_name' );
-		// $unit_json = json_encode( $unit_name );
-
 		$tmp_content=$this->fetch( './Public/html/Content/District/transfer/production_transfer_manifest.html' );
 		$tmp_content = "<script>manifest_json = $production_transfer_manifest_json; </script> $tmp_content";
 		$this->ajaxReturn( $tmp_content );
 	}
+
 	//危废转移->转移联单管理->生产单位转移联单: 详情页
 	public function production_transfer_manifest_page($manifest_id=""){
 		$manifest = M( 'manifest' )->where( array( 'manifest_id' =>$manifest_id ) )->find();

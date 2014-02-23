@@ -74,7 +74,7 @@ class ProductionManifestAction extends CommonAction{
 		// $manifest = M( 'manifest' )->where( array('production_unit_id' => session( 'production_unit_id' ) ) );
 		$manifest = M( 'manifest' );
 		$condition['production_unit_id'] = session('production_unit_id');
-		$condition['_string'] = 'manifest_status = 0 OR manifest_status = 1 OR manifest_status = 7 OR manifest_status = 8';
+		$condition['_string'] = 'manifest_status >= 0';
 		$manifest_data = $manifest->where($condition)->getField( 'manifest_id,manifest_num,manifest_add_time,manifest_status' );
 
 		$manifest_json = json_encode( $manifest_data ); 
@@ -102,7 +102,7 @@ class ProductionManifestAction extends CommonAction{
 		$manifest = M( 'manifest' )->where( array( 'manifest_id' =>$manifest_id ) )->find();
 		$production_unit = M( 'production_unit' )->where( array( 'production_unit_id' => session( 'production_unit_id' ) ) )->find();
 		$this->manifest = $manifest;
-		$this->unit = $production_unit;
+		$this->production_unit = $production_unit;
 
 		$manifest_id_json = json_encode( $manifest_id );
 		$manifest_status_json = json_encode( $manifest['manifest_status'] );
@@ -175,6 +175,8 @@ class ProductionManifestAction extends CommonAction{
 			break;
 		}
 		$manifest = M( 'manifest' ); 
+		$time = date( 'Y-m-d H:i:s', time() );
+		$data['manifest_modify_time'] = $time;
 		$data['manifest_id'] = $manifest_id;
 		$data['manifest_status'] = $manifest_status;
 		$manifest->save( $data );

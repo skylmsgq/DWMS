@@ -30,53 +30,28 @@ var c = new Array();
 var manifest_json = c.concat(production_manifest_json,reception_manifest_json);
 function setTable() {
     var tableData = new Array();
-    console.log(manifest_json);
-    // console.log(production_unit_name_json);
-    // console.log(transport_unit_name_json);
-    // console.log(reception_unit_name_json);
     for (var idx in manifest_json) {
         var itemData = new Array();
         itemData[0] = "" + manifest_json[idx].manifest_num;
-        itemData[1] = "" + manifest_json[idx].production_unit_id;
-        itemData[2] = "" + manifest_json[idx].transport_unit_id;
-        itemData[3] = "" + manifest_json[idx].reception_unit_id;
+        itemData[1] = "" + manifest_json[idx].manifest_modify_time;
+        if(manifest_json[idx].production_unit_name){
+            itemData[2] = "" + manifest_json[idx].production_unit_name;
+        }else{
+            itemData[2] = "" + manifest_json[idx].reception_unit_name;
+        }
         switch (manifest_json[idx].manifest_status) {
-            // case '0':
-            //     itemData[4] = "<span class='label label-primary'>产生单位已保存未提交</span>";
-            //     break;
-            // case '1':
-            //     itemData[4] = "<span class='label label-warning'>生产单位已提交运输单位未填写</span>";
-            //     break;
-            // case '2':
-            //     itemData[4] = "<span class='label label-success'>运输单位已填写未审核</span>";
-            //     break;
             case '3':
-                itemData[4] = "<span class='label label-warning'>运输单位已提交待审核</span>";
+                itemData[3] = "<span class='label label-warning'>运输单位已提交待审核</span>";
                 break;
-            // case '4':
-            //     itemData[4] = "<span class='label label-primary'>未通过生产单位待修改</span>";
-            //     break;
-            // case '5':
-            //     itemData[4] = "<span class='label label-primary'>生产单位已修改待审核</span>";
-            //     break;
-            // case '6':
-            //     itemData[4] = "<span class='label label-primary'>处置单位已确认未审核</span>";
-            //     break;
-            // case '7':
-            //     itemData[4] = "<span class='label label-primary'>已审核已通过</span>";
-            //     break;
-            // case '8':
-            //     itemData[4] = "<span class='label label-primary'>未通过处置单位待修改</span>";
-            //     break;  
             case '10':
-                itemData[4] = "<span class='label label-primary'>处置单位已提交待审核</span>";
+                itemData[3] = "<span class='label label-primary'>处置单位已提交待审核</span>";
                 break;  
             default:
-                itemData[4] = "<span class='label label-danger'>联单状态错误</span>";
+                itemData[3] = "<span class='label label-danger'>联单状态错误</span>";
                 break;
         }
 
-        itemData[5] = '<a href="#" onclick="fetch_model_page(\'./transfer_manifest_management_page?manifest_id=' + manifest_json[idx].manifest_id + '\')"><span class="label label-info"><span class="glyphicon glyphicon-wrench"></span> 操作</span><a>';
+        itemData[4] = '<a href="#" onclick="fetch_model_page(\'./transfer_manifest_management_page?manifest_id=' + manifest_json[idx].manifest_id + '\')"><span class="label label-info"><span class="glyphicon glyphicon-wrench"></span> 操作</span><a>';
         
         tableData.push(itemData);
     }
@@ -86,11 +61,9 @@ function setTable() {
         "aoColumns": [{
             "sTitle": "联单编号"
         }, {
-            "sTitle": "产生单位名称"
+            "sTitle": "提交日期"
         }, {
-            "sTitle": "运输单位名称"
-        }, {
-            "sTitle": "接受单位名称"
+            "sTitle": "产生/接受单位名称"
         }, {
             "sTitle": "联单状态"
         }, {

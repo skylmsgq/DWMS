@@ -13,7 +13,7 @@ class TransportManifestAction extends CommonAction{
 		//$manifest = M( 'manifest' )->where( array( array('transport_unit_id' => session( 'transport_unit_id' ) ), array('manifest_status' => 1,'manifest_status' => 2,'or') ) )->getField( 'manifest_id,manifest_num,manifest_add_time,manifest_status' );
 		$manifest = M( 'manifest' );
 		$condition['transport_unit_id'] = session('transport_unit_id');
-		$condition['_string'] = 'manifest_status=1 OR manifest_status=2 OR manifest_status=3 OR manifest_status=5 OR manifest_status=6';
+		$condition['_string'] = 'manifest_status>0';
 
 		$manifest_data = $manifest->where($condition)->getField( 'manifest_id,manifest_num,manifest_add_time,manifest_status' );
 
@@ -60,8 +60,6 @@ class TransportManifestAction extends CommonAction{
 		}
 		$data['manifest_status'] = $manifest_status;
 		$manifest->where( array( 'manifest_id' =>$manifest_id ) )->save( $data );
-
-
 	}
 
 // 转移联单->转移联单处理->修改页
@@ -86,10 +84,12 @@ class TransportManifestAction extends CommonAction{
 		$manifest = M( 'manifest' ); // 实例化record对象
 		$data = I( 'post.' );
 		$time = date( 'Y-m-d H:i:s', time() );
-
 		$data['manifest_modify_time'] = $time;
 		$manifest_status_old = I( 'post.manifest_status_old' );
 		switch ( $manifest_status_old ) {
+		case '2':
+			$manifest_status = 2;
+			break;
 		case '5':
 			$manifest_status = 6;
 			break;
@@ -129,17 +129,19 @@ class TransportManifestAction extends CommonAction{
 // 转移联单->转移联单处理->提交页->提交联单
 	public function transfer_manifest_handle_submited($manifest_id="") {
 		$manifest = M( 'manifest' );
+		$time = date( 'Y-m-d H:i:s', time() );
+		$data['manifest_modify_time'] = $time;
 		$data['manifest_id'] = $manifest_id;
 		$data['manifest_status'] = 3;
 		$manifest->save( $data );
 	}
 
 // 转移联单->转移联单查询
-	public function transfer_manifest_query() {
+	public function transfer_manifest_query(){
 		//$manifest = M( 'manifest' )->where( array( array('transport_unit_id' => session( 'transport_unit_id' ) ), array('manifest_status' => 1,'manifest_status' => 2,'or') ) )->getField( 'manifest_id,manifest_num,manifest_add_time,manifest_status' );
 		$manifest = M( 'manifest' );
 		$condition['transport_unit_id'] = session('transport_unit_id');
-		$condition['_string'] = 'manifest_status=2 OR manifest_status=3 OR manifest_status=5 OR manifest_status=6';
+		$condition['_string'] = 'manifest_status>1';
 		$manifest_data = $manifest->where($condition)->getField( 'manifest_id,manifest_num,manifest_add_time,manifest_status' );
 
 		$manifest_json = json_encode( $manifest_data );

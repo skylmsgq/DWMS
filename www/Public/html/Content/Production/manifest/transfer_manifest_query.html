@@ -27,8 +27,6 @@
 <!-- /.modal -->
 
 <script type="text/javascript">
-console.log(manifest_json);
-console.log(unit_json);
 function setTable() {
     var tableData = new Array();
     for (var idx in manifest_json) {
@@ -48,13 +46,43 @@ function setTable() {
             case '1':
                 itemData[3] = "<span class='label label-warning'>已提交待审核</span>";
                 break;
+            case '2':
+                itemData[3] = "<span class='label label-warning'>已提交待审核</span>";
+                break;
+            case '3':
+                itemData[3] = "<span class='label label-warning'>已提交待审核</span>";
+                break;
+            case '4':
+                itemData[3] = "<span class='label label-warning'>已提交待审核</span>";
+                break;
+            case '5':
+                itemData[3] = "<span class='label label-warning'>已提交待审核</span>";
+                break;
+            case '6':
+                itemData[3] = "<span class='label label-warning'>已提交待审核</span>";
+                break;
             case '7':
                 itemData[3] = "<span class='label label-danger'>未通过待修改</span>";
                 itemData[4] += itemModify;
                 break;
             case '8':
-                itemData[3] = "<span class='label label-primary'>已修改未提交</span>";
+                itemData[3] = "<span class='label label-info'>已修改未提交</span>";
                 itemData[4] += itemModify + itemSubmit;
+                break;
+            case '9':
+                itemData[3] = "<span class='label label-warning'>已提交待审核</span>";
+                break;
+            case '10':
+                itemData[3] = "<span class='label label-warning'>已提交待审核</span>";
+                break;
+            case '11':
+                itemData[3] = "<span class='label label-success'>已通过</span>";
+                break;
+            case '12':
+                itemData[3] = "<span class='label label-warning'>已提交待审核</span>";
+                break;
+            case '13':
+                itemData[3] = "<span class='label label-warning'>已提交待审核</span>";
                 break;
             default:
                 itemData[3] = "<span class='label label-danger'>备案状态错误</span>";

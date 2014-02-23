@@ -31,7 +31,7 @@
                     </td>
                     <td>所在区县</td>
                     <td>
-                        {$reception_unit.waste_location_county}
+                        {$reception_unit.reception_unit_county}
                     </td>
                 </tr>
                 <tr>
@@ -49,9 +49,8 @@
                     <td>
                         {$reception_unit.reception_unit_fax}
                     </td>
-                    <td>产废设施所在地</td>
+                    <td></td>
                     <td>
-                        {$reception_unit.waste_location}
                     </td>
                 </tr> 
             </table>
@@ -91,7 +90,7 @@
                     </td>
                     <td>危废外运目的</td>
                     <td>
-                        {$manifest.transport_goal}
+                        {$manifest.waste_transport_goal}
                     </td>
                 </tr>
                 <tr>
@@ -101,7 +100,7 @@
                     </td>
                     <td>危废发运人</td>
                     <td>
-                        {$manifest.shipper}
+                        {$manifest.waste_shipper}
                     </td>
                 </tr>
                 <tr>
@@ -220,7 +219,7 @@
                     </td>
                     <td>接收日期</td>
                     <td>
-                        <input type="text" name="receive_date" class="form-control input-sm" placeholder="接收日期">  
+                        <input type="date" name="receive_date" class="form-control input-sm" placeholder="接收日期">  
                     </td>
                 </tr>
                 <tr>
@@ -236,7 +235,7 @@
                 <tr>
                     <td>接受单位负责人审核日期</td>
                     <td>
-                        <input type="text" name="reception_unit_audit_date" class="form-control input-sm" placeholder="接受单位负责人审核日期">  
+                        <input type="date" name="reception_unit_audit_date" class="form-control input-sm" placeholder="接受单位负责人审核日期">  
                     </td>
                     <td></td>
                     <td>
@@ -255,8 +254,6 @@
 </center>
 
 <script type="text/javascript">
-console.log(manifest_id_json);
-console.log(manifest_status_json);
 function ajaxAction() {
     var form_serialize = "" + $('#manifest_request').serialize();
 

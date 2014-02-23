@@ -134,7 +134,7 @@ function ajaxAction(actionID, userIdx, actionValue) {
 
     $.ajax({
         type: "post",
-        url: "{:U(Home/DistrictBusiness/enterprise_user_management_ajaxpost)}",
+        url: "enterprise_user_management_ajaxpost",
         data: postdata,
         success: function(data) {
             console.log(data);
