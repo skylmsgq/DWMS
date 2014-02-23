@@ -13,8 +13,16 @@ class ReceptionWarehouseAction extends CommonAction{
 	public function storage_input_record($record_id="") {
 		$rfid = M( 'rfid' )->where( array( 'reception_unit_id' => session( 'reception_unit_id' ) ) )->select();
 		$rfid_json = json_encode( $rfid );
+		$pdname=array();
+		foreach ($rfid as $value) {
+		$pdu=$value['production_unit_id'];
+		//need to check later
+		$pdname[]=M('production_unit')->where("production_unit_id='$pdu'")->getField('production_unit_name');
+		//$pdname[]=$pdu;
+		}
+		$pd_json = json_encode( $pdname );
 		$tmp_content=$this->fetch( './Public/html/Content/Reception/warehouse/storage_input_record.html' );
-		$tmp_content="<script> record_json=$rfid_json; </script> $tmp_content";
+		$tmp_content="<script> record_json=$rfid_json; production_unit_name=$pd_json;</script> $tmp_content";
 		$this->ajaxReturn( $tmp_content );
 	}
 

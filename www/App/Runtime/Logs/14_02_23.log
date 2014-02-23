@@ -4168,3 +4168,493 @@ INFO: WriteHtmlCache Behavior ::run [ RunTime:0.001000s ]
 INFO: ShowRuntime Behavior ::run [ RunTime:0.001001s ]
 INFO: [ view_filter ] --END-- [ RunTime:0.005001s ]
 
+[ 2014-02-23T22:06:07+08:00 ] 127.0.0.1 /dwms/www/index.php/Home/ReceptionWarehouse/storage_input_record.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `rfid` [ RunTime:0.004001s ]
+SQL: SELECT * FROM `rfid` WHERE ( `reception_unit_id` = 1 )  [ RunTime:0.008000s ]
+INFO: [ view_parse ] --START--
+INFO: ParseTemplate Behavior ::run [ RunTime:0.021001s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.021001s ]
+INFO: [ view_filter ] --START--
+INFO: ContentReplace Behavior ::run [ RunTime:0.002000s ]
+INFO: TokenBuild Behavior ::run [ RunTime:0.001001s ]
+INFO: WriteHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: ShowRuntime Behavior ::run [ RunTime:0.002000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.007001s ]
+
+[ 2014-02-23T22:06:08+08:00 ] 127.0.0.1 /dwms/www/index.php/Home/ReceptionWarehouse/storage_query.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+INFO: [ view_parse ] --START--
+INFO: ParseTemplate Behavior ::run [ RunTime:0.021001s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.021001s ]
+INFO: [ view_filter ] --START--
+INFO: ContentReplace Behavior ::run [ RunTime:0.003001s ]
+INFO: TokenBuild Behavior ::run [ RunTime:0.002000s ]
+INFO: WriteHtmlCache Behavior ::run [ RunTime:0.001000s ]
+INFO: ShowRuntime Behavior ::run [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.008001s ]
+
+[ 2014-02-23T22:06:12+08:00 ] 127.0.0.1 /dwms/www/index.php/Home/ReceptionWarehouse/storage_input_record.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `rfid` [ RunTime:0.006001s ]
+SQL: SELECT * FROM `rfid` WHERE ( `reception_unit_id` = 1 )  [ RunTime:0.005000s ]
+INFO: [ view_parse ] --START--
+INFO: ParseTemplate Behavior ::run [ RunTime:0.020001s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.021001s ]
+INFO: [ view_filter ] --START--
+INFO: ContentReplace Behavior ::run [ RunTime:0.001000s ]
+INFO: TokenBuild Behavior ::run [ RunTime:0.002000s ]
+INFO: WriteHtmlCache Behavior ::run [ RunTime:0.001001s ]
+INFO: ShowRuntime Behavior ::run [ RunTime:0.002000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.006001s ]
+
+[ 2014-02-23T22:08:54+08:00 ] 127.0.0.1 /dwms/www/index.php/Home/ReceptionWarehouse/storage_query.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.003000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.003000s ]
+INFO: [ view_parse ] --START--
+INFO: ParseTemplate Behavior ::run [ RunTime:0.019001s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.020001s ]
+INFO: [ view_filter ] --START--
+INFO: ContentReplace Behavior ::run [ RunTime:0.002000s ]
+INFO: TokenBuild Behavior ::run [ RunTime:0.002000s ]
+INFO: WriteHtmlCache Behavior ::run [ RunTime:0.001000s ]
+INFO: ShowRuntime Behavior ::run [ RunTime:0.002001s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.007001s ]
+
+[ 2014-02-23T22:08:55+08:00 ] 127.0.0.1 /dwms/www/index.php/Home/ReceptionWarehouse/storage_input_record.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.003000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.003000s ]
+SQL: SHOW COLUMNS FROM `rfid` [ RunTime:0.009001s ]
+SQL: SELECT * FROM `rfid` WHERE ( `reception_unit_id` = 1 )  [ RunTime:0.007000s ]
+INFO: [ view_parse ] --START--
+INFO: ParseTemplate Behavior ::run [ RunTime:0.020001s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.020001s ]
+INFO: [ view_filter ] --START--
+INFO: ContentReplace Behavior ::run [ RunTime:0.002000s ]
+INFO: TokenBuild Behavior ::run [ RunTime:0.001001s ]
+INFO: WriteHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: ShowRuntime Behavior ::run [ RunTime:0.002000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.007001s ]
+
+[ 2014-02-23T22:09:01+08:00 ] 127.0.0.1 /dwms/www/index.php/Home/ReceptionWarehouse/storage_input_record_page?record_id=E00401007A93FAE3
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.003000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.003000s ]
+SQL: SHOW COLUMNS FROM `reception_unit_1` [ RunTime:0.009000s ]
+SQL: SELECT * FROM `reception_unit_1` WHERE ( `rfid_id` = 'E00401007A93FAE3' )  [ RunTime:0.011001s ]
+INFO: [ view_parse ] --START--
+INFO: ParseTemplate Behavior ::run [ RunTime:0.021001s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.021001s ]
+INFO: [ view_filter ] --START--
+INFO: ContentReplace Behavior ::run [ RunTime:0.002000s ]
+INFO: TokenBuild Behavior ::run [ RunTime:0.002001s ]
+INFO: WriteHtmlCache Behavior ::run [ RunTime:0.001000s ]
+INFO: ShowRuntime Behavior ::run [ RunTime:0.002000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.007001s ]
+
+[ 2014-02-23T22:09:13+08:00 ] 127.0.0.1 /dwms/www/index.php/Home/ReceptionWarehouse/storage_input_record_page?record_id=E00401004E0AD714
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `reception_unit_1` [ RunTime:0.006001s ]
+SQL: SELECT * FROM `reception_unit_1` WHERE ( `rfid_id` = 'E00401004E0AD714' )  [ RunTime:0.016001s ]
+INFO: [ view_parse ] --START--
+INFO: ParseTemplate Behavior ::run [ RunTime:0.020001s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.020001s ]
+INFO: [ view_filter ] --START--
+INFO: ContentReplace Behavior ::run [ RunTime:0.002000s ]
+INFO: TokenBuild Behavior ::run [ RunTime:0.002000s ]
+INFO: WriteHtmlCache Behavior ::run [ RunTime:0.001000s ]
+INFO: ShowRuntime Behavior ::run [ RunTime:0.002000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.007000s ]
+
+[ 2014-02-23T22:09:17+08:00 ] 127.0.0.1 /dwms/www/index.php/Home/ReceptionWarehouse/storage_input_record_page?record_id=E00401007A8A0DDE
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `reception_unit_1` [ RunTime:0.007001s ]
+SQL: SELECT * FROM `reception_unit_1` WHERE ( `rfid_id` = 'E00401007A8A0DDE' )  [ RunTime:0.008000s ]
+INFO: [ view_parse ] --START--
+INFO: ParseTemplate Behavior ::run [ RunTime:0.018001s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.018001s ]
+INFO: [ view_filter ] --START--
+INFO: ContentReplace Behavior ::run [ RunTime:0.001000s ]
+INFO: TokenBuild Behavior ::run [ RunTime:0.001000s ]
+INFO: WriteHtmlCache Behavior ::run [ RunTime:0.001001s ]
+INFO: ShowRuntime Behavior ::run [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.005001s ]
+
+[ 2014-02-23T22:10:57+08:00 ] 127.0.0.1 /dwms/www/index.php/Home/ReceptionWarehouse/storage_input_record_page?record_id=65B5736B
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `reception_unit_1` [ RunTime:0.003001s ]
+SQL: SELECT * FROM `reception_unit_1` WHERE ( `rfid_id` = '65B5736B' )  [ RunTime:0.013000s ]
+INFO: [ view_parse ] --START--
+INFO: ParseTemplate Behavior ::run [ RunTime:0.019001s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.019001s ]
+INFO: [ view_filter ] --START--
+INFO: ContentReplace Behavior ::run [ RunTime:0.002001s ]
+INFO: TokenBuild Behavior ::run [ RunTime:0.002000s ]
+INFO: WriteHtmlCache Behavior ::run [ RunTime:0.001000s ]
+INFO: ShowRuntime Behavior ::run [ RunTime:0.002000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.007001s ]
+
+[ 2014-02-23T22:15:26+08:00 ] 127.0.0.1 /dwms/www/index.php/Home/ReceptionWarehouse/storage_input_record_page?record_id=65B5736B
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.003000s ]
+SQL: SHOW COLUMNS FROM `reception_unit_1` [ RunTime:0.005001s ]
+SQL: SELECT * FROM `reception_unit_1` WHERE ( `rfid_id` = '65B5736B' )  [ RunTime:0.003000s ]
+INFO: [ view_parse ] --START--
+INFO: ParseTemplate Behavior ::run [ RunTime:0.020001s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.020001s ]
+INFO: [ view_filter ] --START--
+INFO: ContentReplace Behavior ::run [ RunTime:0.002000s ]
+INFO: TokenBuild Behavior ::run [ RunTime:0.001000s ]
+INFO: WriteHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: ShowRuntime Behavior ::run [ RunTime:0.002000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.007000s ]
+
+[ 2014-02-23T22:15:42+08:00 ] 127.0.0.1 /dwms/www/index.php/Home/ReceptionWarehouse/storage_input_record_page?record_id=65B5736B
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `reception_unit_1` [ RunTime:0.013000s ]
+SQL: SELECT * FROM `reception_unit_1` WHERE ( `rfid_id` = '65B5736B' )  [ RunTime:0.010001s ]
+INFO: [ view_parse ] --START--
+INFO: ParseTemplate Behavior ::run [ RunTime:0.021001s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.021001s ]
+INFO: [ view_filter ] --START--
+INFO: ContentReplace Behavior ::run [ RunTime:0.001000s ]
+INFO: TokenBuild Behavior ::run [ RunTime:0.002000s ]
+INFO: WriteHtmlCache Behavior ::run [ RunTime:0.001000s ]
+INFO: ShowRuntime Behavior ::run [ RunTime:0.002000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.006000s ]
+
+[ 2014-02-23T22:15:51+08:00 ] 127.0.0.1 /dwms/www/index.php/Home/ReceptionWarehouse/storage_input_record_page?record_id=17696552
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `reception_unit_1` [ RunTime:0.005000s ]
+SQL: SELECT * FROM `reception_unit_1` WHERE ( `rfid_id` = '17696552' )  [ RunTime:0.002000s ]
+INFO: [ view_parse ] --START--
+INFO: ParseTemplate Behavior ::run [ RunTime:0.016001s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.016001s ]
+INFO: [ view_filter ] --START--
+INFO: ContentReplace Behavior ::run [ RunTime:0.002000s ]
+INFO: TokenBuild Behavior ::run [ RunTime:0.001000s ]
+INFO: WriteHtmlCache Behavior ::run [ RunTime:0.001000s ]
+INFO: ShowRuntime Behavior ::run [ RunTime:0.002000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.006000s ]
+
+[ 2014-02-23T22:16:06+08:00 ] 127.0.0.1 /dwms/www/index.php/Home/ReceptionWarehouse/storage_input_record_page?record_id=17696552
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `reception_unit_1` [ RunTime:0.003001s ]
+SQL: SELECT * FROM `reception_unit_1` WHERE ( `rfid_id` = '17696552' )  [ RunTime:0.002000s ]
+INFO: [ view_parse ] --START--
+INFO: ParseTemplate Behavior ::run [ RunTime:0.019001s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.019001s ]
+INFO: [ view_filter ] --START--
+INFO: ContentReplace Behavior ::run [ RunTime:0.002000s ]
+INFO: TokenBuild Behavior ::run [ RunTime:0.002000s ]
+INFO: WriteHtmlCache Behavior ::run [ RunTime:0.001000s ]
+INFO: ShowRuntime Behavior ::run [ RunTime:0.002000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.007000s ]
+
+[ 2014-02-23T22:33:32+08:00 ] 127.0.0.1 /dwms/www/index.php/Home/ReceptionWarehouse/storage_input_record.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.003000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.003000s ]
+SQL: SHOW COLUMNS FROM `rfid` [ RunTime:0.002000s ]
+SQL: SELECT * FROM `rfid` WHERE ( `reception_unit_id` = 1 )  [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `production_unit` [ RunTime:0.004000s ]
+SQL: SELECT `production_unit_name` FROM `production_unit` WHERE ( production_unit_id='3' ) LIMIT 1   [ RunTime:0.002001s ]
+SQL: SELECT `production_unit_name` FROM `production_unit` WHERE ( production_unit_id='' ) LIMIT 1   [ RunTime:0.002000s ]
+SQL: SELECT `production_unit_name` FROM `production_unit` WHERE ( production_unit_id='1' ) LIMIT 1   [ RunTime:0.002000s ]
+SQL: SELECT `production_unit_name` FROM `production_unit` WHERE ( production_unit_id='1' ) LIMIT 1   [ RunTime:0.001000s ]
+SQL: SELECT `production_unit_name` FROM `production_unit` WHERE ( production_unit_id='1' ) LIMIT 1   [ RunTime:0.003000s ]
+SQL: SELECT `production_unit_name` FROM `production_unit` WHERE ( production_unit_id='1' ) LIMIT 1   [ RunTime:0.002000s ]
+SQL: SELECT `production_unit_name` FROM `production_unit` WHERE ( production_unit_id='1' ) LIMIT 1   [ RunTime:0.002000s ]
+INFO: [ view_parse ] --START--
+INFO: ParseTemplate Behavior ::run [ RunTime:0.023002s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.023002s ]
+INFO: [ view_filter ] --START--
+INFO: ContentReplace Behavior ::run [ RunTime:0.002000s ]
+INFO: TokenBuild Behavior ::run [ RunTime:0.001000s ]
+INFO: WriteHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: ShowRuntime Behavior ::run [ RunTime:0.002000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.007000s ]
+NOTIC: [8] Array to string conversion F:\apache\htdocs\dwms\www\App\Lib\Action\Home\ReceptionWarehouseAction.class.php 第 23 行.
+
+[ 2014-02-23T22:37:12+08:00 ] 127.0.0.1 /dwms/www/index.php/Home/ReceptionWarehouse/storage_input_record.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.003000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.003000s ]
+SQL: SHOW COLUMNS FROM `rfid` [ RunTime:0.004000s ]
+SQL: SELECT * FROM `rfid` WHERE ( `reception_unit_id` = 1 )  [ RunTime:0.008001s ]
+SQL: SHOW COLUMNS FROM `production_unit` [ RunTime:0.005000s ]
+SQL: SELECT `production_unit_name` FROM `production_unit` WHERE ( production_unit_id='3' ) LIMIT 1   [ RunTime:0.002000s ]
+SQL: SELECT `production_unit_name` FROM `production_unit` WHERE ( production_unit_id='' ) LIMIT 1   [ RunTime:0.002000s ]
+SQL: SELECT `production_unit_name` FROM `production_unit` WHERE ( production_unit_id='1' ) LIMIT 1   [ RunTime:0.002000s ]
+SQL: SELECT `production_unit_name` FROM `production_unit` WHERE ( production_unit_id='1' ) LIMIT 1   [ RunTime:0.003001s ]
+SQL: SELECT `production_unit_name` FROM `production_unit` WHERE ( production_unit_id='1' ) LIMIT 1   [ RunTime:0.002000s ]
+SQL: SELECT `production_unit_name` FROM `production_unit` WHERE ( production_unit_id='1' ) LIMIT 1   [ RunTime:0.002000s ]
+SQL: SELECT `production_unit_name` FROM `production_unit` WHERE ( production_unit_id='1' ) LIMIT 1   [ RunTime:0.001000s ]
+INFO: [ view_parse ] --START--
+INFO: ParseTemplate Behavior ::run [ RunTime:0.022001s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.022001s ]
+INFO: [ view_filter ] --START--
+INFO: ContentReplace Behavior ::run [ RunTime:0.001000s ]
+INFO: TokenBuild Behavior ::run [ RunTime:0.002000s ]
+INFO: WriteHtmlCache Behavior ::run [ RunTime:0.002001s ]
+INFO: ShowRuntime Behavior ::run [ RunTime:0.002000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.008001s ]
+NOTIC: [8] Array to string conversion F:\apache\htdocs\dwms\www\App\Lib\Action\Home\ReceptionWarehouseAction.class.php 第 23 行.
+
+[ 2014-02-23T22:39:28+08:00 ] 127.0.0.1 /dwms/www/index.php/Home/ReceptionWarehouse/storage_input_record.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.003000s ]
+SQL: SHOW COLUMNS FROM `rfid` [ RunTime:0.024001s ]
+SQL: SELECT * FROM `rfid` WHERE ( `reception_unit_id` = 1 )  [ RunTime:0.006001s ]
+SQL: SHOW COLUMNS FROM `production_unit` [ RunTime:0.012000s ]
+SQL: SELECT `production_unit_name` FROM `production_unit` WHERE ( production_unit_id='3' ) LIMIT 1   [ RunTime:0.017001s ]
+SQL: SELECT `production_unit_name` FROM `production_unit` WHERE ( production_unit_id='' ) LIMIT 1   [ RunTime:0.015001s ]
+SQL: SELECT `production_unit_name` FROM `production_unit` WHERE ( production_unit_id='1' ) LIMIT 1   [ RunTime:0.004000s ]
+SQL: SELECT `production_unit_name` FROM `production_unit` WHERE ( production_unit_id='1' ) LIMIT 1   [ RunTime:0.012001s ]
+SQL: SELECT `production_unit_name` FROM `production_unit` WHERE ( production_unit_id='1' ) LIMIT 1   [ RunTime:0.036002s ]
+SQL: SELECT `production_unit_name` FROM `production_unit` WHERE ( production_unit_id='1' ) LIMIT 1   [ RunTime:0.004000s ]
+SQL: SELECT `production_unit_name` FROM `production_unit` WHERE ( production_unit_id='1' ) LIMIT 1   [ RunTime:0.032002s ]
+INFO: [ view_parse ] --START--
+INFO: ParseTemplate Behavior ::run [ RunTime:0.021002s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.021002s ]
+INFO: [ view_filter ] --START--
+INFO: ContentReplace Behavior ::run [ RunTime:0.002000s ]
+INFO: TokenBuild Behavior ::run [ RunTime:0.002000s ]
+INFO: WriteHtmlCache Behavior ::run [ RunTime:0.001000s ]
+INFO: ShowRuntime Behavior ::run [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.007000s ]
+NOTIC: [8] Array to string conversion F:\apache\htdocs\dwms\www\App\Lib\Action\Home\ReceptionWarehouseAction.class.php 第 23 行.
+
+[ 2014-02-23T22:40:24+08:00 ] 127.0.0.1 /dwms/www/index.php/Home/ReceptionWarehouse/storage_input_record.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `rfid` [ RunTime:0.006000s ]
+SQL: SELECT * FROM `rfid` WHERE ( `reception_unit_id` = 1 )  [ RunTime:0.007001s ]
+SQL: SHOW COLUMNS FROM `production_unit` [ RunTime:0.004000s ]
+SQL: SELECT `production_unit_name` FROM `production_unit` WHERE ( production_unit_id='3' ) LIMIT 1   [ RunTime:0.007001s ]
+SQL: SELECT `production_unit_name` FROM `production_unit` WHERE ( production_unit_id='' ) LIMIT 1   [ RunTime:0.003000s ]
+SQL: SELECT `production_unit_name` FROM `production_unit` WHERE ( production_unit_id='1' ) LIMIT 1   [ RunTime:0.005000s ]
+SQL: SELECT `production_unit_name` FROM `production_unit` WHERE ( production_unit_id='1' ) LIMIT 1   [ RunTime:0.005000s ]
+SQL: SELECT `production_unit_name` FROM `production_unit` WHERE ( production_unit_id='1' ) LIMIT 1   [ RunTime:0.005001s ]
+SQL: SELECT `production_unit_name` FROM `production_unit` WHERE ( production_unit_id='1' ) LIMIT 1   [ RunTime:0.005000s ]
+SQL: SELECT `production_unit_name` FROM `production_unit` WHERE ( production_unit_id='1' ) LIMIT 1   [ RunTime:0.006000s ]
+INFO: [ view_parse ] --START--
+INFO: ParseTemplate Behavior ::run [ RunTime:0.024001s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.024001s ]
+INFO: [ view_filter ] --START--
+INFO: ContentReplace Behavior ::run [ RunTime:0.003000s ]
+INFO: TokenBuild Behavior ::run [ RunTime:0.002000s ]
+INFO: WriteHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: ShowRuntime Behavior ::run [ RunTime:0.003000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.010000s ]
+NOTIC: [8] Array to string conversion F:\apache\htdocs\dwms\www\App\Lib\Action\Home\ReceptionWarehouseAction.class.php 第 23 行.
+
+[ 2014-02-23T22:41:55+08:00 ] 127.0.0.1 /dwms/www/index.php/Home/ReceptionWarehouse/storage_input_record.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `rfid` [ RunTime:0.003001s ]
+SQL: SELECT * FROM `rfid` WHERE ( `reception_unit_id` = 1 )  [ RunTime:0.003000s ]
+INFO: [ view_parse ] --START--
+INFO: ParseTemplate Behavior ::run [ RunTime:0.023001s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.023001s ]
+INFO: [ view_filter ] --START--
+INFO: ContentReplace Behavior ::run [ RunTime:0.002000s ]
+INFO: TokenBuild Behavior ::run [ RunTime:0.001000s ]
+INFO: WriteHtmlCache Behavior ::run [ RunTime:0.001001s ]
+INFO: ShowRuntime Behavior ::run [ RunTime:0.002000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.008001s ]
+NOTIC: [8] Array to string conversion F:\apache\htdocs\dwms\www\App\Lib\Action\Home\ReceptionWarehouseAction.class.php 第 24 行.
+
+[ 2014-02-23T22:42:13+08:00 ] 127.0.0.1 /dwms/www/index.php/Home/ReceptionWarehouse/storage_input_record.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `rfid` [ RunTime:0.005000s ]
+SQL: SELECT * FROM `rfid` WHERE ( `reception_unit_id` = 1 )  [ RunTime:0.006000s ]
+INFO: [ view_parse ] --START--
+INFO: ParseTemplate Behavior ::run [ RunTime:0.022001s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.022001s ]
+INFO: [ view_filter ] --START--
+INFO: ContentReplace Behavior ::run [ RunTime:0.002000s ]
+INFO: TokenBuild Behavior ::run [ RunTime:0.002000s ]
+INFO: WriteHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: ShowRuntime Behavior ::run [ RunTime:0.003000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.009000s ]
+NOTIC: [8] Array to string conversion F:\apache\htdocs\dwms\www\App\Lib\Action\Home\ReceptionWarehouseAction.class.php 第 24 行.
+
+[ 2014-02-23T22:42:37+08:00 ] 127.0.0.1 /dwms/www/index.php/Home/ReceptionWarehouse/storage_input_record.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.003000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.004000s ]
+SQL: SHOW COLUMNS FROM `rfid` [ RunTime:0.004000s ]
+SQL: SELECT * FROM `rfid` WHERE ( `reception_unit_id` = 1 )  [ RunTime:0.003000s ]
+INFO: [ view_parse ] --START--
+INFO: ParseTemplate Behavior ::run [ RunTime:0.021001s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.021001s ]
+INFO: [ view_filter ] --START--
+INFO: ContentReplace Behavior ::run [ RunTime:0.002001s ]
+INFO: TokenBuild Behavior ::run [ RunTime:0.002000s ]
+INFO: WriteHtmlCache Behavior ::run [ RunTime:0.001000s ]
+INFO: ShowRuntime Behavior ::run [ RunTime:0.002000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.007001s ]
+NOTIC: [8] Array to string conversion F:\apache\htdocs\dwms\www\App\Lib\Action\Home\ReceptionWarehouseAction.class.php 第 24 行.
+
+[ 2014-02-23T22:42:57+08:00 ] 127.0.0.1 /dwms/www/index.php/Home/ReceptionWarehouse/storage_input_record.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.004000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.004000s ]
+SQL: SHOW COLUMNS FROM `rfid` [ RunTime:0.003001s ]
+SQL: SELECT * FROM `rfid` WHERE ( `reception_unit_id` = 1 )  [ RunTime:0.008000s ]
+INFO: [ view_parse ] --START--
+INFO: ParseTemplate Behavior ::run [ RunTime:0.021001s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.021001s ]
+INFO: [ view_filter ] --START--
+INFO: ContentReplace Behavior ::run [ RunTime:0.002001s ]
+INFO: TokenBuild Behavior ::run [ RunTime:0.002000s ]
+INFO: WriteHtmlCache Behavior ::run [ RunTime:0.001000s ]
+INFO: ShowRuntime Behavior ::run [ RunTime:0.002000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.007001s ]
+NOTIC: [8] Array to string conversion F:\apache\htdocs\dwms\www\App\Lib\Action\Home\ReceptionWarehouseAction.class.php 第 24 行.
+
+[ 2014-02-23T22:44:54+08:00 ] 127.0.0.1 /dwms/www/index.php/Home/ReceptionWarehouse/storage_input_record.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `rfid` [ RunTime:0.003000s ]
+SQL: SELECT * FROM `rfid` WHERE ( `reception_unit_id` = 1 )  [ RunTime:0.002001s ]
+INFO: [ view_parse ] --START--
+INFO: ParseTemplate Behavior ::run [ RunTime:0.023001s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.023001s ]
+INFO: [ view_filter ] --START--
+INFO: ContentReplace Behavior ::run [ RunTime:0.002000s ]
+INFO: TokenBuild Behavior ::run [ RunTime:0.002000s ]
+INFO: WriteHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: ShowRuntime Behavior ::run [ RunTime:0.002000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.008000s ]
+
+[ 2014-02-23T22:45:03+08:00 ] 127.0.0.1 /dwms/www/index.php/Home/ReceptionWarehouse/storage_input_record.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `rfid` [ RunTime:0.003000s ]
+SQL: SELECT * FROM `rfid` WHERE ( `reception_unit_id` = 1 )  [ RunTime:0.003000s ]
+INFO: [ view_parse ] --START--
+INFO: ParseTemplate Behavior ::run [ RunTime:0.021001s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.021001s ]
+INFO: [ view_filter ] --START--
+INFO: ContentReplace Behavior ::run [ RunTime:0.002000s ]
+INFO: TokenBuild Behavior ::run [ RunTime:0.001000s ]
+INFO: WriteHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: ShowRuntime Behavior ::run [ RunTime:0.001001s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.006001s ]
+
+[ 2014-02-23T22:46:10+08:00 ] 127.0.0.1 /dwms/www/index.php/Home/ReceptionWarehouse/storage_input_record.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002001s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002001s ]
+SQL: SHOW COLUMNS FROM `rfid` [ RunTime:0.003000s ]
+SQL: SELECT * FROM `rfid` WHERE ( `reception_unit_id` = 1 )  [ RunTime:0.002000s ]
+INFO: [ view_parse ] --START--
+INFO: ParseTemplate Behavior ::run [ RunTime:0.021001s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.022001s ]
+INFO: [ view_filter ] --START--
+INFO: ContentReplace Behavior ::run [ RunTime:0.002000s ]
+INFO: TokenBuild Behavior ::run [ RunTime:0.002001s ]
+INFO: WriteHtmlCache Behavior ::run [ RunTime:0.001000s ]
+INFO: ShowRuntime Behavior ::run [ RunTime:0.002000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.008001s ]
+NOTIC: [8] Array to string conversion F:\apache\htdocs\dwms\www\App\Lib\Action\Home\ReceptionWarehouseAction.class.php 第 24 行.
+
+[ 2014-02-23T22:48:01+08:00 ] 127.0.0.1 /dwms/www/index.php/Home/ReceptionWarehouse/storage_input_record.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.003000s ]
+SQL: SHOW COLUMNS FROM `rfid` [ RunTime:0.003000s ]
+SQL: SELECT * FROM `rfid` WHERE ( `reception_unit_id` = 1 )  [ RunTime:0.002000s ]
+INFO: [ view_parse ] --START--
+INFO: ParseTemplate Behavior ::run [ RunTime:0.020002s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.020002s ]
+INFO: [ view_filter ] --START--
+INFO: ContentReplace Behavior ::run [ RunTime:0.001000s ]
+INFO: TokenBuild Behavior ::run [ RunTime:0.002000s ]
+INFO: WriteHtmlCache Behavior ::run [ RunTime:0.001000s ]
+INFO: ShowRuntime Behavior ::run [ RunTime:0.002000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.006000s ]
+
+[ 2014-02-23T22:48:52+08:00 ] 127.0.0.1 /dwms/www/index.php/Home/ReceptionWarehouse/storage_input_record.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.003001s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.003001s ]
+SQL: SHOW COLUMNS FROM `rfid` [ RunTime:0.003000s ]
+SQL: SELECT * FROM `rfid` WHERE ( `reception_unit_id` = 1 )  [ RunTime:0.003000s ]
+SQL: SHOW COLUMNS FROM `production_unit` [ RunTime:0.004000s ]
+SQL: SELECT `production_unit_name` FROM `production_unit` WHERE ( production_unit_id='3' ) LIMIT 1   [ RunTime:0.002000s ]
+SQL: SELECT `production_unit_name` FROM `production_unit` WHERE ( production_unit_id='' ) LIMIT 1   [ RunTime:0.004001s ]
+SQL: SELECT `production_unit_name` FROM `production_unit` WHERE ( production_unit_id='1' ) LIMIT 1   [ RunTime:0.002000s ]
+SQL: SELECT `production_unit_name` FROM `production_unit` WHERE ( production_unit_id='1' ) LIMIT 1   [ RunTime:0.002000s ]
+SQL: SELECT `production_unit_name` FROM `production_unit` WHERE ( production_unit_id='1' ) LIMIT 1   [ RunTime:0.001000s ]
+SQL: SELECT `production_unit_name` FROM `production_unit` WHERE ( production_unit_id='1' ) LIMIT 1   [ RunTime:0.002000s ]
+SQL: SELECT `production_unit_name` FROM `production_unit` WHERE ( production_unit_id='1' ) LIMIT 1   [ RunTime:0.002000s ]
+INFO: [ view_parse ] --START--
+INFO: ParseTemplate Behavior ::run [ RunTime:0.024002s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.024002s ]
+INFO: [ view_filter ] --START--
+INFO: ContentReplace Behavior ::run [ RunTime:0.002000s ]
+INFO: TokenBuild Behavior ::run [ RunTime:0.002000s ]
+INFO: WriteHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: ShowRuntime Behavior ::run [ RunTime:0.002000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.008000s ]
+
+[ 2014-02-23T22:52:42+08:00 ] 127.0.0.1 /dwms/www/index.php/Home/ReceptionWarehouse/storage_input_record.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.003000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.003000s ]
+SQL: SHOW COLUMNS FROM `rfid` [ RunTime:0.003000s ]
+SQL: SELECT * FROM `rfid` WHERE ( `reception_unit_id` = 1 )  [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `production_unit` [ RunTime:0.004000s ]
+SQL: SELECT `production_unit_name` FROM `production_unit` WHERE ( production_unit_id='3' ) LIMIT 1   [ RunTime:0.004000s ]
+SQL: SELECT `production_unit_name` FROM `production_unit` WHERE ( production_unit_id='7' ) LIMIT 1   [ RunTime:0.006000s ]
+SQL: SELECT `production_unit_name` FROM `production_unit` WHERE ( production_unit_id='1' ) LIMIT 1   [ RunTime:0.003000s ]
+SQL: SELECT `production_unit_name` FROM `production_unit` WHERE ( production_unit_id='1' ) LIMIT 1   [ RunTime:0.003000s ]
+SQL: SELECT `production_unit_name` FROM `production_unit` WHERE ( production_unit_id='1' ) LIMIT 1   [ RunTime:0.003000s ]
+SQL: SELECT `production_unit_name` FROM `production_unit` WHERE ( production_unit_id='1' ) LIMIT 1   [ RunTime:0.002001s ]
+SQL: SELECT `production_unit_name` FROM `production_unit` WHERE ( production_unit_id='1' ) LIMIT 1   [ RunTime:0.002000s ]
+SQL: SELECT `production_unit_name` FROM `production_unit` WHERE ( production_unit_id='1' ) LIMIT 1   [ RunTime:0.001000s ]
+SQL: SELECT `production_unit_name` FROM `production_unit` WHERE ( production_unit_id='1' ) LIMIT 1   [ RunTime:0.001000s ]
+SQL: SELECT `production_unit_name` FROM `production_unit` WHERE ( production_unit_id='1' ) LIMIT 1   [ RunTime:0.002000s ]
+SQL: SELECT `production_unit_name` FROM `production_unit` WHERE ( production_unit_id='1' ) LIMIT 1   [ RunTime:0.003000s ]
+SQL: SELECT `production_unit_name` FROM `production_unit` WHERE ( production_unit_id='1' ) LIMIT 1   [ RunTime:0.002000s ]
+INFO: [ view_parse ] --START--
+INFO: ParseTemplate Behavior ::run [ RunTime:0.019001s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.020001s ]
+INFO: [ view_filter ] --START--
+INFO: ContentReplace Behavior ::run [ RunTime:0.002001s ]
+INFO: TokenBuild Behavior ::run [ RunTime:0.001000s ]
+INFO: WriteHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: ShowRuntime Behavior ::run [ RunTime:0.002000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.007001s ]
+

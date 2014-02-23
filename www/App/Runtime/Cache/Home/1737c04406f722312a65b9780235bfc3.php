@@ -1,4 +1,4 @@
-<div class="panel panel-primary">
+<?php if (!defined('THINK_PATH')) exit();?><div class="panel panel-primary">
     <div class="panel-heading">
     </div>
     <div class="panel-body">
@@ -25,7 +25,7 @@
  -->
 <script type="text/javascript">
 function setTable() {
-	//console.log(production_unit_name);
+	console.log(production_unit_name);
     var tableData = new Array();
     for (var idx in record_json) {
         var itemData = new Array();
