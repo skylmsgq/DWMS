@@ -29,16 +29,16 @@ class ProductionWarehouseAction extends CommonAction{
 		$this->ajaxReturn( $tmp_content );
 	}
 
-	// 危废库存->危废在库查询
-	public function storage_query() {
-		$tmp_content=$this->fetch( './Public/html/Content/Production/warehouse/storage_query.html' );
-		$this->ajaxReturn( $tmp_content );
-	}
+	// // 危废库存->危废在库查询
+	// public function storage_query() {
+	// 	$tmp_content=$this->fetch( './Public/html/Content/Production/warehouse/storage_query.html' );
+	// 	$this->ajaxReturn( $tmp_content );
+	// }
 
-	// 危废库存->危废出库管理
-	public function storage_output_management() {
-		$tmp_content=$this->fetch( './Public/html/Content/Production/warehouse/storage_output_management.html' );
-		$this->ajaxReturn( $tmp_content );
-	}
+	// // 危废库存->危废出库管理
+	// public function storage_output_management() {
+	// 	$tmp_content=$this->fetch( './Public/html/Content/Production/warehouse/storage_output_management.html' );
+	// 	$this->ajaxReturn( $tmp_content );
+	// }
 }
 ?>

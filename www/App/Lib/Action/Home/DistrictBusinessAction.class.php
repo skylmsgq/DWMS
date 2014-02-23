@@ -60,9 +60,19 @@ class DistrictBusinessAction extends CommonAction{
 	public function transfer_manifest_management() {
 		// $manifest = M( 'manifest' )->where( 'manifest_status=1' )->getField( 'manifest_id,production_unit_id,transport_unit_id,reception_unit_id,manifest_num,manifest_add_time.manifest_status' );
 		// $manifest_json = json_encode( $manifest );
-		$manifest = M( 'manifest' )->where( 'manifest_status = 3 OR manifest_status = 10 ' )->getField( 'manifest_id,production_unit_id,transport_unit_id,reception_unit_id,manifest_num,manifest_add_time,manifest_status' );
-		$manifest_json = json_encode( $manifest );
+		// $manifest = M( 'manifest' )->where( 'manifest_status = 3 OR manifest_status = 10 ' )->getField( 'manifest_id,production_unit_id,transport_unit_id,reception_unit_id,manifest_num,manifest_add_time,manifest_status' );
+		// $manifest_json = json_encode( $manifest );
 
+		$manifest = M( 'manifest' );
+		$condition['jurisdiction_id'] = array('EQ', session( 'jurisdiction_id' ) );
+		$condition['manifest_status'] = array('EQ', 3);
+		$production_manifest = $manifest->join( 'production_unit ON manifest.production_unit_id = production_unit.production_unit_id' )->where( $condition )->select();
+		$production_manifest_json = json_encode( $production_manifest );
+
+		$condition['jurisdiction_id'] = array('EQ', session( 'jurisdiction_id' ) );
+		$condition['manifest_status'] = array('EQ', 10);
+		$reception_manifest = $manifest->join( 'reception_unit ON manifest.reception_unit_id = reception_unit.reception_unit_id' )->where( $condition )->select();
+		$reception_manifest_json = json_encode( $reception_manifest );
 		// $production_unit = M( 'production_unit' )->where( array( 'production_unit_id' => $record['production_unit_id'] ) )->find();
 		// $transport_unit = M( 'transport_unit' )->where( array( 'transport_unit_id' => $record['transport_unit_id'] ) )->find();
 		// $reception_unit = M( 'reception_unit' )->where( array( 'reception_unit_id' => $record['reception_unit_id'] ) )->find();
@@ -78,13 +88,11 @@ class DistrictBusinessAction extends CommonAction{
 		// $reception_unit_name = M( 'reception_unit' )->getField( 'reception_unit_name' );
 		// $reception_unit_name_json = json_encode( $reception_unit_name );
 
-		if( $manifest_json == null ){
-			$this->ajaxReturn( "联单没有找到：" .  $manifest_json );
-		} else{
-				$tmp_content=$this->fetch( './Public/html/Content/District/business/transfer_manifest_management.html' );
-				$tmp_content = "<script>manifest_json = $manifest_json; </script> $tmp_content";
-				$this->ajaxReturn( $tmp_content );
-		}
+		
+		$tmp_content=$this->fetch( './Public/html/Content/District/business/transfer_manifest_management.html' );
+		$tmp_content = "<script>production_manifest_json = $production_manifest_json;reception_manifest_json = $reception_manifest_json </script> $tmp_content";
+		$this->ajaxReturn( $tmp_content );
+		
 	}
 		// else if ( $production_unit_name_json == null ) {
 		// 		$this->ajaxReturn( "生产单位表没有找到：" .  $manifest_json );
