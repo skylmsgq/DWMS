@@ -233,5 +233,47 @@ class DistrictMapAction extends CommonAction{
 		}
 	}
 
+	// GPS数据模拟器
+	public function gps_data_simulator(){
+		$condition['device_type_id'] = array('EQ', 0);
+		$device = M( 'device' )->where( $condition )->select();
+		if ( $device ) {
+			$device_json = json_encode( $device );
+			$tmp_content = $this->fetch( './Public/html/Content/District/map/gps_data_simulator.html' );
+			$tmp_content = "<script>device_json=$device_json; </script> $tmp_content";
+			$this->ajaxReturn( $tmp_content );
+		} else {
+			$this->ajaxReturn( "加载页面失败，请重新点击侧边栏加载页面。" );
+		}
+	}
+
+	// GPS数据模拟器：GPS数据接受
+	public function ajax_gps_data_receiver(){
+		$device_serial_num = I( 'post.device_serial_num' );
+		$gps_data_array = I( 'post.route_lng_lat' );
+		$gps_data_array =  htmlspecialchars_decode( $gps_data_array );
+		$gps_data_array = json_decode( $gps_data_array );
+
+		$gps_table_name = "gps_" . $device_serial_num;
+		$gps = M( $gps_table_name );
+		//$time = date( 'Y-m-d H:i:s', time() );
+		$time = date( 'Y-m-d H:i:s', strtotime( '2014-02-20 08:00:00' ) );
+		for ( $idx = 0; $idx < count( $gps_data_array ); ++$idx ) {
+			$time = date( 'Y-m-d H:i:s', strtotime($time) + 10 );
+			$data['datetime'] = $time;
+			$data['bmap_longitude'] = $gps_data_array[$idx]->lng;
+			$data['bmap_latitude'] = $gps_data_array[$idx]->lat;
+			$data['status'] = 0;
+
+			$gps->add( $data );
+		}
+		if ( $idx == count( $gps_data_array ) ) {
+			$this->ajaxReturn( 'success' );
+		} else {
+			$this->ajaxReturn( 'fail' );
+		}
+
+	}
+
 }
 ?>

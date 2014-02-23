@@ -1,23 +1,23 @@
 <div class="panel panel-primary" style="margin-bottom:0px;">
     <div class="panel panel-heading" style="margin-bottom:0px; height:40px;">
-        <h3 class="panel-title" style="float:left;">运输路线规划</h3>
+        <h3 class="panel-title" style="float:left;">GPS数据模拟</h3>
         <button type="button" class="btn btn-default btn-xs" id="toFullScreen" onclick="toFullScreen();" style="float:right;">全屏</button>
         <button type="button" class="btn btn-default btn-xs" id="exitFullScreen" onclick="exitFullScreen();" style="float:right;display:none;">退出全屏</button>
     </div>
     <div class="panel panel-body" style="margin-bottom:1px">
         <div id="noSelectionAlert"></div>
         <div class="row">
-            <div class="col-md-3">
-                <label class="sr-only" for="selectProductionUnit">产生单位：</label>
-                <select class="form-control input-sm" id="selectProductionUnit">
-                    <option>请选择生产单位</option>
+            <div class="col-md-2">
+                <label class="sr-only" for="selectGPS">GPS：</label>
+                <select class="form-control input-sm" id="selectGPS" value='-1'>
+                    <option>请选择GPS</option>
                 </select>
             </div>
-            <div class="col-md-3">
-                <label class="sr-only" for="selectReceptionUnit">接受单位：</label>
-                <select class="form-control input-sm" id="selectReceptionUnit">
-                    <option>请选择接受单位</option>
-                </select>
+            <div class="col-md-2">
+                <input type="text" class="form-control input-sm" id="startPoint" value="117.008434,30.606801">
+            </div>
+            <div class="col-md-2">
+                <input type="text" class="form-control input-sm" id="endPoint" value="117.078574,30.563773">
             </div>
             <div class="col-md-2">
                 <label class="sr-only" for="selectStrategy">驾车策略：</label>
@@ -57,7 +57,7 @@ function setBMap() {
     $("#map_container").css("height", "" + windowHeight - 350 + "px");
 
     BaiduMap = new BMap.Map("map_container"); // 创建Map实例
-    BaiduMap.centerAndZoom("上海", 11); // 初始化地图,设置中心点坐标和地图级别
+    BaiduMap.centerAndZoom("安庆", 11); // 初始化地图,设置中心点坐标和地图级别
     BaiduMap.addControl(new BMap.NavigationControl()); // 添加默认缩放平移控件
     BaiduMap.addControl(new BMap.ScaleControl()); // 添加默认比例尺控件
     BaiduMap.addControl(new BMap.OverviewMapControl()); //添加默认缩略地图控件
@@ -70,13 +70,9 @@ function setBMap() {
     };
     BaiduMap.setMapStyle(mapStyle);
 
-    var selectProductionUnit = $('#selectProductionUnit');
-    for (var idx in production_unit_json) {
-        selectProductionUnit.append('<option id="" value="' + production_unit_json[idx].production_unit_id + '">' + production_unit_json[idx].production_unit_name + '</option>');
-    }
-    var selectReceptionUnit = $('#selectReceptionUnit');
-    for (var idx in reception_unit_json) {
-        selectReceptionUnit.append('<option id="" value="' + reception_unit_json[idx].reception_unit_id + '">' + reception_unit_json[idx].reception_unit_name + '</option>');
+    var selectGPS = $('#selectGPS');
+    for (var idx in device_json) {
+        selectGPS.append('<option id="" value="' + device_json[idx].device_serial_num + '">' + device_json[idx].device_serial_num + '</option>');
     }
 
     $(".anchorBL").hide();
@@ -92,6 +88,7 @@ loadScript();
 
 var path = new Array();
 var route_detail = '';
+var p1, p2;
 var routePolicy = [BMAP_DRIVING_POLICY_LEAST_TIME, BMAP_DRIVING_POLICY_LEAST_DISTANCE, BMAP_DRIVING_POLICY_AVOID_HIGHWAYS];
 
 var searchComplete = function(results) {
@@ -121,8 +118,8 @@ var searchComplete = function(results) {
             BaiduMap.setViewport([p1,p2]);   //调整到最佳视野
         },1000);*/
 
-        //console.log(path);
-        //console.log(route_detail);
+        console.log(path);
+        console.log(route_detail);
 
     } else if (transit.getStatus() == BMAP_STATUS_UNKNOWN_ROUTE) { //导航结果未知。对应数值“3”。
         return;
@@ -152,22 +149,14 @@ function search() {
 
     transit = new BMap.DrivingRoute(BaiduMap, options);
 
-    var p1_lng, p1_lat;
-    var p2_lng, p2_lat;
-    var selectProductionUnit = $('#selectProductionUnit');
-    for (var idx in production_unit_json) {
-        if (production_unit_json[idx].production_unit_id == selectProductionUnit.val()) {
-            p1_lng = production_unit_json[idx].production_unit_longitude;
-            p1_lat = production_unit_json[idx].production_unit_latitude;
-        }
-    }
-    var selectReceptionUnit = $('#selectReceptionUnit');
-    for (var idx in reception_unit_json) {
-        if (reception_unit_json[idx].reception_unit_id == selectReceptionUnit.val()) {
-            p2_lng = reception_unit_json[idx].reception_unit_longitude;
-            p2_lat = reception_unit_json[idx].reception_unit_latitude;
-        }
-    }
+    var p1_lng_lat, p1_lng, p1_lat;
+    var p2_lng_lat, p2_lng, p2_lat;
+    p1_lng_lat = $('#startPoint').val().split(',');
+    p1_lng = p1_lng_lat[0];
+    p1_lat = p1_lng_lat[1];
+    p2_lng_lat = $('#endPoint').val().split(',');
+    p2_lng = p2_lng_lat[0];
+    p2_lat = p2_lng_lat[1];
     var p1 = new BMap.Point(p1_lng, p1_lat);
     var p2 = new BMap.Point(p2_lng, p2_lat);
     transit.search(p1, p2);
@@ -178,27 +167,28 @@ function submit() {
         myAlertFail("数据为空，不能提交");
         return;
     }
-    /*
-    var BMapPointArray = new Array();
-    for (var point_idx in path) {
-        var BMapPoint = {
-            "lng": path[point_idx].lng,
-            "lat": path[point_idx].lat
+
+    var pathPointArray = new Array();
+    for (var pointIdx in path) {
+        var lngString = "" + path[pointIdx].lng;
+        var latString = "" + path[pointIdx].lat;
+        var newPoint = {
+            "lng": lngString,
+            "lat": latString,
         };
-        BMapPointArray.push(BMapPoint);
+        pathPointArray.push(newPoint);
     }
-    */
+
     $.ajax({
         type: "POST",
-        url: "{:U('Home/DistrictMap/ajax_transfer_route_plan')}",
-        timeout: 2000,
+        url: "{:U('Home/DistrictMap/ajax_gps_data_receiver')}",
+        timeout: 30000,
         data: {
-            "production_unit_id": $('#selectProductionUnit').val(),
-            "reception_unit_id": $('#selectReceptionUnit').val(),
-            "route_lng_lat": JSON.stringify(path),
-            "route_detail": route_detail
+            "device_serial_num": $('#selectGPS').val(),
+            "route_lng_lat": JSON.stringify(pathPointArray),
         },
         success: function(data) {
+            console.log(data);
             switch (data) {
                 case 'exist':
                     myAlertFail("此生产单位到此接受单位的路线已存在，需要调整请删除后重新规划");
