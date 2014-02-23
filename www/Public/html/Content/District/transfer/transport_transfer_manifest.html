@@ -32,7 +32,7 @@ function setTable() {
         var itemData = new Array();
         itemData[0] = "" + manifest_json[idx].manifest_num;
         itemData[1] = "" + manifest_json[idx].manifest_add_time;
-        itemData[2] = "" + unit_json;
+        itemData[2] = "" + manifest_json[idx].transport_unit_name;
         switch (manifest_json[idx].manifest_status) {
             case '0':
                 itemData[3] = "<span class='label label-primary'>产生单位已保存未提交</span>";

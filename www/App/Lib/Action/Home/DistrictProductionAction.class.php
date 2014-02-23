@@ -26,9 +26,21 @@ class DistrictProductionAction extends CommonAction{
 		$this->ajaxReturn( $tmp_content );
 	}
 
-	// 危废产生单位->危险废物台账->危废产生月报统计
+	// 危废产生单位->危险废物台账->危废产生统计
 	public function waste_account_monthly_statistics(){
-		$tmp_content=$this->fetch( './Public/html/Content/District/production/waste_account_monthly_statistics.html' );
+		$production_unit = M( 'production_unit' )->where( array( 'jurisdiction_id' =>session('jurisdiction_id') ) )->select();
+		$production_unit_json = json_encode($production_unit);
+		$tmp_content = $this->fetch( './Public/html/Content/District/production/waste_account_monthly_statistics.html' );
+		$tmp_content = "<script>production_unit_json = $production_unit_json;</script> $tmp_content";
+		$this->ajaxReturn( $tmp_content );
+	}
+
+	// 危废产生单位->危险废物台账->危废产生统计->详情
+	public function waste_account_monthly_statistics_page($production_unit_id=""){
+		$rfid = M( 'rfid' )->where( array( 'production_unit_id' =>$production_unit_id ) )->select();
+		$rfid_json = json_encode( $rfid );
+		$tmp_content = $this->fetch( './Public/html/Content/District/production/waste_account_monthly_statistics_page.html' );
+		$tmp_content = "<script>rfid_json = $rfid_json;</script> $tmp_content";
 		$this->ajaxReturn( $tmp_content );
 	}
 
