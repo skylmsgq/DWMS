@@ -30,11 +30,15 @@
     </div>
 </div>
 
+<script type="text/javascript" src="__PUBLIC__/js/fullscreen.js"></script>
 <script type="text/javascript" src="__PUBLIC__/js/myAlert.js"></script>
 
 <script type="text/javascript">
 if (typeof(intervalWarning) != 'undefined') {
     clearInterval(intervalWarning);
+}
+if (typeof(playbackTimeout) != 'undefined') {
+    clearTimeout(playbackTimeout);
 }
 
 function setBMap() {
@@ -73,9 +77,9 @@ loadScript();
 
 function searchRoute() {
     $.ajax({
-        type: 'post',
+        type: 'POST',
         url: "{:U('Home/DistrictMap/ajax_search_route')}",
-        dataType: 'json',
+        dataType: 'JSON',
         data: {
             "production_unit_id": $('#selectProductionUnit').val(),
             "reception_unit_id": $('#selectReceptionUnit').val()
@@ -90,10 +94,9 @@ function searchRoute() {
                 var route_decode = route_object.route_lng_lat.replace(/&quot;/g, '"');
                 var route_decode_object = JSON.parse(route_decode);
                 var pointArray = new Array();
-                var lng, lat;
                 for (var pointIdx in route_decode_object) {
-                    lng = route_decode_object[pointIdx].lng;
-                    lat = route_decode_object[pointIdx].lat;
+                    var lng = route_decode_object[pointIdx].lng;
+                    var lat = route_decode_object[pointIdx].lat;
                     pointArray.push(new BMap.Point(lng, lat));
                 }
                 var polyline = new BMap.Polyline(pointArray, {
@@ -107,7 +110,7 @@ function searchRoute() {
             $(".anchorBL").hide();
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) {
-            myAlertFail("获取路线失败");
+            myAlertFail("获取路线ajax请求失败");
             console.log("Error:Ajax_Content_Load" + errorThrown);
             console.log("XMLHttpRequest.status:" + XMLHttpRequest.status);
             console.log("XMLHttpRequest.readyState:" + XMLHttpRequest.readyState);
@@ -133,7 +136,7 @@ function deleteRoute() {
             }
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) {
-            myAlertFail("删除路线失败");
+            myAlertFail("删除路线ajax请求失败");
             console.log("Error:Ajax_Content_Load" + errorThrown);
             console.log("XMLHttpRequest.status:" + XMLHttpRequest.status);
             console.log("XMLHttpRequest.readyState:" + XMLHttpRequest.readyState);

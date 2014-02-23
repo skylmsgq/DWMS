@@ -20,10 +20,10 @@
                 </select>
             </div>
             <div class="col-md-3">
-                <input type="date" id="beginDate" value="2014-01-13">
+                <input type="date" class="form-control input-sm" id="beginDate" value="2014-01-13">
             </div>
             <div class="col-md-3">
-                <input type="date" id="endDate" value="2014-01-14">
+                <input type="date" class="form-control input-sm" id="endDate" value="2014-01-14">
             </div>
             <div class="col-md-1">
                 <label class="sr-only" for="selectSpeed">回放速度：</label>
@@ -41,13 +41,15 @@
     </div>
 </div>
 
-<script type="text/javascript" src="__PUBLIC__/js/shortestDist.js"></script>
 <script type="text/javascript" src="__PUBLIC__/js/fullscreen.js"></script>
 <script type="text/javascript" src="__PUBLIC__/js/myAlert.js"></script>
 
 <script type="text/javascript">
 if (typeof(intervalWarning) != 'undefined') {
     clearInterval(intervalWarning);
+}
+if (typeof(playbackTimeout) != 'undefined') {
+    clearTimeout(playbackTimeout);
 }
 
 function setBMap() {
@@ -131,6 +133,10 @@ function getVehicleRoute() {
         myAlertFail('请先选择历史回放起始日期和终止日期');
         return;
     }
+    if ($('#beginDate').val() >= $('#endDate').val()) {
+        myAlertFail('终止日期必须晚于起始日期');
+        return;
+    }
     $.ajax({
         type: "POST",
         url: "{:U('Home/DistrictMap/ajax_get_vehicle_route')}",
@@ -140,45 +146,62 @@ function getVehicleRoute() {
             "beginDate": $('#beginDate').val(),
             "endDate": $('#endDate').val()
         },
-        success: function(gps_data) {
-            if (gps_data == 'fail') {
+        success: function(gpsRoute) {
+            if (gpsRoute == 'fail') {
                 myAlertFail("获取车辆历史数据失败");
                 return;
             }
+            if (typeof(playbackTimeout) != 'undefined') {
+                clearTimeout(playbackTimeout);
+            }
             BaiduMap.clearOverlays();
-            var iconPoint = new BMap.Point(gps_data[0].bmap_longitude, gps_data[0].bmap_latitude);
-            var lorryIcon = new BMap.Icon("__PUBLIC__/image/truck_green.png", new BMap.Size(32, 40), {
+
+            var lorryIconGreen = new BMap.Icon("__PUBLIC__/image/truck_green.png", new BMap.Size(32, 40), {
                 anchor: new BMap.Size(16, 40),
                 imageOffset: new BMap.Size(0, 0)
             });
+            var lorryIconYellow = new BMap.Icon("__PUBLIC__/image/truck_yellow.png", new BMap.Size(32, 40), {
+                anchor: new BMap.Size(16, 40),
+                imageOffset: new BMap.Size(0, 0)
+            });
+            var lorryIconRed = new BMap.Icon("__PUBLIC__/image/truck_red.png", new BMap.Size(32, 40), {
+                anchor: new BMap.Size(16, 40),
+                imageOffset: new BMap.Size(0, 0)
+            });
+
+            var iconPoint = new BMap.Point(gpsRoute[0].bmap_longitude, gpsRoute[0].bmap_latitude);
             var vehicleMarker = new BMap.Marker(iconPoint, {
-                icon: lorryIcon,
+                icon: lorryIconGreen,
                 title: "危废运输车辆"
             });
             BaiduMap.addOverlay(vehicleMarker);
-            var routeLength = gps_data.length;
-            var gpsIdx = 1;
 
-            function playback(gpsIdx) {
-                var newPoint = new BMap.Point(gps_data[gpsIdx].bmap_longitude, gps_data[gpsIdx].bmap_latitude);
+            var routeLength = gpsRoute.length;
+            var dataIdx = 1;
+
+            function playback(dataIdx) {
+                var newPoint = new BMap.Point(gpsRoute[dataIdx].bmap_longitude, gpsRoute[dataIdx].bmap_latitude);
                 vehicleMarker.setPosition(newPoint);
-                var speedFactor = $('#selectSpeed').val();
-                if (gps_data[gpsIdx].speed <= 20) {
-                    var intervalTime = 200 / speedFactor;
+                if (gpsRoute[dataIdx].offset_distance < 0.5) {
+                    vehicleMarker.setIcon(lorryIconGreen);
+                } else if ((gpsRoute[dataIdx].offset_distance >= 0.5) && (gpsRoute[dataIdx].offset_distance < 1)) {
+                    vehicleMarker.setIcon(lorryIconYellow);
                 } else {
-                    var intervalTime = 4000 / gps_data[gpsIdx].speed / speedFactor;
+                    vehicleMarker.setIcon(lorryIconRed);
                 }
 
-                if (gpsIdx < routeLength) {
-                    setTimeout(function() {
-                        ++gpsIdx;
-                        playback(gpsIdx);
+                var intervalTime = 200 / $('#selectSpeed').val();
+
+                if (dataIdx < routeLength) {
+                    playbackTimeout = setTimeout(function() {
+                        ++dataIdx;
+                        playback(dataIdx);
                     }, intervalTime);
                 } else {
                     return;
                 }
             }
-            setTimeout(playback(0), 100);
+            playback(0);
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) {
             myAlertFail("获取车辆历史数据ajax请求失败");
