@@ -18,20 +18,20 @@
     </div>
 </div>
 
-<!-- <script type="text/javascript" src="__PUBLIC__/js/shortestDist.js"></script> -->
 <script type="text/javascript" src="__PUBLIC__/js/fullscreen.js"></script>
 
 <script type="text/javascript">
+if (typeof(intervalWarning) != 'undefined') {
+    clearInterval(intervalWarning);
+}
 if (typeof(playbackTimeout) != 'undefined') {
     clearTimeout(playbackTimeout);
 }
 
-var route_decode_object = new Array();
-var markerList = new Array();
+var routeDecodeObj = new Array();
+var vehicleMarkerList = new Array();
+var infoWindowList = new Array();
 var polylineList = new Array();
-var messageContent = new Array();
-var infoWindowOption = new Array();
-var infoWindowContent = new Array();
 
 var warningDistance = 0.5;
 var dangerDistance = 1.0;
@@ -54,15 +54,28 @@ function setBMap() {
     };
     BaiduMap.setMapStyle(mapStyle);
 
+    for (var idx in route_json) {
+        routeDecodeObj[idx] = JSON.parse(route_json[idx].route_lng_lat.replace(/&quot;/g, '"'));
+    }
+
+    lorryIconGreen = new BMap.Icon("__PUBLIC__/image/truck_green.png", new BMap.Size(32, 40), {
+        anchor: new BMap.Size(16, 40),
+        imageOffset: new BMap.Size(0, 0)
+    });
+    lorryIconYellow = new BMap.Icon("__PUBLIC__/image/truck_yellow.png", new BMap.Size(32, 40), {
+        anchor: new BMap.Size(16, 40),
+        imageOffset: new BMap.Size(0, 0)
+    });
+    lorryIconRed = new BMap.Icon("__PUBLIC__/image/truck_red.png", new BMap.Size(32, 40), {
+        anchor: new BMap.Size(16, 40),
+        imageOffset: new BMap.Size(0, 0)
+    });
+
     BaiduMap.addEventListener("click", function() {
         while (polyline = polylineList.pop()) {
             BaiduMap.removeOverlay(polyline);
         }
     });
-
-    for (var idx in route_json) {
-        route_decode_object[idx] = JSON.parse(route_json[idx].route_lng_lat.replace(/&quot;/g, '"'));
-    }
 
     $(".anchorBL").hide();
 }
@@ -80,60 +93,26 @@ function transferWarning() {
         type: "GET",
         url: "{:U('Home/DistrictMap/ajax_gps_data')}",
         timeout: 5000,
-        success: function(gps_data_array) {
-            while (marker = markerList.pop()) {
-                BaiduMap.removeOverlay(marker);
+        success: function(gpsDataArray) {
+            while (vehicleMarker = vehicleMarkerList.pop()) {
+                BaiduMap.removeOverlay(vehicleMarker);
+            }
+            while (infoWindow = infoWindowList.pop()){
+                BaiduMap.removeOverlay(infoWindow);
+            }
+            while (polyline = polylineList.pop()) {
+                BaiduMap.removeOverlay(polyline);
             }
 
-            for (var idx in gps_data_array) {
-                var lng = gps_data_array[idx].lng;
-                var lat = gps_data_array[idx].lat;
-                var gps_lng_lat = {
-                    "lng": lng,
-                    "lat": lat
-                };
-
-                //var distance = shortestDist(gps_lng_lat, route_decode_object[idx]);
-                var distance = gps_data_array[idx].offset_distance;
-                distance = Math.round(distance * 1000) / 1000;
-
-                var iconPoint = new BMap.Point(lng, lat);
-                if (distance < warningDistance) {
-                    var lorryIcon = new BMap.Icon("__PUBLIC__/image/truck_green.png", new BMap.Size(32, 40), {
-                        // 指定定位位置。
-                        // 当标注显示在地图上时，其所指向的地理位置距离图标左上
-                        // 角各偏移16像素和20像素。您可以看到在本例中该位置即是
-                        // 图标中央下端的尖角位置。
-                        anchor: new BMap.Size(16, 40),
-                        // 设置图片偏移。
-                        // 当您需要从一幅较大的图片中截取某部分作为标注图标时，您
-                        // 需要指定大图的偏移位置，此做法与css sprites技术类似。
-                        imageOffset: new BMap.Size(0, 0) // 设置图片偏移
-                    });
-                    var warningText = "<p style='color:#00FF00;'>偏离" + distance + "千米，安全。</p>";
-
-                } else if (distance > warningDistance && distance < dangerDistance) {
-                    var lorryIcon = new BMap.Icon("__PUBLIC__/image/truck_yellow.png", new BMap.Size(32, 40), {
-                        anchor: new BMap.Size(16, 40),
-                        imageOffset: new BMap.Size(0, 0) // 设置图片偏移
-                    });
-                    var warningText = "<p style='color:#FFFF00;'>偏离" + distance + "千米，注意！</p>";
-                } else {
-                    var lorryIcon = new BMap.Icon("__PUBLIC__/image/truck_red.png", new BMap.Size(32, 40), {
-                        anchor: new BMap.Size(16, 40),
-                        imageOffset: new BMap.Size(0, 0) // 设置图片偏移
-                    });
-                    var warningText = "<p style='color:#FF0000;'>偏离" + distance + "千米，报警!</p>";
+            for (var gpsIdx in gpsDataArray) {
+                if (!gpsDataArray[gpsIdx]) {
+                    continue;
                 }
-
-                // 创建标注对象并添加到地图
-                var marker = new BMap.Marker(iconPoint, {
-                    icon: lorryIcon,
-                    title: "危废运输车辆"
+                var iconPoint = new BMap.Point(gpsDataArray[gpsIdx].lng, gpsDataArray[gpsIdx].lat);
+                var vehicleMarker = new BMap.Marker(iconPoint, {
+                    title: "危废运输车辆", // 覆盖物标题
                 });
-                marker.setTitle(idx);
-                BaiduMap.addOverlay(marker);
-                markerList.push(marker);
+                vehicleMarkerList.push(vehicleMarker);
 
                 var geoCoder = new BMap.Geocoder();
                 var pointLocation = "";
@@ -142,29 +121,48 @@ function transferWarning() {
                     pointLocation = "" + addComp.province + addComp.city + addComp.district + addComp.street + addComp.streetNumber;
                 });
 
-                messageContent[idx] = "车辆牌照为：" + join_json[idx].vehicle_num + "的" + join_json[idx].vehicle_type + "，大致位置为：" + pointLocation;
-
-                infoWindowOption[idx] = {
+                var infoWindowContent = "<p>运输车辆牌照：" + vehicle_json[gpsIdx].vehicle_num + "</p><p>运输车辆类型：" + vehicle_json[gpsIdx].vehicle_type + "</p><p>运输单位名称：" + vehicle_json[gpsIdx].transport_unit_name + "</p><p>运输单位地址：" + vehicle_json[gpsIdx].transport_unit_address + "</p><p>运输单位电话：" + vehicle_json[gpsIdx].transport_unit_phone + "</p><p>运输单位环保联系人姓名：" + vehicle_json[gpsIdx].transport_unit_contacts_name + "</p><p>运输单位环保联系人电话：" + vehicle_json[gpsIdx].transport_unit_contacts_phone;
+                var messageContent = "车辆牌照为：" + vehicle_json[gpsIdx].vehicle_num + "的" + vehicle_json[gpsIdx].vehicle_type + "，大致位置为：" + pointLocation;
+                var infoWindowOption = {
                     width: 0, // 信息窗口宽度
                     height: 0, // 信息窗口高度
-                    title: warningText, // 信息窗口标题
-                    message: messageContent[idx]
+                    title: "车辆行驶中", // 信息窗口标题
+                    message: messageContent, // 自定义部分的短信内容
                 };
-                infoWindowContent[idx] = "<p>运输车辆牌照：" + join_json[idx].vehicle_num + "</p><p>运输车辆类型：" + join_json[idx].vehicle_type + "</p><p>运输单位名称：" + join_json[idx].transport_unit_name + "</p><p>运输单位地址：" + join_json[idx].transport_unit_address + "</p><p>运输单位电话：" + join_json[idx].transport_unit_phone + "</p><p>运输单位环保联系人姓名：" + join_json[idx].transport_unit_contacts_name + "</p><p>运输单位环保联系人电话：" + join_json[idx].transport_unit_contacts_phone;
 
-                marker.addEventListener("click", function(e) {
+                var infoWindow = new BMap.InfoWindow(infoWindowContent, infoWindowOption);
+                infoWindowList.push(infoWindow);
 
-                    BaiduMap.openInfoWindow(new BMap.InfoWindow(infoWindowContent[this.getTitle() - '0'], infoWindowOption[this.getTitle() - '0']), this.getPosition()); // 打开信息窗口
+                var offsetDistance = gpsDataArray[gpsIdx].offset_distance;
+                offsetDistance = Math.round(offsetDistance * 1000) / 1000;
+                var warningTextGreen = "<p style='color:#00FF00;'>偏离" + offsetDistance + "千米，安全。</p>";
+                var warningTextYellow = "<p style='color:#FFFF00;'>偏离" + offsetDistance + "千米，注意！</p>";
+                var warningTextRed = "<p style='color:#FF0000;'>偏离" + offsetDistance + "千米，报警!</p>";
 
+                vehicleMarker.setTitle(gpsIdx);
+                if (offsetDistance < warningDistance) {
+                    vehicleMarker.setIcon(lorryIconGreen);
+                    infoWindow.setTitle(warningTextGreen);
+                } else if (offsetDistance > warningDistance && offsetDistance < dangerDistance) {
+                    vehicleMarker.setIcon(lorryIconYellow);
+                    infoWindow.setTitle(warningTextYellow);
+                } else {
+                    vehicleMarker.setIcon(lorryIconRed);
+                    infoWindow.setTitle(warningTextRed);
+                }
+
+                BaiduMap.addOverlay(vehicleMarker);
+
+                vehicleMarker.addEventListener("click", function(e) {
+                    BaiduMap.openInfoWindow(infoWindowList[this.getTitle() - '0'], this.getPosition());
                 });
 
-                marker.addEventListener("rightclick", function(e) {
-                    var idx = this.getTitle() - '0';
+                vehicleMarker.addEventListener("rightclick", function(e) {
+                    var markerIdx = this.getTitle() - '0';
                     var pointArray = new Array();
-                    var lng, lat;
-                    for (var pointIdx in route_decode_object[idx]) {
-                        lng = route_decode_object[idx][pointIdx].lng;
-                        lat = route_decode_object[idx][pointIdx].lat;
+                    for (var pointIdx in routeDecodeObj[markerIdx]) {
+                        var lng = routeDecodeObj[markerIdx][pointIdx].lng;
+                        var lat = routeDecodeObj[markerIdx][pointIdx].lat;
                         pointArray.push(new BMap.Point(lng, lat));
                     }
                     var polyline = new BMap.Polyline(pointArray, {
@@ -174,7 +172,6 @@ function transferWarning() {
                     });
                     BaiduMap.addOverlay(polyline);
                     polylineList.push(polyline);
-
                 });
             }
         },

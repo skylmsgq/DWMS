@@ -41,15 +41,11 @@ if (typeof(playbackTimeout) != 'undefined') {
     clearTimeout(playbackTimeout);
 }
 
-var markerList_p = new Array();
-var messageContent_p = new Array();
-var infoWindowOption_p = new Array();
-var infoWindowContent_p = new Array();
+var productionMarkerList = new Array();
+var productionInfoWindowList = new Array();
 
-var markerList_r = new Array();
-var messageContent_r = new Array();
-var infoWindowOption_r = new Array();
-var infoWindowContent_r = new Array();
+var receptionMarkerList = new Array();
+var receptionInfoWindowList = new Array();
 
 function setBMap() {
     var windowHeight = $(window).height();
@@ -72,14 +68,7 @@ function setBMap() {
     for (var idx in production_unit_json) {
         var iconPoint = new BMap.Point(production_unit_json[idx].production_unit_longitude, production_unit_json[idx].production_unit_latitude);
         var productionUnitIcon = new BMap.Icon("__PUBLIC__/image/02green_48.png", new BMap.Size(48, 48), {
-            // 指定定位位置。
-            // 当标注显示在地图上时，其所指向的地理位置距离图标左上
-            // 角各偏移16像素和20像素。您可以看到在本例中该位置即是
-            // 图标中央下端的尖角位置。
             anchor: new BMap.Size(24, 24),
-            // 设置图片偏移。
-            // 当您需要从一幅较大的图片中截取某部分作为标注图标时，您
-            // 需要指定大图的偏移位置，此做法与css sprites技术类似。
             imageOffset: new BMap.Size(0, 0) // 设置图片偏移
         });
         // 创建标注对象并添加到地图
@@ -89,7 +78,7 @@ function setBMap() {
         });
         marker.setTitle(idx);
         BaiduMap.addOverlay(marker);
-        markerList_p.push(marker);
+        productionMarkerList.push(marker);
 
         var geoCoder = new BMap.Geocoder();
         var pointLocation = "";
@@ -98,34 +87,27 @@ function setBMap() {
             pointLocation = "" + addComp.province + addComp.city + addComp.district + addComp.street + addComp.streetNumber;
         });
 
-        messageContent_p[idx] = "生产单位名称：" + production_unit_json[idx].production_unit_name + "，大致位置为：" + pointLocation;
-
-        infoWindowOption_p[idx] = {
+        var infoWindowContent = "<p>生产单位名称：" + production_unit_json[idx].production_unit_name + "</p><p>生产单位电话：" + production_unit_json[idx].production_unit_phone + "</p><p>生产单位地址：" + production_unit_json[idx].production_unit_address + "</p><p>环保联系人姓名：" + production_unit_json[idx].production_unit_contacts_name + "</p><p>环保联系人电话：" + production_unit_json[idx].production_unit_contacts_phone;
+        var messageContent = "生产单位名称：" + production_unit_json[idx].production_unit_name + "，大致位置为：" + pointLocation;
+        var infoWindowOption = {
             width: 0, // 信息窗口宽度
             height: 0, // 信息窗口高度
-            // title: "", // 信息窗口标题
-            message: messageContent_p[idx]
+            title: "", // 信息窗口标题
+            message: messageContent, // 自定义部分的短信内容
         };
-        infoWindowContent_p[idx] = "<p>生产单位名称：" + production_unit_json[idx].production_unit_name + "</p><p>生产单位电话：" + production_unit_json[idx].production_unit_phone + "</p><p>生产单位地址：" + production_unit_json[idx].production_unit_address + "</p><p>环保联系人姓名：" + production_unit_json[idx].production_unit_contacts_name + "</p><p>环保联系人电话：" + production_unit_json[idx].production_unit_contacts_phone;
+
+        var infoWindow = new BMap.InfoWindow(infoWindowContent, infoWindowOption);
+        productionInfoWindowList.push(infoWindow);
 
         marker.addEventListener("click", function(e) {
-
-            BaiduMap.openInfoWindow(new BMap.InfoWindow(infoWindowContent_p[this.getTitle() - '0'], infoWindowOption_p[this.getTitle() - '0']), this.getPosition()); // 打开信息窗口
-
+            BaiduMap.openInfoWindow(productionInfoWindowList[this.getTitle() - '0'], this.getPosition());
         });
     }
 
     for (var idx in reception_unit_json) {
         var iconPoint = new BMap.Point(reception_unit_json[idx].reception_unit_longitude, reception_unit_json[idx].reception_unit_latitude);
         var receptionUnitIcon = new BMap.Icon("__PUBLIC__/image/04yellow_48.png", new BMap.Size(48, 48), {
-            // 指定定位位置。
-            // 当标注显示在地图上时，其所指向的地理位置距离图标左上
-            // 角各偏移16像素和20像素。您可以看到在本例中该位置即是
-            // 图标中央下端的尖角位置。
             anchor: new BMap.Size(24, 24),
-            // 设置图片偏移。
-            // 当您需要从一幅较大的图片中截取某部分作为标注图标时，您
-            // 需要指定大图的偏移位置，此做法与css sprites技术类似。
             imageOffset: new BMap.Size(0, 0) // 设置图片偏移
         });
         // 创建标注对象并添加到地图
@@ -135,7 +117,7 @@ function setBMap() {
         });
         marker.setTitle(idx);
         BaiduMap.addOverlay(marker);
-        markerList_r.push(marker);
+        receptionMarkerList.push(marker);
 
         var geoCoder = new BMap.Geocoder();
         var pointLocation = "";
@@ -144,20 +126,18 @@ function setBMap() {
             pointLocation = "" + addComp.province + addComp.city + addComp.district + addComp.street + addComp.streetNumber;
         });
 
-        messageContent_r[idx] = "生产单位名称：" + reception_unit_json[idx].reception_unit_name + "，大致位置为：" + pointLocation;
-
-        infoWindowOption_r[idx] = {
+        var infoWindowContent = "<p>接受单位名称：" + reception_unit_json[idx].reception_unit_name + "</p><p>接受单位电话：" + reception_unit_json[idx].reception_unit_phone + "</p><p>接受单位地址：" + reception_unit_json[idx].reception_unit_address + "</p><p>环保联系人姓名：" + reception_unit_json[idx].reception_unit_contacts_name + "</p><p>环保联系人电话：" + reception_unit_json[idx].reception_unit_contacts_phone;
+        var messageContent = "生产单位名称：" + reception_unit_json[idx].reception_unit_name + "，大致位置为：" + pointLocation;
+        var infoWindowOption = {
             width: 0, // 信息窗口宽度
             height: 0, // 信息窗口高度
-            // title: "", // 信息窗口标题
-            message: messageContent_r[idx]
+            title: "", // 信息窗口标题
+            message: messageContent, // 自定义部分的短信内容
         };
-        infoWindowContent_r[idx] = "<p>生产单位名称：" + reception_unit_json[idx].reception_unit_name + "</p>";
-
+        var infoWindow = new BMap.InfoWindow(infoWindowContent, infoWindowOption);
+        receptionInfoWindowList.push(infoWindow);
         marker.addEventListener("click", function(e) {
-
-            BaiduMap.openInfoWindow(new BMap.InfoWindow(infoWindowContent_r[this.getTitle() - '0'], infoWindowOption_r[this.getTitle() - '0']), this.getPosition()); // 打开信息窗口
-
+            BaiduMap.openInfoWindow(receptionInfoWindowList[this.getTitle() - '0'], this.getPosition());
         });
     }
 
@@ -174,28 +154,24 @@ loadScript();
 
 $('#productionUnit').on('click', function() {
     if ($(this).is(':checked')) {
-        for (var idx in markerList_p) {
-            // BaiduMap.addOverlay(markerList_p[idx]);
-            markerList_p[idx].show();
+        for (var idx in productionMarkerList) {
+            productionMarkerList[idx].show();
         }
     } else {
-        for (var idx in markerList_p) {
-            // BaiduMap.removeOverlay(markerList_p[idx]);
-            markerList_p[idx].hide();
+        for (var idx in productionMarkerList) {
+            productionMarkerList[idx].hide();
         }
     }
 });
 
 $('#receptionUnit').on('click', function() {
     if ($(this).is(':checked')) {
-        for (var idx in markerList_r) {
-            // BaiduMap.addOverlay(markerList_r[idx]);
-            markerList_r[idx].show();
+        for (var idx in receptionMarkerList) {
+            receptionMarkerList[idx].show();
         }
     } else {
-        for (var idx in markerList_r) {
-            // BaiduMap.removeOverlay(markerList_r[idx]);
-            markerList_r[idx].hide();
+        for (var idx in receptionMarkerList) {
+            receptionMarkerList[idx].hide();
         }
     }
 });

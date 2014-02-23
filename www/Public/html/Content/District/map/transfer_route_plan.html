@@ -41,6 +41,7 @@
     </div>
 </div>
 
+<script type="text/javascript" src="__PUBLIC__/js/fullscreen.js"></script>
 <script type="text/javascript" src="__PUBLIC__/js/myAlert.js"></script>
 
 <script type="text/javascript">
@@ -107,13 +108,13 @@ var searchComplete = function(results) {
         path = route.getPath();
         */
         var steps = new Array();
-        for (var idx = 0; idx < plan.getNumRoutes(); ++idx) {
-            var route = plan.getRoute(idx);
+        for (var routeIdx = 0; routeIdx < plan.getNumRoutes(); ++routeIdx) {
+            var route = plan.getRoute(routeIdx);
             var tmpPath = route.getPath();
             path = path.concat(tmpPath);
-            for (var i = 0; i < route.getNumSteps(); ++i) {
-                var step = route.getStep(i);
-                steps.push((idx + 1) + "." + (i + 1) + " " + step.getDescription());
+            for (var stepIdx = 0; stepIdx < route.getNumSteps(); ++stepIdx) {
+                var step = route.getStep(stepIdx);
+                steps.push((routeIdx + 1) + "." + (stepIdx + 1) + " " + step.getDescription());
             }
         }
         route_detail = steps.join('<br/>');
@@ -188,7 +189,6 @@ function submit() {
         BMapPointArray.push(BMapPoint);
     }
     */
-
     $.ajax({
         type: "POST",
         url: "{:U('Home/DistrictMap/ajax_transfer_route_plan')}",
@@ -218,7 +218,7 @@ function submit() {
             }
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) {
-            myAlertFail("提交失败");
+            myAlertFail("ajax请求失败");
             console.log("Error:Ajax_Content_Load" + errorThrown);
             console.log("XMLHttpRequest.status:" + XMLHttpRequest.status);
             console.log("XMLHttpRequest.readyState:" + XMLHttpRequest.readyState);

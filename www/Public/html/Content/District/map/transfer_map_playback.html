@@ -32,7 +32,6 @@
     </div>
 </div>
 
-<script type="text/javascript" src="__PUBLIC__/js/shortestDist.js"></script>
 <script type="text/javascript" src="__PUBLIC__/js/fullscreen.js"></script>
 <script type="text/javascript" src="__PUBLIC__/js/myAlert.js"></script>
 
@@ -44,6 +43,8 @@ if (typeof(playbackTimeout) != 'undefined') {
     clearTimeout(playbackTimeout);
 }
 
+var routeDecodeObj = new Array();
+var infoWindowList = new Array();
 var polylineList = new Array();
 
 function setBMap() {
@@ -64,15 +65,15 @@ function setBMap() {
     };
     BaiduMap.setMapStyle(mapStyle);
 
+    for (var idx in route_json) {
+        routeDecodeObj[idx] = JSON.parse(route_json[idx].route_lng_lat.replace(/&quot;/g, '"'));
+    }
+
     BaiduMap.addEventListener("click", function() {
         while (polyline = polylineList.pop()) {
             BaiduMap.removeOverlay(polyline);
         }
     });
-
-    for (var idx in route_json) {
-        route_decode_object[idx] = JSON.parse(route_json[idx].route_lng_lat.replace(/&quot;/g, '"'));
-    }
 
     $(".anchorBL").hide();
 }
@@ -90,16 +91,20 @@ function getVehicleRoutes() {
         myAlertFail('请先选择历史回放起始日期和终止日期');
         return;
     }
+    if ($('#beginDate').val() >= $('#endDate').val()) {
+        myAlertFail('终止日期必须晚于起始日期');
+        return;
+    }
     $.ajax({
         type: "POST",
-        url: "{:U('Home/DistrictMap/ajax_get_vehicle_routes_test')}",
+        url: "{:U('Home/DistrictMap/ajax_get_vehicle_routes')}",
         timeout: 5000,
         data: {
             "beginDate": $('#beginDate').val(),
             "endDate": $('#endDate').val()
         },
-        success: function(gps_route_array) {
-            if (gps_route_array == 'fail') {
+        success: function(gpsRouteArray) {
+            if (gpsRouteArray == 'fail') {
                 myAlertFail("获取转移地图历史数据失败");
                 return;
             }
@@ -126,23 +131,23 @@ function getVehicleRoutes() {
             var startTime = "9999-12-31 23:59:59";
             var endTime = "0000-00-00 00:00:00";
 
-            var gpsRouteArray = new Array();
-            for (var gpsIdx in gps_route_array) {
+            var gpsRouteTimeArray = new Array();
+            for (var gpsIdx in gpsRouteArray) {
 
-                gpsRouteArray[gpsIdx] = new Array();
-                if (!gps_route_array[gpsIdx]) {
+                gpsRouteTimeArray[gpsIdx] = new Array();
+                if (!gpsRouteArray[gpsIdx]) {
                     continue;
                 }
 
-                var idxLength = gps_route_array[gpsIdx].length;
-                if (gps_route_array[gpsIdx][0].datetime < startTime) {
-                    startTime = gps_route_array[gpsIdx][0].datetime;
+                var idxLength = gpsRouteArray[gpsIdx].length;
+                if (gpsRouteArray[gpsIdx][0].datetime < startTime) {
+                    startTime = gpsRouteArray[gpsIdx][0].datetime;
                 }
-                if (gps_route_array[gpsIdx][idxLength - 1].datetime > endTime) {
-                    endTime = gps_route_array[gpsIdx][idxLength - 1].datetime;
+                if (gpsRouteArray[gpsIdx][idxLength - 1].datetime > endTime) {
+                    endTime = gpsRouteArray[gpsIdx][idxLength - 1].datetime;
                 }
 
-                var iconPoint = new BMap.Point(gps_route_array[gpsIdx][0].bmap_longitude, gps_route_array[gpsIdx][0].bmap_latitude);
+                var iconPoint = new BMap.Point(gpsRouteArray[gpsIdx][0].bmap_longitude, gpsRouteArray[gpsIdx][0].bmap_latitude);
                 var vehicleMarker = new BMap.Marker(iconPoint, {
                     icon: lorryIconGreen,
                     title: "危废运输车辆"
@@ -151,13 +156,24 @@ function getVehicleRoutes() {
                 BaiduMap.addOverlay(vehicleMarker);
                 vehicleMarkerList.push(vehicleMarker);
 
+                var infoWindowContent = "<p>运输车辆牌照：" + vehicle_json[gpsIdx].vehicle_num + "</p><p>运输车辆类型：" + vehicle_json[gpsIdx].vehicle_type + "</p><p>运输单位名称：" + vehicle_json[gpsIdx].transport_unit_name + "</p><p>运输单位地址：" + vehicle_json[gpsIdx].transport_unit_address + "</p><p>运输单位电话：" + vehicle_json[gpsIdx].transport_unit_phone + "</p><p>运输单位环保联系人姓名：" + vehicle_json[gpsIdx].transport_unit_contacts_name + "</p><p>运输单位环保联系人电话：" + vehicle_json[gpsIdx].transport_unit_contacts_phone;
+                var infoWindowOption = {
+                    width: 0, // 信息窗口宽度
+                    height: 0, // 信息窗口高度
+                    title: "", // 信息窗口标题
+                };
+                var infoWindow = new BMap.InfoWindow(infoWindowContent, infoWindowOption);
+                infoWindowList.push(infoWindow);
+                vehicleMarker.addEventListener("click", function(e) {
+                    BaiduMap.openInfoWindow(infoWindowList[this.getTitle() - '0'], this.getPosition());
+                });
+
                 vehicleMarker.addEventListener("rightclick", function(e) {
                     var markerIdx = this.getTitle() - '0';
                     var pointArray = new Array();
-                    var lng, lat;
-                    for (var pointIdx in route_decode_object[markerIdx]) {
-                        lng = route_decode_object[markerIdx][pointIdx].lng;
-                        lat = route_decode_object[markerIdx][pointIdx].lat;
+                    for (var pointIdx in routeDecodeObj[markerIdx]) {
+                        var lng = routeDecodeObj[markerIdx][pointIdx].lng;
+                        var lat = routeDecodeObj[markerIdx][pointIdx].lat;
                         pointArray.push(new BMap.Point(lng, lat));
                     }
                     var polyline = new BMap.Polyline(pointArray, {
@@ -169,14 +185,14 @@ function getVehicleRoutes() {
                     polylineList.push(polyline);
                 });
 
-                for (var dataIdx in gps_route_array[gpsIdx]) {
-                    if (!gps_route_array[gpsIdx][dataIdx]) {
+                for (var dataIdx in gpsRouteArray[gpsIdx]) {
+                    if (!gpsRouteArray[gpsIdx][dataIdx]) {
                         continue;
                     }
-                    var dateTime = gps_route_array[gpsIdx][dataIdx].datetime;
+                    var dateTime = gpsRouteArray[gpsIdx][dataIdx].datetime;
                     var dateTimeObj = new Date(dateTime);
                     var newIdx = Math.floor(dateTimeObj.getHours() * 360 + dateTimeObj.getMinutes() * 6 + dateTimeObj.getSeconds() / 10);
-                    gpsRouteArray[gpsIdx][newIdx] = gps_route_array[gpsIdx][dataIdx];
+                    gpsRouteTimeArray[gpsIdx][newIdx] = gpsRouteArray[gpsIdx][dataIdx];
                 }
             }
 
@@ -191,13 +207,14 @@ function getVehicleRoutes() {
             function playback(dataIdx) {
                 playbackTimeObj.setSeconds(playbackTimeObj.getSeconds() + 10);
                 playbackTimeDiv.html(playbackTimeObj.getFullYear() + '/' + (playbackTimeObj.getMonth() + 1) + '/' + playbackTimeObj.getDate() + ' ' + playbackTimeObj.getHours() + ':' + playbackTimeObj.getMinutes());
-                for (var gpsIdx in gpsRouteArray) {
-                    if (!gpsRouteArray[gpsIdx][dataIdx]) {
+                for (var gpsIdx in gpsRouteTimeArray) {
+                    if (!gpsRouteTimeArray[gpsIdx][dataIdx]) {
                         continue;
                     }
-                    var newPoint = new BMap.Point(gpsRouteArray[gpsIdx][dataIdx].bmap_longitude, gpsRouteArray[gpsIdx][dataIdx].bmap_latitude);
+                    var newPoint = new BMap.Point(gpsRouteTimeArray[gpsIdx][dataIdx].bmap_longitude, gpsRouteTimeArray[gpsIdx][dataIdx].bmap_latitude);
                     vehicleMarkerList[gpsIdx].setPosition(newPoint);
-                    offsetDistance = gpsRouteArray[gpsIdx][dataIdx].offset_distance;
+                    offsetDistance = gpsRouteTimeArray[gpsIdx][dataIdx].offset_distance;
+                    offsetDistance = Math.round(offsetDistance * 1000) / 1000;
                     if (offsetDistance < 0.5) {
                         vehicleMarkerList[gpsIdx].setIcon(lorryIconGreen);
                     } else if ((offsetDistance >= 0.5) && (offsetDistance < 1)) {
@@ -205,6 +222,9 @@ function getVehicleRoutes() {
                     } else {
                         vehicleMarkerList[gpsIdx].setIcon(lorryIconRed);
                     }
+                    // var infoWindowTitle = "偏离" + offsetDistance + "千米，时速" + gpsRouteTimeArray[gpsIdx][dataIdx].speed + "千米/小时";
+                    // infoWindowList[gpsIdx].setTitle(infoWindowTitle);
+                    // infoWindowList[gpsIdx].redraw();
                 }
                 intervalTime = 200 / $('#selectSpeed').val();
                 if (dataIdx < endIdx) {

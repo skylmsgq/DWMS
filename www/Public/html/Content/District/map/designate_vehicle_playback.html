@@ -41,16 +41,12 @@
     </div>
 </div>
 
-<script type="text/javascript" src="__PUBLIC__/js/shortestDist.js"></script>
 <script type="text/javascript" src="__PUBLIC__/js/fullscreen.js"></script>
 <script type="text/javascript" src="__PUBLIC__/js/myAlert.js"></script>
 
 <script type="text/javascript">
 if (typeof(intervalWarning) != 'undefined') {
     clearInterval(intervalWarning);
-}
-if (typeof(timeout) != 'undefined') {
-    clearTimeout(timeout);
 }
 if (typeof(playbackTimeout) != 'undefined') {
     clearTimeout(playbackTimeout);
@@ -137,6 +133,10 @@ function getVehicleRoute() {
         myAlertFail('请先选择历史回放起始日期和终止日期');
         return;
     }
+    if ($('#beginDate').val() >= $('#endDate').val()) {
+        myAlertFail('终止日期必须晚于起始日期');
+        return;
+    }
     $.ajax({
         type: "POST",
         url: "{:U('Home/DistrictMap/ajax_get_vehicle_route')}",
@@ -146,10 +146,13 @@ function getVehicleRoute() {
             "beginDate": $('#beginDate').val(),
             "endDate": $('#endDate').val()
         },
-        success: function(gps_data) {
-            if (gps_data == 'fail') {
+        success: function(gpsRoute) {
+            if (gpsRoute == 'fail') {
                 myAlertFail("获取车辆历史数据失败");
                 return;
+            }
+            if (typeof(playbackTimeout) != 'undefined') {
+                clearTimeout(playbackTimeout);
             }
             BaiduMap.clearOverlays();
 
@@ -166,32 +169,29 @@ function getVehicleRoute() {
                 imageOffset: new BMap.Size(0, 0)
             });
 
-            var iconPoint = new BMap.Point(gps_data[0].bmap_longitude, gps_data[0].bmap_latitude);
+            var iconPoint = new BMap.Point(gpsRoute[0].bmap_longitude, gpsRoute[0].bmap_latitude);
             var vehicleMarker = new BMap.Marker(iconPoint, {
                 icon: lorryIconGreen,
                 title: "危废运输车辆"
             });
             BaiduMap.addOverlay(vehicleMarker);
 
-            var routeLength = gps_data.length;
+            var routeLength = gpsRoute.length;
             var dataIdx = 1;
 
             function playback(dataIdx) {
-                var speedFactor = $('#selectSpeed').val();
-                var newPoint = new BMap.Point(gps_data[dataIdx].bmap_longitude, gps_data[dataIdx].bmap_latitude);
+                var newPoint = new BMap.Point(gpsRoute[dataIdx].bmap_longitude, gpsRoute[dataIdx].bmap_latitude);
                 vehicleMarker.setPosition(newPoint);
-                if (gps_data[dataIdx].offset_distance < 0.5) {
+                if (gpsRoute[dataIdx].offset_distance < 0.5) {
                     vehicleMarker.setIcon(lorryIconGreen);
-                } else if ((gps_data[dataIdx].offset_distance >= 0.5) && (gps_data[dataIdx].offset_distance < 1)) {
+                } else if ((gpsRoute[dataIdx].offset_distance >= 0.5) && (gpsRoute[dataIdx].offset_distance < 1)) {
                     vehicleMarker.setIcon(lorryIconYellow);
                 } else {
                     vehicleMarker.setIcon(lorryIconRed);
                 }
-                if (gps_data[dataIdx].speed <= 20) {
-                    var intervalTime = 200 / speedFactor;
-                } else {
-                    var intervalTime = 4000 / gps_data[dataIdx].speed / speedFactor;
-                }
+
+                var intervalTime = 200 / $('#selectSpeed').val();
+
                 if (dataIdx < routeLength) {
                     playbackTimeout = setTimeout(function() {
                         ++dataIdx;
@@ -201,7 +201,7 @@ function getVehicleRoute() {
                     return;
                 }
             }
-            setTimeout(playback(0), 100);
+            playback(0);
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) {
             myAlertFail("获取车辆历史数据ajax请求失败");
