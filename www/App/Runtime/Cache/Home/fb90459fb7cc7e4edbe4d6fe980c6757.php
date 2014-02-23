@@ -1,4 +1,4 @@
-<form role="form" id="manifest_modify">
+<?php if (!defined('THINK_PATH')) exit();?><form role="form" id="manifest_modify">
  <div class="panel panel-primary">
         <div class="panel-heading">基本信息</div>
         <div class="panel-body">
@@ -7,51 +7,51 @@
                 <tr>
                     <td>产生单位</td>
                     <td>
-                        {$manifest.transport_unit_name}
+                        <?php echo ($manifest["transport_unit_name"]); ?>
                     </td>
                     <td>接受单位</td>
                     <td>
-                        {$manifest.reception_unit_name}
+                        <?php echo ($manifest["reception_unit_name"]); ?>
                     </td>
                 </tr>                 
                 <tr>
                     <td>危废编号</td>
                     <td>
-                        {$manifest.waste_id}
+                        <?php echo ($manifest["waste_id"]); ?>
                     </td>
                     <td>危废重量</td>
                     <td>
-                        {$manifest.waste_weight}
+                        <?php echo ($manifest["waste_weight"]); ?>
                     </td>
                 </tr>
                  <tr>
                     <td>危废包装方式</td>
                     <td>
-                        {$manifest.waste_package}
+                        <?php echo ($manifest["waste_package"]); ?>
                     </td>
                     <td>危废外运目的</td>
                     <td>
-                        {$manifest.transport_goal}
+                        <?php echo ($manifest["transport_goal"]); ?>
                     </td>
                 </tr>
                 <tr>
                     <td>应急措施</td>
                     <td>
-                        {$manifest.emergency_measure}
+                        <?php echo ($manifest["emergency_measure"]); ?>
                     </td>
                     <td>危废发运人</td>
                     <td>
-                        {$manifest.shipper}
+                        <?php echo ($manifest["shipper"]); ?>
                     </td>
                 </tr>
                 <tr>
                     <td>危废运达地</td>
                     <td>
-                        {$manifest.waste_destination}
+                        <?php echo ($manifest["waste_destination"]); ?>
                     </td>
                     <td>危废转移时间</td>
                     <td>
-                        {$manifest.waste_transport_time}
+                        <?php echo ($manifest["waste_transport_time"]); ?>
                     </td>
                 </tr>
             </table>
@@ -66,81 +66,81 @@
                 <tr>
                     <td>第一承运人姓名</td>
                     <td>
-                        <input type="text" name="carrier_1_name" class="form-control input-sm" placeholder="{$manifest.carrier_1_name}" value="{$manifest.carrier_1_name}">  
+                        <input type="text" name="carrier_1_name" class="form-control input-sm" placeholder="<?php echo ($manifest["carrier_1_name"]); ?>" value="<?php echo ($manifest["carrier_1_name"]); ?>">  
                     </td>
                     <td>第一承运人工号</td>
                     <td>
-                        <input type="text" name="carrier_1_num" class="form-control input-sm" placeholder="{$manifest.carrier_1_num}" value="{$manifest.carrier_1_num}">  
+                        <input type="text" name="carrier_1_num" class="form-control input-sm" placeholder="<?php echo ($manifest["carrier_1_num"]); ?>" value="<?php echo ($manifest["carrier_1_num"]); ?>">  
                     </td>
                 </tr>
                 <tr>
                     <td>运输日期</td>
                     <td>
-                        <input type="date" name="transport_date_1" class="form-control input-sm" placeholder="{$manifest.transport_date_1}" value="{$manifest.transport_date_1}">  
+                        <input type="date" name="transport_date_1" class="form-control input-sm" placeholder="<?php echo ($manifest["transport_date_1"]); ?>" value="<?php echo ($manifest["transport_date_1"]); ?>">  
                     </td>
                     <td>车辆1 ID</td>
                     <td>
-                        <input type="text" name="vehicle_id_1" class="form-control input-sm" placeholder="{$manifest.vehicle_id_1}" value="{$manifest.vehicle_id_1}">  
+                        <input type="text" name="vehicle_id_1" class="form-control input-sm" placeholder="<?php echo ($manifest["vehicle_id_1"]); ?>" value="<?php echo ($manifest["vehicle_id_1"]); ?>">  
                     </td>
                 </tr>
                 <tr>
                     <td>道路运输证号</td>
                     <td>
-                        <input type="text" name="transport_license_num_1" class="form-control input-sm" placeholder="{$manifest.transport_license_num_1}" value="{$manifest.transport_license_num_1}">  
+                        <input type="text" name="transport_license_num_1" class="form-control input-sm" placeholder="<?php echo ($manifest["transport_license_num_1"]); ?>" value="<?php echo ($manifest["transport_license_num_1"]); ?>">  
                     </td>
                     <td>运输起点</td>
                     <td>
-                        <input type="text" name="transport_start_point_1" class="form-control input-sm" placeholder="{$manifest.transport_start_point_1}" value="{$manifest.transport_start_point_1}">  
+                        <input type="text" name="transport_start_point_1" class="form-control input-sm" placeholder="<?php echo ($manifest["transport_start_point_1"]); ?>" value="<?php echo ($manifest["transport_start_point_1"]); ?>">  
                     </td>
                 </tr>
                 <tr>
                     <td>经由地</td>
                     <td>
-                        <input type="text" name="transport_pass_by_1" class="form-control input-sm" placeholder="{$manifest.transport_pass_by_1}" value="{$manifest.transport_pass_by_1}">  
+                        <input type="text" name="transport_pass_by_1" class="form-control input-sm" placeholder="<?php echo ($manifest["transport_pass_by_1"]); ?>" value="<?php echo ($manifest["transport_pass_by_1"]); ?>">  
                     </td>
                     <td>运输终点</td>
                     <td>
-                        <input type="text" name="transport_destination_1" class="form-control input-sm" placeholder="{$manifest.transport_destination_1}" value="{$manifest.transport_destination_1}">  
+                        <input type="text" name="transport_destination_1" class="form-control input-sm" placeholder="<?php echo ($manifest["transport_destination_1"]); ?>" value="<?php echo ($manifest["transport_destination_1"]); ?>">  
                     </td>
                 </tr>
                     <tr>
                     <td>第二承运人姓名</td>
                     <td>
-                        <input type="text" name="carrier_2_name" class="form-control input-sm" placeholder="{$manifest.carrier_2_name}" value="{$manifest.carrier_2_name}">  
+                        <input type="text" name="carrier_2_name" class="form-control input-sm" placeholder="<?php echo ($manifest["carrier_2_name"]); ?>" value="<?php echo ($manifest["carrier_2_name"]); ?>">  
                     </td>
                     <td>第二承运人工号</td>
                     <td>
-                        <input type="text" name="carrier_2_num" class="form-control input-sm" placeholder="{$manifest.carrier_2_num}" value="{$manifest.carrier_2_num}">  
+                        <input type="text" name="carrier_2_num" class="form-control input-sm" placeholder="<?php echo ($manifest["carrier_2_num"]); ?>" value="<?php echo ($manifest["carrier_2_num"]); ?>">  
                     </td>
                 </tr>
                 <tr>
                     <td>运输日期</td>
                     <td>
-                        <input type="date" name="transport_date_2" class="form-control input-sm" placeholder="{$manifest.transport_date_2}" value="{$manifest.transport_date_2}">  
+                        <input type="date" name="transport_date_2" class="form-control input-sm" placeholder="<?php echo ($manifest["transport_date_2"]); ?>" value="<?php echo ($manifest["transport_date_2"]); ?>">  
                     </td>
                     <td>车辆2 ID</td>
                     <td>
-                        <input type="text" name="vehicle_id_2" class="form-control input-sm" placeholder="{$manifest.vehicle_id_2}" value="{$manifest.vehicle_id_2}">  
+                        <input type="text" name="vehicle_id_2" class="form-control input-sm" placeholder="<?php echo ($manifest["vehicle_id_2"]); ?>" value="<?php echo ($manifest["vehicle_id_2"]); ?>">  
                     </td>
                 </tr>
                 <tr>
                     <td>道路运输证号</td>
                     <td>
-                        <input type="text" name="transport_license_num_2" class="form-control input-sm" placeholder="{$manifest.transport_license_num_2}" value="{$manifest.transport_license_num_2}">  
+                        <input type="text" name="transport_license_num_2" class="form-control input-sm" placeholder="<?php echo ($manifest["transport_license_num_2"]); ?>" value="<?php echo ($manifest["transport_license_num_2"]); ?>">  
                     </td>
                     <td>运输起点</td>
                     <td>
-                        <input type="text" name="transport_start_point_2" class="form-control input-sm" placeholder="{$manifest.transport_start_point_2}" value="{$manifest.transport_start_point_2}">  
+                        <input type="text" name="transport_start_point_2" class="form-control input-sm" placeholder="<?php echo ($manifest["transport_start_point_2"]); ?>" value="<?php echo ($manifest["transport_start_point_2"]); ?>">  
                     </td>
                 </tr>
                 <tr>
                     <td>经由地</td>
                     <td>
-                        <input type="text" name="transport_pass_by_2" class="form-control input-sm" placeholder="{$manifest.transport_pass_by_2}" value="{$manifest.transport_pass_by_2}">  
+                        <input type="text" name="transport_pass_by_2" class="form-control input-sm" placeholder="<?php echo ($manifest["transport_pass_by_2"]); ?>" value="<?php echo ($manifest["transport_pass_by_2"]); ?>">  
                     </td>
                     <td>运输终点</td>
                     <td>
-                        <input type="text" name="transport_destination_2" class="form-control input-sm" placeholder="{$manifest.transport_destination_2}" value="{$manifest.transport_destination_2}">  
+                        <input type="text" name="transport_destination_2" class="form-control input-sm" placeholder="<?php echo ($manifest["transport_destination_2"]); ?>" value="<?php echo ($manifest["transport_destination_2"]); ?>">  
                     </td>
                 </tr>
 
