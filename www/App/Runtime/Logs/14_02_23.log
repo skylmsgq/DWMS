@@ -1,0 +1,2456 @@
+[ 2014-02-23T10:34:08+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_city_name.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `county_code` [ RunTime:0.003000s ]
+SQL: SELECT * FROM `county_code` WHERE ( `county_up_id` = 12 )  [ RunTime:0.003000s ]
+
+[ 2014-02-23T10:34:11+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_county_name.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.001001s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001001s ]
+SQL: SHOW COLUMNS FROM `county_code` [ RunTime:0.003001s ]
+SQL: SELECT * FROM `county_code` WHERE ( `county_up_id` = 1199 )  [ RunTime:0.002000s ]
+
+[ 2014-02-23T10:34:13+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_code_jurisdiction.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `jurisdiction` [ RunTime:0.004000s ]
+SQL: SELECT * FROM `jurisdiction` WHERE ( `county_name` = '大观区' )  [ RunTime:0.004001s ]
+
+[ 2014-02-23T10:34:15+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_code.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `county_code` [ RunTime:0.005000s ]
+SQL: SELECT * FROM `county_code` WHERE ( `county_name` = '大观区' )  [ RunTime:0.002000s ]
+
+[ 2014-02-23T10:49:12+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_city_name.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002001s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002001s ]
+SQL: SHOW COLUMNS FROM `county_code` [ RunTime:0.004001s ]
+SQL: SELECT * FROM `county_code` WHERE ( `county_up_id` = 12 )  [ RunTime:0.002000s ]
+
+[ 2014-02-23T10:49:16+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_county_name.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `county_code` [ RunTime:0.003000s ]
+SQL: SELECT * FROM `county_code` WHERE ( `county_up_id` = 1199 )  [ RunTime:0.008001s ]
+
+[ 2014-02-23T10:49:20+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_code.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `county_code` [ RunTime:0.006000s ]
+SQL: SELECT * FROM `county_code` WHERE ( `county_name` = '大观区' )  [ RunTime:0.004001s ]
+
+[ 2014-02-23T10:49:21+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_code_jurisdiction.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.003000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.003000s ]
+SQL: SHOW COLUMNS FROM `jurisdiction` [ RunTime:0.004000s ]
+SQL: SELECT * FROM `jurisdiction` WHERE ( `county_name` = '大观区' )  [ RunTime:0.002000s ]
+
+[ 2014-02-23T10:51:55+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_city_name.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `county_code` [ RunTime:0.002000s ]
+SQL: SELECT * FROM `county_code` WHERE ( `county_up_id` = 13 )  [ RunTime:0.002001s ]
+
+[ 2014-02-23T10:51:57+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_city_name.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.003000s ]
+SQL: SHOW COLUMNS FROM `county_code` [ RunTime:0.003001s ]
+SQL: SELECT * FROM `county_code` WHERE ( `county_up_id` = 12 )  [ RunTime:0.005000s ]
+
+[ 2014-02-23T10:52:01+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_county_name.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `county_code` [ RunTime:0.004001s ]
+SQL: SELECT * FROM `county_code` WHERE ( `county_up_id` = 1199 )  [ RunTime:0.004000s ]
+
+[ 2014-02-23T10:52:05+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_code_jurisdiction.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.003000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.003000s ]
+SQL: SHOW COLUMNS FROM `jurisdiction` [ RunTime:0.002000s ]
+SQL: SELECT * FROM `jurisdiction` WHERE ( `county_name` = '大观区' )  [ RunTime:0.003001s ]
+
+[ 2014-02-23T10:52:06+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_code.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `county_code` [ RunTime:0.006000s ]
+SQL: SELECT * FROM `county_code` WHERE ( `county_name` = '大观区' )  [ RunTime:0.002000s ]
+
+[ 2014-02-23T10:53:14+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_city_name.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `county_code` [ RunTime:0.003000s ]
+SQL: SELECT * FROM `county_code` WHERE ( `county_up_id` = 12 )  [ RunTime:0.005001s ]
+
+[ 2014-02-23T10:53:17+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_county_name.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `county_code` [ RunTime:0.013001s ]
+SQL: SELECT * FROM `county_code` WHERE ( `county_up_id` = 1199 )  [ RunTime:0.005000s ]
+
+[ 2014-02-23T10:53:20+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_code_jurisdiction.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002001s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002001s ]
+SQL: SHOW COLUMNS FROM `jurisdiction` [ RunTime:0.005001s ]
+SQL: SELECT * FROM `jurisdiction` WHERE ( `county_name` = '大观区' )  [ RunTime:0.002000s ]
+
+[ 2014-02-23T10:53:21+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_code.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `county_code` [ RunTime:0.005000s ]
+SQL: SELECT * FROM `county_code` WHERE ( `county_name` = '大观区' )  [ RunTime:0.004001s ]
+
+[ 2014-02-23T11:13:20+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_city_name.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `county_code` [ RunTime:0.006001s ]
+SQL: SELECT * FROM `county_code` WHERE ( `county_up_id` = 12 )  [ RunTime:0.002000s ]
+
+[ 2014-02-23T11:13:24+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_county_name.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `county_code` [ RunTime:0.003001s ]
+SQL: SELECT * FROM `county_code` WHERE ( `county_up_id` = 1199 )  [ RunTime:0.003000s ]
+
+[ 2014-02-23T11:13:27+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_code_jurisdiction.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `jurisdiction` [ RunTime:0.004000s ]
+SQL: SELECT * FROM `jurisdiction` WHERE ( `county_name` = '大观区' )  [ RunTime:0.003000s ]
+
+[ 2014-02-23T11:13:28+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_code.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002001s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002001s ]
+SQL: SHOW COLUMNS FROM `county_code` [ RunTime:0.005001s ]
+SQL: SELECT * FROM `county_code` WHERE ( `county_name` = '大观区' )  [ RunTime:0.002000s ]
+
+[ 2014-02-23T11:30:51+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_city_name.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `county_code` [ RunTime:0.004001s ]
+SQL: SELECT * FROM `county_code` WHERE ( `county_up_id` = 12 )  [ RunTime:0.002000s ]
+
+[ 2014-02-23T11:30:53+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_county_name.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `county_code` [ RunTime:0.002001s ]
+SQL: SELECT * FROM `county_code` WHERE ( `county_up_id` = 1199 )  [ RunTime:0.004000s ]
+
+[ 2014-02-23T11:30:55+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_code_jurisdiction.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `jurisdiction` [ RunTime:0.003000s ]
+SQL: SELECT * FROM `jurisdiction` WHERE ( `county_name` = '大观区' )  [ RunTime:0.004000s ]
+
+[ 2014-02-23T11:30:57+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_code.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.030001s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.030001s ]
+SQL: SHOW COLUMNS FROM `county_code` [ RunTime:0.007000s ]
+SQL: SELECT * FROM `county_code` WHERE ( `county_name` = '大观区' )  [ RunTime:0.002000s ]
+
+[ 2014-02-23T11:33:51+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_city_name.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `county_code` [ RunTime:0.004000s ]
+SQL: SELECT * FROM `county_code` WHERE ( `county_up_id` = 12 )  [ RunTime:0.004000s ]
+
+[ 2014-02-23T11:33:54+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_county_name.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `county_code` [ RunTime:0.002000s ]
+SQL: SELECT * FROM `county_code` WHERE ( `county_up_id` = 1199 )  [ RunTime:0.006000s ]
+
+[ 2014-02-23T11:33:57+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_code_jurisdiction.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.013001s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.014001s ]
+SQL: SHOW COLUMNS FROM `jurisdiction` [ RunTime:0.004001s ]
+SQL: SELECT * FROM `jurisdiction` WHERE ( `county_name` = '大观区' )  [ RunTime:0.004000s ]
+
+[ 2014-02-23T11:33:58+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_code.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `county_code` [ RunTime:0.003000s ]
+SQL: SELECT * FROM `county_code` WHERE ( `county_name` = '大观区' )  [ RunTime:0.003000s ]
+
+[ 2014-02-23T11:35:48+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_city_name.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `county_code` [ RunTime:0.002000s ]
+SQL: SELECT * FROM `county_code` WHERE ( `county_up_id` = 12 )  [ RunTime:0.002000s ]
+
+[ 2014-02-23T11:35:52+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_county_name.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `county_code` [ RunTime:0.002000s ]
+SQL: SELECT * FROM `county_code` WHERE ( `county_up_id` = 1199 )  [ RunTime:0.002000s ]
+
+[ 2014-02-23T11:35:54+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_code_jurisdiction.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `jurisdiction` [ RunTime:0.005000s ]
+SQL: SELECT * FROM `jurisdiction` WHERE ( `county_name` = '大观区' )  [ RunTime:0.002000s ]
+
+[ 2014-02-23T11:35:54+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_code.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `county_code` [ RunTime:0.003000s ]
+SQL: SELECT * FROM `county_code` WHERE ( `county_name` = '大观区' )  [ RunTime:0.003000s ]
+
+[ 2014-02-23T11:37:16+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_city_name.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `county_code` [ RunTime:0.003000s ]
+SQL: SELECT * FROM `county_code` WHERE ( `county_up_id` = 12 )  [ RunTime:0.003000s ]
+
+[ 2014-02-23T11:37:19+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_county_name.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `county_code` [ RunTime:0.005000s ]
+SQL: SELECT * FROM `county_code` WHERE ( `county_up_id` = 1199 )  [ RunTime:0.002000s ]
+
+[ 2014-02-23T11:37:23+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_code_jurisdiction.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.003000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.003000s ]
+SQL: SHOW COLUMNS FROM `jurisdiction` [ RunTime:0.002000s ]
+SQL: SELECT * FROM `jurisdiction` WHERE ( `county_name` = '大观区' )  [ RunTime:0.003000s ]
+
+[ 2014-02-23T11:37:24+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_code.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `county_code` [ RunTime:0.002000s ]
+SQL: SELECT * FROM `county_code` WHERE ( `county_name` = '大观区' )  [ RunTime:0.002000s ]
+
+[ 2014-02-23T11:39:54+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_city_name.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `county_code` [ RunTime:0.006000s ]
+SQL: SELECT * FROM `county_code` WHERE ( `county_up_id` = 12 )  [ RunTime:0.003000s ]
+
+[ 2014-02-23T11:39:56+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_county_name.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `county_code` [ RunTime:0.003000s ]
+SQL: SELECT * FROM `county_code` WHERE ( `county_up_id` = 1199 )  [ RunTime:0.004000s ]
+
+[ 2014-02-23T11:39:58+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_code_jurisdiction.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `jurisdiction` [ RunTime:0.003001s ]
+SQL: SELECT * FROM `jurisdiction` WHERE ( `county_name` = '大观区' )  [ RunTime:0.003000s ]
+
+[ 2014-02-23T11:39:59+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_code.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `county_code` [ RunTime:0.005001s ]
+SQL: SELECT * FROM `county_code` WHERE ( `county_name` = '大观区' )  [ RunTime:0.004000s ]
+
+[ 2014-02-23T11:41:38+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_city_name.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `county_code` [ RunTime:0.006000s ]
+SQL: SELECT * FROM `county_code` WHERE ( `county_up_id` = 12 )  [ RunTime:0.006001s ]
+
+[ 2014-02-23T11:41:40+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_county_name.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `county_code` [ RunTime:0.007001s ]
+SQL: SELECT * FROM `county_code` WHERE ( `county_up_id` = 1199 )  [ RunTime:0.003000s ]
+
+[ 2014-02-23T11:41:43+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_code_jurisdiction.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `jurisdiction` [ RunTime:0.003001s ]
+SQL: SELECT * FROM `jurisdiction` WHERE ( `county_name` = '大观区' )  [ RunTime:0.005000s ]
+
+[ 2014-02-23T11:41:44+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_code.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `county_code` [ RunTime:0.004000s ]
+SQL: SELECT * FROM `county_code` WHERE ( `county_name` = '大观区' )  [ RunTime:0.002000s ]
+
+[ 2014-02-23T11:46:23+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_city_name.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.004000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.004000s ]
+SQL: SHOW COLUMNS FROM `county_code` [ RunTime:0.005000s ]
+SQL: SELECT * FROM `county_code` WHERE ( `county_up_id` = 12 )  [ RunTime:0.005000s ]
+
+[ 2014-02-23T11:46:26+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_county_name.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `county_code` [ RunTime:0.004000s ]
+SQL: SELECT * FROM `county_code` WHERE ( `county_up_id` = 1199 )  [ RunTime:0.003000s ]
+
+[ 2014-02-23T11:46:29+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_code.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `county_code` [ RunTime:0.002000s ]
+SQL: SELECT * FROM `county_code` WHERE ( `county_name` = '大观区' )  [ RunTime:0.002000s ]
+
+[ 2014-02-23T11:46:29+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_code_jurisdiction.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.023001s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.023001s ]
+SQL: SHOW COLUMNS FROM `jurisdiction` [ RunTime:0.005001s ]
+SQL: SELECT * FROM `jurisdiction` WHERE ( `county_name` = '大观区' )  [ RunTime:0.003000s ]
+
+[ 2014-02-23T12:37:20+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_city_name.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `county_code` [ RunTime:0.004000s ]
+SQL: SELECT * FROM `county_code` WHERE ( `county_up_id` = 9 )  [ RunTime:0.006001s ]
+
+[ 2014-02-23T12:37:22+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_city_name.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `county_code` [ RunTime:0.006001s ]
+SQL: SELECT * FROM `county_code` WHERE ( `county_up_id` = 12 )  [ RunTime:0.003000s ]
+
+[ 2014-02-23T12:37:24+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_county_name.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.005000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.006000s ]
+SQL: SHOW COLUMNS FROM `county_code` [ RunTime:0.003000s ]
+SQL: SELECT * FROM `county_code` WHERE ( `county_up_id` = 1199 )  [ RunTime:0.002000s ]
+
+[ 2014-02-23T12:37:28+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_code_jurisdiction.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `jurisdiction` [ RunTime:0.003000s ]
+SQL: SELECT * FROM `jurisdiction` WHERE ( `county_name` = '大观区' )  [ RunTime:0.002000s ]
+
+[ 2014-02-23T12:37:28+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_code.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `county_code` [ RunTime:0.005001s ]
+SQL: SELECT * FROM `county_code` WHERE ( `county_name` = '大观区' )  [ RunTime:0.006000s ]
+
+[ 2014-02-23T12:45:32+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_city_name.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `county_code` [ RunTime:0.003000s ]
+SQL: SELECT * FROM `county_code` WHERE ( `county_up_id` = 12 )  [ RunTime:0.002000s ]
+
+[ 2014-02-23T12:45:35+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_county_name.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `county_code` [ RunTime:0.004000s ]
+SQL: SELECT * FROM `county_code` WHERE ( `county_up_id` = 1199 )  [ RunTime:0.003000s ]
+
+[ 2014-02-23T12:45:38+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_code_jurisdiction.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `jurisdiction` [ RunTime:0.003000s ]
+SQL: SELECT * FROM `jurisdiction` WHERE ( `county_name` = '大观区' )  [ RunTime:0.003000s ]
+
+[ 2014-02-23T12:45:38+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_code.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.005001s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.005001s ]
+SQL: SHOW COLUMNS FROM `county_code` [ RunTime:0.002001s ]
+SQL: SELECT * FROM `county_code` WHERE ( `county_name` = '大观区' )  [ RunTime:0.002000s ]
+
+[ 2014-02-23T12:46:36+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_city_name.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.003000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.003000s ]
+SQL: SHOW COLUMNS FROM `county_code` [ RunTime:0.003000s ]
+SQL: SELECT * FROM `county_code` WHERE ( `county_up_id` = 12 )  [ RunTime:0.006000s ]
+
+[ 2014-02-23T12:46:40+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_county_name.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.003000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.003000s ]
+SQL: SHOW COLUMNS FROM `county_code` [ RunTime:0.005001s ]
+SQL: SELECT * FROM `county_code` WHERE ( `county_up_id` = 1199 )  [ RunTime:0.002000s ]
+
+[ 2014-02-23T12:46:43+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_code_jurisdiction.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `jurisdiction` [ RunTime:0.003000s ]
+SQL: SELECT * FROM `jurisdiction` WHERE ( `county_name` = '大观区' )  [ RunTime:0.002000s ]
+
+[ 2014-02-23T12:46:43+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_code.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.005001s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.005001s ]
+SQL: SHOW COLUMNS FROM `county_code` [ RunTime:0.003000s ]
+SQL: SELECT * FROM `county_code` WHERE ( `county_name` = '大观区' )  [ RunTime:0.002000s ]
+
+[ 2014-02-23T12:54:33+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_city_name.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `county_code` [ RunTime:0.006001s ]
+SQL: SELECT * FROM `county_code` WHERE ( `county_up_id` = 12 )  [ RunTime:0.017001s ]
+
+[ 2014-02-23T12:54:36+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_county_name.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.003000s ]
+SQL: SHOW COLUMNS FROM `county_code` [ RunTime:0.003000s ]
+SQL: SELECT * FROM `county_code` WHERE ( `county_up_id` = 1199 )  [ RunTime:0.002000s ]
+
+[ 2014-02-23T12:54:39+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_code_jurisdiction.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `jurisdiction` [ RunTime:0.003001s ]
+SQL: SELECT * FROM `jurisdiction` WHERE ( `county_name` = '大观区' )  [ RunTime:0.002000s ]
+
+[ 2014-02-23T12:54:40+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_code.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `county_code` [ RunTime:0.002000s ]
+SQL: SELECT * FROM `county_code` WHERE ( `county_name` = '大观区' )  [ RunTime:0.002000s ]
+
+[ 2014-02-23T13:04:00+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_city_name.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `county_code` [ RunTime:0.004001s ]
+SQL: SELECT * FROM `county_code` WHERE ( `county_up_id` = 12 )  [ RunTime:0.004000s ]
+
+[ 2014-02-23T13:04:03+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_county_name.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.003001s ]
+SQL: SHOW COLUMNS FROM `county_code` [ RunTime:0.003000s ]
+SQL: SELECT * FROM `county_code` WHERE ( `county_up_id` = 1199 )  [ RunTime:0.005001s ]
+
+[ 2014-02-23T13:04:06+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_code_jurisdiction.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `jurisdiction` [ RunTime:0.002000s ]
+SQL: SELECT * FROM `jurisdiction` WHERE ( `county_name` = '大观区' )  [ RunTime:0.006000s ]
+
+[ 2014-02-23T13:04:07+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_code.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `county_code` [ RunTime:0.003000s ]
+SQL: SELECT * FROM `county_code` WHERE ( `county_name` = '大观区' )  [ RunTime:0.005000s ]
+
+[ 2014-02-23T13:14:29+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_city_name.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `county_code` [ RunTime:0.002000s ]
+SQL: SELECT * FROM `county_code` WHERE ( `county_up_id` = 12 )  [ RunTime:0.002000s ]
+
+[ 2014-02-23T13:14:33+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_county_name.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `county_code` [ RunTime:0.005000s ]
+SQL: SELECT * FROM `county_code` WHERE ( `county_up_id` = 1199 )  [ RunTime:0.004001s ]
+
+[ 2014-02-23T13:14:35+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_code_jurisdiction.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `jurisdiction` [ RunTime:0.002000s ]
+SQL: SELECT * FROM `jurisdiction` WHERE ( `county_name` = '大观区' )  [ RunTime:0.001000s ]
+
+[ 2014-02-23T13:14:36+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_code.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `county_code` [ RunTime:0.002000s ]
+SQL: SELECT * FROM `county_code` WHERE ( `county_name` = '大观区' )  [ RunTime:0.014001s ]
+
+[ 2014-02-23T13:19:30+08:00 ] 127.0.0.1 /waste/www/index.php/Home/DistrictReception/reception_basic_information.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.001001s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002001s ]
+SQL: SHOW COLUMNS FROM `reception_unit` [ RunTime:0.006000s ]
+SQL: SELECT `reception_unit_id`,`reception_unit_name`,`reception_unit_address`,`reception_unit_county` FROM `reception_unit` WHERE ( `jurisdiction_id` = 3 )  [ RunTime:0.003001s ]
+INFO: [ view_parse ] --START--
+INFO: ParseTemplate Behavior ::run [ RunTime:0.054003s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.054003s ]
+INFO: [ view_filter ] --START--
+INFO: ContentReplace Behavior ::run [ RunTime:0.001000s ]
+INFO: TokenBuild Behavior ::run [ RunTime:0.001000s ]
+INFO: WriteHtmlCache Behavior ::run [ RunTime:0.001000s ]
+INFO: ShowRuntime Behavior ::run [ RunTime:0.002000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.006000s ]
+
+[ 2014-02-23T13:19:32+08:00 ] 127.0.0.1 /waste/www/index.php/Home/DistrictTransfer/transfer_record.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `record` [ RunTime:0.031002s ]
+SQL: SELECT * FROM `record` LEFT JOIN production_unit ON record.production_unit_id = production_unit.production_unit_id WHERE ( `jurisdiction_id` = '3' ) AND ( `record_status` > 0 )  [ RunTime:0.119007s ]
+INFO: [ view_parse ] --START--
+INFO: ParseTemplate Behavior ::run [ RunTime:0.040002s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.040002s ]
+INFO: [ view_filter ] --START--
+INFO: ContentReplace Behavior ::run [ RunTime:0.002000s ]
+INFO: TokenBuild Behavior ::run [ RunTime:0.001001s ]
+INFO: WriteHtmlCache Behavior ::run [ RunTime:0.001000s ]
+INFO: ShowRuntime Behavior ::run [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.006001s ]
+
+[ 2014-02-23T13:19:34+08:00 ] 127.0.0.1 /waste/www/index.php/Home/DistrictProduction/production_basic_information.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `production_unit` [ RunTime:0.004000s ]
+SQL: SELECT `production_unit_id`,`production_unit_name`,`production_unit_address`,`waste_location_county` FROM `production_unit` WHERE ( `jurisdiction_id` = 3 )  [ RunTime:0.003000s ]
+INFO: [ view_parse ] --START--
+INFO: ParseTemplate Behavior ::run [ RunTime:0.058004s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.058004s ]
+INFO: [ view_filter ] --START--
+INFO: ContentReplace Behavior ::run [ RunTime:0.001000s ]
+INFO: TokenBuild Behavior ::run [ RunTime:0.001000s ]
+INFO: WriteHtmlCache Behavior ::run [ RunTime:0.001000s ]
+INFO: ShowRuntime Behavior ::run [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.004000s ]
+
+[ 2014-02-23T13:19:38+08:00 ] 127.0.0.1 /waste/www/index.php/Home/DistrictBusiness/transfer_record_management.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `record` [ RunTime:0.008000s ]
+SQL: SELECT * FROM `record` LEFT JOIN production_unit ON record.production_unit_id = production_unit.production_unit_id WHERE ( `jurisdiction_id` = '3' ) AND ( `record_status` > 0 )  [ RunTime:0.004000s ]
+INFO: [ view_parse ] --START--
+INFO: ParseTemplate Behavior ::run [ RunTime:0.029002s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.029002s ]
+INFO: [ view_filter ] --START--
+INFO: ContentReplace Behavior ::run [ RunTime:0.001000s ]
+INFO: TokenBuild Behavior ::run [ RunTime:0.001000s ]
+INFO: WriteHtmlCache Behavior ::run [ RunTime:0.001000s ]
+INFO: ShowRuntime Behavior ::run [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.004000s ]
+
+[ 2014-02-23T13:19:39+08:00 ] 127.0.0.1 /waste/www/index.php/Home/DistrictBusiness/enterprise_user_management.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: 
+			(SELECT `user`.`user_id`, `username`, `user_type`, `production_unit_name` AS `unit_name`, `production_unit_code` AS `unit_code`, `production_unit_username` AS `unit_username`, `waste_location_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN production_unit ON user.user_id = production_unit.user_id)
+			UNION
+			(SELECT `user`.`user_id`, `username`, `user_type`, `transport_unit_name` AS `unit_name`, `transport_unit_code` AS `unit_code`, `transport_unit_username` AS `unit_username`, `transport_unit_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN transport_unit ON user.user_id = transport_unit.user_id)
+			UNION
+			(SELECT `user`.`user_id`, `username`, `user_type`, `reception_unit_name` AS `unit_name`, `reception_unit_code` AS `unit_code`, `reception_unit_username` AS `unit_username`, `reception_unit_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN reception_unit ON user.user_id = reception_unit.user_id) [ RunTime:0.009001s ]
+INFO: [ view_parse ] --START--
+NOTIC: [8] Use of undefined constant Home - assumed 'Home' F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [8] Use of undefined constant DistrictBusiness - assumed 'DistrictBusiness' F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [2] Division by zero F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [8] Use of undefined constant enterprise_user_management_ajaxpost - assumed 'enterprise_user_management_ajaxpost' F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [2] Division by zero F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+INFO: ParseTemplate Behavior ::run [ RunTime:0.055003s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.055003s ]
+INFO: [ view_filter ] --START--
+INFO: ContentReplace Behavior ::run [ RunTime:0.002000s ]
+INFO: TokenBuild Behavior ::run [ RunTime:0.002000s ]
+INFO: WriteHtmlCache Behavior ::run [ RunTime:0.001000s ]
+INFO: ShowRuntime Behavior ::run [ RunTime:0.002000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.007000s ]
+
+[ 2014-02-23T13:20:02+08:00 ] 127.0.0.1 /waste/www/index.php/DistrictBusiness/enterprise_user_management.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: 
+			(SELECT `user`.`user_id`, `username`, `user_type`, `production_unit_name` AS `unit_name`, `production_unit_code` AS `unit_code`, `production_unit_username` AS `unit_username`, `waste_location_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN production_unit ON user.user_id = production_unit.user_id)
+			UNION
+			(SELECT `user`.`user_id`, `username`, `user_type`, `transport_unit_name` AS `unit_name`, `transport_unit_code` AS `unit_code`, `transport_unit_username` AS `unit_username`, `transport_unit_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN transport_unit ON user.user_id = transport_unit.user_id)
+			UNION
+			(SELECT `user`.`user_id`, `username`, `user_type`, `reception_unit_name` AS `unit_name`, `reception_unit_code` AS `unit_code`, `reception_unit_username` AS `unit_username`, `reception_unit_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN reception_unit ON user.user_id = reception_unit.user_id) [ RunTime:0.003000s ]
+INFO: [ view_parse ] --START--
+NOTIC: [8] Use of undefined constant Home - assumed 'Home' F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [8] Use of undefined constant DistrictBusiness - assumed 'DistrictBusiness' F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [2] Division by zero F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [8] Use of undefined constant enterprise_user_management_ajaxpost - assumed 'enterprise_user_management_ajaxpost' F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [2] Division by zero F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+INFO: ParseTemplate Behavior ::run [ RunTime:0.021001s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.021001s ]
+INFO: [ view_filter ] --START--
+INFO: ContentReplace Behavior ::run [ RunTime:0.002000s ]
+INFO: TokenBuild Behavior ::run [ RunTime:0.002000s ]
+INFO: WriteHtmlCache Behavior ::run [ RunTime:0.001000s ]
+INFO: ShowRuntime Behavior ::run [ RunTime:0.002001s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.007001s ]
+
+[ 2014-02-23T13:20:03+08:00 ] 127.0.0.1 /waste/www/index.php/Home/DistrictBusiness/enterprise_user_management.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: 
+			(SELECT `user`.`user_id`, `username`, `user_type`, `production_unit_name` AS `unit_name`, `production_unit_code` AS `unit_code`, `production_unit_username` AS `unit_username`, `waste_location_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN production_unit ON user.user_id = production_unit.user_id)
+			UNION
+			(SELECT `user`.`user_id`, `username`, `user_type`, `transport_unit_name` AS `unit_name`, `transport_unit_code` AS `unit_code`, `transport_unit_username` AS `unit_username`, `transport_unit_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN transport_unit ON user.user_id = transport_unit.user_id)
+			UNION
+			(SELECT `user`.`user_id`, `username`, `user_type`, `reception_unit_name` AS `unit_name`, `reception_unit_code` AS `unit_code`, `reception_unit_username` AS `unit_username`, `reception_unit_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN reception_unit ON user.user_id = reception_unit.user_id) [ RunTime:0.003000s ]
+INFO: [ view_parse ] --START--
+NOTIC: [8] Use of undefined constant Home - assumed 'Home' F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [8] Use of undefined constant DistrictBusiness - assumed 'DistrictBusiness' F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [2] Division by zero F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [8] Use of undefined constant enterprise_user_management_ajaxpost - assumed 'enterprise_user_management_ajaxpost' F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [2] Division by zero F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+INFO: ParseTemplate Behavior ::run [ RunTime:0.022001s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.022001s ]
+INFO: [ view_filter ] --START--
+INFO: ContentReplace Behavior ::run [ RunTime:0.001000s ]
+INFO: TokenBuild Behavior ::run [ RunTime:0.001001s ]
+INFO: WriteHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: ShowRuntime Behavior ::run [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.006001s ]
+
+[ 2014-02-23T13:20:40+08:00 ] 127.0.0.1 /waste/www/index.php/DistrictBusiness/enterprise_user_management.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: 
+			(SELECT `user`.`user_id`, `username`, `user_type`, `production_unit_name` AS `unit_name`, `production_unit_code` AS `unit_code`, `production_unit_username` AS `unit_username`, `waste_location_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN production_unit ON user.user_id = production_unit.user_id)
+			UNION
+			(SELECT `user`.`user_id`, `username`, `user_type`, `transport_unit_name` AS `unit_name`, `transport_unit_code` AS `unit_code`, `transport_unit_username` AS `unit_username`, `transport_unit_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN transport_unit ON user.user_id = transport_unit.user_id)
+			UNION
+			(SELECT `user`.`user_id`, `username`, `user_type`, `reception_unit_name` AS `unit_name`, `reception_unit_code` AS `unit_code`, `reception_unit_username` AS `unit_username`, `reception_unit_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN reception_unit ON user.user_id = reception_unit.user_id) [ RunTime:0.006001s ]
+INFO: [ view_parse ] --START--
+NOTIC: [8] Use of undefined constant Home - assumed 'Home' F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [8] Use of undefined constant DistrictBusiness - assumed 'DistrictBusiness' F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [2] Division by zero F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [8] Use of undefined constant enterprise_user_management_ajaxpost - assumed 'enterprise_user_management_ajaxpost' F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [2] Division by zero F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+INFO: ParseTemplate Behavior ::run [ RunTime:0.017001s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.017001s ]
+INFO: [ view_filter ] --START--
+INFO: ContentReplace Behavior ::run [ RunTime:0.001000s ]
+INFO: TokenBuild Behavior ::run [ RunTime:0.001000s ]
+INFO: WriteHtmlCache Behavior ::run [ RunTime:0.001000s ]
+INFO: ShowRuntime Behavior ::run [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.004000s ]
+
+[ 2014-02-23T13:20:42+08:00 ] 127.0.0.1 /waste/www/index.php/Home/DistrictBusiness/enterprise_user_management.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: 
+			(SELECT `user`.`user_id`, `username`, `user_type`, `production_unit_name` AS `unit_name`, `production_unit_code` AS `unit_code`, `production_unit_username` AS `unit_username`, `waste_location_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN production_unit ON user.user_id = production_unit.user_id)
+			UNION
+			(SELECT `user`.`user_id`, `username`, `user_type`, `transport_unit_name` AS `unit_name`, `transport_unit_code` AS `unit_code`, `transport_unit_username` AS `unit_username`, `transport_unit_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN transport_unit ON user.user_id = transport_unit.user_id)
+			UNION
+			(SELECT `user`.`user_id`, `username`, `user_type`, `reception_unit_name` AS `unit_name`, `reception_unit_code` AS `unit_code`, `reception_unit_username` AS `unit_username`, `reception_unit_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN reception_unit ON user.user_id = reception_unit.user_id) [ RunTime:0.007001s ]
+INFO: [ view_parse ] --START--
+NOTIC: [8] Use of undefined constant Home - assumed 'Home' F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [8] Use of undefined constant DistrictBusiness - assumed 'DistrictBusiness' F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [2] Division by zero F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [8] Use of undefined constant enterprise_user_management_ajaxpost - assumed 'enterprise_user_management_ajaxpost' F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [2] Division by zero F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+INFO: ParseTemplate Behavior ::run [ RunTime:0.017001s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.017001s ]
+INFO: [ view_filter ] --START--
+INFO: ContentReplace Behavior ::run [ RunTime:0.001000s ]
+INFO: TokenBuild Behavior ::run [ RunTime:0.001000s ]
+INFO: WriteHtmlCache Behavior ::run [ RunTime:0.001000s ]
+INFO: ShowRuntime Behavior ::run [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.005000s ]
+
+[ 2014-02-23T13:20:50+08:00 ] 127.0.0.1 /waste/www/index.php/Home/DistrictBusiness/enterprise_user_management_page_reception?record_id=76
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `reception_unit` [ RunTime:0.004000s ]
+SQL: SELECT * FROM `reception_unit` WHERE ( `user_id` = 76 ) LIMIT 1   [ RunTime:0.002000s ]
+INFO: [ view_parse ] --START--
+INFO: ParseTemplate Behavior ::run [ RunTime:0.221013s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.222013s ]
+INFO: [ view_filter ] --START--
+INFO: ContentReplace Behavior ::run [ RunTime:0.002000s ]
+INFO: TokenBuild Behavior ::run [ RunTime:0.002000s ]
+INFO: WriteHtmlCache Behavior ::run [ RunTime:0.001000s ]
+INFO: ShowRuntime Behavior ::run [ RunTime:0.002000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.007000s ]
+
+[ 2014-02-23T13:21:06+08:00 ] 127.0.0.1 /waste/www/index.php/DistrictBusiness/enterprise_user_management.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.003000s ]
+SQL: 
+			(SELECT `user`.`user_id`, `username`, `user_type`, `production_unit_name` AS `unit_name`, `production_unit_code` AS `unit_code`, `production_unit_username` AS `unit_username`, `waste_location_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN production_unit ON user.user_id = production_unit.user_id)
+			UNION
+			(SELECT `user`.`user_id`, `username`, `user_type`, `transport_unit_name` AS `unit_name`, `transport_unit_code` AS `unit_code`, `transport_unit_username` AS `unit_username`, `transport_unit_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN transport_unit ON user.user_id = transport_unit.user_id)
+			UNION
+			(SELECT `user`.`user_id`, `username`, `user_type`, `reception_unit_name` AS `unit_name`, `reception_unit_code` AS `unit_code`, `reception_unit_username` AS `unit_username`, `reception_unit_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN reception_unit ON user.user_id = reception_unit.user_id) [ RunTime:0.003000s ]
+INFO: [ view_parse ] --START--
+NOTIC: [8] Use of undefined constant Home - assumed 'Home' F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [8] Use of undefined constant DistrictBusiness - assumed 'DistrictBusiness' F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [2] Division by zero F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [8] Use of undefined constant enterprise_user_management_ajaxpost - assumed 'enterprise_user_management_ajaxpost' F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [2] Division by zero F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+INFO: ParseTemplate Behavior ::run [ RunTime:0.021002s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.022002s ]
+INFO: [ view_filter ] --START--
+INFO: ContentReplace Behavior ::run [ RunTime:0.002000s ]
+INFO: TokenBuild Behavior ::run [ RunTime:0.001000s ]
+INFO: WriteHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: ShowRuntime Behavior ::run [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.006000s ]
+
+[ 2014-02-23T13:21:07+08:00 ] 127.0.0.1 /waste/www/index.php/Home/DistrictBusiness/enterprise_user_management.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002001s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002001s ]
+SQL: 
+			(SELECT `user`.`user_id`, `username`, `user_type`, `production_unit_name` AS `unit_name`, `production_unit_code` AS `unit_code`, `production_unit_username` AS `unit_username`, `waste_location_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN production_unit ON user.user_id = production_unit.user_id)
+			UNION
+			(SELECT `user`.`user_id`, `username`, `user_type`, `transport_unit_name` AS `unit_name`, `transport_unit_code` AS `unit_code`, `transport_unit_username` AS `unit_username`, `transport_unit_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN transport_unit ON user.user_id = transport_unit.user_id)
+			UNION
+			(SELECT `user`.`user_id`, `username`, `user_type`, `reception_unit_name` AS `unit_name`, `reception_unit_code` AS `unit_code`, `reception_unit_username` AS `unit_username`, `reception_unit_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN reception_unit ON user.user_id = reception_unit.user_id) [ RunTime:0.003000s ]
+INFO: [ view_parse ] --START--
+NOTIC: [8] Use of undefined constant Home - assumed 'Home' F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [8] Use of undefined constant DistrictBusiness - assumed 'DistrictBusiness' F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [2] Division by zero F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [8] Use of undefined constant enterprise_user_management_ajaxpost - assumed 'enterprise_user_management_ajaxpost' F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [2] Division by zero F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+INFO: ParseTemplate Behavior ::run [ RunTime:0.021001s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.021001s ]
+INFO: [ view_filter ] --START--
+INFO: ContentReplace Behavior ::run [ RunTime:0.001000s ]
+INFO: TokenBuild Behavior ::run [ RunTime:0.002001s ]
+INFO: WriteHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: ShowRuntime Behavior ::run [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.006001s ]
+
+[ 2014-02-23T13:26:11+08:00 ] 127.0.0.1 /waste/www/index.php/DistrictBusiness/enterprise_user_management.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: 
+			(SELECT `user`.`user_id`, `username`, `user_type`, `production_unit_name` AS `unit_name`, `production_unit_code` AS `unit_code`, `production_unit_username` AS `unit_username`, `waste_location_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN production_unit ON user.user_id = production_unit.user_id)
+			UNION
+			(SELECT `user`.`user_id`, `username`, `user_type`, `transport_unit_name` AS `unit_name`, `transport_unit_code` AS `unit_code`, `transport_unit_username` AS `unit_username`, `transport_unit_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN transport_unit ON user.user_id = transport_unit.user_id)
+			UNION
+			(SELECT `user`.`user_id`, `username`, `user_type`, `reception_unit_name` AS `unit_name`, `reception_unit_code` AS `unit_code`, `reception_unit_username` AS `unit_username`, `reception_unit_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN reception_unit ON user.user_id = reception_unit.user_id) [ RunTime:0.003000s ]
+INFO: [ view_parse ] --START--
+NOTIC: [8] Use of undefined constant Home - assumed 'Home' F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [8] Use of undefined constant DistrictBusiness - assumed 'DistrictBusiness' F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [2] Division by zero F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [8] Use of undefined constant enterprise_user_management_ajaxpost - assumed 'enterprise_user_management_ajaxpost' F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [2] Division by zero F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+INFO: ParseTemplate Behavior ::run [ RunTime:0.019001s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.019001s ]
+INFO: [ view_filter ] --START--
+INFO: ContentReplace Behavior ::run [ RunTime:0.001000s ]
+INFO: TokenBuild Behavior ::run [ RunTime:0.002000s ]
+INFO: WriteHtmlCache Behavior ::run [ RunTime:0.001000s ]
+INFO: ShowRuntime Behavior ::run [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.005000s ]
+
+[ 2014-02-23T13:26:12+08:00 ] 127.0.0.1 /waste/www/index.php/Home/DistrictBusiness/enterprise_user_management.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: 
+			(SELECT `user`.`user_id`, `username`, `user_type`, `production_unit_name` AS `unit_name`, `production_unit_code` AS `unit_code`, `production_unit_username` AS `unit_username`, `waste_location_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN production_unit ON user.user_id = production_unit.user_id)
+			UNION
+			(SELECT `user`.`user_id`, `username`, `user_type`, `transport_unit_name` AS `unit_name`, `transport_unit_code` AS `unit_code`, `transport_unit_username` AS `unit_username`, `transport_unit_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN transport_unit ON user.user_id = transport_unit.user_id)
+			UNION
+			(SELECT `user`.`user_id`, `username`, `user_type`, `reception_unit_name` AS `unit_name`, `reception_unit_code` AS `unit_code`, `reception_unit_username` AS `unit_username`, `reception_unit_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN reception_unit ON user.user_id = reception_unit.user_id) [ RunTime:0.048002s ]
+INFO: [ view_parse ] --START--
+NOTIC: [8] Use of undefined constant Home - assumed 'Home' F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [8] Use of undefined constant DistrictBusiness - assumed 'DistrictBusiness' F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [2] Division by zero F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [8] Use of undefined constant enterprise_user_management_ajaxpost - assumed 'enterprise_user_management_ajaxpost' F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [2] Division by zero F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+INFO: ParseTemplate Behavior ::run [ RunTime:0.019002s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.019002s ]
+INFO: [ view_filter ] --START--
+INFO: ContentReplace Behavior ::run [ RunTime:0.001000s ]
+INFO: TokenBuild Behavior ::run [ RunTime:0.001000s ]
+INFO: WriteHtmlCache Behavior ::run [ RunTime:0.001000s ]
+INFO: ShowRuntime Behavior ::run [ RunTime:0.002000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.005000s ]
+
+[ 2014-02-23T13:26:24+08:00 ] 127.0.0.1 /waste/www/index.php/DistrictBusiness/enterprise_user_management.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: 
+			(SELECT `user`.`user_id`, `username`, `user_type`, `production_unit_name` AS `unit_name`, `production_unit_code` AS `unit_code`, `production_unit_username` AS `unit_username`, `waste_location_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN production_unit ON user.user_id = production_unit.user_id)
+			UNION
+			(SELECT `user`.`user_id`, `username`, `user_type`, `transport_unit_name` AS `unit_name`, `transport_unit_code` AS `unit_code`, `transport_unit_username` AS `unit_username`, `transport_unit_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN transport_unit ON user.user_id = transport_unit.user_id)
+			UNION
+			(SELECT `user`.`user_id`, `username`, `user_type`, `reception_unit_name` AS `unit_name`, `reception_unit_code` AS `unit_code`, `reception_unit_username` AS `unit_username`, `reception_unit_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN reception_unit ON user.user_id = reception_unit.user_id) [ RunTime:0.004000s ]
+INFO: [ view_parse ] --START--
+NOTIC: [8] Use of undefined constant Home - assumed 'Home' F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [8] Use of undefined constant DistrictBusiness - assumed 'DistrictBusiness' F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [2] Division by zero F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [8] Use of undefined constant enterprise_user_management_ajaxpost - assumed 'enterprise_user_management_ajaxpost' F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [2] Division by zero F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+INFO: ParseTemplate Behavior ::run [ RunTime:0.022001s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.022001s ]
+INFO: [ view_filter ] --START--
+INFO: ContentReplace Behavior ::run [ RunTime:0.001001s ]
+INFO: TokenBuild Behavior ::run [ RunTime:0.001000s ]
+INFO: WriteHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: ShowRuntime Behavior ::run [ RunTime:0.002000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.007001s ]
+
+[ 2014-02-23T13:26:25+08:00 ] 127.0.0.1 /waste/www/index.php/Home/DistrictBusiness/enterprise_user_management.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: 
+			(SELECT `user`.`user_id`, `username`, `user_type`, `production_unit_name` AS `unit_name`, `production_unit_code` AS `unit_code`, `production_unit_username` AS `unit_username`, `waste_location_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN production_unit ON user.user_id = production_unit.user_id)
+			UNION
+			(SELECT `user`.`user_id`, `username`, `user_type`, `transport_unit_name` AS `unit_name`, `transport_unit_code` AS `unit_code`, `transport_unit_username` AS `unit_username`, `transport_unit_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN transport_unit ON user.user_id = transport_unit.user_id)
+			UNION
+			(SELECT `user`.`user_id`, `username`, `user_type`, `reception_unit_name` AS `unit_name`, `reception_unit_code` AS `unit_code`, `reception_unit_username` AS `unit_username`, `reception_unit_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN reception_unit ON user.user_id = reception_unit.user_id) [ RunTime:0.004001s ]
+INFO: [ view_parse ] --START--
+NOTIC: [8] Use of undefined constant Home - assumed 'Home' F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [8] Use of undefined constant DistrictBusiness - assumed 'DistrictBusiness' F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [2] Division by zero F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [8] Use of undefined constant enterprise_user_management_ajaxpost - assumed 'enterprise_user_management_ajaxpost' F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [2] Division by zero F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+INFO: ParseTemplate Behavior ::run [ RunTime:0.022001s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.022001s ]
+INFO: [ view_filter ] --START--
+INFO: ContentReplace Behavior ::run [ RunTime:0.001000s ]
+INFO: TokenBuild Behavior ::run [ RunTime:0.002000s ]
+INFO: WriteHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: ShowRuntime Behavior ::run [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.006000s ]
+
+[ 2014-02-23T13:30:08+08:00 ] 127.0.0.1 /waste/www/index.php/DistrictBusiness/enterprise_user_management.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: 
+			(SELECT `user`.`user_id`, `username`, `user_type`, `production_unit_name` AS `unit_name`, `production_unit_code` AS `unit_code`, `production_unit_username` AS `unit_username`, `waste_location_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN production_unit ON user.user_id = production_unit.user_id)
+			UNION
+			(SELECT `user`.`user_id`, `username`, `user_type`, `transport_unit_name` AS `unit_name`, `transport_unit_code` AS `unit_code`, `transport_unit_username` AS `unit_username`, `transport_unit_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN transport_unit ON user.user_id = transport_unit.user_id)
+			UNION
+			(SELECT `user`.`user_id`, `username`, `user_type`, `reception_unit_name` AS `unit_name`, `reception_unit_code` AS `unit_code`, `reception_unit_username` AS `unit_username`, `reception_unit_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN reception_unit ON user.user_id = reception_unit.user_id) [ RunTime:0.004000s ]
+INFO: [ view_parse ] --START--
+NOTIC: [8] Use of undefined constant Home - assumed 'Home' F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [8] Use of undefined constant DistrictBusiness - assumed 'DistrictBusiness' F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [2] Division by zero F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [8] Use of undefined constant enterprise_user_management_ajaxpost - assumed 'enterprise_user_management_ajaxpost' F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [2] Division by zero F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+INFO: ParseTemplate Behavior ::run [ RunTime:0.019002s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.019002s ]
+INFO: [ view_filter ] --START--
+INFO: ContentReplace Behavior ::run [ RunTime:0.001000s ]
+INFO: TokenBuild Behavior ::run [ RunTime:0.001000s ]
+INFO: WriteHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: ShowRuntime Behavior ::run [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.005000s ]
+
+[ 2014-02-23T13:30:09+08:00 ] 127.0.0.1 /waste/www/index.php/Home/DistrictBusiness/enterprise_user_management.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: 
+			(SELECT `user`.`user_id`, `username`, `user_type`, `production_unit_name` AS `unit_name`, `production_unit_code` AS `unit_code`, `production_unit_username` AS `unit_username`, `waste_location_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN production_unit ON user.user_id = production_unit.user_id)
+			UNION
+			(SELECT `user`.`user_id`, `username`, `user_type`, `transport_unit_name` AS `unit_name`, `transport_unit_code` AS `unit_code`, `transport_unit_username` AS `unit_username`, `transport_unit_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN transport_unit ON user.user_id = transport_unit.user_id)
+			UNION
+			(SELECT `user`.`user_id`, `username`, `user_type`, `reception_unit_name` AS `unit_name`, `reception_unit_code` AS `unit_code`, `reception_unit_username` AS `unit_username`, `reception_unit_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN reception_unit ON user.user_id = reception_unit.user_id) [ RunTime:0.009001s ]
+INFO: [ view_parse ] --START--
+NOTIC: [8] Use of undefined constant Home - assumed 'Home' F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [8] Use of undefined constant DistrictBusiness - assumed 'DistrictBusiness' F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [2] Division by zero F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [8] Use of undefined constant enterprise_user_management_ajaxpost - assumed 'enterprise_user_management_ajaxpost' F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [2] Division by zero F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+INFO: ParseTemplate Behavior ::run [ RunTime:0.018001s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.018001s ]
+INFO: [ view_filter ] --START--
+INFO: ContentReplace Behavior ::run [ RunTime:0.001000s ]
+INFO: TokenBuild Behavior ::run [ RunTime:0.001000s ]
+INFO: WriteHtmlCache Behavior ::run [ RunTime:0.001000s ]
+INFO: ShowRuntime Behavior ::run [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.004000s ]
+
+[ 2014-02-23T13:33:55+08:00 ] 127.0.0.1 /waste/www/index.php/DistrictBusiness/enterprise_user_management.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: 
+			(SELECT `user`.`user_id`, `username`, `user_type`, `production_unit_name` AS `unit_name`, `production_unit_code` AS `unit_code`, `production_unit_username` AS `unit_username`, `waste_location_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN production_unit ON user.user_id = production_unit.user_id)
+			UNION
+			(SELECT `user`.`user_id`, `username`, `user_type`, `transport_unit_name` AS `unit_name`, `transport_unit_code` AS `unit_code`, `transport_unit_username` AS `unit_username`, `transport_unit_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN transport_unit ON user.user_id = transport_unit.user_id)
+			UNION
+			(SELECT `user`.`user_id`, `username`, `user_type`, `reception_unit_name` AS `unit_name`, `reception_unit_code` AS `unit_code`, `reception_unit_username` AS `unit_username`, `reception_unit_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN reception_unit ON user.user_id = reception_unit.user_id) [ RunTime:0.012001s ]
+INFO: [ view_parse ] --START--
+NOTIC: [8] Use of undefined constant Home - assumed 'Home' F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [8] Use of undefined constant DistrictBusiness - assumed 'DistrictBusiness' F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [2] Division by zero F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [8] Use of undefined constant enterprise_user_management_ajaxpost - assumed 'enterprise_user_management_ajaxpost' F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [2] Division by zero F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+INFO: ParseTemplate Behavior ::run [ RunTime:0.022001s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.022001s ]
+INFO: [ view_filter ] --START--
+INFO: ContentReplace Behavior ::run [ RunTime:0.001000s ]
+INFO: TokenBuild Behavior ::run [ RunTime:0.001000s ]
+INFO: WriteHtmlCache Behavior ::run [ RunTime:0.002001s ]
+INFO: ShowRuntime Behavior ::run [ RunTime:0.002000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.007001s ]
+
+[ 2014-02-23T13:33:56+08:00 ] 127.0.0.1 /waste/www/index.php/Home/DistrictBusiness/enterprise_user_management.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.003000s ]
+SQL: 
+			(SELECT `user`.`user_id`, `username`, `user_type`, `production_unit_name` AS `unit_name`, `production_unit_code` AS `unit_code`, `production_unit_username` AS `unit_username`, `waste_location_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN production_unit ON user.user_id = production_unit.user_id)
+			UNION
+			(SELECT `user`.`user_id`, `username`, `user_type`, `transport_unit_name` AS `unit_name`, `transport_unit_code` AS `unit_code`, `transport_unit_username` AS `unit_username`, `transport_unit_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN transport_unit ON user.user_id = transport_unit.user_id)
+			UNION
+			(SELECT `user`.`user_id`, `username`, `user_type`, `reception_unit_name` AS `unit_name`, `reception_unit_code` AS `unit_code`, `reception_unit_username` AS `unit_username`, `reception_unit_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN reception_unit ON user.user_id = reception_unit.user_id) [ RunTime:0.018001s ]
+INFO: [ view_parse ] --START--
+NOTIC: [8] Use of undefined constant Home - assumed 'Home' F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [8] Use of undefined constant DistrictBusiness - assumed 'DistrictBusiness' F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [2] Division by zero F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [8] Use of undefined constant enterprise_user_management_ajaxpost - assumed 'enterprise_user_management_ajaxpost' F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [2] Division by zero F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+INFO: ParseTemplate Behavior ::run [ RunTime:0.023001s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.023001s ]
+INFO: [ view_filter ] --START--
+INFO: ContentReplace Behavior ::run [ RunTime:0.002000s ]
+INFO: TokenBuild Behavior ::run [ RunTime:0.002000s ]
+INFO: WriteHtmlCache Behavior ::run [ RunTime:0.001000s ]
+INFO: ShowRuntime Behavior ::run [ RunTime:0.002000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.007000s ]
+
+[ 2014-02-23T13:46:07+08:00 ] 127.0.0.1 /waste/www/index.php/DistrictBusiness/enterprise_user_management.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: 
+			(SELECT `user`.`user_id`, `username`, `user_type`, `production_unit_name` AS `unit_name`, `production_unit_code` AS `unit_code`, `production_unit_username` AS `unit_username`, `waste_location_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN production_unit ON user.user_id = production_unit.user_id)
+			UNION
+			(SELECT `user`.`user_id`, `username`, `user_type`, `transport_unit_name` AS `unit_name`, `transport_unit_code` AS `unit_code`, `transport_unit_username` AS `unit_username`, `transport_unit_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN transport_unit ON user.user_id = transport_unit.user_id)
+			UNION
+			(SELECT `user`.`user_id`, `username`, `user_type`, `reception_unit_name` AS `unit_name`, `reception_unit_code` AS `unit_code`, `reception_unit_username` AS `unit_username`, `reception_unit_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN reception_unit ON user.user_id = reception_unit.user_id) [ RunTime:0.003001s ]
+INFO: [ view_parse ] --START--
+NOTIC: [8] Use of undefined constant Home - assumed 'Home' F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [8] Use of undefined constant DistrictBusiness - assumed 'DistrictBusiness' F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [2] Division by zero F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [8] Use of undefined constant enterprise_user_management_ajaxpost - assumed 'enterprise_user_management_ajaxpost' F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [2] Division by zero F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+INFO: ParseTemplate Behavior ::run [ RunTime:0.019001s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.020001s ]
+INFO: [ view_filter ] --START--
+INFO: ContentReplace Behavior ::run [ RunTime:0.001000s ]
+INFO: TokenBuild Behavior ::run [ RunTime:0.001000s ]
+INFO: WriteHtmlCache Behavior ::run [ RunTime:0.001000s ]
+INFO: ShowRuntime Behavior ::run [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.005000s ]
+
+[ 2014-02-23T13:46:08+08:00 ] 127.0.0.1 /waste/www/index.php/Home/DistrictBusiness/enterprise_user_management.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: 
+			(SELECT `user`.`user_id`, `username`, `user_type`, `production_unit_name` AS `unit_name`, `production_unit_code` AS `unit_code`, `production_unit_username` AS `unit_username`, `waste_location_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN production_unit ON user.user_id = production_unit.user_id)
+			UNION
+			(SELECT `user`.`user_id`, `username`, `user_type`, `transport_unit_name` AS `unit_name`, `transport_unit_code` AS `unit_code`, `transport_unit_username` AS `unit_username`, `transport_unit_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN transport_unit ON user.user_id = transport_unit.user_id)
+			UNION
+			(SELECT `user`.`user_id`, `username`, `user_type`, `reception_unit_name` AS `unit_name`, `reception_unit_code` AS `unit_code`, `reception_unit_username` AS `unit_username`, `reception_unit_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN reception_unit ON user.user_id = reception_unit.user_id) [ RunTime:0.003000s ]
+INFO: [ view_parse ] --START--
+NOTIC: [8] Use of undefined constant Home - assumed 'Home' F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [8] Use of undefined constant DistrictBusiness - assumed 'DistrictBusiness' F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [2] Division by zero F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [8] Use of undefined constant enterprise_user_management_ajaxpost - assumed 'enterprise_user_management_ajaxpost' F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [2] Division by zero F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+INFO: ParseTemplate Behavior ::run [ RunTime:0.018001s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.018001s ]
+INFO: [ view_filter ] --START--
+INFO: ContentReplace Behavior ::run [ RunTime:0.001000s ]
+INFO: TokenBuild Behavior ::run [ RunTime:0.001001s ]
+INFO: WriteHtmlCache Behavior ::run [ RunTime:0.001000s ]
+INFO: ShowRuntime Behavior ::run [ RunTime:0.003000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.006001s ]
+
+[ 2014-02-23T14:17:44+08:00 ] 127.0.0.1 /waste/www/index.php/Home/DistrictProduction/production_basic_information.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `production_unit` [ RunTime:3.382193s ]
+SQL: SELECT `production_unit_id`,`production_unit_name`,`production_unit_address`,`waste_location_county` FROM `production_unit` WHERE ( `jurisdiction_id` = 3 )  [ RunTime:0.698040s ]
+INFO: [ view_parse ] --START--
+INFO: ParseTemplate Behavior ::run [ RunTime:0.019001s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.019001s ]
+INFO: [ view_filter ] --START--
+INFO: ContentReplace Behavior ::run [ RunTime:0.001000s ]
+INFO: TokenBuild Behavior ::run [ RunTime:0.002000s ]
+INFO: WriteHtmlCache Behavior ::run [ RunTime:0.001000s ]
+INFO: ShowRuntime Behavior ::run [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.005000s ]
+
+[ 2014-02-23T14:18:05+08:00 ] 127.0.0.1 /waste/www/index.php/Home/DistrictProduction/production_basic_information.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `production_unit` [ RunTime:0.748043s ]
+SQL: SELECT `production_unit_id`,`production_unit_name`,`production_unit_address`,`waste_location_county` FROM `production_unit` WHERE ( `jurisdiction_id` = 3 )  [ RunTime:0.656038s ]
+INFO: [ view_parse ] --START--
+INFO: ParseTemplate Behavior ::run [ RunTime:0.021001s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.021001s ]
+INFO: [ view_filter ] --START--
+INFO: ContentReplace Behavior ::run [ RunTime:0.001000s ]
+INFO: TokenBuild Behavior ::run [ RunTime:0.001000s ]
+INFO: WriteHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: ShowRuntime Behavior ::run [ RunTime:0.002000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.007000s ]
+
+[ 2014-02-23T14:24:06+08:00 ] 127.0.0.1 /waste/www/index.php/Home/DistrictProduction/production_basic_information_page?record_id=1
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `production_unit` [ RunTime:0.003000s ]
+SQL: SELECT * FROM `production_unit` WHERE ( `production_unit_id` = 1 ) LIMIT 1   [ RunTime:0.003001s ]
+INFO: [ view_parse ] --START--
+INFO: ParseTemplate Behavior ::run [ RunTime:0.069004s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.069004s ]
+INFO: [ view_filter ] --START--
+INFO: ContentReplace Behavior ::run [ RunTime:0.001000s ]
+INFO: TokenBuild Behavior ::run [ RunTime:0.002000s ]
+INFO: WriteHtmlCache Behavior ::run [ RunTime:0.001000s ]
+INFO: ShowRuntime Behavior ::run [ RunTime:0.002000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.007000s ]
+
+[ 2014-02-23T14:26:37+08:00 ] 127.0.0.1 /waste/www/index.php/Home/DistrictProduction/production_basic_information_page?record_id=1
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `production_unit` [ RunTime:0.003000s ]
+SQL: SELECT * FROM `production_unit` WHERE ( `production_unit_id` = 1 ) LIMIT 1   [ RunTime:0.003001s ]
+INFO: [ view_parse ] --START--
+INFO: ParseTemplate Behavior ::run [ RunTime:0.021001s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.021001s ]
+INFO: [ view_filter ] --START--
+INFO: ContentReplace Behavior ::run [ RunTime:0.001000s ]
+INFO: TokenBuild Behavior ::run [ RunTime:0.001000s ]
+INFO: WriteHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: ShowRuntime Behavior ::run [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.005000s ]
+
+[ 2014-02-23T14:39:39+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_city_name.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.007000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.008000s ]
+SQL: SHOW COLUMNS FROM `county_code` [ RunTime:0.003000s ]
+SQL: SELECT * FROM `county_code` WHERE ( `county_up_id` = 12 )  [ RunTime:0.002000s ]
+
+[ 2014-02-23T14:39:42+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_county_name.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `county_code` [ RunTime:0.003000s ]
+SQL: SELECT * FROM `county_code` WHERE ( `county_up_id` = 1199 )  [ RunTime:0.002001s ]
+
+[ 2014-02-23T14:39:46+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_code_jurisdiction.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.001001s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001001s ]
+SQL: SHOW COLUMNS FROM `jurisdiction` [ RunTime:0.003000s ]
+SQL: SELECT * FROM `jurisdiction` WHERE ( `county_name` = '大观区' )  [ RunTime:0.001000s ]
+
+[ 2014-02-23T14:39:47+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_code.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `county_code` [ RunTime:0.002000s ]
+SQL: SELECT * FROM `county_code` WHERE ( `county_name` = '大观区' )  [ RunTime:0.002000s ]
+NOTIC: [8] Undefined index: county_code F:\apache\htdocs\waste\www\App\Lib\Action\Home\RegisterAction.class.php 第 77 行.
+
+[ 2014-02-23T14:42:05+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_city_name.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `county_code` [ RunTime:0.003000s ]
+SQL: SELECT * FROM `county_code` WHERE ( `county_up_id` = 12 )  [ RunTime:0.002001s ]
+
+[ 2014-02-23T14:42:08+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_county_name.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `county_code` [ RunTime:0.003000s ]
+SQL: SELECT * FROM `county_code` WHERE ( `county_up_id` = 1199 )  [ RunTime:0.003000s ]
+
+[ 2014-02-23T14:42:11+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_code_jurisdiction.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `jurisdiction` [ RunTime:0.002000s ]
+SQL: SELECT * FROM `jurisdiction` WHERE ( `county_name` = '大观区' )  [ RunTime:0.002001s ]
+
+[ 2014-02-23T14:42:12+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_code.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `county_code` [ RunTime:0.003000s ]
+SQL: SELECT * FROM `county_code` WHERE ( `county_name` = '大观区' )  [ RunTime:0.002001s ]
+NOTIC: [8] Undefined index: county_code F:\apache\htdocs\waste\www\App\Lib\Action\Home\RegisterAction.class.php 第 77 行.
+
+[ 2014-02-23T14:43:07+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_city_name.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `county_code` [ RunTime:0.002000s ]
+SQL: SELECT * FROM `county_code` WHERE ( `county_up_id` = 12 )  [ RunTime:0.007000s ]
+
+[ 2014-02-23T14:43:10+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_county_name.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `county_code` [ RunTime:0.003000s ]
+SQL: SELECT * FROM `county_code` WHERE ( `county_up_id` = 1199 )  [ RunTime:0.001000s ]
+
+[ 2014-02-23T14:43:14+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_code_jurisdiction.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `jurisdiction` [ RunTime:0.003000s ]
+SQL: SELECT * FROM `jurisdiction` WHERE ( `county_name` = '大观区' )  [ RunTime:0.009001s ]
+
+[ 2014-02-23T14:43:15+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_code.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `county_code` [ RunTime:0.003000s ]
+SQL: SELECT * FROM `county_code` WHERE ( `county_name` = '大观区' )  [ RunTime:0.003000s ]
+NOTIC: [8] Undefined index: county_code F:\apache\htdocs\waste\www\App\Lib\Action\Home\RegisterAction.class.php 第 77 行.
+
+[ 2014-02-23T14:43:55+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_city_name.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `county_code` [ RunTime:0.002000s ]
+SQL: SELECT * FROM `county_code` WHERE ( `county_up_id` = 12 )  [ RunTime:0.004000s ]
+
+[ 2014-02-23T14:43:58+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_county_name.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `county_code` [ RunTime:0.002001s ]
+SQL: SELECT * FROM `county_code` WHERE ( `county_up_id` = 1199 )  [ RunTime:0.002000s ]
+
+[ 2014-02-23T14:44:01+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_code_jurisdiction.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `jurisdiction` [ RunTime:0.006000s ]
+SQL: SELECT * FROM `jurisdiction` WHERE ( `county_name` = '大观区' )  [ RunTime:0.007000s ]
+
+[ 2014-02-23T14:44:02+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_code.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `county_code` [ RunTime:0.002000s ]
+SQL: SELECT * FROM `county_code` WHERE ( `county_name` = '大观区' )  [ RunTime:0.001000s ]
+NOTIC: [8] Undefined index: county_code F:\apache\htdocs\waste\www\App\Lib\Action\Home\RegisterAction.class.php 第 77 行.
+
+[ 2014-02-23T14:44:50+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_city_name.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.003000s ]
+SQL: SHOW COLUMNS FROM `county_code` [ RunTime:0.002000s ]
+SQL: SELECT * FROM `county_code` WHERE ( `county_up_id` = 12 )  [ RunTime:0.003001s ]
+
+[ 2014-02-23T14:44:54+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_county_name.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `county_code` [ RunTime:0.003000s ]
+SQL: SELECT * FROM `county_code` WHERE ( `county_up_id` = 1199 )  [ RunTime:0.002000s ]
+
+[ 2014-02-23T14:44:56+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_code_jurisdiction.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `jurisdiction` [ RunTime:0.003001s ]
+SQL: SELECT * FROM `jurisdiction` WHERE ( `county_name` = '大观区' )  [ RunTime:0.002000s ]
+
+[ 2014-02-23T14:44:57+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_code.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `county_code` [ RunTime:0.003000s ]
+SQL: SELECT * FROM `county_code` WHERE ( `county_name` = '大观区' )  [ RunTime:0.002000s ]
+NOTIC: [8] Undefined index: county_code F:\apache\htdocs\waste\www\App\Lib\Action\Home\RegisterAction.class.php 第 77 行.
+
+[ 2014-02-23T15:49:58+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_city_name.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `county_code` [ RunTime:0.002000s ]
+SQL: SELECT * FROM `county_code` WHERE ( `county_up_id` = 12 )  [ RunTime:0.002001s ]
+
+[ 2014-02-23T15:50:00+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_county_name.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `county_code` [ RunTime:0.003000s ]
+SQL: SELECT * FROM `county_code` WHERE ( `county_up_id` = 1199 )  [ RunTime:0.002000s ]
+
+[ 2014-02-23T15:50:03+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_code_jurisdiction.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `jurisdiction` [ RunTime:0.002000s ]
+SQL: SELECT * FROM `jurisdiction` WHERE ( `county_name` = '大观区' )  [ RunTime:0.002000s ]
+
+[ 2014-02-23T15:50:03+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_code.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+ERR: 非法操作:select_code
+
+[ 2014-02-23T15:52:45+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_city_name.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `county_code` [ RunTime:0.002000s ]
+SQL: SELECT * FROM `county_code` WHERE ( `county_up_id` = 12 )  [ RunTime:0.003001s ]
+
+[ 2014-02-23T15:52:49+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_county_name.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `county_code` [ RunTime:0.002001s ]
+SQL: SELECT * FROM `county_code` WHERE ( `county_up_id` = 1199 )  [ RunTime:0.005000s ]
+
+[ 2014-02-23T15:52:52+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_code_jurisdiction.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `jurisdiction` [ RunTime:0.003000s ]
+SQL: SELECT * FROM `jurisdiction` WHERE ( `county_name` = '大观区' )  [ RunTime:0.002000s ]
+
+[ 2014-02-23T15:52:53+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_code.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `county_code` [ RunTime:0.002000s ]
+SQL: SELECT * FROM `county_code` WHERE ( `county_name` = '大观区' )  [ RunTime:0.002001s ]
+NOTIC: [8] Undefined index: county_code F:\apache\htdocs\waste\www\App\Lib\Action\Home\RegisterAction.class.php 第 77 行.
+
+[ 2014-02-23T16:12:51+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_city_name.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.003000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.003000s ]
+SQL: SHOW COLUMNS FROM `county_code` [ RunTime:0.006000s ]
+SQL: SELECT * FROM `county_code` WHERE ( `county_up_id` = 9 )  [ RunTime:0.003000s ]
+
+[ 2014-02-23T16:12:52+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_city_name.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.003000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.003000s ]
+SQL: SHOW COLUMNS FROM `county_code` [ RunTime:0.004001s ]
+SQL: SELECT * FROM `county_code` WHERE ( `county_up_id` = 12 )  [ RunTime:0.002000s ]
+
+[ 2014-02-23T16:12:55+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_county_name.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `county_code` [ RunTime:0.004000s ]
+SQL: SELECT * FROM `county_code` WHERE ( `county_up_id` = 1199 )  [ RunTime:0.003000s ]
+
+[ 2014-02-23T16:13:00+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_code.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `county_code` [ RunTime:0.002000s ]
+SQL: SELECT * FROM `county_code` WHERE ( `county_name` = '大观区' )  [ RunTime:0.002000s ]
+NOTIC: [8] Undefined index: county_code F:\apache\htdocs\waste\www\App\Lib\Action\Home\RegisterAction.class.php 第 77 行.
+
+[ 2014-02-23T16:13:01+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_code_jurisdiction.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `jurisdiction` [ RunTime:0.004000s ]
+SQL: SELECT * FROM `jurisdiction` WHERE ( `county_name` = '大观区' )  [ RunTime:0.002000s ]
+
+[ 2014-02-23T16:17:34+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_city_name.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `county_code` [ RunTime:0.004000s ]
+SQL: SELECT * FROM `county_code` WHERE ( `county_up_id` = 12 )  [ RunTime:0.003000s ]
+
+[ 2014-02-23T16:17:37+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_county_name.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `county_code` [ RunTime:0.004000s ]
+SQL: SELECT * FROM `county_code` WHERE ( `county_up_id` = 1199 )  [ RunTime:0.003000s ]
+
+[ 2014-02-23T16:17:39+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_code_jurisdiction.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.004000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.004000s ]
+SQL: SHOW COLUMNS FROM `jurisdiction` [ RunTime:0.008001s ]
+SQL: SELECT * FROM `jurisdiction` WHERE ( `county_name` = '大观区' )  [ RunTime:0.002000s ]
+
+[ 2014-02-23T16:17:40+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_code.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `county_code` [ RunTime:0.003000s ]
+SQL: SELECT * FROM `county_code` WHERE ( `county_name` = '大观区' )  [ RunTime:0.002000s ]
+NOTIC: [8] Undefined index: county_code F:\apache\htdocs\waste\www\App\Lib\Action\Home\RegisterAction.class.php 第 77 行.
+
+[ 2014-02-23T16:18:16+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_city_name.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `county_code` [ RunTime:0.006001s ]
+SQL: SELECT * FROM `county_code` WHERE ( `county_up_id` = 12 )  [ RunTime:0.002000s ]
+
+[ 2014-02-23T16:18:19+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_county_name.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `county_code` [ RunTime:0.004000s ]
+SQL: SELECT * FROM `county_code` WHERE ( `county_up_id` = 1199 )  [ RunTime:0.005001s ]
+
+[ 2014-02-23T16:18:22+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_code_jurisdiction.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.003000s ]
+SQL: SHOW COLUMNS FROM `jurisdiction` [ RunTime:0.004000s ]
+SQL: SELECT * FROM `jurisdiction` WHERE ( `county_name` = '大观区' )  [ RunTime:0.001000s ]
+
+[ 2014-02-23T16:18:23+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_code.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `county_code` [ RunTime:0.006001s ]
+SQL: SELECT * FROM `county_code` WHERE ( `county_name` = '大观区' )  [ RunTime:0.004000s ]
+NOTIC: [8] Undefined index: county_code F:\apache\htdocs\waste\www\App\Lib\Action\Home\RegisterAction.class.php 第 77 行.
+
+[ 2014-02-23T16:21:02+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_city_name.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `county_code` [ RunTime:0.003001s ]
+SQL: SELECT * FROM `county_code` WHERE ( `county_up_id` = 12 )  [ RunTime:0.003000s ]
+
+[ 2014-02-23T16:21:04+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_county_name.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.003000s ]
+SQL: SHOW COLUMNS FROM `county_code` [ RunTime:0.003000s ]
+SQL: SELECT * FROM `county_code` WHERE ( `county_up_id` = 1199 )  [ RunTime:0.015001s ]
+
+[ 2014-02-23T16:21:06+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_code_jurisdiction.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `jurisdiction` [ RunTime:0.005000s ]
+SQL: SELECT * FROM `jurisdiction` WHERE ( `county_name` = '大观区' )  [ RunTime:0.004001s ]
+
+[ 2014-02-23T16:21:07+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_code.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `county_code` [ RunTime:0.003001s ]
+SQL: SELECT * FROM `county_code` WHERE ( `county_name` = '大观区' )  [ RunTime:0.003000s ]
+NOTIC: [8] Undefined index: county_code F:\apache\htdocs\waste\www\App\Lib\Action\Home\RegisterAction.class.php 第 77 行.
+
+[ 2014-02-23T16:27:19+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_city_name.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `county_code` [ RunTime:0.007000s ]
+SQL: SELECT * FROM `county_code` WHERE ( `county_up_id` = 0 )  [ RunTime:0.007001s ]
+
+[ 2014-02-23T16:28:59+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_city_name.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `county_code` [ RunTime:0.005001s ]
+SQL: SELECT * FROM `county_code` WHERE ( `county_up_id` = 0 )  [ RunTime:0.003000s ]
+
+[ 2014-02-23T16:29:15+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_city_name.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.003000s ]
+SQL: SHOW COLUMNS FROM `county_code` [ RunTime:0.002000s ]
+SQL: SELECT * FROM `county_code` WHERE ( `county_up_id` = 12 )  [ RunTime:0.002000s ]
+
+[ 2014-02-23T16:29:18+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_county_name.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.003000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.003000s ]
+SQL: SHOW COLUMNS FROM `county_code` [ RunTime:0.002000s ]
+SQL: SELECT * FROM `county_code` WHERE ( `county_up_id` = 1199 )  [ RunTime:0.002000s ]
+
+[ 2014-02-23T16:29:21+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_code_jurisdiction.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `jurisdiction` [ RunTime:0.005000s ]
+SQL: SELECT * FROM `jurisdiction` WHERE ( `county_name` = '大观区' )  [ RunTime:0.006001s ]
+
+[ 2014-02-23T16:29:22+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_code.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `county_code` [ RunTime:0.003000s ]
+SQL: SELECT * FROM `county_code` WHERE ( `county_name` = '大观区' )  [ RunTime:0.002000s ]
+NOTIC: [8] Undefined index: county_code F:\apache\htdocs\waste\www\App\Lib\Action\Home\RegisterAction.class.php 第 77 行.
+
+[ 2014-02-23T16:33:08+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_city_name.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `county_code` [ RunTime:0.005000s ]
+SQL: SELECT * FROM `county_code` WHERE ( `county_up_id` = 12 )  [ RunTime:0.002000s ]
+
+[ 2014-02-23T16:33:10+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_county_name.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `county_code` [ RunTime:0.003000s ]
+SQL: SELECT * FROM `county_code` WHERE ( `county_up_id` = 1199 )  [ RunTime:0.001000s ]
+
+[ 2014-02-23T16:33:13+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_code_jurisdiction.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `jurisdiction` [ RunTime:0.008001s ]
+SQL: SELECT * FROM `jurisdiction` WHERE ( `county_name` = '大观区' )  [ RunTime:0.002000s ]
+
+[ 2014-02-23T16:33:14+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_code.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002001s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002001s ]
+SQL: SHOW COLUMNS FROM `county_code` [ RunTime:0.004000s ]
+SQL: SELECT * FROM `county_code` WHERE ( `county_name` = '大观区' )  [ RunTime:0.010001s ]
+NOTIC: [8] Undefined index: county_code F:\apache\htdocs\waste\www\App\Lib\Action\Home\RegisterAction.class.php 第 77 行.
+
+[ 2014-02-23T16:36:22+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_city_name.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `county_code` [ RunTime:0.003001s ]
+SQL: SELECT * FROM `county_code` WHERE ( `county_up_id` = 12 )  [ RunTime:0.004000s ]
+
+[ 2014-02-23T16:36:25+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_county_name.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002001s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002001s ]
+SQL: SHOW COLUMNS FROM `county_code` [ RunTime:0.003000s ]
+SQL: SELECT * FROM `county_code` WHERE ( `county_up_id` = 1199 )  [ RunTime:0.002000s ]
+
+[ 2014-02-23T16:36:27+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_code_jurisdiction.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `jurisdiction` [ RunTime:0.004000s ]
+SQL: SELECT * FROM `jurisdiction` WHERE ( `county_name` = '大观区' )  [ RunTime:0.002001s ]
+
+[ 2014-02-23T16:36:28+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_code.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002001s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.003001s ]
+SQL: SHOW COLUMNS FROM `county_code` [ RunTime:0.003000s ]
+SQL: SELECT * FROM `county_code` WHERE ( `county_name` = '大观区' )  [ RunTime:0.002000s ]
+NOTIC: [8] Undefined index: county_code F:\apache\htdocs\waste\www\App\Lib\Action\Home\RegisterAction.class.php 第 77 行.
+
+[ 2014-02-23T16:46:31+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_city_name.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.006000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.006000s ]
+SQL: SHOW COLUMNS FROM `county_code` [ RunTime:0.006000s ]
+SQL: SELECT * FROM `county_code` WHERE ( `county_up_id` = 12 )  [ RunTime:0.017001s ]
+
+[ 2014-02-23T16:46:33+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_county_name.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `county_code` [ RunTime:0.002001s ]
+SQL: SELECT * FROM `county_code` WHERE ( `county_up_id` = 1199 )  [ RunTime:0.002000s ]
+
+[ 2014-02-23T16:46:36+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_code_jurisdiction.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `jurisdiction` [ RunTime:0.003000s ]
+SQL: SELECT * FROM `jurisdiction` WHERE ( `county_name` = '大观区' )  [ RunTime:0.003001s ]
+
+[ 2014-02-23T16:46:37+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_code.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `county_code` [ RunTime:0.005000s ]
+SQL: SELECT * FROM `county_code` WHERE ( `county_name` = '大观区' )  [ RunTime:0.002000s ]
+NOTIC: [8] Undefined index: county_code F:\apache\htdocs\waste\www\App\Lib\Action\Home\RegisterAction.class.php 第 77 行.
+
+[ 2014-02-23T16:52:12+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_city_name.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002001s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002001s ]
+SQL: SHOW COLUMNS FROM `county_code` [ RunTime:0.005000s ]
+SQL: SELECT * FROM `county_code` WHERE ( `county_up_id` = 12 )  [ RunTime:0.004000s ]
+
+[ 2014-02-23T16:52:15+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_county_name.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `county_code` [ RunTime:0.007000s ]
+SQL: SELECT * FROM `county_code` WHERE ( `county_up_id` = 1212 )  [ RunTime:0.005000s ]
+
+[ 2014-02-23T16:52:18+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_code_jurisdiction.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `jurisdiction` [ RunTime:0.002000s ]
+SQL: SELECT * FROM `jurisdiction` WHERE ( `county_name` = '黄山区' )  [ RunTime:0.004001s ]
+
+[ 2014-02-23T16:52:19+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_code.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `county_code` [ RunTime:0.004000s ]
+SQL: SELECT * FROM `county_code` WHERE ( `county_name` = '黄山区' )  [ RunTime:0.004000s ]
+NOTIC: [8] Undefined index: county_code F:\apache\htdocs\waste\www\App\Lib\Action\Home\RegisterAction.class.php 第 77 行.
+
+[ 2014-02-23T16:53:00+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_county_name.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `county_code` [ RunTime:0.003000s ]
+SQL: SELECT * FROM `county_code` WHERE ( `county_up_id` = 1199 )  [ RunTime:0.003000s ]
+
+[ 2014-02-23T16:53:15+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_city_name.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `county_code` [ RunTime:0.005000s ]
+SQL: SELECT * FROM `county_code` WHERE ( `county_up_id` = 12 )  [ RunTime:0.002000s ]
+
+[ 2014-02-23T16:53:18+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_county_name.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `county_code` [ RunTime:0.002000s ]
+SQL: SELECT * FROM `county_code` WHERE ( `county_up_id` = 1199 )  [ RunTime:0.001000s ]
+
+[ 2014-02-23T16:53:20+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_code_jurisdiction.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `jurisdiction` [ RunTime:0.003000s ]
+SQL: SELECT * FROM `jurisdiction` WHERE ( `county_name` = '大观区' )  [ RunTime:0.006001s ]
+
+[ 2014-02-23T16:53:21+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_code.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `county_code` [ RunTime:0.004000s ]
+SQL: SELECT * FROM `county_code` WHERE ( `county_name` = '大观区' )  [ RunTime:0.002001s ]
+NOTIC: [8] Undefined index: county_code F:\apache\htdocs\waste\www\App\Lib\Action\Home\RegisterAction.class.php 第 77 行.
+
+[ 2014-02-23T16:56:11+08:00 ] 127.0.0.1 /waste/www/index.php/Home/ProductionBasic/production_basic_information.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `production_unit` [ RunTime:0.004000s ]
+SQL: SELECT * FROM `production_unit` WHERE ( `production_unit_id` = 1 ) LIMIT 1   [ RunTime:0.007000s ]
+INFO: [ view_parse ] --START--
+INFO: ParseTemplate Behavior ::run [ RunTime:0.060004s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.060004s ]
+INFO: [ view_filter ] --START--
+INFO: ContentReplace Behavior ::run [ RunTime:0.001000s ]
+INFO: TokenBuild Behavior ::run [ RunTime:0.001000s ]
+INFO: WriteHtmlCache Behavior ::run [ RunTime:0.001000s ]
+INFO: ShowRuntime Behavior ::run [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.004000s ]
+
+[ 2014-02-23T16:56:13+08:00 ] 127.0.0.1 /waste/www/index.php/Home/ProductionBasic/production_change_information.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `production_unit` [ RunTime:0.004001s ]
+SQL: SELECT * FROM `production_unit` WHERE ( `production_unit_id` = 1 ) LIMIT 1   [ RunTime:0.003000s ]
+INFO: [ view_parse ] --START--
+INFO: ParseTemplate Behavior ::run [ RunTime:0.073004s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.073004s ]
+INFO: [ view_filter ] --START--
+INFO: ContentReplace Behavior ::run [ RunTime:0.001000s ]
+INFO: TokenBuild Behavior ::run [ RunTime:0.001000s ]
+INFO: WriteHtmlCache Behavior ::run [ RunTime:0.001000s ]
+INFO: ShowRuntime Behavior ::run [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.005000s ]
+
+[ 2014-02-23T17:07:46+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_city_name.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `county_code` [ RunTime:0.005000s ]
+SQL: SELECT * FROM `county_code` WHERE ( `county_up_id` = 2 )  [ RunTime:0.002000s ]
+
+[ 2014-02-23T17:07:49+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_county_name.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `county_code` [ RunTime:0.003000s ]
+SQL: SELECT * FROM `county_code` WHERE ( `county_up_id` = 54 )  [ RunTime:0.002000s ]
+
+[ 2014-02-23T17:07:52+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_code_jurisdiction.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002001s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002001s ]
+SQL: SHOW COLUMNS FROM `jurisdiction` [ RunTime:0.002001s ]
+SQL: SELECT * FROM `jurisdiction` WHERE ( `county_name` = '南开区' )  [ RunTime:0.010000s ]
+
+[ 2014-02-23T17:07:53+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_code.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `county_code` [ RunTime:0.005000s ]
+SQL: SELECT * FROM `county_code` WHERE ( `county_name` = '南开区' )  [ RunTime:0.003000s ]
+NOTIC: [8] Undefined index: county_code F:\apache\htdocs\waste\www\App\Lib\Action\Home\RegisterAction.class.php 第 77 行.
+
+[ 2014-02-23T17:09:57+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_county_name.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `county_code` [ RunTime:0.003000s ]
+SQL: SELECT * FROM `county_code` WHERE ( `county_up_id` = 68 )  [ RunTime:0.005000s ]
+
+[ 2014-02-23T17:10:02+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_code_jurisdiction.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.003000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.003000s ]
+SQL: SHOW COLUMNS FROM `jurisdiction` [ RunTime:0.003000s ]
+SQL: SELECT * FROM `jurisdiction` WHERE ( `county_name` = '宁河县' )  [ RunTime:0.002000s ]
+
+[ 2014-02-23T17:10:03+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_code.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `county_code` [ RunTime:0.020001s ]
+SQL: SELECT * FROM `county_code` WHERE ( `county_name` = '宁河县' )  [ RunTime:0.014000s ]
+NOTIC: [8] Undefined index: county_code F:\apache\htdocs\waste\www\App\Lib\Action\Home\RegisterAction.class.php 第 77 行.
+
+[ 2014-02-23T17:10:25+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_city_name.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `county_code` [ RunTime:0.002000s ]
+SQL: SELECT * FROM `county_code` WHERE ( `county_up_id` = 9 )  [ RunTime:0.002000s ]
+
+[ 2014-02-23T17:10:28+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_county_name.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `county_code` [ RunTime:0.003000s ]
+SQL: SELECT * FROM `county_code` WHERE ( `county_up_id` = 880 )  [ RunTime:0.005001s ]
+
+[ 2014-02-23T17:13:46+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_city_name.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `county_code` [ RunTime:0.002000s ]
+SQL: SELECT * FROM `county_code` WHERE ( `county_up_id` = 9 )  [ RunTime:0.001000s ]
+
+[ 2014-02-23T17:13:49+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_county_name.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `county_code` [ RunTime:0.003000s ]
+SQL: SELECT * FROM `county_code` WHERE ( `county_up_id` = 880 )  [ RunTime:0.002000s ]
+
+[ 2014-02-23T17:13:52+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_code_jurisdiction.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `jurisdiction` [ RunTime:0.003001s ]
+SQL: SELECT * FROM `jurisdiction` WHERE ( `county_name` = '891' )  [ RunTime:0.003000s ]
+
+[ 2014-02-23T17:13:53+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_code.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `county_code` [ RunTime:0.002000s ]
+SQL: SELECT * FROM `county_code` WHERE ( `county_name` = '891' )  [ RunTime:0.004000s ]
+
+[ 2014-02-23T17:19:52+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_city_name.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `county_code` [ RunTime:0.002000s ]
+SQL: SELECT * FROM `county_code` WHERE ( `county_up_id` = 2 )  [ RunTime:0.002000s ]
+
+[ 2014-02-23T17:19:56+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_county_name.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `county_code` [ RunTime:0.003000s ]
+SQL: SELECT * FROM `county_code` WHERE ( `county_up_id` = 54 )  [ RunTime:0.004000s ]
+
+[ 2014-02-23T17:19:58+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_code_jurisdiction.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.003000s ]
+SQL: SHOW COLUMNS FROM `jurisdiction` [ RunTime:0.003000s ]
+SQL: SELECT * FROM `jurisdiction` WHERE ( `county_name` = '南开区' )  [ RunTime:0.002000s ]
+
+[ 2014-02-23T17:19:59+08:00 ] 127.0.0.1 /waste/www/index.php/Home/Register/select_code.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.003001s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.003001s ]
+SQL: SHOW COLUMNS FROM `county_code` [ RunTime:0.004000s ]
+SQL: SELECT * FROM `county_code` WHERE ( `county_name` = '南开区' )  [ RunTime:0.107007s ]
+NOTIC: [8] Undefined index: county_code F:\apache\htdocs\waste\www\App\Lib\Action\Home\RegisterAction.class.php 第 77 行.
+
+[ 2014-02-23T19:28:52+08:00 ] 127.0.0.1 /waste/www/index.php/Home/DistrictBusiness/transfer_record_management.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.003001s ]
+SQL: SHOW COLUMNS FROM `record` [ RunTime:0.003000s ]
+SQL: SELECT * FROM `record` LEFT JOIN production_unit ON record.production_unit_id = production_unit.production_unit_id WHERE ( `jurisdiction_id` = '3' ) AND ( `record_status` > 0 )  [ RunTime:0.004001s ]
+INFO: [ view_parse ] --START--
+INFO: ParseTemplate Behavior ::run [ RunTime:0.206012s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.206012s ]
+INFO: [ view_filter ] --START--
+INFO: ContentReplace Behavior ::run [ RunTime:0.002000s ]
+INFO: TokenBuild Behavior ::run [ RunTime:0.002000s ]
+INFO: WriteHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: ShowRuntime Behavior ::run [ RunTime:0.002000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.008000s ]
+
+[ 2014-02-23T19:28:53+08:00 ] 127.0.0.1 /waste/www/index.php/Home/DistrictBusiness/enterprise_user_management.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.013001s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.013001s ]
+SQL: 
+			(SELECT `user`.`user_id`, `username`, `user_type`, `production_unit_name` AS `unit_name`, `production_unit_code` AS `unit_code`, `production_unit_username` AS `unit_username`, `waste_location_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN production_unit ON user.user_id = production_unit.user_id)
+			UNION
+			(SELECT `user`.`user_id`, `username`, `user_type`, `transport_unit_name` AS `unit_name`, `transport_unit_code` AS `unit_code`, `transport_unit_username` AS `unit_username`, `transport_unit_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN transport_unit ON user.user_id = transport_unit.user_id)
+			UNION
+			(SELECT `user`.`user_id`, `username`, `user_type`, `reception_unit_name` AS `unit_name`, `reception_unit_code` AS `unit_code`, `reception_unit_username` AS `unit_username`, `reception_unit_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN reception_unit ON user.user_id = reception_unit.user_id) [ RunTime:0.018001s ]
+INFO: [ view_parse ] --START--
+NOTIC: [8] Use of undefined constant Home - assumed 'Home' F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [8] Use of undefined constant DistrictBusiness - assumed 'DistrictBusiness' F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [2] Division by zero F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [8] Use of undefined constant enterprise_user_management_ajaxpost - assumed 'enterprise_user_management_ajaxpost' F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [2] Division by zero F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+INFO: ParseTemplate Behavior ::run [ RunTime:0.021001s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.021001s ]
+INFO: [ view_filter ] --START--
+INFO: ContentReplace Behavior ::run [ RunTime:0.002001s ]
+INFO: TokenBuild Behavior ::run [ RunTime:0.002000s ]
+INFO: WriteHtmlCache Behavior ::run [ RunTime:0.001000s ]
+INFO: ShowRuntime Behavior ::run [ RunTime:0.002000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.007001s ]
+
+[ 2014-02-23T19:29:09+08:00 ] 127.0.0.1 /waste/www/index.php/Home/DistrictBusiness/enterprise_user_management_page_reception?record_id=84
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.003000s ]
+SQL: SHOW COLUMNS FROM `reception_unit` [ RunTime:0.005001s ]
+SQL: SELECT * FROM `reception_unit` WHERE ( `user_id` = 84 ) LIMIT 1   [ RunTime:0.012000s ]
+INFO: [ view_parse ] --START--
+INFO: ParseTemplate Behavior ::run [ RunTime:0.024002s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.025002s ]
+INFO: [ view_filter ] --START--
+INFO: ContentReplace Behavior ::run [ RunTime:0.001000s ]
+INFO: TokenBuild Behavior ::run [ RunTime:0.002000s ]
+INFO: WriteHtmlCache Behavior ::run [ RunTime:0.001000s ]
+INFO: ShowRuntime Behavior ::run [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.006000s ]
+
+[ 2014-02-23T19:29:16+08:00 ] 127.0.0.1 /waste/www/index.php/DistrictBusiness/enterprise_user_management.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: 
+			(SELECT `user`.`user_id`, `username`, `user_type`, `production_unit_name` AS `unit_name`, `production_unit_code` AS `unit_code`, `production_unit_username` AS `unit_username`, `waste_location_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN production_unit ON user.user_id = production_unit.user_id)
+			UNION
+			(SELECT `user`.`user_id`, `username`, `user_type`, `transport_unit_name` AS `unit_name`, `transport_unit_code` AS `unit_code`, `transport_unit_username` AS `unit_username`, `transport_unit_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN transport_unit ON user.user_id = transport_unit.user_id)
+			UNION
+			(SELECT `user`.`user_id`, `username`, `user_type`, `reception_unit_name` AS `unit_name`, `reception_unit_code` AS `unit_code`, `reception_unit_username` AS `unit_username`, `reception_unit_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN reception_unit ON user.user_id = reception_unit.user_id) [ RunTime:0.008000s ]
+INFO: [ view_parse ] --START--
+NOTIC: [8] Use of undefined constant Home - assumed 'Home' F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [8] Use of undefined constant DistrictBusiness - assumed 'DistrictBusiness' F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [2] Division by zero F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [8] Use of undefined constant enterprise_user_management_ajaxpost - assumed 'enterprise_user_management_ajaxpost' F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [2] Division by zero F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+INFO: ParseTemplate Behavior ::run [ RunTime:0.019001s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.019001s ]
+INFO: [ view_filter ] --START--
+INFO: ContentReplace Behavior ::run [ RunTime:0.001000s ]
+INFO: TokenBuild Behavior ::run [ RunTime:0.001000s ]
+INFO: WriteHtmlCache Behavior ::run [ RunTime:0.001000s ]
+INFO: ShowRuntime Behavior ::run [ RunTime:0.002001s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.005001s ]
+
+[ 2014-02-23T19:29:17+08:00 ] 127.0.0.1 /waste/www/index.php/Home/DistrictBusiness/enterprise_user_management.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: 
+			(SELECT `user`.`user_id`, `username`, `user_type`, `production_unit_name` AS `unit_name`, `production_unit_code` AS `unit_code`, `production_unit_username` AS `unit_username`, `waste_location_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN production_unit ON user.user_id = production_unit.user_id)
+			UNION
+			(SELECT `user`.`user_id`, `username`, `user_type`, `transport_unit_name` AS `unit_name`, `transport_unit_code` AS `unit_code`, `transport_unit_username` AS `unit_username`, `transport_unit_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN transport_unit ON user.user_id = transport_unit.user_id)
+			UNION
+			(SELECT `user`.`user_id`, `username`, `user_type`, `reception_unit_name` AS `unit_name`, `reception_unit_code` AS `unit_code`, `reception_unit_username` AS `unit_username`, `reception_unit_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN reception_unit ON user.user_id = reception_unit.user_id) [ RunTime:0.008001s ]
+INFO: [ view_parse ] --START--
+NOTIC: [8] Use of undefined constant Home - assumed 'Home' F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [8] Use of undefined constant DistrictBusiness - assumed 'DistrictBusiness' F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [2] Division by zero F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [8] Use of undefined constant enterprise_user_management_ajaxpost - assumed 'enterprise_user_management_ajaxpost' F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [2] Division by zero F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+INFO: ParseTemplate Behavior ::run [ RunTime:0.019001s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.019001s ]
+INFO: [ view_filter ] --START--
+INFO: ContentReplace Behavior ::run [ RunTime:0.001000s ]
+INFO: TokenBuild Behavior ::run [ RunTime:0.001000s ]
+INFO: WriteHtmlCache Behavior ::run [ RunTime:0.001000s ]
+INFO: ShowRuntime Behavior ::run [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.004000s ]
+
+[ 2014-02-23T20:01:55+08:00 ] 127.0.0.1 /waste/www/index.php/Home/DistrictBusiness/transfer_record_management.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `record` [ RunTime:0.007000s ]
+SQL: SELECT * FROM `record` LEFT JOIN production_unit ON record.production_unit_id = production_unit.production_unit_id WHERE ( `jurisdiction_id` = '3' ) AND ( `record_status` > 0 )  [ RunTime:0.006001s ]
+INFO: [ view_parse ] --START--
+INFO: ParseTemplate Behavior ::run [ RunTime:0.024001s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.025001s ]
+INFO: [ view_filter ] --START--
+INFO: ContentReplace Behavior ::run [ RunTime:0.001000s ]
+INFO: TokenBuild Behavior ::run [ RunTime:0.001000s ]
+INFO: WriteHtmlCache Behavior ::run [ RunTime:0.001000s ]
+INFO: ShowRuntime Behavior ::run [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.004000s ]
+
+[ 2014-02-23T20:01:58+08:00 ] 127.0.0.1 /waste/www/index.php/Home/DistrictBusiness/enterprise_user_management.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: 
+			(SELECT `user`.`user_id`, `username`, `user_type`, `production_unit_name` AS `unit_name`, `production_unit_code` AS `unit_code`, `production_unit_username` AS `unit_username`, `waste_location_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN production_unit ON user.user_id = production_unit.user_id)
+			UNION
+			(SELECT `user`.`user_id`, `username`, `user_type`, `transport_unit_name` AS `unit_name`, `transport_unit_code` AS `unit_code`, `transport_unit_username` AS `unit_username`, `transport_unit_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN transport_unit ON user.user_id = transport_unit.user_id)
+			UNION
+			(SELECT `user`.`user_id`, `username`, `user_type`, `reception_unit_name` AS `unit_name`, `reception_unit_code` AS `unit_code`, `reception_unit_username` AS `unit_username`, `reception_unit_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN reception_unit ON user.user_id = reception_unit.user_id) [ RunTime:0.007001s ]
+INFO: [ view_parse ] --START--
+NOTIC: [8] Use of undefined constant Home - assumed 'Home' F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [8] Use of undefined constant DistrictBusiness - assumed 'DistrictBusiness' F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [2] Division by zero F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [8] Use of undefined constant enterprise_user_management_ajaxpost - assumed 'enterprise_user_management_ajaxpost' F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [2] Division by zero F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+INFO: ParseTemplate Behavior ::run [ RunTime:0.017001s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.018001s ]
+INFO: [ view_filter ] --START--
+INFO: ContentReplace Behavior ::run [ RunTime:0.001000s ]
+INFO: TokenBuild Behavior ::run [ RunTime:0.001000s ]
+INFO: WriteHtmlCache Behavior ::run [ RunTime:0.001000s ]
+INFO: ShowRuntime Behavior ::run [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.004000s ]
+
+[ 2014-02-23T20:02:18+08:00 ] 127.0.0.1 /waste/www/index.php/DistrictBusiness/enterprise_user_management.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: 
+			(SELECT `user`.`user_id`, `username`, `user_type`, `production_unit_name` AS `unit_name`, `production_unit_code` AS `unit_code`, `production_unit_username` AS `unit_username`, `waste_location_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN production_unit ON user.user_id = production_unit.user_id)
+			UNION
+			(SELECT `user`.`user_id`, `username`, `user_type`, `transport_unit_name` AS `unit_name`, `transport_unit_code` AS `unit_code`, `transport_unit_username` AS `unit_username`, `transport_unit_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN transport_unit ON user.user_id = transport_unit.user_id)
+			UNION
+			(SELECT `user`.`user_id`, `username`, `user_type`, `reception_unit_name` AS `unit_name`, `reception_unit_code` AS `unit_code`, `reception_unit_username` AS `unit_username`, `reception_unit_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN reception_unit ON user.user_id = reception_unit.user_id) [ RunTime:0.008001s ]
+INFO: [ view_parse ] --START--
+NOTIC: [8] Use of undefined constant Home - assumed 'Home' F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [8] Use of undefined constant DistrictBusiness - assumed 'DistrictBusiness' F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [2] Division by zero F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [8] Use of undefined constant enterprise_user_management_ajaxpost - assumed 'enterprise_user_management_ajaxpost' F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [2] Division by zero F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+INFO: ParseTemplate Behavior ::run [ RunTime:0.022001s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.022001s ]
+INFO: [ view_filter ] --START--
+INFO: ContentReplace Behavior ::run [ RunTime:0.001000s ]
+INFO: TokenBuild Behavior ::run [ RunTime:0.002000s ]
+INFO: WriteHtmlCache Behavior ::run [ RunTime:0.001001s ]
+INFO: ShowRuntime Behavior ::run [ RunTime:0.002000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.006001s ]
+
+[ 2014-02-23T20:02:19+08:00 ] 127.0.0.1 /waste/www/index.php/Home/DistrictBusiness/enterprise_user_management.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: 
+			(SELECT `user`.`user_id`, `username`, `user_type`, `production_unit_name` AS `unit_name`, `production_unit_code` AS `unit_code`, `production_unit_username` AS `unit_username`, `waste_location_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN production_unit ON user.user_id = production_unit.user_id)
+			UNION
+			(SELECT `user`.`user_id`, `username`, `user_type`, `transport_unit_name` AS `unit_name`, `transport_unit_code` AS `unit_code`, `transport_unit_username` AS `unit_username`, `transport_unit_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN transport_unit ON user.user_id = transport_unit.user_id)
+			UNION
+			(SELECT `user`.`user_id`, `username`, `user_type`, `reception_unit_name` AS `unit_name`, `reception_unit_code` AS `unit_code`, `reception_unit_username` AS `unit_username`, `reception_unit_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN reception_unit ON user.user_id = reception_unit.user_id) [ RunTime:0.006000s ]
+INFO: [ view_parse ] --START--
+NOTIC: [8] Use of undefined constant Home - assumed 'Home' F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [8] Use of undefined constant DistrictBusiness - assumed 'DistrictBusiness' F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [2] Division by zero F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [8] Use of undefined constant enterprise_user_management_ajaxpost - assumed 'enterprise_user_management_ajaxpost' F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [2] Division by zero F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+INFO: ParseTemplate Behavior ::run [ RunTime:0.020001s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.020001s ]
+INFO: [ view_filter ] --START--
+INFO: ContentReplace Behavior ::run [ RunTime:0.002000s ]
+INFO: TokenBuild Behavior ::run [ RunTime:0.001000s ]
+INFO: WriteHtmlCache Behavior ::run [ RunTime:0.001001s ]
+INFO: ShowRuntime Behavior ::run [ RunTime:0.002000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.006001s ]
+
+[ 2014-02-23T20:03:55+08:00 ] 127.0.0.1 /waste/www/index.php/Home/DistrictBusiness/transfer_record_management.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `record` [ RunTime:0.005001s ]
+SQL: SELECT * FROM `record` LEFT JOIN production_unit ON record.production_unit_id = production_unit.production_unit_id WHERE ( `jurisdiction_id` = '3' ) AND ( `record_status` > 0 )  [ RunTime:0.007000s ]
+INFO: [ view_parse ] --START--
+INFO: ParseTemplate Behavior ::run [ RunTime:0.020001s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.020001s ]
+INFO: [ view_filter ] --START--
+INFO: ContentReplace Behavior ::run [ RunTime:0.001000s ]
+INFO: TokenBuild Behavior ::run [ RunTime:0.001000s ]
+INFO: WriteHtmlCache Behavior ::run [ RunTime:0.001000s ]
+INFO: ShowRuntime Behavior ::run [ RunTime:0.002000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.006001s ]
+
+[ 2014-02-23T20:03:56+08:00 ] 127.0.0.1 /waste/www/index.php/Home/DistrictBusiness/enterprise_user_management.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: 
+			(SELECT `user`.`user_id`, `username`, `user_type`, `production_unit_name` AS `unit_name`, `production_unit_code` AS `unit_code`, `production_unit_username` AS `unit_username`, `waste_location_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN production_unit ON user.user_id = production_unit.user_id)
+			UNION
+			(SELECT `user`.`user_id`, `username`, `user_type`, `transport_unit_name` AS `unit_name`, `transport_unit_code` AS `unit_code`, `transport_unit_username` AS `unit_username`, `transport_unit_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN transport_unit ON user.user_id = transport_unit.user_id)
+			UNION
+			(SELECT `user`.`user_id`, `username`, `user_type`, `reception_unit_name` AS `unit_name`, `reception_unit_code` AS `unit_code`, `reception_unit_username` AS `unit_username`, `reception_unit_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN reception_unit ON user.user_id = reception_unit.user_id) [ RunTime:0.013001s ]
+INFO: [ view_parse ] --START--
+NOTIC: [8] Use of undefined constant Home - assumed 'Home' F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [8] Use of undefined constant DistrictBusiness - assumed 'DistrictBusiness' F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [2] Division by zero F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [8] Use of undefined constant enterprise_user_management_ajaxpost - assumed 'enterprise_user_management_ajaxpost' F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [2] Division by zero F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+INFO: ParseTemplate Behavior ::run [ RunTime:0.020001s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.021001s ]
+INFO: [ view_filter ] --START--
+INFO: ContentReplace Behavior ::run [ RunTime:0.001000s ]
+INFO: TokenBuild Behavior ::run [ RunTime:0.001000s ]
+INFO: WriteHtmlCache Behavior ::run [ RunTime:0.001001s ]
+INFO: ShowRuntime Behavior ::run [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.005001s ]
+
+[ 2014-02-23T20:04:03+08:00 ] 127.0.0.1 /waste/www/index.php/DistrictBusiness/enterprise_user_management.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: 
+			(SELECT `user`.`user_id`, `username`, `user_type`, `production_unit_name` AS `unit_name`, `production_unit_code` AS `unit_code`, `production_unit_username` AS `unit_username`, `waste_location_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN production_unit ON user.user_id = production_unit.user_id)
+			UNION
+			(SELECT `user`.`user_id`, `username`, `user_type`, `transport_unit_name` AS `unit_name`, `transport_unit_code` AS `unit_code`, `transport_unit_username` AS `unit_username`, `transport_unit_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN transport_unit ON user.user_id = transport_unit.user_id)
+			UNION
+			(SELECT `user`.`user_id`, `username`, `user_type`, `reception_unit_name` AS `unit_name`, `reception_unit_code` AS `unit_code`, `reception_unit_username` AS `unit_username`, `reception_unit_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN reception_unit ON user.user_id = reception_unit.user_id) [ RunTime:0.007000s ]
+INFO: [ view_parse ] --START--
+NOTIC: [8] Use of undefined constant Home - assumed 'Home' F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [8] Use of undefined constant DistrictBusiness - assumed 'DistrictBusiness' F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [2] Division by zero F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [8] Use of undefined constant enterprise_user_management_ajaxpost - assumed 'enterprise_user_management_ajaxpost' F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [2] Division by zero F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+INFO: ParseTemplate Behavior ::run [ RunTime:0.019001s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.019001s ]
+INFO: [ view_filter ] --START--
+INFO: ContentReplace Behavior ::run [ RunTime:0.001001s ]
+INFO: TokenBuild Behavior ::run [ RunTime:0.001000s ]
+INFO: WriteHtmlCache Behavior ::run [ RunTime:0.001000s ]
+INFO: ShowRuntime Behavior ::run [ RunTime:0.002000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.006001s ]
+
+[ 2014-02-23T20:04:04+08:00 ] 127.0.0.1 /waste/www/index.php/Home/DistrictBusiness/enterprise_user_management.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: 
+			(SELECT `user`.`user_id`, `username`, `user_type`, `production_unit_name` AS `unit_name`, `production_unit_code` AS `unit_code`, `production_unit_username` AS `unit_username`, `waste_location_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN production_unit ON user.user_id = production_unit.user_id)
+			UNION
+			(SELECT `user`.`user_id`, `username`, `user_type`, `transport_unit_name` AS `unit_name`, `transport_unit_code` AS `unit_code`, `transport_unit_username` AS `unit_username`, `transport_unit_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN transport_unit ON user.user_id = transport_unit.user_id)
+			UNION
+			(SELECT `user`.`user_id`, `username`, `user_type`, `reception_unit_name` AS `unit_name`, `reception_unit_code` AS `unit_code`, `reception_unit_username` AS `unit_username`, `reception_unit_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN reception_unit ON user.user_id = reception_unit.user_id) [ RunTime:0.007001s ]
+INFO: [ view_parse ] --START--
+NOTIC: [8] Use of undefined constant Home - assumed 'Home' F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [8] Use of undefined constant DistrictBusiness - assumed 'DistrictBusiness' F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [2] Division by zero F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [8] Use of undefined constant enterprise_user_management_ajaxpost - assumed 'enterprise_user_management_ajaxpost' F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [2] Division by zero F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+INFO: ParseTemplate Behavior ::run [ RunTime:0.019001s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.019001s ]
+INFO: [ view_filter ] --START--
+INFO: ContentReplace Behavior ::run [ RunTime:0.001000s ]
+INFO: TokenBuild Behavior ::run [ RunTime:0.002000s ]
+INFO: WriteHtmlCache Behavior ::run [ RunTime:0.000000s ]
+INFO: ShowRuntime Behavior ::run [ RunTime:0.002000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.005000s ]
+
+[ 2014-02-23T20:04:19+08:00 ] 127.0.0.1 /waste/www/index.php/DistrictBusiness/enterprise_user_management.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: 
+			(SELECT `user`.`user_id`, `username`, `user_type`, `production_unit_name` AS `unit_name`, `production_unit_code` AS `unit_code`, `production_unit_username` AS `unit_username`, `waste_location_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN production_unit ON user.user_id = production_unit.user_id)
+			UNION
+			(SELECT `user`.`user_id`, `username`, `user_type`, `transport_unit_name` AS `unit_name`, `transport_unit_code` AS `unit_code`, `transport_unit_username` AS `unit_username`, `transport_unit_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN transport_unit ON user.user_id = transport_unit.user_id)
+			UNION
+			(SELECT `user`.`user_id`, `username`, `user_type`, `reception_unit_name` AS `unit_name`, `reception_unit_code` AS `unit_code`, `reception_unit_username` AS `unit_username`, `reception_unit_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN reception_unit ON user.user_id = reception_unit.user_id) [ RunTime:0.008001s ]
+INFO: [ view_parse ] --START--
+NOTIC: [8] Use of undefined constant Home - assumed 'Home' F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [8] Use of undefined constant DistrictBusiness - assumed 'DistrictBusiness' F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [2] Division by zero F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [8] Use of undefined constant enterprise_user_management_ajaxpost - assumed 'enterprise_user_management_ajaxpost' F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [2] Division by zero F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+INFO: ParseTemplate Behavior ::run [ RunTime:0.021001s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.021001s ]
+INFO: [ view_filter ] --START--
+INFO: ContentReplace Behavior ::run [ RunTime:0.001000s ]
+INFO: TokenBuild Behavior ::run [ RunTime:0.002000s ]
+INFO: WriteHtmlCache Behavior ::run [ RunTime:0.001000s ]
+INFO: ShowRuntime Behavior ::run [ RunTime:0.002000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.006000s ]
+
+[ 2014-02-23T20:04:21+08:00 ] 127.0.0.1 /waste/www/index.php/Home/DistrictBusiness/enterprise_user_management.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: 
+			(SELECT `user`.`user_id`, `username`, `user_type`, `production_unit_name` AS `unit_name`, `production_unit_code` AS `unit_code`, `production_unit_username` AS `unit_username`, `waste_location_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN production_unit ON user.user_id = production_unit.user_id)
+			UNION
+			(SELECT `user`.`user_id`, `username`, `user_type`, `transport_unit_name` AS `unit_name`, `transport_unit_code` AS `unit_code`, `transport_unit_username` AS `unit_username`, `transport_unit_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN transport_unit ON user.user_id = transport_unit.user_id)
+			UNION
+			(SELECT `user`.`user_id`, `username`, `user_type`, `reception_unit_name` AS `unit_name`, `reception_unit_code` AS `unit_code`, `reception_unit_username` AS `unit_username`, `reception_unit_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN reception_unit ON user.user_id = reception_unit.user_id) [ RunTime:0.014001s ]
+INFO: [ view_parse ] --START--
+NOTIC: [8] Use of undefined constant Home - assumed 'Home' F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [8] Use of undefined constant DistrictBusiness - assumed 'DistrictBusiness' F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [2] Division by zero F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [8] Use of undefined constant enterprise_user_management_ajaxpost - assumed 'enterprise_user_management_ajaxpost' F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [2] Division by zero F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+INFO: ParseTemplate Behavior ::run [ RunTime:0.021001s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.021001s ]
+INFO: [ view_filter ] --START--
+INFO: ContentReplace Behavior ::run [ RunTime:0.001000s ]
+INFO: TokenBuild Behavior ::run [ RunTime:0.002000s ]
+INFO: WriteHtmlCache Behavior ::run [ RunTime:0.001000s ]
+INFO: ShowRuntime Behavior ::run [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.005000s ]
+
+[ 2014-02-23T20:04:40+08:00 ] 127.0.0.1 /waste/www/index.php/DistrictBusiness/enterprise_user_management.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: 
+			(SELECT `user`.`user_id`, `username`, `user_type`, `production_unit_name` AS `unit_name`, `production_unit_code` AS `unit_code`, `production_unit_username` AS `unit_username`, `waste_location_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN production_unit ON user.user_id = production_unit.user_id)
+			UNION
+			(SELECT `user`.`user_id`, `username`, `user_type`, `transport_unit_name` AS `unit_name`, `transport_unit_code` AS `unit_code`, `transport_unit_username` AS `unit_username`, `transport_unit_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN transport_unit ON user.user_id = transport_unit.user_id)
+			UNION
+			(SELECT `user`.`user_id`, `username`, `user_type`, `reception_unit_name` AS `unit_name`, `reception_unit_code` AS `unit_code`, `reception_unit_username` AS `unit_username`, `reception_unit_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN reception_unit ON user.user_id = reception_unit.user_id) [ RunTime:0.014001s ]
+INFO: [ view_parse ] --START--
+NOTIC: [8] Use of undefined constant Home - assumed 'Home' F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [8] Use of undefined constant DistrictBusiness - assumed 'DistrictBusiness' F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [2] Division by zero F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [8] Use of undefined constant enterprise_user_management_ajaxpost - assumed 'enterprise_user_management_ajaxpost' F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [2] Division by zero F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+INFO: ParseTemplate Behavior ::run [ RunTime:0.020001s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.020001s ]
+INFO: [ view_filter ] --START--
+INFO: ContentReplace Behavior ::run [ RunTime:0.002001s ]
+INFO: TokenBuild Behavior ::run [ RunTime:0.001000s ]
+INFO: WriteHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: ShowRuntime Behavior ::run [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.006001s ]
+
+[ 2014-02-23T20:04:41+08:00 ] 127.0.0.1 /waste/www/index.php/Home/DistrictBusiness/enterprise_user_management.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002001s ]
+SQL: 
+			(SELECT `user`.`user_id`, `username`, `user_type`, `production_unit_name` AS `unit_name`, `production_unit_code` AS `unit_code`, `production_unit_username` AS `unit_username`, `waste_location_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN production_unit ON user.user_id = production_unit.user_id)
+			UNION
+			(SELECT `user`.`user_id`, `username`, `user_type`, `transport_unit_name` AS `unit_name`, `transport_unit_code` AS `unit_code`, `transport_unit_username` AS `unit_username`, `transport_unit_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN transport_unit ON user.user_id = transport_unit.user_id)
+			UNION
+			(SELECT `user`.`user_id`, `username`, `user_type`, `reception_unit_name` AS `unit_name`, `reception_unit_code` AS `unit_code`, `reception_unit_username` AS `unit_username`, `reception_unit_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN reception_unit ON user.user_id = reception_unit.user_id) [ RunTime:0.010000s ]
+INFO: [ view_parse ] --START--
+NOTIC: [8] Use of undefined constant Home - assumed 'Home' F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [8] Use of undefined constant DistrictBusiness - assumed 'DistrictBusiness' F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [2] Division by zero F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [8] Use of undefined constant enterprise_user_management_ajaxpost - assumed 'enterprise_user_management_ajaxpost' F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [2] Division by zero F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+INFO: ParseTemplate Behavior ::run [ RunTime:0.021002s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.021002s ]
+INFO: [ view_filter ] --START--
+INFO: ContentReplace Behavior ::run [ RunTime:0.001000s ]
+INFO: TokenBuild Behavior ::run [ RunTime:0.002000s ]
+INFO: WriteHtmlCache Behavior ::run [ RunTime:0.001000s ]
+INFO: ShowRuntime Behavior ::run [ RunTime:0.002000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.006000s ]
+
+[ 2014-02-23T20:04:53+08:00 ] 127.0.0.1 /waste/www/index.php/Home/DistrictBusiness/enterprise_user_management_page_reception?record_id=84
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `reception_unit` [ RunTime:0.005000s ]
+SQL: SELECT * FROM `reception_unit` WHERE ( `user_id` = 84 ) LIMIT 1   [ RunTime:0.005001s ]
+INFO: [ view_parse ] --START--
+INFO: ParseTemplate Behavior ::run [ RunTime:0.025001s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.025001s ]
+INFO: [ view_filter ] --START--
+INFO: ContentReplace Behavior ::run [ RunTime:0.002000s ]
+INFO: TokenBuild Behavior ::run [ RunTime:0.002000s ]
+INFO: WriteHtmlCache Behavior ::run [ RunTime:0.001000s ]
+INFO: ShowRuntime Behavior ::run [ RunTime:0.002000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.007000s ]
+
+[ 2014-02-23T20:04:57+08:00 ] 127.0.0.1 /waste/www/index.php/DistrictBusiness/enterprise_user_management.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: 
+			(SELECT `user`.`user_id`, `username`, `user_type`, `production_unit_name` AS `unit_name`, `production_unit_code` AS `unit_code`, `production_unit_username` AS `unit_username`, `waste_location_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN production_unit ON user.user_id = production_unit.user_id)
+			UNION
+			(SELECT `user`.`user_id`, `username`, `user_type`, `transport_unit_name` AS `unit_name`, `transport_unit_code` AS `unit_code`, `transport_unit_username` AS `unit_username`, `transport_unit_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN transport_unit ON user.user_id = transport_unit.user_id)
+			UNION
+			(SELECT `user`.`user_id`, `username`, `user_type`, `reception_unit_name` AS `unit_name`, `reception_unit_code` AS `unit_code`, `reception_unit_username` AS `unit_username`, `reception_unit_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN reception_unit ON user.user_id = reception_unit.user_id) [ RunTime:0.003000s ]
+INFO: [ view_parse ] --START--
+NOTIC: [8] Use of undefined constant Home - assumed 'Home' F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [8] Use of undefined constant DistrictBusiness - assumed 'DistrictBusiness' F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [2] Division by zero F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [8] Use of undefined constant enterprise_user_management_ajaxpost - assumed 'enterprise_user_management_ajaxpost' F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [2] Division by zero F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+INFO: ParseTemplate Behavior ::run [ RunTime:0.021001s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.021001s ]
+INFO: [ view_filter ] --START--
+INFO: ContentReplace Behavior ::run [ RunTime:0.001000s ]
+INFO: TokenBuild Behavior ::run [ RunTime:0.002000s ]
+INFO: WriteHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: ShowRuntime Behavior ::run [ RunTime:0.001001s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.006001s ]
+
+[ 2014-02-23T20:04:58+08:00 ] 127.0.0.1 /waste/www/index.php/Home/DistrictBusiness/enterprise_user_management.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.003000s ]
+SQL: 
+			(SELECT `user`.`user_id`, `username`, `user_type`, `production_unit_name` AS `unit_name`, `production_unit_code` AS `unit_code`, `production_unit_username` AS `unit_username`, `waste_location_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN production_unit ON user.user_id = production_unit.user_id)
+			UNION
+			(SELECT `user`.`user_id`, `username`, `user_type`, `transport_unit_name` AS `unit_name`, `transport_unit_code` AS `unit_code`, `transport_unit_username` AS `unit_username`, `transport_unit_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN transport_unit ON user.user_id = transport_unit.user_id)
+			UNION
+			(SELECT `user`.`user_id`, `username`, `user_type`, `reception_unit_name` AS `unit_name`, `reception_unit_code` AS `unit_code`, `reception_unit_username` AS `unit_username`, `reception_unit_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN reception_unit ON user.user_id = reception_unit.user_id) [ RunTime:0.007001s ]
+INFO: [ view_parse ] --START--
+NOTIC: [8] Use of undefined constant Home - assumed 'Home' F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [8] Use of undefined constant DistrictBusiness - assumed 'DistrictBusiness' F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [2] Division by zero F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [8] Use of undefined constant enterprise_user_management_ajaxpost - assumed 'enterprise_user_management_ajaxpost' F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [2] Division by zero F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+INFO: ParseTemplate Behavior ::run [ RunTime:0.021001s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.021001s ]
+INFO: [ view_filter ] --START--
+INFO: ContentReplace Behavior ::run [ RunTime:0.001000s ]
+INFO: TokenBuild Behavior ::run [ RunTime:0.002000s ]
+INFO: WriteHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: ShowRuntime Behavior ::run [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.006000s ]
+
+[ 2014-02-23T20:05:03+08:00 ] 127.0.0.1 /waste/www/index.php/DistrictBusiness/enterprise_user_management.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.003000s ]
+SQL: 
+			(SELECT `user`.`user_id`, `username`, `user_type`, `production_unit_name` AS `unit_name`, `production_unit_code` AS `unit_code`, `production_unit_username` AS `unit_username`, `waste_location_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN production_unit ON user.user_id = production_unit.user_id)
+			UNION
+			(SELECT `user`.`user_id`, `username`, `user_type`, `transport_unit_name` AS `unit_name`, `transport_unit_code` AS `unit_code`, `transport_unit_username` AS `unit_username`, `transport_unit_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN transport_unit ON user.user_id = transport_unit.user_id)
+			UNION
+			(SELECT `user`.`user_id`, `username`, `user_type`, `reception_unit_name` AS `unit_name`, `reception_unit_code` AS `unit_code`, `reception_unit_username` AS `unit_username`, `reception_unit_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN reception_unit ON user.user_id = reception_unit.user_id) [ RunTime:0.004000s ]
+INFO: [ view_parse ] --START--
+NOTIC: [8] Use of undefined constant Home - assumed 'Home' F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [8] Use of undefined constant DistrictBusiness - assumed 'DistrictBusiness' F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [2] Division by zero F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [8] Use of undefined constant enterprise_user_management_ajaxpost - assumed 'enterprise_user_management_ajaxpost' F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [2] Division by zero F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+INFO: ParseTemplate Behavior ::run [ RunTime:0.022001s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.022001s ]
+INFO: [ view_filter ] --START--
+INFO: ContentReplace Behavior ::run [ RunTime:0.002001s ]
+INFO: TokenBuild Behavior ::run [ RunTime:0.002000s ]
+INFO: WriteHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: ShowRuntime Behavior ::run [ RunTime:0.002000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.008001s ]
+
+[ 2014-02-23T20:05:04+08:00 ] 127.0.0.1 /waste/www/index.php/Home/DistrictBusiness/enterprise_user_management.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.003000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.003000s ]
+SQL: 
+			(SELECT `user`.`user_id`, `username`, `user_type`, `production_unit_name` AS `unit_name`, `production_unit_code` AS `unit_code`, `production_unit_username` AS `unit_username`, `waste_location_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN production_unit ON user.user_id = production_unit.user_id)
+			UNION
+			(SELECT `user`.`user_id`, `username`, `user_type`, `transport_unit_name` AS `unit_name`, `transport_unit_code` AS `unit_code`, `transport_unit_username` AS `unit_username`, `transport_unit_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN transport_unit ON user.user_id = transport_unit.user_id)
+			UNION
+			(SELECT `user`.`user_id`, `username`, `user_type`, `reception_unit_name` AS `unit_name`, `reception_unit_code` AS `unit_code`, `reception_unit_username` AS `unit_username`, `reception_unit_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN reception_unit ON user.user_id = reception_unit.user_id) [ RunTime:0.008000s ]
+INFO: [ view_parse ] --START--
+NOTIC: [8] Use of undefined constant Home - assumed 'Home' F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [8] Use of undefined constant DistrictBusiness - assumed 'DistrictBusiness' F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [2] Division by zero F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [8] Use of undefined constant enterprise_user_management_ajaxpost - assumed 'enterprise_user_management_ajaxpost' F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [2] Division by zero F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+INFO: ParseTemplate Behavior ::run [ RunTime:0.020001s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.020001s ]
+INFO: [ view_filter ] --START--
+INFO: ContentReplace Behavior ::run [ RunTime:0.001000s ]
+INFO: TokenBuild Behavior ::run [ RunTime:0.002000s ]
+INFO: WriteHtmlCache Behavior ::run [ RunTime:0.001000s ]
+INFO: ShowRuntime Behavior ::run [ RunTime:0.002000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.006000s ]
+
+[ 2014-02-23T20:05:49+08:00 ] 127.0.0.1 /waste/www/index.php/DistrictBusiness/enterprise_user_management.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: 
+			(SELECT `user`.`user_id`, `username`, `user_type`, `production_unit_name` AS `unit_name`, `production_unit_code` AS `unit_code`, `production_unit_username` AS `unit_username`, `waste_location_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN production_unit ON user.user_id = production_unit.user_id)
+			UNION
+			(SELECT `user`.`user_id`, `username`, `user_type`, `transport_unit_name` AS `unit_name`, `transport_unit_code` AS `unit_code`, `transport_unit_username` AS `unit_username`, `transport_unit_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN transport_unit ON user.user_id = transport_unit.user_id)
+			UNION
+			(SELECT `user`.`user_id`, `username`, `user_type`, `reception_unit_name` AS `unit_name`, `reception_unit_code` AS `unit_code`, `reception_unit_username` AS `unit_username`, `reception_unit_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN reception_unit ON user.user_id = reception_unit.user_id) [ RunTime:0.003000s ]
+INFO: [ view_parse ] --START--
+NOTIC: [8] Use of undefined constant Home - assumed 'Home' F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [8] Use of undefined constant DistrictBusiness - assumed 'DistrictBusiness' F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [2] Division by zero F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [8] Use of undefined constant enterprise_user_management_ajaxpost - assumed 'enterprise_user_management_ajaxpost' F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [2] Division by zero F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+INFO: ParseTemplate Behavior ::run [ RunTime:0.021001s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.021001s ]
+INFO: [ view_filter ] --START--
+INFO: ContentReplace Behavior ::run [ RunTime:0.001000s ]
+INFO: TokenBuild Behavior ::run [ RunTime:0.002000s ]
+INFO: WriteHtmlCache Behavior ::run [ RunTime:0.002001s ]
+INFO: ShowRuntime Behavior ::run [ RunTime:0.002000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.007001s ]
+
+[ 2014-02-23T20:05:50+08:00 ] 127.0.0.1 /waste/www/index.php/Home/DistrictBusiness/enterprise_user_management.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.003000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.003000s ]
+SQL: 
+			(SELECT `user`.`user_id`, `username`, `user_type`, `production_unit_name` AS `unit_name`, `production_unit_code` AS `unit_code`, `production_unit_username` AS `unit_username`, `waste_location_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN production_unit ON user.user_id = production_unit.user_id)
+			UNION
+			(SELECT `user`.`user_id`, `username`, `user_type`, `transport_unit_name` AS `unit_name`, `transport_unit_code` AS `unit_code`, `transport_unit_username` AS `unit_username`, `transport_unit_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN transport_unit ON user.user_id = transport_unit.user_id)
+			UNION
+			(SELECT `user`.`user_id`, `username`, `user_type`, `reception_unit_name` AS `unit_name`, `reception_unit_code` AS `unit_code`, `reception_unit_username` AS `unit_username`, `reception_unit_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN reception_unit ON user.user_id = reception_unit.user_id) [ RunTime:0.008001s ]
+INFO: [ view_parse ] --START--
+NOTIC: [8] Use of undefined constant Home - assumed 'Home' F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [8] Use of undefined constant DistrictBusiness - assumed 'DistrictBusiness' F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [2] Division by zero F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [8] Use of undefined constant enterprise_user_management_ajaxpost - assumed 'enterprise_user_management_ajaxpost' F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [2] Division by zero F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+INFO: ParseTemplate Behavior ::run [ RunTime:0.021001s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.021001s ]
+INFO: [ view_filter ] --START--
+INFO: ContentReplace Behavior ::run [ RunTime:0.003000s ]
+INFO: TokenBuild Behavior ::run [ RunTime:0.001000s ]
+INFO: WriteHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: ShowRuntime Behavior ::run [ RunTime:0.002000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.008000s ]
+
+[ 2014-02-23T20:05:56+08:00 ] 127.0.0.1 /waste/www/index.php/DistrictBusiness/enterprise_user_management.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.003000s ]
+SQL: 
+			(SELECT `user`.`user_id`, `username`, `user_type`, `production_unit_name` AS `unit_name`, `production_unit_code` AS `unit_code`, `production_unit_username` AS `unit_username`, `waste_location_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN production_unit ON user.user_id = production_unit.user_id)
+			UNION
+			(SELECT `user`.`user_id`, `username`, `user_type`, `transport_unit_name` AS `unit_name`, `transport_unit_code` AS `unit_code`, `transport_unit_username` AS `unit_username`, `transport_unit_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN transport_unit ON user.user_id = transport_unit.user_id)
+			UNION
+			(SELECT `user`.`user_id`, `username`, `user_type`, `reception_unit_name` AS `unit_name`, `reception_unit_code` AS `unit_code`, `reception_unit_username` AS `unit_username`, `reception_unit_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN reception_unit ON user.user_id = reception_unit.user_id) [ RunTime:0.003000s ]
+INFO: [ view_parse ] --START--
+NOTIC: [8] Use of undefined constant Home - assumed 'Home' F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [8] Use of undefined constant DistrictBusiness - assumed 'DistrictBusiness' F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [2] Division by zero F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [8] Use of undefined constant enterprise_user_management_ajaxpost - assumed 'enterprise_user_management_ajaxpost' F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [2] Division by zero F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+INFO: ParseTemplate Behavior ::run [ RunTime:0.020001s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.020001s ]
+INFO: [ view_filter ] --START--
+INFO: ContentReplace Behavior ::run [ RunTime:0.002000s ]
+INFO: TokenBuild Behavior ::run [ RunTime:0.002000s ]
+INFO: WriteHtmlCache Behavior ::run [ RunTime:0.001000s ]
+INFO: ShowRuntime Behavior ::run [ RunTime:0.002000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.007000s ]
+
+[ 2014-02-23T20:05:57+08:00 ] 127.0.0.1 /waste/www/index.php/Home/DistrictBusiness/enterprise_user_management.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.003001s ]
+SQL: 
+			(SELECT `user`.`user_id`, `username`, `user_type`, `production_unit_name` AS `unit_name`, `production_unit_code` AS `unit_code`, `production_unit_username` AS `unit_username`, `waste_location_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN production_unit ON user.user_id = production_unit.user_id)
+			UNION
+			(SELECT `user`.`user_id`, `username`, `user_type`, `transport_unit_name` AS `unit_name`, `transport_unit_code` AS `unit_code`, `transport_unit_username` AS `unit_username`, `transport_unit_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN transport_unit ON user.user_id = transport_unit.user_id)
+			UNION
+			(SELECT `user`.`user_id`, `username`, `user_type`, `reception_unit_name` AS `unit_name`, `reception_unit_code` AS `unit_code`, `reception_unit_username` AS `unit_username`, `reception_unit_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN reception_unit ON user.user_id = reception_unit.user_id) [ RunTime:0.003000s ]
+INFO: [ view_parse ] --START--
+NOTIC: [8] Use of undefined constant Home - assumed 'Home' F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [8] Use of undefined constant DistrictBusiness - assumed 'DistrictBusiness' F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [2] Division by zero F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [8] Use of undefined constant enterprise_user_management_ajaxpost - assumed 'enterprise_user_management_ajaxpost' F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [2] Division by zero F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+INFO: ParseTemplate Behavior ::run [ RunTime:0.022002s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.022002s ]
+INFO: [ view_filter ] --START--
+INFO: ContentReplace Behavior ::run [ RunTime:0.002000s ]
+INFO: TokenBuild Behavior ::run [ RunTime:0.002000s ]
+INFO: WriteHtmlCache Behavior ::run [ RunTime:0.001000s ]
+INFO: ShowRuntime Behavior ::run [ RunTime:0.002000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.007000s ]
+
+[ 2014-02-23T20:06:47+08:00 ] 127.0.0.1 /waste/www/index.php/Home/DistrictBusiness/transfer_record_management.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: SHOW COLUMNS FROM `record` [ RunTime:0.004000s ]
+SQL: SELECT * FROM `record` LEFT JOIN production_unit ON record.production_unit_id = production_unit.production_unit_id WHERE ( `jurisdiction_id` = '3' ) AND ( `record_status` > 0 )  [ RunTime:0.013001s ]
+INFO: [ view_parse ] --START--
+INFO: ParseTemplate Behavior ::run [ RunTime:0.023001s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.023001s ]
+INFO: [ view_filter ] --START--
+INFO: ContentReplace Behavior ::run [ RunTime:0.001000s ]
+INFO: TokenBuild Behavior ::run [ RunTime:0.002000s ]
+INFO: WriteHtmlCache Behavior ::run [ RunTime:0.001000s ]
+INFO: ShowRuntime Behavior ::run [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.005000s ]
+
+[ 2014-02-23T20:06:55+08:00 ] 127.0.0.1 /waste/www/index.php/Home/DistrictBusiness/enterprise_user_management.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: 
+			(SELECT `user`.`user_id`, `username`, `user_type`, `production_unit_name` AS `unit_name`, `production_unit_code` AS `unit_code`, `production_unit_username` AS `unit_username`, `waste_location_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN production_unit ON user.user_id = production_unit.user_id)
+			UNION
+			(SELECT `user`.`user_id`, `username`, `user_type`, `transport_unit_name` AS `unit_name`, `transport_unit_code` AS `unit_code`, `transport_unit_username` AS `unit_username`, `transport_unit_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN transport_unit ON user.user_id = transport_unit.user_id)
+			UNION
+			(SELECT `user`.`user_id`, `username`, `user_type`, `reception_unit_name` AS `unit_name`, `reception_unit_code` AS `unit_code`, `reception_unit_username` AS `unit_username`, `reception_unit_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN reception_unit ON user.user_id = reception_unit.user_id) [ RunTime:0.017001s ]
+INFO: [ view_parse ] --START--
+NOTIC: [8] Use of undefined constant Home - assumed 'Home' F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [8] Use of undefined constant DistrictBusiness - assumed 'DistrictBusiness' F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [2] Division by zero F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [8] Use of undefined constant enterprise_user_management_ajaxpost - assumed 'enterprise_user_management_ajaxpost' F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [2] Division by zero F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+INFO: ParseTemplate Behavior ::run [ RunTime:0.025001s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.025001s ]
+INFO: [ view_filter ] --START--
+INFO: ContentReplace Behavior ::run [ RunTime:0.001000s ]
+INFO: TokenBuild Behavior ::run [ RunTime:0.001000s ]
+INFO: WriteHtmlCache Behavior ::run [ RunTime:0.001000s ]
+INFO: ShowRuntime Behavior ::run [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.005000s ]
+
+[ 2014-02-23T20:07:01+08:00 ] 127.0.0.1 /waste/www/index.php/DistrictBusiness/enterprise_user_management.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002000s ]
+SQL: 
+			(SELECT `user`.`user_id`, `username`, `user_type`, `production_unit_name` AS `unit_name`, `production_unit_code` AS `unit_code`, `production_unit_username` AS `unit_username`, `waste_location_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN production_unit ON user.user_id = production_unit.user_id)
+			UNION
+			(SELECT `user`.`user_id`, `username`, `user_type`, `transport_unit_name` AS `unit_name`, `transport_unit_code` AS `unit_code`, `transport_unit_username` AS `unit_username`, `transport_unit_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN transport_unit ON user.user_id = transport_unit.user_id)
+			UNION
+			(SELECT `user`.`user_id`, `username`, `user_type`, `reception_unit_name` AS `unit_name`, `reception_unit_code` AS `unit_code`, `reception_unit_username` AS `unit_username`, `reception_unit_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN reception_unit ON user.user_id = reception_unit.user_id) [ RunTime:0.006000s ]
+INFO: [ view_parse ] --START--
+NOTIC: [8] Use of undefined constant Home - assumed 'Home' F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [8] Use of undefined constant DistrictBusiness - assumed 'DistrictBusiness' F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [2] Division by zero F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [8] Use of undefined constant enterprise_user_management_ajaxpost - assumed 'enterprise_user_management_ajaxpost' F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [2] Division by zero F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+INFO: ParseTemplate Behavior ::run [ RunTime:0.017001s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.017001s ]
+INFO: [ view_filter ] --START--
+INFO: ContentReplace Behavior ::run [ RunTime:0.000000s ]
+INFO: TokenBuild Behavior ::run [ RunTime:0.001000s ]
+INFO: WriteHtmlCache Behavior ::run [ RunTime:0.000000s ]
+INFO: ShowRuntime Behavior ::run [ RunTime:0.000000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.004000s ]
+
+[ 2014-02-23T20:07:01+08:00 ] 127.0.0.1 /waste/www/index.php/Home/DistrictBusiness/enterprise_user_management.html
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: 
+			(SELECT `user`.`user_id`, `username`, `user_type`, `production_unit_name` AS `unit_name`, `production_unit_code` AS `unit_code`, `production_unit_username` AS `unit_username`, `waste_location_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN production_unit ON user.user_id = production_unit.user_id)
+			UNION
+			(SELECT `user`.`user_id`, `username`, `user_type`, `transport_unit_name` AS `unit_name`, `transport_unit_code` AS `unit_code`, `transport_unit_username` AS `unit_username`, `transport_unit_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN transport_unit ON user.user_id = transport_unit.user_id)
+			UNION
+			(SELECT `user`.`user_id`, `username`, `user_type`, `reception_unit_name` AS `unit_name`, `reception_unit_code` AS `unit_code`, `reception_unit_username` AS `unit_username`, `reception_unit_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN reception_unit ON user.user_id = reception_unit.user_id) [ RunTime:0.010000s ]
+INFO: [ view_parse ] --START--
+NOTIC: [8] Use of undefined constant Home - assumed 'Home' F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [8] Use of undefined constant DistrictBusiness - assumed 'DistrictBusiness' F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [2] Division by zero F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [8] Use of undefined constant enterprise_user_management_ajaxpost - assumed 'enterprise_user_management_ajaxpost' F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+NOTIC: [2] Division by zero F:\apache\htdocs\waste\www\App\Runtime\Cache\Home\c69b9c0c198ab67abcc8c338d5e17491.php 第 137 行.
+INFO: ParseTemplate Behavior ::run [ RunTime:0.018001s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.018001s ]
+INFO: [ view_filter ] --START--
+INFO: ContentReplace Behavior ::run [ RunTime:0.001000s ]
+INFO: TokenBuild Behavior ::run [ RunTime:0.001001s ]
+INFO: WriteHtmlCache Behavior ::run [ RunTime:0.001000s ]
+INFO: ShowRuntime Behavior ::run [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.004001s ]
+

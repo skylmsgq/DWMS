@@ -87,46 +87,25 @@ class DistrictMapAction extends CommonAction{
 
 	// 转移地图->地图展示->转移地图历史回放
 	public function transfer_map_playback() {
+		$vehicle = M( 'vehicle' );
+		$condition['vehicle_status'] = array( 'EQ', 2 );
+		$condition['jurisdiction_id'] = array( 'EQ', session( 'jurisdiction_id' ) );
+		$join = $vehicle->join( 'transport_unit ON vehicle.transport_unit_id = transport_unit.transport_unit_id' )->where( $condition )->select();
+		$join_json = json_encode( $join );
+
 		$condition['vehicle_status'] = array( 'EQ', 2 );
 		$condition['jurisdiction_id'] = array( 'EQ', session( 'jurisdiction_id' ) );
 		$route_vehicle = M( 'route_vehicle' );
 		$route_vehicle_join = $route_vehicle->join( 'route ON route_vehicle.route_id = route.route_id' )->join( 'vehicle ON route_vehicle.vehicle_id = vehicle.vehicle_id' )->where( $condition )->select();
 		$route_vehicle_join_json = json_encode( $route_vehicle_join );
+
 		$tmp_content = $this->fetch( './Public/html/Content/District/map/transfer_map_playback.html' );
-		$tmp_content = "<script> route_json=$route_vehicle_join_json; </script> $tmp_content";
+		$tmp_content = "<script> join_json=$join_json; route_json=$route_vehicle_join_json; </script> $tmp_content";
 		$this->ajaxReturn( $tmp_content );
 	}
 
 	// 转移地图->地图展示->转移地图历史回放：获取所有车辆历史路线
 	public function ajax_get_vehicle_routes() {
-		$vehicle = M( 'vehicle' );
-		$condition['jurisdiction_id'] = array( 'EQ', session( 'jurisdiction_id' ) );
-		$join = $vehicle->join( 'device ON vehicle.device_id = device.device_id' )->where( $condition )->field( 'vehicle_id, device_serial_num' )->select();
-		for ( $idx = 0; $idx < count( $join ); ++$idx ) {
-			$gps_table_name = 'gps_' . $join[$idx]['device_serial_num'];
-			$gps = M( $gps_table_name );
-			$where['datetime'] = array( array( 'EGT', I( 'post.beginDate' ) ), array( 'ELT', I( 'post.endDate' ) ) );
-			$where['status'] = 0;
-			$gps_route = $gps->where( $where )->field( 'datetime, bmap_longitude, bmap_latitude, speed, vehicle_id, offset_distance' )->select();
-			$gps_route_array[$idx] = $gps_route;
-		}
-		$this->ajaxReturn( $gps_route_array );
-	}
-
-	// 转移地图->地图展示->转移地图历史回放Test
-	public function transfer_map_playback_test() {
-		$condition['vehicle_status'] = array( 'EQ', 2 );
-		$condition['jurisdiction_id'] = array( 'EQ', session( 'jurisdiction_id' ) );
-		$route_vehicle = M( 'route_vehicle' );
-		$route_vehicle_join = $route_vehicle->join( 'route ON route_vehicle.route_id = route.route_id' )->join( 'vehicle ON route_vehicle.vehicle_id = vehicle.vehicle_id' )->where( $condition )->select();
-		$route_vehicle_join_json = json_encode( $route_vehicle_join );
-		$tmp_content = $this->fetch( './Public/html/Content/District/map/transfer_map_playback_test.html' );
-		$tmp_content = "<script> route_json=$route_vehicle_join_json; </script> $tmp_content";
-		$this->ajaxReturn( $tmp_content );
-	}
-
-	// 转移地图->地图展示->转移地图历史回放Test：获取所有车辆历史路线
-	public function ajax_get_vehicle_routes_test() {
 		$vehicle = M( 'vehicle' );
 		$condition['jurisdiction_id'] = array( 'EQ', session( 'jurisdiction_id' ) );
 		$join = $vehicle->join( 'device ON vehicle.device_id = device.device_id' )->where( $condition )->field( 'vehicle_id, device_serial_num' )->select();

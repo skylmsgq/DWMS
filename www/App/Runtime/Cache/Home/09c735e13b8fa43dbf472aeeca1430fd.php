@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<?php if (!defined('THINK_PATH')) exit();?><!DOCTYPE html>
 
 <html lang="zh-cn">
 
@@ -7,19 +7,19 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="__PUBLIC__/image/favicon.png">
+    <link rel="shortcut icon" href="/waste/www/Public/image/favicon.png">
 
     <title>危险废物管理信息系统</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="__PUBLIC__/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/waste/www/Public/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="__PUBLIC__/css/signin.css" rel="stylesheet">
+    <link href="/waste/www/Public/css/signin.css" rel="stylesheet">
 
-    <script type="text/javascript" src="__PUBLIC__/js/jquery-2.0.3.min.js"></script>
-    <script type="text/javascript" src="__PUBLIC__/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="__PUBLIC__/js/jquery-validate.min.js"></script>
+    <script type="text/javascript" src="/waste/www/Public/js/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="/waste/www/Public/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/waste/www/Public/js/jquery-validate.min.js"></script>
 
 </head>
 <script type="text/javascript">
@@ -78,7 +78,7 @@ function sel_city(province_id){
         console.log(province_id);
           $.ajax({
             type: "post",
-            url: "{:U('Home/Register/select_city_name')}",
+            url: "/waste/www/index.php/Home/Register/select_city_name.html",
             dataType: "json",
             data:{
                 'id': province_id
@@ -102,7 +102,7 @@ function sel_city(province_id){
         console.log(city_id);
           $.ajax({
             type: "post",
-            url: "{:U('Home/Register/select_county_name')}",
+            url: "/waste/www/index.php/Home/Register/select_county_name.html",
             dataType: "json",
             data:{
                 'id': city_id
@@ -127,7 +127,7 @@ function sel_city(province_id){
         console.log(county_name);
         $.ajax({
             type: "post",
-            url: "{:U('Home/Register/select_code_jurisdiction')}",
+            url: "/waste/www/index.php/Home/Register/select_code_jurisdiction.html",
             dataType: "json",
             data:{
                 'name': county_name
@@ -152,7 +152,7 @@ function sel_city(province_id){
         });
     $.ajax({
             type: "post",
-            url: "{:U('Home/Register/select_code')}",
+            url: "/waste/www/index.php/Home/Register/select_code.html",
             dataType: "json",
             data:{
                 'name': county_name
@@ -178,7 +178,7 @@ function sel_city(province_id){
     }
 </script>
 
-<body style="background:url(__PUBLIC__/image/bg_3.jpg) no-repeat;  background-color:#3D80AD;">
+<body style="background:url(/waste/www/Public/image/bg_3.jpg) no-repeat;  background-color:#3D80AD;">
     <div class="container">
 
         <div class="panel panel-primary" id="login-panel" style="margin-top:20px">
@@ -187,7 +187,7 @@ function sel_city(province_id){
             </div>
             <div class="panel-body">
 
-                <form role="form" method="post" id="transportForm" action="{:U('Home/Register/do_reg',array('id'=>'transport'))}">
+                <form role="form" method="post" id="transportForm" action="/waste/www/index.php/Home/Register/do_reg/id/transport.html">
                     <div class="table-responsive">
                         <big>
 
@@ -261,39 +261,39 @@ function sel_city(province_id){
                                     <td>运输单位所在省</td>
                                     <td>
                                         <select type="text" class="form-control input-md required-cn" name="transport_unit_province" id="province_name" onchange="sel_city(this.options[this.options.selectedIndex].value)">
-                                          <option value="1">{$county_code[0].county_name}</option>
-                                          <option value="2">{$county_code[1].county_name}</option>
-                                          <option value="3">{$county_code[2].county_name}</option>
-                                          <option value="4">{$county_code[3].county_name}</option>
-                                          <option value="5">{$county_code[4].county_name}</option>
-                                          <option value="6">{$county_code[5].county_name}</option>
-                                          <option value="7">{$county_code[6].county_name}</option>
-                                          <option value="8">{$county_code[7].county_name}</option>
-                                          <option value="9">{$county_code[8].county_name}</option>
-                                          <option value="10">{$county_code[9].county_name}</option>
-                                          <option value="11">{$county_code[10].county_name}</option>
-                                          <option value="12">{$county_code[11].county_name}</option>
-                                          <option value="13">{$county_code[12].county_name}</option>
-                                          <option value="14">{$county_code[13].county_name}</option>
-                                          <option value="15">{$county_code[14].county_name}</option>
-                                          <option value="16">{$county_code[15].county_name}</option>
-                                          <option value="17">{$county_code[16].county_name}</option>
-                                          <option value="18">{$county_code[17].county_name}</option>
-                                          <option value="19">{$county_code[18].county_name}</option>
-                                          <option value="20">{$county_code[19].county_name}</option>
-                                          <option value="21">{$county_code[20].county_name}</option>
-                                          <option value="22">{$county_code[21].county_name}</option>
-                                          <option value="23">{$county_code[22].county_name}</option>
-                                          <option value="24">{$county_code[23].county_name}</option>
-                                          <option value="25">{$county_code[24].county_name}</option>
-                                          <option value="26">{$county_code[25].county_name}</option>
-                                          <option value="27">{$county_code[26].county_name}</option>
-                                          <option value="28">{$county_code[27].county_name}</option>
-                                          <option value="29">{$county_code[28].county_name}</option>
-                                          <option value="30">{$county_code[29].county_name}</option>
-                                          <option value="31">{$county_code[30].county_name}</option>
-                                          <option value="32">{$county_code[31].county_name}</option>
-                                          <option value="33">{$county_code[32].county_name}</option>
+                                          <option value="1">北京市</option>
+                                          <option value="2">天津市</option>
+                                          <option value="3">河北省</option>
+                                          <option value="4">山西省</option>
+                                          <option value="5">内蒙古自治区</option>
+                                          <option value="6">辽宁省</option>
+                                          <option value="7">吉林省</option>
+                                          <option value="8">黑龙江省</option>
+                                          <option value="9">上海市</option>
+                                          <option value="10">江苏省</option>
+                                          <option value="11">浙江省</option>
+                                          <option value="12">安徽省</option>
+                                          <option value="13">福建省</option>
+                                          <option value="14">江西省</option>
+                                          <option value="15">山东省</option>
+                                          <option value="16">河南省</option>
+                                          <option value="17">湖北省</option>
+                                          <option value="18">湖南省</option>
+                                          <option value="19">广东省</option>
+                                          <option value="20">广西壮族自治区</option>
+                                          <option value="21">海南省</option>
+                                          <option value="22">重庆市</option>
+                                          <option value="23">四川省</option>
+                                          <option value="24">贵州省</option>
+                                          <option value="25">云南省</option>
+                                          <option value="26">西藏自治区</option>
+                                          <option value="27">陕西省</option>
+                                          <option value="28">甘肃省</option>
+                                          <option value="29">青海省</option>
+                                          <option value="30">宁夏回族自治区</option>
+                                          <option value="31">新疆维吾尔自治区</option>
+                                          <option value="32">台湾省</option>
+                                          <option value="33">香港特别行政区</option>
                                         </select>
                                     </td>
                                     <td>运输单位所在市</td>
@@ -329,146 +329,146 @@ function sel_city(province_id){
                                     </td>
                                     <td>运输单位所属行业</td>
                                     <td>
-                                        <select type="text" class="form-control input-md" name="transport_unit_trade" id="transport_unit_trade">
-                                        <option value=1>{$tradecode[1].trade_name}</option>
-                                        <option value=2>{$tradecode[2].trade_name}</option>
-                                        <option value=3>{$tradecode[3].trade_name}</option>
-                                        <option value=4>{$tradecode[4].trade_name}</option>
-                                        <option value=5>{$tradecode[5].trade_name}</option>
-                                        <option value=6>{$tradecode[6].trade_name}</option>
-                                        <option value=7>{$tradecode[7].trade_name}</option>
-                                        <option value=8>{$tradecode[8].trade_name}</option>
-                                        <option value=9>{$tradecode[9].trade_name}</option>
-                                        <option value=10>{$tradecode[10].trade_name}</option>
-                                        <option value=11>{$tradecode[11].trade_name}</option>
-                                        <option value=12>{$tradecode[12].trade_name}</option>
-                                        <option value=13>{$tradecode[13].trade_name}</option>
-                                        <option value=14>{$tradecode[14].trade_name}</option>
-                                        <option value=15>{$tradecode[15].trade_name}</option>
-                                        <option value=16>{$tradecode[16].trade_name}</option>
-                                        <option value=17>{$tradecode[17].trade_name}</option>
-                                        <option value=18>{$tradecode[18].trade_name}</option>
-                                        <option value=19>{$tradecode[19].trade_name}</option>
-                                        <option value=20>{$tradecode[20].trade_name}</option>
-                                        <option value=21>{$tradecode[21].trade_name}</option>
-                                        <option value=22>{$tradecode[22].trade_name}</option>
-                                        <option value=23>{$tradecode[23].trade_name}</option>
-                                        <option value=24>{$tradecode[24].trade_name}</option>
-                                        <option value=25>{$tradecode[25].trade_name}</option>
-                                        <option value=26>{$tradecode[26].trade_name}</option>
-                                        <option value=27>{$tradecode[27].trade_name}</option>
-                                        <option value=28>{$tradecode[28].trade_name}</option>
-                                        <option value=29>{$tradecode[29].trade_name}</option>
-                                        <option value=30>{$tradecode[30].trade_name}</option>
-                                        <option value=31>{$tradecode[31].trade_name}</option>
-                                        <option value=32>{$tradecode[32].trade_name}</option>
-                                        <option value=33>{$tradecode[33].trade_name}</option>
-                                        <option value=34>{$tradecode[34].trade_name}</option>
-                                        <option value=35>{$tradecode[35].trade_name}</option>
-                                        <option value=36>{$tradecode[36].trade_name}</option>
-                                        <option value=37>{$tradecode[37].trade_name}</option>
-                                        <option value=38>{$tradecode[38].trade_name}</option>
-                                        <option value=39>{$tradecode[39].trade_name}</option>
-                                        <option value=40>{$tradecode[40].trade_name}</option>
-                                        <option value=41>{$tradecode[41].trade_name}</option>
-                                        <option value=42>{$tradecode[42].trade_name}</option>
-                                        <option value=43>{$tradecode[43].trade_name}</option>
-                                        <option value=44>{$tradecode[44].trade_name}</option>
-                                        <option value=45>{$tradecode[45].trade_name}</option>
-                                        <option value=46>{$tradecode[46].trade_name}</option>
-                                        <option value=47>{$tradecode[47].trade_name}</option>
-                                        <option value=48>{$tradecode[48].trade_name}</option>
-                                        <option value=49>{$tradecode[49].trade_name}</option>
-                                        <option value=50>{$tradecode[50].trade_name}</option>
-                                        <option value=51>{$tradecode[51].trade_name}</option>
-                                        <option value=52>{$tradecode[52].trade_name}</option>
-                                        <option value=53>{$tradecode[53].trade_name}</option>
-                                        <option value=54>{$tradecode[54].trade_name}</option>
-                                        <option value=55>{$tradecode[55].trade_name}</option>
-                                        <option value=56>{$tradecode[56].trade_name}</option>
-                                        <option value=57>{$tradecode[57].trade_name}</option>
-                                        <option value=58>{$tradecode[58].trade_name}</option>
-                                        <option value=59>{$tradecode[59].trade_name}</option>
-                                        <option value=60>{$tradecode[60].trade_name}</option>
-                                        <option value=61>{$tradecode[61].trade_name}</option>
-                                        <option value=62>{$tradecode[62].trade_name}</option>
-                                        <option value=63>{$tradecode[63].trade_name}</option>
-                                        <option value=64>{$tradecode[64].trade_name}</option>
-                                        <option value=65>{$tradecode[65].trade_name}</option>
-                                        <option value=66>{$tradecode[66].trade_name}</option>
-                                        <option value=67>{$tradecode[67].trade_name}</option>
-                                        <option value=68>{$tradecode[68].trade_name}</option>
-                                        <option value=69>{$tradecode[69].trade_name}</option>
-                                        <option value=70>{$tradecode[70].trade_name}</option>
-                                        <option value=71>{$tradecode[71].trade_name}</option>
-                                        <option value=72>{$tradecode[72].trade_name}</option>
-                                        <option value=73>{$tradecode[73].trade_name}</option>
-                                        <option value=74>{$tradecode[74].trade_name}</option>
-                                        <option value=75>{$tradecode[75].trade_name}</option>
-                                        <option value=76>{$tradecode[76].trade_name}</option>
-                                        <option value=77>{$tradecode[77].trade_name}</option>
-                                        <option value=78>{$tradecode[78].trade_name}</option>
-                                        <option value=79>{$tradecode[79].trade_name}</option>
-                                        <option value=80>{$tradecode[80].trade_name}</option>
-                                        <option value=81>{$tradecode[81].trade_name}</option>
-                                        <option value=82>{$tradecode[82].trade_name}</option>
-                                        <option value=83>{$tradecode[83].trade_name}</option>
-                                        <option value=84>{$tradecode[84].trade_name}</option>
-                                        <option value=85>{$tradecode[85].trade_name}</option>
-                                        <option value=86>{$tradecode[86].trade_name}</option>
-                                        <option value=87>{$tradecode[87].trade_name}</option>
-                                        <option value=88>{$tradecode[88].trade_name}</option>
-                                        <option value=89>{$tradecode[89].trade_name}</option>
-                                        <option value=90>{$tradecode[90].trade_name}</option>
-                                        <option value=91>{$tradecode[91].trade_name}</option>
-                                        <option value=92>{$tradecode[92].trade_name}</option>
-                                        <option value=93>{$tradecode[93].trade_name}</option>
-                                        <option value=94>{$tradecode[94].trade_name}</option>
-                                        <option value=95>{$tradecode[95].trade_name}</option>
-                                        <option value=96>{$tradecode[96].trade_name}</option>
-                                        <option value=97>{$tradecode[97].trade_name}</option>
-                                        <option value=98>{$tradecode[98].trade_name}</option>
-                                        <option value=99>{$tradecode[99].trade_name}</option>
-                                        <option value=100>{$tradecode[100].trade_name}</option>
-                                        <option value=101>{$tradecode[101].trade_name}</option>
-                                        <option value=102>{$tradecode[102].trade_name}</option>
-                                        <option value=103>{$tradecode[103].trade_name}</option>
-                                        <option value=104>{$tradecode[104].trade_name}</option>
-                                        <option value=105>{$tradecode[105].trade_name}</option>
-                                        <option value=106>{$tradecode[106].trade_name}</option>
-                                        <option value=107>{$tradecode[107].trade_name}</option>
-                                        <option value=108>{$tradecode[108].trade_name}</option>
-                                        <option value=109>{$tradecode[109].trade_name}</option>
-                                        <option value=110>{$tradecode[110].trade_name}</option>
-                                        <option value=111>{$tradecode[111].trade_name}</option>
-                                        <option value=112>{$tradecode[112].trade_name}</option>
-                                        <option value=113>{$tradecode[113].trade_name}</option>
-                                        <option value=114>{$tradecode[114].trade_name}</option>
-                                        <option value=115>{$tradecode[115].trade_name}</option>
-                                        <option value=116>{$tradecode[116].trade_name}</option>
-                                        <option value=117>{$tradecode[117].trade_name}</option>
-                                        <option value=118>{$tradecode[118].trade_name}</option>
-                                        <option value=119>{$tradecode[119].trade_name}</option>
-                                        <option value=120>{$tradecode[120].trade_name}</option>
-                                        <option value=121>{$tradecode[121].trade_name}</option>
-                                        <option value=122>{$tradecode[122].trade_name}</option>
-                                        <option value=123>{$tradecode[123].trade_name}</option>
-                                        <option value=124>{$tradecode[124].trade_name}</option>
-                                        <option value=125>{$tradecode[125].trade_name}</option>
-                                        <option value=126>{$tradecode[126].trade_name}</option>
-                                        <option value=127>{$tradecode[127].trade_name}</option>
-                                        <option value=128>{$tradecode[128].trade_name}</option>
-                                        <option value=129>{$tradecode[129].trade_name}</option>
-                                        <option value=130>{$tradecode[130].trade_name}</option>
-                                        <option value=131>{$tradecode[131].trade_name}</option>
-                                        <option value=132>{$tradecode[132].trade_name}</option>
-                                        <option value=133>{$tradecode[133].trade_name}</option>
-                                        <option value=134>{$tradecode[134].trade_name}</option>
-                                        <option value=135>{$tradecode[135].trade_name}</option>
-                                        <option value=136>{$tradecode[136].trade_name}</option>
-                                        <option value=137>{$tradecode[137].trade_name}</option>
-                                        <option value=138>{$tradecode[138].trade_name}</option>
-                                        <option value=139>{$tradecode[139].trade_name}</option>
+                                        <select type="text" class="form-control input-md" name="production_unit_trade" id="production_unit_trade">
+                                        <option value=1>农业</option>
+                                        <option value=2>林业</option>
+                                        <option value=3>畜牧业</option>
+                                        <option value=4>渔业</option>
+                                        <option value=5>农、林、牧、渔服务业</option>
+                                        <option value=6>采掘业</option>
+                                        <option value=7>煤炭采选业</option>
+                                        <option value=8>石油和天然气开采业</option>
+                                        <option value=9>黑色金属矿采选业</option>
+                                        <option value=10>有色金属矿采选业</option>
+                                        <option value=11>非金属矿采选业</option>
+                                        <option value=12>采盐业</option>
+                                        <option value=13>其他矿采选业</option>
+                                        <option value=14>木材及竹材采运业</option>
+                                        <option value=15>制造业</option>
+                                        <option value=16>食品加工业</option>
+                                        <option value=17>食品制造业</option>
+                                        <option value=18>饮料制造业</option>
+                                        <option value=19>烟草加工业</option>
+                                        <option value=20>纺织业</option>
+                                        <option value=21>服装及其他纤维制品制造业</option>
+                                        <option value=22>皮革、毛皮、羽绒及其制品业</option>
+                                        <option value=23>木材加工及竹、藤、棕、草制品业</option>
+                                        <option value=24>家具制造业</option>
+                                        <option value=25>造纸及纸制品业</option>
+                                        <option value=26>印刷业，记录媒介的复制</option>
+                                        <option value=27>文教体育用品制造业</option>
+                                        <option value=28>石油加工及炼焦业</option>
+                                        <option value=29>化学原料及化学制品制造业</option>
+                                        <option value=30>医药制造业</option>
+                                        <option value=31>生物制品业</option>
+                                        <option value=32>化学纤维制造业</option>
+                                        <option value=33>橡胶制品业</option>
+                                        <option value=34>塑料制品业</option>
+                                        <option value=35>非金属矿物制品业</option>
+                                        <option value=36>黑色金属冶炼及压延加工业</option>
+                                        <option value=37>有色金属冶炼及压延加工业</option>
+                                        <option value=38>金属制品业</option>
+                                        <option value=39>日用金属制品业</option>
+                                        <option value=40>普通机械制造业</option>
+                                        <option value=41>锅炉及原动机制造业</option>
+                                        <option value=42>金属加工机械制造业</option>
+                                        <option value=43>通用设备制造业</option>
+                                        <option value=44>冶金、矿山、机电工业专用设备制造业</option>
+                                        <option value=45>石化及其他工业专用设备制造业</option>
+                                        <option value=46>轻纺工业专用设备制造业</option>
+                                        <option value=47>农、林、牧、渔、水利业机械制造业</option>
+                                        <option value=48>医疗器械制造业</option>
+                                        <option value=49>其他专用设备制造业</option>
+                                        <option value=50>专用机械设备修理业</option>
+                                        <option value=51>铁路运输设备制造业</option>
+                                        <option value=52>汽车制造业</option>
+                                        <option value=53>摩托车制造业</option>
+                                        <option value=54>自行车制造业</option>
+                                        <option value=55>电车制造业</option>
+                                        <option value=56>船舶制造业</option>
+                                        <option value=57>航空航天器制造业</option>
+                                        <option value=58>交通运输设备修理业</option>
+                                        <option value=59>其他交通运输设备制造业</option>
+                                        <option value=60>武器弹药制造业</option>
+                                        <option value=61>电气机械及器材制造业</option>
+                                        <option value=62>电子及通信设备制造业</option>
+                                        <option value=63>通信设备制造业</option>
+                                        <option value=64>电子计算机制造业</option>
+                                        <option value=65>日用电子器具制造业</option>
+                                        <option value=66>仪器仪表及文化、办公用机械制造业</option>
+                                        <option value=67>其他制造业</option>
+                                        <option value=68>电力、煤气及水的生产和供应业</option>
+                                        <option value=69>电力、蒸汽、热水的生产和供应业</option>
+                                        <option value=70>煤气生产和供应业</option>
+                                        <option value=71>自来水的生产和供应业</option>
+                                        <option value=72>建筑业</option>
+                                        <option value=73>土木工程建筑业</option>
+                                        <option value=74>线路、管道和设备安装业</option>
+                                        <option value=75>装修装饰业</option>
+                                        <option value=76>地质勘查业、水利管理业</option>
+                                        <option value=77>地质勘查业</option>
+                                        <option value=78>水利管理业</option>
+                                        <option value=79>交通运输、仓储及邮电通信业</option>
+                                        <option value=80>铁路运输业</option>
+                                        <option value=81>公路运输业</option>
+                                        <option value=82>管道运输业</option>
+                                        <option value=83>水上运输业</option>
+                                        <option value=84>航空运输业</option>
+                                        <option value=85>交通运输辅助业</option>
+                                        <option value=86>其他交通运输业</option>
+                                        <option value=87>仓储业</option>
+                                        <option value=88>邮电通信业</option>
+                                        <option value=89>批发和零售贸易、餐饮业</option>
+                                        <option value=90>食品、饮料、烟草和家庭日用品批发业</option>
+                                        <option value=91>能源、材料和机械电子设备批发业</option>
+                                        <option value=92>其他批发业</option>
+                                        <option value=93>零售业</option>
+                                        <option value=94>商业经纪与代理业</option>
+                                        <option value=95>餐饮业</option>
+                                        <option value=96>金融、保险业</option>
+                                        <option value=97>金融业</option>
+                                        <option value=98>保险业</option>
+                                        <option value=99>房地产业</option>
+                                        <option value=100>房地产开发与经营业</option>
+                                        <option value=101>房地产管理业</option>
+                                        <option value=102>房地产经纪与代理业</option>
+                                        <option value=103>社会服务业</option>
+                                        <option value=104>公共设施服务业</option>
+                                        <option value=105>居民服务业</option>
+                                        <option value=106>旅馆业</option>
+                                        <option value=107>租赁服务业</option>
+                                        <option value=108>旅游业</option>
+                                        <option value=109>娱乐服务业</option>
+                                        <option value=110>信息、咨询服务业</option>
+                                        <option value=111>计算机应用服务业</option>
+                                        <option value=112>其他社会服务业</option>
+                                        <option value=113>卫生、体育和社会福利业</option>
+                                        <option value=114>卫生</option>
+                                        <option value=115>体育</option>
+                                        <option value=116>社会福利保障业</option>
+                                        <option value=117>教育、文化艺术及广播电影电视业</option>
+                                        <option value=118>教育</option>
+                                        <option value=119>文化艺术业</option>
+                                        <option value=120>广播电影电视业</option>
+                                        <option value=121>科学研究和综合技术服务业</option>
+                                        <option value=122>科学研究业</option>
+                                        <option value=123>气象</option>
+                                        <option value=124>地震</option>
+                                        <option value=125>测绘</option>
+                                        <option value=126>技术监督</option>
+                                        <option value=127>海洋环境</option>
+                                        <option value=128>环境保护</option>
+                                        <option value=129>技术推广和科技交流服务业</option>
+                                        <option value=130>工程设计业</option>
+                                        <option value=131>其他综合技术服务业</option>
+                                        <option value=132>国家机关、政党机关和社会团体</option>
+                                        <option value=133>国家机关</option>
+                                        <option value=134>政党机关</option>
+                                        <option value=135>社会团体</option>
+                                        <option value=136>基层群众自治组织</option>
+                                        <option value=137>其他行业</option>
+                                        <option value=138>其他行业</option>
+                                        <option value=139></option>
 
 
                                         </select>   
@@ -482,31 +482,31 @@ function sel_city(province_id){
                                     <td>运输单位注册类型</td>
                                     <td>
                                         <select type="text" class="form-control input-md" name="transport_unit_registration_type" id="transport_unit_registration_type">
-                                            <option>{$enterprise_register_type[0].enterprise_register_type_name}</option>
-                                            <option>{$enterprise_register_type[1].enterprise_register_type_name}</option>
-                                            <option>{$enterprise_register_type[2].enterprise_register_type_name}</option>
-                                            <option>{$enterprise_register_type[3].enterprise_register_type_name}</option>
-                                            <option>{$enterprise_register_type[4].enterprise_register_type_name}</option>
-                                            <option>{$enterprise_register_type[5].enterprise_register_type_name}</option>
-                                            <option>{$enterprise_register_type[6].enterprise_register_type_name}</option>
-                                            <option>{$enterprise_register_type[7].enterprise_register_type_name}</option>
-                                            <option>{$enterprise_register_type[8].enterprise_register_type_name}</option>
-                                            <option>{$enterprise_register_type[9].enterprise_register_type_name}</option>
-                                            <option>{$enterprise_register_type[10].enterprise_register_type_name}</option>
-                                            <option>{$enterprise_register_type[11].enterprise_register_type_name}</option>
-                                            <option>{$enterprise_register_type[12].enterprise_register_type_name}</option>
-                                            <option>{$enterprise_register_type[13].enterprise_register_type_name}</option>
-                                            <option>{$enterprise_register_type[14].enterprise_register_type_name}</option>
-                                            <option>{$enterprise_register_type[15].enterprise_register_type_name}</option>
-                                            <option>{$enterprise_register_type[16].enterprise_register_type_name}</option>
-                                            <option>{$enterprise_register_type[17].enterprise_register_type_name}</option>
-                                            <option>{$enterprise_register_type[18].enterprise_register_type_name}</option>
-                                            <option>{$enterprise_register_type[19].enterprise_register_type_name}</option>
-                                            <option>{$enterprise_register_type[20].enterprise_register_type_name}</option>
-                                            <option>{$enterprise_register_type[21].enterprise_register_type_name}</option>
-                                            <option>{$enterprise_register_type[22].enterprise_register_type_name}</option>
-                                            <option>{$enterprise_register_type[23].enterprise_register_type_name}</option>
-                                            <option>{$enterprise_register_type[24].enterprise_register_type_name}</option>
+                                            <option>国有企业</option>
+                                            <option>集体企业</option>
+                                            <option>股份合作企业</option>
+                                            <option>国有联营企业</option>
+                                            <option>集体联营企业</option>
+                                            <option>国有与集体联企业</option>
+                                            <option>其他联营企业</option>
+                                            <option>有限责任公司</option>
+                                            <option>国有独资的有限责任公司</option>
+                                            <option>其他有限责任公司</option>
+                                            <option>股份有限公司</option>
+                                            <option>私营独资企业</option>
+                                            <option>私营合作企业</option>
+                                            <option>私营有限责任公司</option>
+                                            <option>私营股份有限公司</option>
+                                            <option>其他内资</option>
+                                            <option>与港、澳、台商合资经营企业</option>
+                                            <option>与港、澳、台商合作经营企业</option>
+                                            <option>港、澳、台商独资经营企业</option>
+                                            <option>港、澳、台商投资股份有限公司</option>
+                                            <option>中外合资经营企业</option>
+                                            <option>中外合作经营企业</option>
+                                            <option>外商独资企业</option>
+                                            <option>外商投资股份有限公司</option>
+                                            <option>外商投资股份有限公司</option>
 
                                         </select>  
                                     </td>
@@ -515,13 +515,13 @@ function sel_city(province_id){
                                     <td>运输单位企业规模</td>
                                     <td>
                                         <select type="text" class="form-control input-md" name="transport_unit_enterprise_scale" id="transport_unit_enterprise_scale">
-                                            <option>{$enterprise_scale[0].enterprise_scale_name}</option>
-                                            <option>{$enterprise_scale[1].enterprise_scale_name}</option>
-                                            <option>{$enterprise_scale[2].enterprise_scale_name}</option>
-                                            <option>{$enterprise_scale[3].enterprise_scale_name}</option>
-                                            <option>{$enterprise_scale[4].enterprise_scale_name}</option>
-                                            <option>{$enterprise_scale[5].enterprise_scale_name}</option>
-                                            <option>{$enterprise_scale[6].enterprise_scale_name}</option>
+                                            <option>特大型</option>
+                                            <option>大型一档</option>
+                                            <option>大型二档</option>
+                                            <option>中型一档</option>
+                                            <option>中型二档</option>
+                                            <option>小型</option>
+                                            <option>其他</option>
                                         </select>  
                                     </td>
                                     <td>运输单位许可证编号</td>
@@ -604,7 +604,7 @@ function sel_city(province_id){
                     </center>
                 </form>
 
-                <script type="text/javascript" src="__PUBLIC__/js/jquery-myvalidate.js"></script>
+                <script type="text/javascript" src="/waste/www/Public/js/jquery-myvalidate.js"></script>
                 <script>
                 $("#transportForm").validate();
                 </script>

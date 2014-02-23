@@ -1,4 +1,4 @@
-<div class="panel panel-primary" id="div_map" style="margin-bottom:0px;">
+<?php if (!defined('THINK_PATH')) exit();?><div class="panel panel-primary" id="div_map" style="margin-bottom:0px;">
     <div class="panel panel-heading" style="margin-bottom:0px; height:40px;">
         <h3 class="panel-title" style="float:left;">转移地图历史回放</h3>
         <button type="button" class="btn btn-default btn-xs" id="toFullScreen" onclick="toFullScreen();" style="float:right;">全屏</button>
@@ -92,7 +92,7 @@ function getVehicleRoutes() {
     }
     $.ajax({
         type: "POST",
-        url: "{:U('Home/DistrictMap/ajax_get_vehicle_routes_test')}",
+        url: "<?php echo U('Home/DistrictMap/ajax_get_vehicle_routes_test');?>",
         timeout: 5000,
         data: {
             "beginDate": $('#beginDate').val(),

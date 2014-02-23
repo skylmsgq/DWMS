@@ -194,6 +194,7 @@ class DistrictBusinessAction extends CommonAction{
 	//
 	public function enterprise_user_management_ajaxpost() {
 		$munit=M( 'user' );
+		$userid=I( 'post.user_id' );
 
 		if ( I( 'post.action' )=="lock" ) {
 			if ( I( 'post.value' )=='0' )
@@ -204,18 +205,24 @@ class DistrictBusinessAction extends CommonAction{
 			$this->show( "lock_ok".I( 'post.user_id' ) );
 		}
 		else if ( I( 'post.action' )=="verify" ) {
-				if ( I( 'post.value' )=='0' )
-					$data['is_verify'] = '0';
+				$result=$munit->where( "user_id='$userid'" )->setField( 1 );
+				if ($result)
+				{
+					$ans=json_encode(1);
+					$this->ajaxReturn( $ans );			
+				}
 				else
-					$data['is_verify'] = '1';
-
-				$munit->where( array( 'user_id' =>I( 'post.user_id' ) ) )->save( $data );
-				$this->show( "verify_ok".I( 'post.user_id' ) );
+				{
+					$ans=json_encode(0);
+					$this->ajaxReturn( $ans );			
+				}
+			//	$this->show( "verify_ok".I( 'post.user_id' ) );
 			}
 
 		else {
 			$this->error( "action_error" );
 		}
+		
 	}
 
 	// 业务办理->待办业务->企业信息管理

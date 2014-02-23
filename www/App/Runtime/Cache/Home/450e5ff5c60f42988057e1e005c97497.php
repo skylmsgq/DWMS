@@ -1,4 +1,4 @@
-<div class="panel panel-primary" id="div_map" style="margin-bottom:0px;">
+<?php if (!defined('THINK_PATH')) exit();?><div class="panel panel-primary" id="div_map" style="margin-bottom:0px;">
     <div class="panel panel-heading" style="margin-bottom:0px; height:40px;">
         <h3 class="panel-title" style="float:left;">转移地图历史回放</h3>
         <button type="button" class="btn btn-default btn-xs" id="toFullScreen" onclick="toFullScreen();" style="float:right;">全屏</button>
@@ -45,7 +45,6 @@ if (typeof(playbackTimeout) != 'undefined') {
 }
 
 var polylineList = new Array();
-var infoWindowList = new Array();
 
 function setBMap() {
     var windowHeight = $(window).height();
@@ -93,7 +92,7 @@ function getVehicleRoutes() {
     }
     $.ajax({
         type: "POST",
-        url: "{:U('Home/DistrictMap/ajax_get_vehicle_routes')}",
+        url: "<?php echo U('Home/DistrictMap/ajax_get_vehicle_routes');?>",
         timeout: 5000,
         data: {
             "beginDate": $('#beginDate').val(),
@@ -151,13 +150,6 @@ function getVehicleRoutes() {
                 vehicleMarker.setTitle(gpsIdx);
                 BaiduMap.addOverlay(vehicleMarker);
                 vehicleMarkerList.push(vehicleMarker);
-
-                var infoWindowContent = "<p>运输车辆牌照：" + join_json[idx].vehicle_num + "</p><p>运输车辆类型：" + join_json[idx].vehicle_type + "</p><p>运输单位名称：" + join_json[idx].transport_unit_name + "</p><p>运输单位地址：" + join_json[idx].transport_unit_address + "</p><p>运输单位电话：" + join_json[idx].transport_unit_phone + "</p><p>运输单位环保联系人姓名：" + join_json[idx].transport_unit_contacts_name + "</p><p>运输单位环保联系人电话：" + join_json[idx].transport_unit_contacts_phone;
-                var infoWindow = new BMap.InfoWindow(infoWindowContent, infoWindowOption);
-                infoWindowList.push(infoWindow);
-                vehicleMarker.addEventListener("click", function(e) {
-                    BaiduMap.openInfoWindow(infoWindowList[this.getTitle() - '0'], this.getPosition());
-                });
 
                 vehicleMarker.addEventListener("rightclick", function(e) {
                     var markerIdx = this.getTitle() - '0';

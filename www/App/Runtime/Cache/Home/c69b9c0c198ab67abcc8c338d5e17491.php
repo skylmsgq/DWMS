@@ -1,4 +1,4 @@
-<div class="panel panel-primary">
+<?php if (!defined('THINK_PATH')) exit();?><div class="panel panel-primary">
     <div class="panel-heading">
     </div>
     <div class="panel-body">
@@ -134,7 +134,7 @@ function ajaxAction(actionID, userIdx, actionValue) {
 
     $.ajax({
         type: "post",
-        url: "{:U(Home/DistrictBusiness/enterprise_user_management_ajaxpost)}",
+        url: "<?php echo U(Home/DistrictBusiness/enterprise_user_management_ajaxpost);?>",
         data: postdata,
         success: function(rdata) {
             //console.log(data);
