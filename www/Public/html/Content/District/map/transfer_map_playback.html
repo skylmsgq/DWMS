@@ -46,6 +46,7 @@ if (typeof(playbackTimeout) != 'undefined') {
 var routeDecodeObj = new Array();
 var infoWindowList = new Array();
 var polylineList = new Array();
+var infoWindowList = new Array();
 
 function setBMap() {
     var windowHeight = $(window).height();
@@ -164,6 +165,7 @@ function getVehicleRoutes() {
                 };
                 var infoWindow = new BMap.InfoWindow(infoWindowContent, infoWindowOption);
                 infoWindowList.push(infoWindow);
+
                 vehicleMarker.addEventListener("click", function(e) {
                     BaiduMap.openInfoWindow(infoWindowList[this.getTitle() - '0'], this.getPosition());
                 });

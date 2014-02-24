@@ -7,7 +7,7 @@
     </div>
 </div>
 
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<!-- <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog" style="width:70%">
         <div class="modal-content">
             <div class="modal-header">
@@ -18,13 +18,14 @@
             </div>
             <div class="modal-footer"></div>
         </div>
-        <!-- /.modal-content -->
-    </div>
-    <!-- /.modal-dialog -->
-</div>
 
+    </div>
+
+</div>
+ -->
 <script type="text/javascript">
 function setTable() {
+    //console.log(production_unit_name);
     var tableData = new Array();
     for (var idx in record_json) {
         var itemData = new Array();
@@ -59,7 +60,9 @@ function setTable() {
                 break;
         }
         itemData[4] = "" + record_json[idx].waste_total;
-        itemData[5] = '<a href="#" onclick="fetch_model_page(\'./storage_input_management_page?record_id=' + record_json[idx].rfid_id + '\')"><span class="label label-info"><span class="glyphicon glyphicon-wrench"></span> 详情</span><a>';
+
+        itemData[5] = "" + production_unit_name[idx];
+        //  console.log(production_unit_name[idx]);
         tableData.push(itemData);
     }
 
@@ -67,16 +70,16 @@ function setTable() {
         "aaData": tableData,
         "aoColumns": [{
             "sTitle": "废物编号"
-        },{
+        }, {
             "sTitle": "入库时间"
-        },{
+        }, {
             "sTitle": "废物状态"
-        },{
+        }, {
             "sTitle": "增加类型"
-        },{
+        }, {
             "sTitle": "废物总量"
-        },{
-            "sTitle": "操作"
+        }, {
+            "sTitle": "生产企业"
         }],
         "bPaginate": true,
         "bLengthChange": true,
@@ -105,27 +108,26 @@ function setTable() {
 }
 setTable();
 
-function fetch_model_page(ajaxURL) {
-    $('#myModal').modal("show");
-    $("#model-content").html('<center style="margin-top:20px"><h4>努力地加载中...</h4><div class="progress progress-striped active" style="width: 50%"><div class="progress-bar"  role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div></div></center>');
+// function fetch_model_page(ajaxURL) {
+//     $('#myModal').modal("show");
+//     $("#model-content").html('<center style="margin-top:20px"><h4>努力地加载中...</h4><div class="progress progress-striped active" style="width: 50%"><div class="progress-bar"  role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div></div></center>');
 
-    $.ajax({
-        type: "get",
-        url: ajaxURL,
-        dataType: "json",
-        success: function(data) {
-        	//alert(data);
-            $("#model-content").html(data);
+//     $.ajax({
+//         type: "get",
+//         url: ajaxURL,
+//         dataType: "json",
+//         success: function(data) {
+//          //alert(data);
+//             $("#model-content").html(data);
 
-        },
-        error: function(XMLHttpRequest, textStatus, errorThrown) {
-            console.log("Error:Ajax_Content_Load" + errorThrown);
-            console.log("XMLHttpRequest.status:" + XMLHttpRequest.status);
-            console.log("XMLHttpRequest.readyState:" + XMLHttpRequest.readyState);
-            console.log("textStatus:" + textStatus);
-        }
-    });
+//         },
+//         error: function(XMLHttpRequest, textStatus, errorThrown) {
+//             console.log("Error:Ajax_Content_Load" + errorThrown);
+//             console.log("XMLHttpRequest.status:" + XMLHttpRequest.status);
+//             console.log("XMLHttpRequest.readyState:" + XMLHttpRequest.readyState);
+//             console.log("textStatus:" + textStatus);
+//         }
+//     });
 
-}
-
+// }
 </script>
