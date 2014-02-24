@@ -19,11 +19,14 @@ class DistrictMapAction extends CommonAction{
 		$route_vehicle = M( 'route_vehicle' );
 		$route_vehicle_join = $route_vehicle->join( 'route ON route_vehicle.route_id = route.route_id' )->join( 'vehicle ON route_vehicle.vehicle_id = vehicle.vehicle_id' )->where( $condition )->select();
 
-		if ( ( $vehicle_transport_unit ) && ( $route_vehicle_join ) ) {
+		$alarm_distance = M( 'alarm_distance' )->where( array( 'jurisdiction_id' => session( 'jurisdiction_id' ) ) )->select();
+
+		if ( ( $vehicle_transport_unit ) && ( $route_vehicle_join ) && ( $alarm_distance ) ) {
 			$vehicle_transport_unit_json = json_encode( $vehicle_transport_unit );
 			$route_vehicle_join_json = json_encode( $route_vehicle_join );
+			$alarm_distance_json = json_encode( $alarm_distance );
 			$tmp_content = $this->fetch( './Public/html/Content/District/map/transfer_map_display.html' );
-			$tmp_content = "<script> vehicle_json=$vehicle_transport_unit_json; route_json=$route_vehicle_join_json; </script> $tmp_content";
+			$tmp_content = "<script> vehicle_json=$vehicle_transport_unit_json; route_json=$route_vehicle_join_json; alarm_distance_json=$alarm_distance_json; </script> $tmp_content";
 			$this->ajaxReturn( $tmp_content );
 		} else {
 			$this->ajaxReturn( "加载页面失败，请重新点击侧边栏加载页面。" );
@@ -47,6 +50,19 @@ class DistrictMapAction extends CommonAction{
 			$gps_data_array[$idx] = $gps_data;
 		}
 		$this->ajaxReturn( $gps_data_array );
+	}
+
+	// 转移地图->地图展示->转移地图展示：设置告警距离
+	public function ajax_setting_alarm_distance(){
+		$data['id'] = I( 'post.id' );
+		$data['warning_distance'] = I( 'post.warning_distance' );
+		$data['alarm_distance'] = I( 'post.alarm_distance' );
+		$result = M( 'alarm_distance' )->save( $data );
+		if ( $result ) {
+			$this->ajaxReturn( 'success' );
+		} else {
+			$this->ajaxReturn( 'fail' );
+		}
 	}
 
 	// 转移地图->地图展示->指定车辆历史回放
@@ -93,18 +109,17 @@ class DistrictMapAction extends CommonAction{
 	// 转移地图->地图展示->转移地图历史回放
 	public function transfer_map_playback() {
 		$vehicle = M( 'vehicle' );
-		$condition['vehicle_status'] = array( 'EQ', 2 );
 		$condition['jurisdiction_id'] = array( 'EQ', session( 'jurisdiction_id' ) );
-		$vehicle_transport_unit = $vehicle->join( 'transport_unit ON vehicle.transport_unit_id = transport_unit.transport_unit_id' )->where( $condition )->select();
+		$vehicle_array = $vehicle->where( $condition )->select();
 
 		$route_vehicle = M( 'route_vehicle' );
 		$route_vehicle_join = $route_vehicle->join( 'route ON route_vehicle.route_id = route.route_id' )->join( 'vehicle ON route_vehicle.vehicle_id = vehicle.vehicle_id' )->where( $condition )->select();
 
 		if ( ( $vehicle_transport_unit ) && ( $route_vehicle_join ) ) {
-			$vehicle_transport_unit_json = json_encode( $vehicle_transport_unit );
+			$vehicle_json = json_encode( $vehicle_array );
 			$route_vehicle_join_json = json_encode( $route_vehicle_join );
 			$tmp_content = $this->fetch( './Public/html/Content/District/map/transfer_map_playback.html' );
-			$tmp_content = "<script> vehicle_json=$vehicle_transport_unit_json; route_json=$route_vehicle_join_json; </script> $tmp_content";
+			$tmp_content = "<script> vehicle_json=$vehicle_json; route_json=$route_vehicle_join_json; </script> $tmp_content";
 			$this->ajaxReturn( $tmp_content );
 		} else {
 			$this->ajaxReturn( "加载页面失败，请重新点击侧边栏加载页面。" );
@@ -213,8 +228,7 @@ class DistrictMapAction extends CommonAction{
 		$condition['route_status'] = 0;
 		$route = M( 'route' )->where( $condition )->find();
 		if ( $route ) {
-			$route_json = json_encode( $route );
-			$this->ajaxReturn( $route_json );
+			$this->ajaxReturn( $route );
 		} else {
 			$this->ajaxReturn( 'fail' );
 		}
