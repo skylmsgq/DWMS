@@ -301,6 +301,39 @@ class DistrictBusinessAction extends CommonAction{
 		$tmp_content=$this->fetch( './Public/html/Content/District/business/user_information_query.html' );
 		$this->ajaxReturn( $tmp_content );
 	}
+	public function get_chart()
+	{
+		$pnum=M('production_unit')->count();
+		$tnum=M('transport_unit')->count();
+		$rnum=M('reception_unit')->count();
+		$manifestnum=M('manifest')->count();
+		$tong_num=M('rfid')->where("add_method=0")->sum('waste_total');
+		$dai_num=M('rfid')->where("add_method=1")->sum('waste_total');
+		$dict=array();
+		$count_waste=0;
+		$wastelist=M('production_unit')->select();
+		$wastelist[0]['production_unit'];
+		//$waste_list=$wastelist['production_unit_waste'];
+		// foreach ($waste_list as  $value) {
+		// 	$type_list=explode(",", $value['production_unit_waste']);
+		// 	foreach ($type_list as  $val) {
+		// 		if (!array_key_exists($val, $dict))
+		// 		{
+		// 			$count_waste++;
+		// 			$dict[$val]=1;
+		// 		}
+		// 	}
+		// }
+		$result->count_waste=""+$wastelist[0]['production_unit'];
+		$result->pnum=$pnum;
+		$result->tnum=$tnum;
+		$result->rnum=$rnum;
+		$result->manifestnum=$manifestnum;
+		$result->tong_num=$tong_num;
+		$result->dai_num=$dai_num;
+		$result=json_encode($result);
+		$this->ajaxReturn( $result);	
+	}
 
 }
 ?>
