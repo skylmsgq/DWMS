@@ -4,18 +4,153 @@ DWMS_page_config.pageid = 0;
 </script>
 <div class="row">
     <div class="col-md-6">
-        <include file="./Public/html/Fragment/Government/statistics_graph_enterprise.html" />
+        <div class="panel panel-primary">
+    <div class="panel-heading">
+        <h3 class="panel-title">（生产、运输、接受）企业统计图</h3>
     </div>
-    <div class="col-md-6">
-        <include file="./Public/html/Fragment/Government/statistics_table_enterprise.html" />
+    <div class="panel-body">
+        <div id="statistics_graph_enterprise_container"></div>
     </div>
 </div>
+    </div>
+    <div class="col-md-6">
+       <div class="panel panel-primary">
+    <div class="panel-heading">
+        <h3 class="panel-title">本区企业信息统计表</h3>
+    </div>
+    <div class="panel-body">
+        <table class="table" id="statistics_table_enterprise_container">
+        </table>
+    </div>
+</div>
+    </div>
+</div>
+<!-- <div class="row">
+    <div class="col-md-6">
+         <div class="panel panel-primary">
+          <div class="panel-heading">
+            <h3 class="panel-title">（转移联单及其危废重量）危废统计图</h3>
+          </div>
+          <div class="panel-body">   
+            <div id="statistics_graph_waste_container"></div>
+          </div>
+</div>
+    </div>
+    <div class="col-md-6">
+        <div class="panel panel-primary">
+    <div class="panel-heading">
+        <h3 class="panel-title">（转移联单及其危废重量）危废统计表</h3>
+    </div>
+    <div class="panel-body">
+        <table class="table" id="statistics_table_waste_container">
+        </table>
+    </div>
+</div>
+    </div>
+</div> -->
 
-<div class="row">
-    <div class="col-md-6">
-        <include file="./Public/html/Fragment/Government/statistics_graph_waste.html" />
-    </div>
-    <div class="col-md-6">
-        <include file="./Public/html/Fragment/Government/statistics_table_waste.html" />
-    </div>
-</div>
+
+<script type="text/javascript">
+var p_number, r_number, t_number, sum, tong_num, dai_num, count_waste,manifestnum;
+function decimal(num,v)
+{
+    var vv = Math.pow(10,v);
+    return Math.round(num*vv)/vv;
+}
+$.ajax({
+        type: "get",
+        url: "{:U('Home/DistrictBusiness/get_chart')}",
+        dataType: "json",
+        success: function(data) {
+            var result=JSON.parse(data);
+            p_number=parseInt(result.pnum);
+            r_number=parseInt(result.rnum);
+            t_number=parseInt(result.tnum);
+            manifestnum=parseInt(result.manifestnum);
+            count_waste=parseInt(result.count_waste);
+            tong_num=parseFloat(result.tong_num);
+            dai_num=parseInt(result.dai_num);
+            sum=p_number+r_number+t_number;
+            p_ptg=parseFloat(decimal(100*p_number/sum,1));
+            r_ptg=parseFloat(decimal(100*r_number/sum,1));
+            t_ptg=parseFloat(decimal(100*t_number/sum,1));
+            $('#statistics_graph_enterprise_container').highcharts({
+    chart: {
+        plotBackgroundColor: null,
+        plotBorderWidth: null,
+        plotShadow: false
+    },
+    title: {
+        text: '企业统计图'
+    },
+    tooltip: {
+        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+    },
+    plotOptions: {
+        pie: {
+            allowPointSelect: true,
+            cursor: 'pointer',
+            dataLabels: {
+                enabled: true,
+                color: '#000000',
+                connectorColor: '#000000',
+                format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+            }
+        }
+    },
+    series: [{
+        type: 'pie',
+        name: 'company numbers',
+         data: [
+                    
+                    {
+                        name: '生产企业',
+                        y: p_ptg,
+                        sliced: true,
+                        selected: true
+                    },
+                    ['运输企业',    t_ptg],
+                    ['接受企业',     (100-p_ptg-t_ptg) ],
+                  
+        ]
+    }]
+
+});
+
+
+$('#statistics_table_enterprise_container').dataTable({
+    "aaData": [
+        /* Reduced data set */
+        ["生产企业数量",p_number ],
+        ["运输企业数量", t_number],
+        ["接受企业数量", r_number],
+        ["联单总数", manifestnum],
+        ["废物类型总数", count_waste],
+        ["桶装废物总量", tong_num+" 公斤"],
+        ["袋装废物总量", dai_num+" 个"],
+    ],
+    "aoColumns": [{
+        "sTitle": "统计类型"
+    }, {
+        "sTitle": "统计总数"
+    }],
+    "iDisplayLength": 7,
+    "sPaginationType": "full_numbers",
+    "bLengthChange": false,
+    "bInfo": false,
+    "bFilter": false,
+    "bSort": false,
+
+});
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+            console.log("Error:Ajax_Content_Load" + errorThrown);
+            console.log("XMLHttpRequest.status:" + XMLHttpRequest.status);
+            console.log("XMLHttpRequest.readyState:" + XMLHttpRequest.readyState);
+            console.log("textStatus:" + textStatus);
+        }
+    });
+            // console.log(p_number);
+
+</script>
+
