@@ -93,7 +93,7 @@ class DistrictBusinessAction extends CommonAction{
 		$manifest_status = I( 'post.manifest_status' );
 		$time = date( 'Y-m-d H:i:s', time() );
 		$current_manifest_status = array(
-			'manifest_modify_time' => $time;
+			'manifest_modify_time' => $time,
 			'manifest_id' => $manifest_id,
 			'manifest_status' => $manifest_status,
 		);
@@ -108,7 +108,7 @@ class DistrictBusinessAction extends CommonAction{
 		$manifest_status = I( 'post.manifest_status' );
 		$time = date( 'Y-m-d H:i:s', time() );
 		$current_manifest_status = array(
-			'manifest_modify_time' => $time;
+			'manifest_modify_time' => $time,
 			'manifest_id' => $manifest_id,
 			'manifest_status' => $manifest_status,
 		);

@@ -28,13 +28,28 @@ class DistrictTransportAction extends CommonAction{
 
 	// 危废运输单位->运输车辆管理->运输车辆管理
 	public function transport_vehicle_management(){
-		$tmp_content=$this->fetch( './Public/html/Content/City/transport/transport_vehicle_management.html' );
+		$vehicle = M( 'vehicle' );
+		$condition['jurisdiction_id'] = array('EQ', session( 'jurisdiction_id' ) );
+		$join = $vehicle->join( 'transport_unit ON vehicle.transport_unit_id = transport_unit.transport_unit_id' )->where( $condition )->select();
+		$vehicle_json = json_encode( $join );
+
+		$tmp_content=$this->fetch( './Public/html/Content/District/transport/transport_vehicle_management.html' );
+		$tmp_content="<script>vehicle = $vehicle_json;</script> $tmp_content";
+		$this->ajaxReturn( $tmp_content );
+	}
+
+	// 危废运输单位->运输车辆管理->运输车辆管理->详情
+	public function transport_vehicle_management_detail($vehicle_id=""){
+		$vehicle = M( 'vehicle' )->where( array( 'vehicle_id' => $vehicle_id ) )->find();
+		$this->vehicle = $vehicle;
+
+		$tmp_content=$this->fetch( './Public/html/Content/District/transport/transport_vehicle_management_detail.html' );
 		$this->ajaxReturn( $tmp_content );
 	}
 
 	// 危废运输单位->GPS监控信息->GPS监控信息
 	public function transport_gps_monitor_information(){
-		$tmp_content=$this->fetch( './Public/html/Content/City/transport/transport_gps_monitor_information.html' );
+		$tmp_content=$this->fetch( './Public/html/Content/District/transport/transport_gps_monitor_information.html' );
 		$this->ajaxReturn( $tmp_content );
 	}
 
