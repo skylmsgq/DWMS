@@ -57,10 +57,15 @@ class DistrictTransferAction extends CommonAction{
 	//危废转移->转移联单管理->生产单位转移联单: 详情页
 	public function production_transfer_manifest_page($manifest_id=""){
 		$manifest = M( 'manifest' )->where( array( 'manifest_id' =>$manifest_id ) )->find();
-		$production_unit = M( 'production_unit' )->where( array( 'production_unit_id' => $manifest['production_unit_id'] ) )->find();
+		$unit = M( 'production_unit' )->where( array( 'production_unit_id' => $manifest['production_unit_id'] ) )->find();
+		$reception_unit = M( 'reception_unit' )->where( array( 'reception_unit_id' => $manifest['reception_unit_id'] ) )->find();
+		$transport_unit = M( 'transport_unit' )->where( array( 'transport_unit_id' => $manifest['transport_unit_id'] ) )->find();
 		$this->manifest = $manifest;
-		$this->unit = $production_unit;
-
+		$this->rname = $reception_unit['reception_unit_name'];
+		$this->tname = $transport_unit['transport_unit_name'];
+		$this->tcode=$transport_unit['transport_unit_code'];
+		$this->rcode =$reception_unit['reception_unit_code'];
+		$this->unit = $unit;
 		// $manifest_id_json = json_encode( $manifest_id );
 		// $manifest_status_json = json_encode( $manifest['manifest_status'] );
 
@@ -93,7 +98,12 @@ class DistrictTransferAction extends CommonAction{
 		$transport_unit = M( 'transport_unit' )->where( array( 'transport_unit_id' => $manifest['transport_unit_id'] ) )->find();
 		$this->manifest = $manifest;
 		$this->unit = $transport_unit;
-
+		$reception_unit = M( 'reception_unit' )->where( array( 'reception_unit_id' => $manifest['reception_unit_id'] ) )->find();
+		$production_unit = M( 'production_unit' )->where( array( 'production_unit_id' => $manifest['production_unit_id'] ) )->find();
+		$this->rname = $reception_unit['reception_unit_name'];
+		$this->pname = $production_unit['production_unit_name'];
+		$this->pcode=$production_unit['production_unit_code'];
+		$this->rcode =$reception_unit['reception_unit_code'];
 		// $manifest_id_json = json_encode( $manifest_id );
 		// $manifest_status_json = json_encode( $manifest['manifest_status'] );
 
@@ -125,8 +135,14 @@ class DistrictTransferAction extends CommonAction{
 		$manifest = M( 'manifest' )->where( array( 'manifest_id' =>$manifest_id ) )->find();
 		$reception_unit = M( 'reception_unit' )->where( array( 'reception_unit_id' => $manifest['reception_unit_id'] ) )->find();
 		$this->manifest = $manifest;
-		$this->unit = $reception_unit;
-
+		$this->unit = $reception_unit;	
+		$transport_unit = M( 'transport_unit' )->where( array( 'transport_unit_id' => $manifest['transport_unit_id'] ) )->find();
+		$production_unit = M( 'production_unit' )->where( array( 'production_unit_id' => $manifest['production_unit_id'] ) )->find();
+		$this->pname = $production_unit['production_unit_name'];
+		$this->pcode=$production_unit['production_unit_code'];
+		$this->tname = $transport_unit['transport_unit_name'];
+		$this->tcode=$transport_unit['transport_unit_code'];
+		
 		// $manifest_id_json = json_encode( $manifest_id );
 		// $manifest_status_json = json_encode( $manifest['manifest_status'] );
 
