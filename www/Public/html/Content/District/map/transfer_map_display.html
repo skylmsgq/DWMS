@@ -15,6 +15,10 @@
             <button type="button" class="col-md-1 btn btn-success btn-sm" id="setting" onclick="setting();">设置</button>
         </div>
         <div id="map_container" style="width:auto">地图加载中...</div>
+        <div id="map_panel" style="display:none;height:100%;width:auto;float:right;">
+            1. 啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊
+            <br/>2. 鹅鹅鹅鹅鹅鹅鹅鹅鹅饿鹅鹅鹅饿鹅鹅鹅饿鹅鹅鹅饿鹅鹅鹅饿鹅鹅鹅饿鹅鹅鹅
+        </div>
     </div>
 </div>
 
@@ -97,7 +101,7 @@ function transferWarning() {
             while (vehicleMarker = vehicleMarkerList.pop()) {
                 BaiduMap.removeOverlay(vehicleMarker);
             }
-            while (infoWindow = infoWindowList.pop()){
+            while (infoWindow = infoWindowList.pop()) {
                 BaiduMap.removeOverlay(infoWindow);
             }
             while (polyline = polylineList.pop()) {
