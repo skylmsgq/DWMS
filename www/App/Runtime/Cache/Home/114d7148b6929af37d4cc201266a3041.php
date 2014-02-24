@@ -1,1 +1,0 @@
-<?php if (!defined('THINK_PATH')) exit();?><h1>危废库存->危废出库管理</h1>
