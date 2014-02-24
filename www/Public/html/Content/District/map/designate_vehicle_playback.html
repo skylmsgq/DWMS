@@ -1,43 +1,96 @@
 <div class="panel panel-primary" id="div_map" style="margin-bottom:0px;">
     <div class="panel panel-heading" style="margin-bottom:0px; height:40px;">
         <h3 class="panel-title" style="float:left;">指定车辆历史回放</h3>
-        <button type="button" class="btn btn-default btn-xs" id="toFullScreen" onclick="toFullScreen();" style="float:right;">全屏</button>
-        <button type="button" class="btn btn-default btn-xs" id="exitFullScreen" onclick="exitFullScreen();" style="float:right;display:none;">退出全屏</button>
+        <button type="button" class="btn btn-default btn-xs" id="toFullScreen" onclick="toFullScreen(); fullScreen=1;" style="float:right;">全屏</button>
+        <div id="exitFullScreen" style="display:none; float:right;">
+            <button type="button" class="btn btn-default btn-xs" id="showSidebar" onclick="showSidebar();">
+                <span class="glyphicon glyphicon-chevron-left"></span>显示右侧边栏
+            </button>
+            <button type="button" class="btn btn-default btn-xs" id="hideSidebar" onclick="hideSidebar();" style="display:none">
+                <span class="glyphicon glyphicon-chevron-right"></span>隐藏右侧边栏
+            </button>
+            <button type="button" class="btn btn-default btn-xs" onclick="exitFullScreen(); fullScreen=0;">退出全屏</button>
+        </div>
     </div>
-    <div class="panel panel-body" style="margin-bottom:1px">
-        <div id="noSelectionAlert"></div>
-        <div class="row">
-            <div class="col-md-2">
-                <label class="sr-only" for="selectTransportUnit">运输单位：</label>
-                <select class="form-control input-sm" id="selectTransportUnit" onchange="getVehicleList();">
-                    <option value='-1'>请选择运输单位</option>
-                </select>
-            </div>
-            <div class="col-md-2">
-                <label class="sr-only" for="selectVehicle">运输车辆：</label>
-                <select class="form-control input-sm" id="selectVehicle">
-                    <option value='-1'>请选择运输车辆</option>
-                </select>
-            </div>
-            <div class="col-md-3">
-                <input type="date" class="form-control input-sm" id="beginDate" value="2014-01-13">
-            </div>
-            <div class="col-md-3">
-                <input type="date" class="form-control input-sm" id="endDate" value="2014-01-14">
-            </div>
-            <div class="col-md-1">
-                <label class="sr-only" for="selectSpeed">回放速度：</label>
-                <select class="form-control input-sm" id="selectSpeed">
-                    <option value='1'>慢</option>
-                    <option value='2' selected="selected">中</option>
-                    <option value='4'>快</option>
-                </select>
-            </div>
-            <div class="col-md-1">
-                <button type="button" class="btn btn-info btn-sm" onclick="getVehicleRoute();">回放</button>
+    <div class="panel panel-body" style="margin-bottom:0px">
+
+        <div id="div_input-group">
+            <div id="myAlert"></div>
+            <div class="row">
+                <div class="col-md-2">
+                    <label class="sr-only" for="selectTransportUnit">运输单位：</label>
+                    <select class="form-control input-sm" id="selectTransportUnit" onchange="getVehicleList();">
+                        <option value='-1'>请选择运输单位</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label class="sr-only" for="selectVehicle">运输车辆：</label>
+                    <select class="form-control input-sm" id="selectVehicle">
+                        <option value='-1'>请选择运输车辆</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <input type="date" class="form-control input-sm" id="beginDate" value="2014-01-13">
+                </div>
+                <div class="col-md-3">
+                    <input type="date" class="form-control input-sm" id="endDate" value="2014-01-14">
+                </div>
+                <div class="col-md-1">
+                    <label class="sr-only" for="selectSpeed">回放速度：</label>
+                    <select class="form-control input-sm" id="selectSpeed">
+                        <option value='1'>慢</option>
+                        <option value='2' selected="selected">中</option>
+                        <option value='4'>快</option>
+                    </select>
+                </div>
+                <div class="col-md-1">
+                    <button type="button" class="btn btn-info btn-sm" onclick="getVehicleRoute();">回放</button>
+                </div>
             </div>
         </div>
-        <div id="map_container" style="width:auto">地图加载中...</div>
+
+        <div id="map_container" style="width:100%;float:left;">地图加载中...</div>
+
+        <div id="map_panel" style="display:none;height:100%;width:20%;float:right;">
+            <div id="myAlertFull"></div>
+            <div class="row">
+                <div class="col-md-6">
+                    <label class="sr-only" for="selectTransportUnitFull">运输单位：</label>
+                    <select class="form-control input-sm" id="selectTransportUnitFull" onchange="getVehicleList();">
+                        <option value='-1'>请选择运输单位</option>
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <label class="sr-only" for="selectVehicleFull">运输车辆：</label>
+                    <select class="form-control input-sm" id="selectVehicleFull">
+                        <option value='-1'>请选择运输车辆</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <input type="date" class="form-control input-sm" id="beginDateFull" value="2014-01-13">
+                </div>
+                <div class="col-md-6">
+                    <input type="date" class="form-control input-sm" id="endDateFull" value="2014-01-14">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <label class="sr-only" for="selectSpeedFull">回放速度：</label>
+                    <select class="form-control input-sm" id="selectSpeedFull">
+                        <option value='1'>慢</option>
+                        <option value='2' selected="selected">中</option>
+                        <option value='4'>快</option>
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <button type="button" class="btn btn-info btn-sm" onclick="getVehicleRoute();">回放</button>
+                </div>
+            </div>
+            <div id="route_panel"></div>
+        </div>
+
     </div>
 </div>
 
@@ -51,6 +104,7 @@ if (typeof(intervalWarning) != 'undefined') {
 if (typeof(playbackTimeout) != 'undefined') {
     clearTimeout(playbackTimeout);
 }
+var fullScreen = 0;
 
 function setBMap() {
     var windowHeight = $(window).height();
@@ -72,7 +126,11 @@ function setBMap() {
 
     var selectTransportUnit = $('#selectTransportUnit');
     for (var idx in transport_unit_json) {
-        selectTransportUnit.append('<option id="" value="' + transport_unit_json[idx].transport_unit_id + '">' + transport_unit_json[idx].transport_unit_name + '</option>');
+        selectTransportUnit.append('<option value="' + transport_unit_json[idx].transport_unit_id + '">' + transport_unit_json[idx].transport_unit_name + '</option>');
+    }
+    var selectTransportUnitFull = $('#selectTransportUnitFull');
+    for (var idx in transport_unit_json) {
+        selectTransportUnitFull.append('<option value="' + transport_unit_json[idx].transport_unit_id + '">' + transport_unit_json[idx].transport_unit_name + '</option>');
     }
 
     $(".anchorBL").hide();
@@ -87,26 +145,37 @@ function loadScript() {
 loadScript();
 
 function getVehicleList() {
-    if ($('#selectTransportUnit').val() == '-1') {
+    if (fullScreen) {
+        var selectTransportUnitVal = $('#selectTransportUnitFull').val();
+    } else {
+        var selectTransportUnitVal = $('#selectTransportUnit').val();
+    }
+    if (selectTransportUnitVal == '-1') {
         myAlertFail('请先选择运输单位');
         return;
     }
     $.ajax({
         type: "POST",
         url: "{:U('Home/DistrictMap/ajax_get_vehicle_list')}",
-        timeout: 2000,
+        timeout: 3000,
         data: {
-            "transport_unit_id": $('#selectTransportUnit').val()
+            "transport_unit_id": selectTransportUnitVal
         },
         success: function(vehicleList) {
+            console.log(vehicleList);
             if (vehicleList == 'fail') {
                 myAlertFail("获取车辆列表失败");
                 return;
             }
             var selectVehicle = $('#selectVehicle');
             selectVehicle.html("<option value='-1'>请选择运输车辆</option>");
-            for (var idx in transport_unit_json) {
-                selectVehicle.append('<option id="" value="' + vehicleList[idx].vehicle_id + '">车牌号为：' + vehicleList[idx].vehicle_num + '的' + vehicleList[idx].vehicle_type + '</option>');
+            for (var idx in vehicleList) {
+                selectVehicle.append('<option value="' + vehicleList[idx].vehicle_id + '">车牌号为：' + vehicleList[idx].vehicle_num + '的' + vehicleList[idx].vehicle_type + '</option>');
+            }
+            var selectVehicleFull = $('#selectVehicleFull');
+            selectVehicleFull.html("<option value='-1'>请选择运输车辆</option>");
+            for (var idx in vehicleList) {
+                selectVehicleFull.append('<option value="' + vehicleList[idx].vehicle_id + '">车牌号为：' + vehicleList[idx].vehicle_num + '的' + vehicleList[idx].vehicle_type + '</option>');
             }
 
         },
@@ -121,19 +190,31 @@ function getVehicleList() {
 }
 
 function getVehicleRoute() {
-    if ($('#selectTransportUnit').val() == '-1') {
+    if (fullScreen) {
+        var selectTransportUnitVal = $('#selectTransportUnitFull').val();
+        var selectVehicleVal = $('#selectVehicleFull').val();
+        var beginDateVal = $('#beginDateFull').val();
+        var endDateVal = $('#endDateFull').val();
+    } else {
+        var selectTransportUnitVal = $('#selectTransportUnit').val();
+        var selectVehicleVal = $('#selectVehicle').val();
+        var beginDateVal = $('#beginDate').val();
+        var endDateVal = $('#endDate').val();
+    }
+
+    if (selectTransportUnitVal == '-1') {
         myAlertFail('请先选择运输单位');
         return;
     }
-    if ($('#selectVehicle').val() == '-1') {
+    if (selectVehicleVal == '-1') {
         myAlertFail('请先选择运输车辆');
         return;
     }
-    if ($('#beginDate').val() == '' || $('#endDate').val() == '') {
+    if (beginDateVal == '' || endDateVal == '') {
         myAlertFail('请先选择历史回放起始日期和终止日期');
         return;
     }
-    if ($('#beginDate').val() >= $('#endDate').val()) {
+    if (beginDateVal >= endDateVal) {
         myAlertFail('终止日期必须晚于起始日期');
         return;
     }
@@ -142,9 +223,9 @@ function getVehicleRoute() {
         url: "{:U('Home/DistrictMap/ajax_get_vehicle_route')}",
         timeout: 2000,
         data: {
-            "vehicle_id": $('#selectVehicle').val(),
-            "beginDate": $('#beginDate').val(),
-            "endDate": $('#endDate').val()
+            "vehicle_id": selectVehicleVal,
+            "beginDate": beginDateVal,
+            "endDate": endDateVal
         },
         success: function(gpsRoute) {
             if (gpsRoute == 'fail') {
@@ -189,8 +270,12 @@ function getVehicleRoute() {
                 } else {
                     vehicleMarker.setIcon(lorryIconRed);
                 }
-
-                var intervalTime = 200 / $('#selectSpeed').val();
+                if (fullScreen) {
+                    var selectSpeedVal = $('#selectSpeedFull').val();
+                } else {
+                    var selectSpeedVal = $('#selectSpeed').val();
+                }
+                var intervalTime = 200 / selectSpeedVal;
 
                 if (dataIdx < routeLength) {
                     playbackTimeout = setTimeout(function() {

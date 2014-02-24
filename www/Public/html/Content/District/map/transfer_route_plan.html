@@ -1,43 +1,86 @@
 <div class="panel panel-primary" style="margin-bottom:0px;">
     <div class="panel panel-heading" style="margin-bottom:0px; height:40px;">
         <h3 class="panel-title" style="float:left;">运输路线规划</h3>
-        <button type="button" class="btn btn-default btn-xs" id="toFullScreen" onclick="toFullScreen();" style="float:right;">全屏</button>
-        <button type="button" class="btn btn-default btn-xs" id="exitFullScreen" onclick="exitFullScreen();" style="float:right;display:none;">退出全屏</button>
+        <button type="button" class="btn btn-default btn-xs" id="toFullScreen" onclick="toFullScreen(); fullScreen=1;" style="float:right;">全屏</button>
+        <div id="exitFullScreen" style="display:none; float:right;">
+            <button type="button" class="btn btn-default btn-xs" id="showSidebar" onclick="showSidebar();">
+                <span class="glyphicon glyphicon-chevron-left"></span>显示右侧边栏
+            </button>
+            <button type="button" class="btn btn-default btn-xs" id="hideSidebar" onclick="hideSidebar();" style="display:none">
+                <span class="glyphicon glyphicon-chevron-right"></span>隐藏右侧边栏
+            </button>
+            <button type="button" class="btn btn-default btn-xs" onclick="exitFullScreen(); fullScreen=0;">退出全屏</button>
+        </div>
     </div>
-    <div class="panel panel-body" style="margin-bottom:1px">
-        <div id="noSelectionAlert"></div>
-        <div class="row">
-            <div class="col-md-3">
-                <label class="sr-only" for="selectProductionUnit">产生单位：</label>
-                <select class="form-control input-sm" id="selectProductionUnit">
-                    <option>请选择生产单位</option>
-                </select>
-            </div>
-            <div class="col-md-3">
-                <label class="sr-only" for="selectReceptionUnit">接受单位：</label>
-                <select class="form-control input-sm" id="selectReceptionUnit">
-                    <option>请选择接受单位</option>
-                </select>
-            </div>
-            <div class="col-md-2">
-                <label class="sr-only" for="selectStrategy">驾车策略：</label>
-                <select class="form-control input-sm" id="selectStrategy">
-                    <option value="0">最小时间</option>
-                    <option value="1">最短距离</option>
-                    <option value="2">避开高速</option>
-                </select>
-            </div>
-            <div class="col-md-1">
-                <button type="button" class="btn btn-info btn-sm" onclick="search();">查询</button>
-            </div>
-            <div class="col-md-1">
-                <button type="button" class="btn btn-warning btn-sm" id="clearButton" onclick="BaiduMap.clearOverlays();">清除</button>
-            </div>
-            <div class="col-md-1">
-                <button type="button" class="btn btn-success btn-sm" onclick="submit();">提交</button>
+    <div class="panel panel-body" style="margin-bottom:0px">
+
+        <div id="div_input-group">
+            <div id="myAlert"></div>
+            <div class="row">
+                <div class="col-md-3">
+                    <label class="sr-only" for="selectProductionUnit">产生单位：</label>
+                    <select class="form-control input-sm" id="selectProductionUnit">
+                        <option>请选择生产单位</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label class="sr-only" for="selectReceptionUnit">接受单位：</label>
+                    <select class="form-control input-sm" id="selectReceptionUnit">
+                        <option>请选择接受单位</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label class="sr-only" for="selectStrategy">驾车策略：</label>
+                    <select class="form-control input-sm" id="selectStrategy">
+                        <option value="0">最小时间</option>
+                        <option value="1">最短距离</option>
+                        <option value="2">避开高速</option>
+                    </select>
+                </div>
+                <div class="col-md-1">
+                    <button type="button" class="btn btn-info btn-sm" onclick="search();">查询</button>
+                </div>
+                <div class="col-md-1">
+                    <button type="button" class="btn btn-warning btn-sm" onclick="clearScreen();">清除</button>
+                </div>
+                <div class="col-md-1">
+                    <button type="button" class="btn btn-success btn-sm" onclick="submit();">提交</button>
+                </div>
             </div>
         </div>
-        <div id="map_container" style="width:auto"></div>
+
+        <div id="map_container" style="width:100%;float:left;"></div>
+
+        <div id="map_panel" style="display:none;height:100%;width:20%;float:right;">
+            <div id="myAlertFull"></div>
+            <label class="sr-only" for="selectProductionUnitFull">产生单位：</label>
+            <select class="form-control input-sm" id="selectProductionUnitFull">
+                <option>请选择生产单位</option>
+            </select>
+            <label class="sr-only" for="selectReceptionUnitFull">接受单位：</label>
+            <select class="form-control input-sm" id="selectReceptionUnitFull">
+                <option>请选择接受单位</option>
+            </select>
+            <label class="sr-only" for="selectStrategyFull">驾车策略：</label>
+            <select class="form-control input-sm" id="selectStrategyFull">
+                <option value="0">最小时间</option>
+                <option value="1">最短距离</option>
+                <option value="2">避开高速</option>
+            </select>
+            <div class="row">
+                <div class="col-md-4">
+                    <button type="button" class="btn btn-info btn-sm" onclick="search();">查询</button>
+                </div>
+                <div class="col-md-4">
+                    <button type="button" class="btn btn-warning btn-sm" onclick="clearScreen();">清除</button>
+                </div>
+                <div class="col-md-4">
+                    <button type="button" class="btn btn-success btn-sm" onclick="submit();">提交</button>
+                </div>
+            </div>
+            <div id="route_panel"></div>
+        </div>
+
     </div>
 </div>
 
@@ -51,6 +94,7 @@ if (typeof(intervalWarning) != 'undefined') {
 if (typeof(playbackTimeout) != 'undefined') {
     clearTimeout(playbackTimeout);
 }
+var fullScreen = 0;
 
 function setBMap() {
     var windowHeight = $(window).height();
@@ -72,11 +116,20 @@ function setBMap() {
 
     var selectProductionUnit = $('#selectProductionUnit');
     for (var idx in production_unit_json) {
-        selectProductionUnit.append('<option id="" value="' + production_unit_json[idx].production_unit_id + '">' + production_unit_json[idx].production_unit_name + '</option>');
+        selectProductionUnit.append('<option value="' + production_unit_json[idx].production_unit_id + '">' + production_unit_json[idx].production_unit_name + '</option>');
     }
     var selectReceptionUnit = $('#selectReceptionUnit');
     for (var idx in reception_unit_json) {
-        selectReceptionUnit.append('<option id="" value="' + reception_unit_json[idx].reception_unit_id + '">' + reception_unit_json[idx].reception_unit_name + '</option>');
+        selectReceptionUnit.append('<option value="' + reception_unit_json[idx].reception_unit_id + '">' + reception_unit_json[idx].reception_unit_name + '</option>');
+    }
+
+    var selectProductionUnitFull = $('#selectProductionUnitFull');
+    for (var idx in production_unit_json) {
+        selectProductionUnitFull.append('<option value="' + production_unit_json[idx].production_unit_id + '">' + production_unit_json[idx].production_unit_name + '</option>');
+    }
+    var selectReceptionUnitFull = $('#selectReceptionUnitFull');
+    for (var idx in reception_unit_json) {
+        selectReceptionUnitFull.append('<option value="' + reception_unit_json[idx].reception_unit_id + '">' + reception_unit_json[idx].reception_unit_name + '</option>');
     }
 
     $(".anchorBL").hide();
@@ -140,13 +193,23 @@ function search() {
     path = [];
     route_detail = '';
 
+    if (fullScreen) {
+        var selectStrategyVal = $('#selectStrategyFull').val();
+        var selectProductionUnitVal = $('#selectProductionUnitFull').val();
+        var selectReceptionUnitVal = $('#selectReceptionUnitFull').val();
+    } else {
+        var selectStrategyVal = $('#selectStrategy').val();
+        var selectProductionUnitVal = $('#selectProductionUnit').val();
+        var selectReceptionUnitVal = $('#selectReceptionUnit').val();
+    }
     var options = {
         renderOptions: {
             map: BaiduMap,
+            panel: "route_panel",
             autoViewport: false, //启用自动调整地图层级，当指定了搜索结果所展现的地图时有效。
             enableDragging: true //起终点可进行拖拽
         },
-        policy: routePolicy[$('#selectStrategy').val()],
+        policy: routePolicy[selectStrategyVal],
         onSearchComplete: searchComplete
     };
 
@@ -154,23 +217,30 @@ function search() {
 
     var p1_lng, p1_lat;
     var p2_lng, p2_lat;
-    var selectProductionUnit = $('#selectProductionUnit');
+
     for (var idx in production_unit_json) {
-        if (production_unit_json[idx].production_unit_id == selectProductionUnit.val()) {
+        if (production_unit_json[idx].production_unit_id == selectProductionUnitVal) {
             p1_lng = production_unit_json[idx].production_unit_longitude;
             p1_lat = production_unit_json[idx].production_unit_latitude;
+            break;
         }
     }
-    var selectReceptionUnit = $('#selectReceptionUnit');
+
     for (var idx in reception_unit_json) {
-        if (reception_unit_json[idx].reception_unit_id == selectReceptionUnit.val()) {
+        if (reception_unit_json[idx].reception_unit_id == selectReceptionUnitVal) {
             p2_lng = reception_unit_json[idx].reception_unit_longitude;
             p2_lat = reception_unit_json[idx].reception_unit_latitude;
+            break;
         }
     }
     var p1 = new BMap.Point(p1_lng, p1_lat);
     var p2 = new BMap.Point(p2_lng, p2_lat);
     transit.search(p1, p2);
+}
+
+function clearScreen(){
+    BaiduMap.clearOverlays();
+    $('#route_panel').html("");
 }
 
 function submit() {
@@ -188,13 +258,21 @@ function submit() {
         BMapPointArray.push(BMapPoint);
     }
     */
+    if (fullScreen) {
+        var selectProductionUnitVal = $('#selectProductionUnitFull').val();
+        var selectReceptionUnitVal = $('#selectReceptionUnitFull').val();
+    } else {
+        var selectProductionUnitVal = $('#selectProductionUnit').val();
+        var selectReceptionUnitVal = $('#selectReceptionUnit').val();
+    }
+
     $.ajax({
         type: "POST",
         url: "{:U('Home/DistrictMap/ajax_transfer_route_plan')}",
         timeout: 2000,
         data: {
-            "production_unit_id": $('#selectProductionUnit').val(),
-            "reception_unit_id": $('#selectReceptionUnit').val(),
+            "production_unit_id": selectProductionUnitVal,
+            "reception_unit_id": selectReceptionUnitVal,
             "route_lng_lat": JSON.stringify(path),
             "route_detail": route_detail
         },
@@ -205,7 +283,7 @@ function submit() {
                     break;
                 case 'success':
                     myAlertSucc("提交成功");
-                    $("#clearButton").click();
+                    clearScreen();
                     path = [];
                     break;
                 case 'fail':

@@ -138,11 +138,11 @@ class DistrictBusinessAction extends CommonAction{
 
 		$userModel = new Model();
 		$all_user = $userModel->query("
-			(SELECT `user`.`user_id`, `username`, `user_type`, `production_unit_name` AS `unit_name`, `production_unit_code` AS `unit_code`, `production_unit_username` AS `unit_username`, `waste_location_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN production_unit ON user.user_id = production_unit.user_id)
+			(SELECT `user`.`user_id`, `username`, `user_type`, `production_unit_name` AS `unit_name`, `production_unit_id` AS `unit_code`, `production_unit_username` AS `unit_username`, `waste_location_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN production_unit ON user.user_id = production_unit.user_id)
 			UNION
-			(SELECT `user`.`user_id`, `username`, `user_type`, `transport_unit_name` AS `unit_name`, `transport_unit_code` AS `unit_code`, `transport_unit_username` AS `unit_username`, `transport_unit_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN transport_unit ON user.user_id = transport_unit.user_id)
+			(SELECT `user`.`user_id`, `username`, `user_type`, `transport_unit_name` AS `unit_name`, `transport_unit_id` AS `unit_code`, `transport_unit_username` AS `unit_username`, `transport_unit_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN transport_unit ON user.user_id = transport_unit.user_id)
 			UNION
-			(SELECT `user`.`user_id`, `username`, `user_type`, `reception_unit_name` AS `unit_name`, `reception_unit_code` AS `unit_code`, `reception_unit_username` AS `unit_username`, `reception_unit_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN reception_unit ON user.user_id = reception_unit.user_id)");
+			(SELECT `user`.`user_id`, `username`, `user_type`, `reception_unit_name` AS `unit_name`, `reception_unit_id` AS `unit_code`, `reception_unit_username` AS `unit_username`, `reception_unit_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN reception_unit ON user.user_id = reception_unit.user_id)");
 
 		$record_json = json_encode( $all_user );
 
@@ -178,8 +178,12 @@ class DistrictBusinessAction extends CommonAction{
 
 	//
 	public function enterprise_user_management_ajaxpost() {
+					// 		$A=1;
+					// 		$ans=json_encode($A);
+					// $this->ajaxReturn( "shibai");
 		$munit=M( 'user' );
-
+		$userid=I( 'post.user_id' );
+		$type=I( 'post.usertype' );
 		if ( I( 'post.action' )=="lock" ) {
 			if ( I( 'post.value' )=='0' )
 				$data['lock'] = '0';
@@ -189,18 +193,60 @@ class DistrictBusinessAction extends CommonAction{
 			$this->show( "lock_ok".I( 'post.user_id' ) );
 		}
 		else if ( I( 'post.action' )=="verify" ) {
-				if ( I( 'post.value' )=='0' )
-					$data['is_verify'] = '0';
+				$result=$munit->where( "user_id='$userid'" )->setField('is_verify', 1 );
+				if ($result>0)
+				{
+					if ($type==5)
+						$prefix="production_unit";
+					else if ($type==7)
+						$prefix="reception_unit";
+					else
+					{
+						$ans=json_encode("成功");
+						$this->ajaxReturn( $ans ,'JSON');				
+					}
+					$mx=M($prefix)->where("user_id='$userid'")->getField($prefix.'_id');
+					$tablename=$prefix."_".$mx;
+					$sql='create table '. $tablename.
+					' (
+ 					id int(11) NOT NULL AUTO_INCREMENT,
+ 					rfid_id varchar(255) DEFAULT NULL,
+  					waste_id int(11) DEFAULT NULL,
+  					add_weight double DEFAULT NULL,
+  					add_date_time datetime DEFAULT NULL,
+  					add_num int(11) DEFAULT NULL,
+  					android_num varchar(255) DEFAULT NULL,
+  					PRIMARY KEY (id),
+  					KEY fk_waste_id_'.$tablename.' (waste_id) USING BTREE,
+  					CONSTRAINT fk_waste_id_'.$tablename.' FOREIGN KEY (waste_id) REFERENCES waste (waste_id)
+					)';
+					$model=new Model();
+					$model->execute($sql);
+					$num=M('information_schema.tables')->where("table_schema = 'dwms' 
+							AND table_name = '$tablename'")->count();
+					if ($num>0)
+					{
+						$ans=json_encode("成功");
+						$this->ajaxReturn( $ans ,'JSON');	
+					}
+					else
+					{
+						$ans=json_encode("创建数据库出现错误");
+						$this->ajaxReturn( $ans ,'JSON');	
+					}		
+				}
 				else
-					$data['is_verify'] = '1';
-
-				$munit->where( array( 'user_id' =>I( 'post.user_id' ) ) )->save( $data );
-				$this->show( "verify_ok".I( 'post.user_id' ) );
+				{
+					$ans=json_encode("未知错误");
+					$this->ajaxReturn( $ans ,'JSON');			
+				}
+			//	$this->show( "verify_ok".I( 'post.user_id' ) );
 			}
 
 		else {
 			$this->error( "action_error" );
 		}
+		
 	}
 
 	// 业务办理->待办业务->企业信息管理

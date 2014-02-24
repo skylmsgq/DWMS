@@ -1,32 +1,68 @@
 <div class="panel panel-primary" style="margin-bottom:0px;">
     <div class="panel panel-heading" style="margin-bottom:0px; height:40px;">
         <h3 class="panel-title" style="float:left;">转移路线查询</h3>
-        <button type="button" class="btn btn-default btn-xs" id="toFullScreen" onclick="toFullScreen();" style="float:right;">全屏</button>
-        <button type="button" class="btn btn-default btn-xs" id="exitFullScreen" onclick="exitFullScreen();" style="float:right;display:none;">退出全屏</button>
+        <button type="button" class="btn btn-default btn-xs" id="toFullScreen" onclick="toFullScreen(); fullScreen=1;" style="float:right;">全屏</button>
+        <div id="exitFullScreen" style="display:none; float:right;">
+            <button type="button" class="btn btn-default btn-xs" id="showSidebar" onclick="showSidebar();">
+                <span class="glyphicon glyphicon-chevron-left"></span>显示右侧边栏
+            </button>
+            <button type="button" class="btn btn-default btn-xs" id="hideSidebar" onclick="hideSidebar();" style="display:none">
+                <span class="glyphicon glyphicon-chevron-right"></span>隐藏右侧边栏
+            </button>
+            <button type="button" class="btn btn-default btn-xs" onclick="exitFullScreen(); fullScreen=0;">退出全屏</button>
+        </div>
     </div>
-    <div class="panel panel-body" style="margin-bottom:1px">
-        <div id="noSelectionAlert"></div>
-        <div class="row">
-            <div class="col-md-3">
-                <label class="sr-only" for="selectProductionUnit">产生单位：</label>
-                <select class="form-control input-sm" id="selectProductionUnit">
-                    <option>请选择生产单位</option>
-                </select>
-            </div>
-            <div class="col-md-3">
-                <label class="sr-only" for="selectReceptionUnit">接受单位：</label>
-                <select class="form-control input-sm" id="selectReceptionUnit">
-                    <option>请选择接受单位</option>
-                </select>
-            </div>
-            <div class="col-md-2">
-                <button class="btn btn-info btn-sm" id="searchRoute" onclick="searchRoute();">查询</button>
-            </div>
-            <div class="col-md-2">
-                <button class="btn btn-danger btn-sm" id="deleteRoute" onclick="deleteRoute();">删除</button>
+    <div class="panel panel-body" style="margin-bottom:0px">
+
+        <div id="div_input-group">
+            <div id="myAlert"></div>
+            <div class="row">
+                <div class="col-md-3">
+                    <label class="sr-only" for="selectProductionUnit">产生单位：</label>
+                    <select class="form-control input-sm" id="selectProductionUnit">
+                        <option>请选择生产单位</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label class="sr-only" for="selectReceptionUnit">接受单位：</label>
+                    <select class="form-control input-sm" id="selectReceptionUnit">
+                        <option>请选择接受单位</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <button class="btn btn-info btn-sm" onclick="searchRoute();">查询</button>
+                </div>
+                <div class="col-md-2">
+                    <button class="btn btn-danger btn-sm" onclick="deleteRoute();">删除</button>
+                </div>
             </div>
         </div>
-        <div id="map_container" style="width:auto">地图加载中...</div>
+
+        <div id="map_container" style="width:100%;float:left;">地图加载中...</div>
+
+        <div id="map_panel" style="display:none;height:100%;width:20%;float:right;">
+            <div id="myAlertFull"></div>
+            <label class="sr-only" for="selectProductionUnitFull">产生单位：</label>
+            <select class="form-control input-sm" id="selectProductionUnitFull">
+                <option>请选择生产单位</option>
+            </select>
+            <label class="sr-only" for="selectReceptionUnitFull">接受单位：</label>
+            <select class="form-control input-sm" id="selectReceptionUnitFull">
+                <option>请选择接受单位</option>
+            </select>
+            <div class="row">
+                <div class="col-md-4">
+                    <button class="btn btn-info btn-sm" onclick="searchRoute();">查询</button>
+                </div>
+                <div class="col-md-4">
+                    <button class="btn btn-danger btn-sm" onclick="deleteRoute();">删除</button>
+                </div>
+                <div class="col-md-4">
+                </div>
+            </div>
+            <div id="route_panel"></div>
+        </div>
+
     </div>
 </div>
 
@@ -40,6 +76,7 @@ if (typeof(intervalWarning) != 'undefined') {
 if (typeof(playbackTimeout) != 'undefined') {
     clearTimeout(playbackTimeout);
 }
+var fullScreen = 0;
 
 function setBMap() {
     var windowHeight = $(window).height();
@@ -59,12 +96,25 @@ function setBMap() {
     };
     BaiduMap.setMapStyle(mapStyle);
 
+    var selectProductionUnit = $('#selectProductionUnit');
     for (var idx in production_unit_json) {
-        $('#selectProductionUnit').append('<option id="" value="' + idx + '">' + production_unit_json[idx] + '</option>');
+        selectProductionUnit.append('<option value="' + idx + '">' + production_unit_json[idx] + '</option>');
     }
+    var selectReceptionUnit = $('#selectReceptionUnit');
     for (var idx in reception_unit_json) {
-        $('#selectReceptionUnit').append('<option id="" value="' + idx + '">' + reception_unit_json[idx] + '</option>');
+        selectReceptionUnit.append('<option value="' + idx + '">' + reception_unit_json[idx] + '</option>');
     }
+
+    var selectProductionUnitFull = $('#selectProductionUnitFull');
+    for (var idx in production_unit_json) {
+        selectProductionUnitFull.append('<option value="' + idx + '">' + production_unit_json[idx] + '</option>');
+    }
+    var selectReceptionUnitFull = $('#selectReceptionUnitFull');
+    for (var idx in reception_unit_json) {
+        selectReceptionUnitFull.append('<option value="' + idx + '">' + reception_unit_json[idx] + '</option>');
+    }
+
+    $(".anchorBL").hide();
 }
 
 function loadScript() {
@@ -76,38 +126,45 @@ function loadScript() {
 loadScript();
 
 function searchRoute() {
+    if (fullScreen) {
+        var selectProductionUnitVal = $('#selectProductionUnitFull').val();
+        var selectReceptionUnitVal = $('#selectReceptionUnitFull').val();
+    } else {
+        var selectProductionUnitVal = $('#selectProductionUnit').val();
+        var selectReceptionUnitVal = $('#selectReceptionUnit').val();
+    }
+
     $.ajax({
         type: 'POST',
         url: "{:U('Home/DistrictMap/ajax_search_route')}",
         dataType: 'JSON',
         data: {
-            "production_unit_id": $('#selectProductionUnit').val(),
-            "reception_unit_id": $('#selectReceptionUnit').val()
+            "production_unit_id": selectProductionUnitVal,
+            "reception_unit_id": selectReceptionUnitVal
         },
-        success: function(route_json) {
+        success: function(routeObj) {
             BaiduMap.clearOverlays();
-            if (route_json == 'fail') {
+            $('#route_panel').html("");
+            if (routeObj == 'fail') {
                 myAlertFail("此生产单位至此接受单位的路线不存在，请先规划")
             } else {
-                var route_object = JSON.parse(route_json);
-                route_id = route_object.route_id;
-                var route_decode = route_object.route_lng_lat.replace(/&quot;/g, '"');
-                var route_decode_object = JSON.parse(route_decode);
+                route_id = routeObj.route_id;
+                var routeDecode = routeObj.route_lng_lat.replace(/&quot;/g, '"');
+                var routeDecodeObj = JSON.parse(routeDecode);
                 var pointArray = new Array();
-                for (var pointIdx in route_decode_object) {
-                    var lng = route_decode_object[pointIdx].lng;
-                    var lat = route_decode_object[pointIdx].lat;
+                for (var pointIdx in routeDecodeObj) {
+                    var lng = routeDecodeObj[pointIdx].lng;
+                    var lat = routeDecodeObj[pointIdx].lat;
                     pointArray.push(new BMap.Point(lng, lat));
                 }
                 var polyline = new BMap.Polyline(pointArray, {
                     strokeColor: "blue",
-                    strokeWeight: 6,
+                    strokeWeight: 5,
                     strokeOpacity: 0.8
                 });
                 BaiduMap.addOverlay(polyline);
-            }
 
-            $(".anchorBL").hide();
+            }
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) {
             myAlertFail("获取路线ajax请求失败");
@@ -145,5 +202,4 @@ function deleteRoute() {
 
     })
 }
-
 </script>

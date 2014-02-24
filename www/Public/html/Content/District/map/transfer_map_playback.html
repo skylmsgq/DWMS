@@ -1,34 +1,74 @@
 <div class="panel panel-primary" id="div_map" style="margin-bottom:0px;">
     <div class="panel panel-heading" style="margin-bottom:0px; height:40px;">
         <h3 class="panel-title" style="float:left;">转移地图历史回放</h3>
-        <button type="button" class="btn btn-default btn-xs" id="toFullScreen" onclick="toFullScreen();" style="float:right;">全屏</button>
-        <button type="button" class="btn btn-default btn-xs" id="exitFullScreen" onclick="exitFullScreen();" style="float:right;display:none;">退出全屏</button>
+        <button type="button" class="btn btn-default btn-xs" id="toFullScreen" onclick="toFullScreen(); fullScreen=1;" style="float:right;">全屏</button>
+        <div id="exitFullScreen" style="display:none; float:right;">
+            <button type="button" class="btn btn-default btn-xs" id="showSidebar" onclick="showSidebar();">
+                <span class="glyphicon glyphicon-chevron-left"></span>显示右侧边栏
+            </button>
+            <button type="button" class="btn btn-default btn-xs" id="hideSidebar" onclick="hideSidebar();" style="display:none">
+                <span class="glyphicon glyphicon-chevron-right"></span>隐藏右侧边栏
+            </button>
+            <button type="button" class="btn btn-default btn-xs" onclick="exitFullScreen(); fullScreen=0;">退出全屏</button>
+        </div>
     </div>
-    <div class="panel panel-body" style="margin-bottom:1px">
-        <div id="noSelectionAlert"></div>
-        <div class="row">
-            <div class="col-md-3">
-                <input type="date" class="form-control input-sm" id="beginDate" value="2014-01-13">
-            </div>
-            <div class="col-md-3">
-                <input type="date" class="form-control input-sm" id="endDate" value="2014-01-14">
-            </div>
-            <div class="col-md-2">
-                <label class="sr-only" for="selectSpeed">回放速度：</label>
-                <select class="form-control input-sm" id="selectSpeed">
-                    <option value='1'>慢</option>
-                    <option value='2' selected="selected">中</option>
-                    <option value='4'>快</option>
-                </select>
-            </div>
-            <div class="col-md-1">
-                <button type="button" class="btn btn-info btn-sm" onclick="getVehicleRoutes();">回放</button>
-            </div>
-            <div class="col-md-3">
-                <div id="playbackTimeDiv"></div>
+    <div class="panel panel-body" style="margin-bottom:0px">
+
+        <div id="div_input-group">
+            <div id="myAlert"></div>
+            <div class="row">
+                <div class="col-md-3">
+                    <input type="date" class="form-control input-sm" id="beginDate" value="2014-01-13">
+                </div>
+                <div class="col-md-3">
+                    <input type="date" class="form-control input-sm" id="endDate" value="2014-01-14">
+                </div>
+                <div class="col-md-2">
+                    <label class="sr-only" for="selectSpeed">回放速度：</label>
+                    <select class="form-control input-sm" id="selectSpeed">
+                        <option value='1'>慢</option>
+                        <option value='2' selected="selected">中</option>
+                        <option value='4'>快</option>
+                    </select>
+                </div>
+                <div class="col-md-1">
+                    <button type="button" class="btn btn-info btn-sm" onclick="getVehicleRoutes();">回放</button>
+                </div>
+                <div class="col-md-3">
+                    <div id="playbackTimeDiv"></div>
+                </div>
             </div>
         </div>
-        <div id="map_container" style="width:auto">地图加载中...</div>
+
+        <div id="map_container" style="width:100%;float:left;">地图加载中...</div>
+
+        <div id="map_panel" style="display:none;height:100%;width:20%;float:right;">
+            <div id="myAlertFull"></div>
+            <div class="row">
+                <div class="col-md-6">
+                    <input type="date" class="form-control input-sm" id="beginDateFull" value="2014-01-13">
+                </div>
+                <div class="col-md-6">
+                    <input type="date" class="form-control input-sm" id="endDateFull" value="2014-01-14">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <label class="sr-only" for="selectSpeedFull">回放速度：</label>
+                    <select class="form-control input-sm" id="selectSpeedFull">
+                        <option value='1'>慢</option>
+                        <option value='2' selected="selected">中</option>
+                        <option value='4'>快</option>
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <button type="button" class="btn btn-info btn-sm" onclick="getVehicleRoutes();">回放</button>
+                </div>s
+            </div>
+            <div id="playbackTimeDivFull"></div>
+            <div id="route_panel"></div>
+        </div>
+
     </div>
 </div>
 
@@ -42,10 +82,12 @@ if (typeof(intervalWarning) != 'undefined') {
 if (typeof(playbackTimeout) != 'undefined') {
     clearTimeout(playbackTimeout);
 }
+var fullScreen = 0;
 
 var routeDecodeObj = new Array();
 var infoWindowList = new Array();
 var polylineList = new Array();
+var infoWindowList = new Array();
 
 function setBMap() {
     var windowHeight = $(window).height();
@@ -87,11 +129,18 @@ function loadScript() {
 loadScript();
 
 function getVehicleRoutes() {
-    if ($('#beginDate').val() == '' || $('#endDate').val() == '') {
+    if (fullScreen) {
+        var beginDateVal = $('#beginDateFull').val();
+        var endDateVal = $('#endDateFull').val();
+    } else {
+        var beginDateVal = $('#beginDate').val();
+        var endDateVal = $('#endDate').val();
+    }
+    if (beginDateVal == '' || endDateVal == '') {
         myAlertFail('请先选择历史回放起始日期和终止日期');
         return;
     }
-    if ($('#beginDate').val() >= $('#endDate').val()) {
+    if (beginDateVal >= endDateVal) {
         myAlertFail('终止日期必须晚于起始日期');
         return;
     }
@@ -100,10 +149,11 @@ function getVehicleRoutes() {
         url: "{:U('Home/DistrictMap/ajax_get_vehicle_routes')}",
         timeout: 5000,
         data: {
-            "beginDate": $('#beginDate').val(),
-            "endDate": $('#endDate').val()
+            "beginDate": beginDateVal,
+            "endDate": endDateVal
         },
         success: function(gpsRouteArray) {
+            console.log(gpsRouteArray);
             if (gpsRouteArray == 'fail') {
                 myAlertFail("获取转移地图历史数据失败");
                 return;
@@ -164,6 +214,7 @@ function getVehicleRoutes() {
                 };
                 var infoWindow = new BMap.InfoWindow(infoWindowContent, infoWindowOption);
                 infoWindowList.push(infoWindow);
+
                 vehicleMarker.addEventListener("click", function(e) {
                     BaiduMap.openInfoWindow(infoWindowList[this.getTitle() - '0'], this.getPosition());
                 });
@@ -201,8 +252,13 @@ function getVehicleRoutes() {
             var startIdx = Math.floor(startTimeObj.getHours() * 360 + startTimeObj.getMinutes() * 6 + startTimeObj.getSeconds() / 10);
             var endIdx = Math.floor(endTimeObj.getHours() * 360 + endTimeObj.getMinutes() * 6 + endTimeObj.getSeconds() / 10);
             var playbackTimeObj = startTimeObj;
-            var playbackTimeDiv = $('#playbackTimeDiv');
-            var intervalTime = 200 / $('#selectSpeed').val();
+            if (fullScreen) {
+                var playbackTimeDiv = $('#playbackTimeDivFull');
+                var intervalTime = 200 / $('#selectSpeedFull').val();
+            } else {
+                var playbackTimeDiv = $('#playbackTimeDiv');
+                var intervalTime = 200 / $('#selectSpeed').val();
+            }
 
             function playback(dataIdx) {
                 playbackTimeObj.setSeconds(playbackTimeObj.getSeconds() + 10);
@@ -226,7 +282,12 @@ function getVehicleRoutes() {
                     // infoWindowList[gpsIdx].setTitle(infoWindowTitle);
                     // infoWindowList[gpsIdx].redraw();
                 }
-                intervalTime = 200 / $('#selectSpeed').val();
+                if (fullScreen) {
+                    var selectSpeedVal = $('#selectSpeedFull').val();
+                } else {
+                    var selectSpeedVal = $('#selectSpeed').val();
+                }
+                intervalTime = 200 / selectSpeedVal;
                 if (dataIdx < endIdx) {
                     playbackTimeout = setTimeout(function() {
                         ++dataIdx;

@@ -1,33 +1,74 @@
 <div class="panel panel-primary" style="margin-bottom:0px;">
     <div class="panel panel-heading" style="margin-bottom:0px; height:40px;">
         <h3 class="panel-title" style="float:left;">仓库地图展示</h3>
-        <button type="button" class="btn btn-default btn-xs" id="toFullScreen" onclick="toFullScreen();" style="float:right;">全屏</button>
-        <button type="button" class="btn btn-default btn-xs" id="exitFullScreen" onclick="exitFullScreen();" style="float:right;display:none;">退出全屏</button>
+        <button type="button" class="btn btn-default btn-xs" id="toFullScreen" onclick="toFullScreen(); fullScreen=1;" style="float:right;">全屏</button>
+        <div id="exitFullScreen" style="display:none; float:right;">
+            <button type="button" class="btn btn-default btn-xs" id="showSidebar" onclick="showSidebar();">
+                <span class="glyphicon glyphicon-chevron-left"></span>显示右侧边栏
+            </button>
+            <button type="button" class="btn btn-default btn-xs" id="hideSidebar" onclick="hideSidebar();" style="display:none">
+                <span class="glyphicon glyphicon-chevron-right"></span>隐藏右侧边栏
+            </button>
+            <button type="button" class="btn btn-default btn-xs" onclick="exitFullScreen(); fullScreen=0;">退出全屏</button>
+        </div>
     </div>
-    <div class="panel-body">
-        <div class="row" id="div_input-group">
-            <div class="col-md-3">
-                <div class="input-group">
-                    <span class="input-group-addon">
-                        <input type="checkbox" name="checkbox" checked="true" id="productionUnit" onclick="">
-                    </span>
-                    <span class="form-control  input-sm">
-                        &nbsp; 生产单位
-                    </span>
+    <div class="panel panel-body" style="margin-bottom:0px">
+
+        <div id="div_input-group">
+            <div id="myAlert"></div>
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <input type="checkbox" name="checkbox" checked="true" id="productionUnit" onclick="productionUnit();">
+                        </span>
+                        <span class="form-control  input-sm">
+                            &nbsp; 生产单位
+                        </span>
+                    </div>
                 </div>
-            </div>
-            <div class="col-md-3">
-                <div class="input-group">
-                    <span class="input-group-addon">
-                        <input type="checkbox" name="checkbox" checked="true" id="receptionUnit" onclick="">
-                    </span>
-                    <span class="form-control input-sm">
-                        &nbsp; 接受单位
-                    </span>
+                <div class="col-md-3">
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <input type="checkbox" name="checkbox" checked="true" id="receptionUnit" onclick="receptionUnit();">
+                        </span>
+                        <span class="form-control input-sm">
+                            &nbsp; 接受单位
+                        </span>
+                    </div>
                 </div>
             </div>
         </div>
-        <div id="map_container" style="width:auto">地图加载中...</div>
+
+        <div id="map_container" style="width:100%;float:left;">地图加载中...</div>
+
+        <div id="map_panel" style="display:none;height:100%;width:20%;float:right;">
+            <div id="myAlertFull"></div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <input type="checkbox" name="checkbox" checked="true" id="productionUnitFull" onclick="productionUnitFull();">
+                        </span>
+                        <span class="form-control  input-sm">
+                            &nbsp; 生产单位
+                        </span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <input type="checkbox" name="checkbox" checked="true" id="receptionUnitFull" onclick="receptionUnitFull();">
+                        </span>
+                        <span class="form-control input-sm">
+                            &nbsp; 接受单位
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div id="route_panel"></div>
+        </div>
+
     </div>
 </div>
 
@@ -40,6 +81,7 @@ if (typeof(intervalWarning) != 'undefined') {
 if (typeof(playbackTimeout) != 'undefined') {
     clearTimeout(playbackTimeout);
 }
+var fullScreen = 0;
 
 var productionMarkerList = new Array();
 var productionInfoWindowList = new Array();
@@ -152,27 +194,59 @@ function loadScript() {
 
 loadScript();
 
-$('#productionUnit').on('click', function() {
-    if ($(this).is(':checked')) {
+function productionUnit() {
+    if ($('#productionUnit').is(':checked')) {
         for (var idx in productionMarkerList) {
             productionMarkerList[idx].show();
         }
+        $('#productionUnitFull').attr('checked', true);
     } else {
         for (var idx in productionMarkerList) {
             productionMarkerList[idx].hide();
         }
+        $('#productionUnitFull').attr('checked', false);
     }
-});
+}
 
-$('#receptionUnit').on('click', function() {
-    if ($(this).is(':checked')) {
+function receptionUnit() {
+    if ($('#receptionUnit').is(':checked')) {
         for (var idx in receptionMarkerList) {
             receptionMarkerList[idx].show();
         }
+        $('#receptionUnitFull').attr('checked', true);
     } else {
         for (var idx in receptionMarkerList) {
             receptionMarkerList[idx].hide();
         }
+        $('#receptionUnitFull').attr('checked', false);
     }
-});
+}
+
+function productionUnitFull() {
+    if ($('#productionUnitFull').is(':checked')) {
+        for (var idx in productionMarkerList) {
+            productionMarkerList[idx].show();
+        }
+        $('#productionUnit').attr('checked', true);
+    } else {
+        for (var idx in productionMarkerList) {
+            productionMarkerList[idx].hide();
+        }
+        $('#productionUnit').attr('checked', false);
+    }
+}
+
+function receptionUnitFull() {
+    if ($('#receptionUnitFull').is(':checked')) {
+        for (var idx in receptionMarkerList) {
+            receptionMarkerList[idx].show();
+        }
+        $('#receptionUnit').attr('checked', true);
+    } else {
+        for (var idx in receptionMarkerList) {
+            receptionMarkerList[idx].hide();
+        }
+        $('#receptionUnit').attr('checked', false);
+    }
+}
 </script>

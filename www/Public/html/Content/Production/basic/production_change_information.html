@@ -4,7 +4,8 @@
     </div>
     <div class="panel-body">
         <div class="table-responsive">
-            <form class="form-horizontal" role="form">
+            <form class="form-horizontal" role="form" method="post" id="changeform"
+             action="{:U('Home/ProductionBasic/change',array('id'=>'production'))}">
                 <table class="table table-hover table-striped table-bordered table-condensed">
                     <!-- <caption>企业基本信息</caption> -->
                     <tr>
@@ -138,6 +139,9 @@
                         </td>
                     </tr>
                 </table>
+                 <center>
+                        <button type="submit" class="btn btn-warning btn-lg">提交</button>
+                 </center>
             </form>
         </div>
     </div>

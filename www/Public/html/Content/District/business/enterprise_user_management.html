@@ -27,7 +27,7 @@
 
 <script type="text/javascript">
 function setTable() {
-
+	console.log(record_json);
     var tmp_page_name;
     var tableData = new Array();
     for (var idx in record_json) {
@@ -56,7 +56,7 @@ function setTable() {
 
         if (record_json[idx].is_verify == "0") {
             itemData[3] = "未验证";
-            itemData[6] = '<a href="#" onclick="ajaxAction(0,' + record_json[idx].user_id + ',1)"><span class="label label-primary"><span class="glyphicon glyphicon-paperclip"></span> 通过</span><a>';
+            itemData[6] = '<a href="#" onclick="ajaxAction(0,' + record_json[idx].user_type+", "+ record_json[idx].user_id + ',1)"><span class="label label-primary"><span class="glyphicon glyphicon-paperclip"></span> 通过</span><a>';
         } else {
             itemData[3] = "已验证";
             itemData[6] = "";
@@ -66,10 +66,10 @@ function setTable() {
         if (record_json[idx].lock == "0") {
             //ajaxAction(actionID,itemIdx,actionValue)
             itemData[3] += "未锁定";
-            itemData[5] = '<a href="#" onclick="ajaxAction(1,' + record_json[idx].user_id + ',1)"><span class="label label-danger"><span class="glyphicon glyphicon-paperclip"></span> 锁定</span><a>';
+            itemData[5] = '<a href="#" onclick="ajaxAction(1,' + record_json[idx].user_type+", "+record_json[idx].user_id + ',1)"><span class="label label-danger"><span class="glyphicon glyphicon-paperclip"></span> 锁定</span><a>';
         } else {
             itemData[3] += "已锁定";
-            itemData[5] = '<a href="#" onclick="ajaxAction(1,' + record_json[idx].user_id + ',0)"><span class="label label-success"><span class="glyphicon glyphicon-paperclip"></span> 解锁</span><a>';
+            itemData[5] = '<a href="#" onclick="ajaxAction(1,' +record_json[idx].user_type+", "+ record_json[idx].user_id + ',0)"><span class="label label-success"><span class="glyphicon glyphicon-paperclip"></span> 解锁</span><a>';
         }
 
         tableData.push(itemData);
@@ -121,7 +121,7 @@ function setTable() {
 }
 setTable();
 
-function ajaxAction(actionID, userIdx, actionValue) {
+function ajaxAction(actionID, usertype, userIdx, actionValue) {
 
     postdata = {};
     if (actionID == 0) {    //is_verify
@@ -131,13 +131,15 @@ function ajaxAction(actionID, userIdx, actionValue) {
     }
     postdata.value = "" + actionValue;
     postdata.user_id = userIdx;
-
+	postdata.usertype=usertype;
     $.ajax({
         type: "post",
         url: "enterprise_user_management_ajaxpost",
         data: postdata,
-        success: function(data) {
-            console.log(data);
+        success: function(rdata) {
+            //console.log(data);
+			xdata=JSON.parse(rdata);
+			console.log(xdata);
             refresh_page();
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) {

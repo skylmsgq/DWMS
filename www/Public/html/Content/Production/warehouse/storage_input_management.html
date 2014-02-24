@@ -28,7 +28,7 @@ function setTable() {
     var tableData = new Array();
     for (var idx in record_json) {
         var itemData = new Array();
-        itemData[0] = "" + record_json[idx].waste_id;
+        itemData[0] = "" + waste_json[idx];
         itemData[1] = "" + record_json[idx].add_date_time;
         switch (record_json[idx].rfid_status) {
             case '0':
