@@ -82,9 +82,11 @@ class DistrictBusinessAction extends CommonAction{
 
 		$manifest_id_json = json_encode( $manifest_id );
 		$manifest_status_json = json_encode( $manifest['manifest_status'] );
+		$production_unit_id_json = json_encode( $manifest['production_unit_id'] );
+		$reception_unit_id_json = json_encode( $manifest['reception_unit_id'] );
 
 		$tmp_content=$this->fetch( './Public/html/Content/District/business/transfer_manifest_management_page.html' );
-		$tmp_content = "<script>manifest_id_json = $manifest_id_json; manifest_status_json = $manifest_status_json; </script> $tmp_content";
+		$tmp_content = "<script>manifest_id_json = $manifest_id_json; manifest_status_json = $manifest_status_json; production_unit_id = $production_unit_id_json; reception_unit_id = $reception_unit_id_json; </script> $tmp_content";
 		$this->ajaxReturn( $tmp_content );
 	}
 
@@ -98,12 +100,35 @@ class DistrictBusinessAction extends CommonAction{
 			'manifest_status' => $manifest_status,
 		);
 		$result = M( 'manifest' )->save( $current_manifest_status );
-		if ( $result ) {
-			$this->ajaxReturn( 1, '审核成功！', 1 );
-		} else {
-			$this->ajaxReturn( 0, '审核失败！', 0 );
+
+		if(I( 'post.manifest_status' )==4){
+			$route = M( 'route' )->where( array( 'production_unit_id' => I( 'post.production_unit_id' ),'reception_unit_id' => I( 'post.reception_unit_id' ) ) )->find();
+			$route_id = $route['route_id'];
+			$manifest = M('manifest')->where( array( 'manifest_id' => $manifest_id ) )->find();
+			$route_vehicle = M('route_vehicle');
+			$route_vehicle->create();
+			$route_vehicle->route_id = $route_id;
+			$route_vehicle->vehicle_id = $manifest['vehicle_id_1'];
+			$route_vehicle->manifest_id = $manifest_id;
+			$route_vehicle->transport_date = $manifest['waste_transport_time'];
+			$time = date( 'Y-m-d H:i:s', time() );
+			$route_vehicle->correlation_add_time = $time;
+			$route_vehicle->correlation_status = 0;
+
+			$result = $route_vehicle->add(); // 根据条件保存修改的数据
+
+			if ( $result ) {
+				$this->ajaxReturn( 1, '保存成功！', 1 );
+			} else {
+				$this->ajaxReturn( 0, '保存失败！', 0 );
+			}
+
+
+
+
 		}
 	}
+
 	public function transfer_manifest_management_audit_2($manifest_id="") {
 		$manifest_status = I( 'post.manifest_status' );
 		$time = date( 'Y-m-d H:i:s', time() );

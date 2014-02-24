@@ -221,7 +221,9 @@ function ajaxAction_1(actionID) {
         url: "transfer_manifest_management_audit_1?manifest_id=" + manifest_id_json,
         timeout: 2000,
         data: {
-            manifest_status: actionID
+            manifest_status: actionID,
+            production_unit_id: production_unit_id,
+            reception_unit_id: reception_unit_id,
         },
         success: function(data) {
             $('#myModal').modal('hide');
@@ -245,7 +247,7 @@ function ajaxAction_2(actionID) {
         url: "transfer_manifest_management_audit_2?manifest_id=" + manifest_id_json,
         timeout: 2000,
         data: {
-            manifest_status: actionID
+            manifest_status: actionID,
         },
         success: function(data) {
             $('#myModal').modal('hide');
