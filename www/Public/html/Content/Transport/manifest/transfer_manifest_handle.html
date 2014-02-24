@@ -27,14 +27,12 @@
 <!-- /.modal -->
 
 <script type="text/javascript">
-console.log(manifest_json);
-console.log(unit_json);
 function setTable() {
     var tableData = new Array();
     for (var idx in manifest_json) {
         var itemRequest = '<a href="#" onclick="fetch_model_page(\'./transfer_manifest_handle_request?manifest_id=' + manifest_json[idx].manifest_id + '\')"><span class="label label-info"><span class="glyphicon glyphicon-paperclip"></span> 填写</span><a>';
-        var itemModify = ' <a href="#" onclick="fetch_model_page(\'./transfer_manifest_handle_modify?manifest_id=' + manifest_json[idx].manifest_id + '\')"><span class="label label-warning"><span class="glyphicon glyphicon-paperclip"></span> 修改</span><a>';
-        var itemSubmit = ' <a href="#" onclick="fetch_model_page(\'./transfer_manifest_handle_submit?manifest_id=' + manifest_json[idx].manifest_id + '\')"><span class="label label-warning"><span class="glyphicon glyphicon-paperclip"></span> 提交</span><a>';
+        var itemModify = ' <a href="#" onclick="fetch_model_page(\'./transfer_manifest_handle_modify?manifest_id=' + manifest_json[idx].manifest_id + '\')"><span class="label label-danger"><span class="glyphicon glyphicon-paperclip"></span> 修改</span><a>';
+        var itemSubmit = ' <a href="#" onclick="fetch_model_page(\'./transfer_manifest_handle_submit?manifest_id=' + manifest_json[idx].manifest_id + '\')"><span class="label label-success"><span class="glyphicon glyphicon-paperclip"></span> 提交</span><a>';
         
         var itemData = new Array();
         itemData[0] = "" + manifest_json[idx].manifest_num;
@@ -42,7 +40,7 @@ function setTable() {
         itemData[2] = "" + unit_json;
         switch (manifest_json[idx].manifest_status) {
             case '1':
-                itemData[3] = "<span class='label label-warning'>未填写</span>";
+                itemData[3] = "<span class='label label-info'>未填写</span>";
                 itemData[4] = "" + itemRequest;
                 break;
             case '2':
@@ -60,6 +58,38 @@ function setTable() {
             case '6':
                 itemData[3] = "<span class='label label-primary'>已修改未提交</span>";
                 itemData[4] = "" + itemModify + itemSubmit;
+                break;
+            case '4':
+                itemData[3] = "<span class='label label-warning'>已提交待审核</span>";
+                itemData[4] = "";
+                break;
+            case '7':
+                itemData[3] = "<span class='label label-warning'>已提交待审核</span>";
+                itemData[4] = "";
+                break;
+            case '8':
+                itemData[3] = "<span class='label label-warning'>已提交待审核</span>";
+                itemData[4] = "";
+                break;
+            case '9':
+                itemData[3] = "<span class='label label-warning'>已提交待审核</span>";
+                itemData[4] = "";
+                break;
+            case '10':
+                itemData[3] = "<span class='label label-warning'>已提交待审核</span>";
+                itemData[4] = "";
+                break;
+            case '11':
+                itemData[3] = "<span class='label label-success'>已通过</span>";
+                itemData[4] = "";
+                break;
+            case '12':
+                itemData[3] = "<span class='label label-warning'>已提交待审核</span>";
+                itemData[4] = "";
+                break;
+            case '13':
+                itemData[3] = "<span class='label label-warning'>已提交待审核</span>";
+                itemData[4] = "";
                 break;
             default:
                 itemData[3] = "<span class='label label-danger'>备案状态错误</span>";

@@ -12,8 +12,8 @@ class ReceptionManifestAction extends CommonAction{
 	public function transfer_manifest_handle() {
 		$manifest = M( 'manifest' );
 		$condition['reception_unit_id'] = session('reception_unit_id');
-		$condition['_string'] = 'manifest_status=4 OR manifest_status=9 OR manifest_status=10 OR manifest_status=12 OR manifest_status=13';
-		$manifest_data = $manifest->where($condition)->getField( 'manifest_id,manifest_num,manifest_add_time,manifest_status' );
+		$condition['_string'] = 'manifest_status=4 OR manifest_status=9 OR manifest_status=10 OR manifest_status=12 OR manifest_status=13 OR manifest_status=11';
+		$manifest_data = $manifest->where($condition)->getField( 'manifest_id,manifest_num,manifest_modify_time,manifest_status' );
 
 		$manifest_json = json_encode( $manifest_data ); 
 
@@ -87,13 +87,13 @@ class ReceptionManifestAction extends CommonAction{
 		$manifest_status_old = I( 'post.manifest_status_old' );
 		switch ( $manifest_status_old ) {
 		case '9':
-			$manifest_status = 10;
+			$manifest_status = 9;
 			break;
 		case '12':
 			$manifest_status = 13;
 			break;
 		case '13':
-			$manifest_status = 10;
+			$manifest_status = 13;
 			break;	
 		default:
 			$manifest_status = -1;
@@ -122,6 +122,8 @@ class ReceptionManifestAction extends CommonAction{
 // 转移联单->转移联单处理->提交页->提交联单
 	public function transfer_manifest_handle_submited($manifest_id="") {
 		$manifest = M( 'manifest' ); 
+		$time = date( 'Y-m-d H:i:s', time() );
+		$data['manifest_modify_time'] = $time;
 		$data['manifest_id'] = $manifest_id;
 		$data['manifest_status'] = 10;
 		$manifest->save( $data );
@@ -131,7 +133,7 @@ class ReceptionManifestAction extends CommonAction{
 	public function transfer_manifest_query() {
 		$manifest = M( 'manifest' );
 		$condition['reception_unit_id'] = session('reception_unit_id');
-		$condition['_string'] = 'manifest_status=9 OR manifest_status=13 OR manifest_status=10 OR manifest_status=12';
+		$condition['_string'] = 'manifest_status=9 OR manifest_status=13 OR manifest_status=10 OR manifest_status=12 OR manifest_status=11';
 		$manifest_data = $manifest->where($condition)->getField( 'manifest_id,manifest_num,manifest_add_time,manifest_status' );
 
 		$manifest_json = json_encode( $manifest_data ); 
