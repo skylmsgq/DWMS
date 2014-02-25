@@ -115,20 +115,16 @@ function setBMap() {
     BaiduMap.setMapStyle(mapStyle);
 
     var selectProductionUnit = $('#selectProductionUnit');
-    for (var idx in production_unit_json) {
-        selectProductionUnit.append('<option value="' + production_unit_json[idx].production_unit_id + '">' + production_unit_json[idx].production_unit_name + '</option>');
-    }
-    var selectReceptionUnit = $('#selectReceptionUnit');
-    for (var idx in reception_unit_json) {
-        selectReceptionUnit.append('<option value="' + reception_unit_json[idx].reception_unit_id + '">' + reception_unit_json[idx].reception_unit_name + '</option>');
-    }
-
     var selectProductionUnitFull = $('#selectProductionUnitFull');
     for (var idx in production_unit_json) {
+        selectProductionUnit.append('<option value="' + production_unit_json[idx].production_unit_id + '">' + production_unit_json[idx].production_unit_name + '</option>');
         selectProductionUnitFull.append('<option value="' + production_unit_json[idx].production_unit_id + '">' + production_unit_json[idx].production_unit_name + '</option>');
     }
+
+    var selectReceptionUnit = $('#selectReceptionUnit');
     var selectReceptionUnitFull = $('#selectReceptionUnitFull');
     for (var idx in reception_unit_json) {
+        selectReceptionUnit.append('<option value="' + reception_unit_json[idx].reception_unit_id + '">' + reception_unit_json[idx].reception_unit_name + '</option>');
         selectReceptionUnitFull.append('<option value="' + reception_unit_json[idx].reception_unit_id + '">' + reception_unit_json[idx].reception_unit_name + '</option>');
     }
 
@@ -173,9 +169,6 @@ var searchComplete = function(results) {
         /*setTimeout(function(){
             BaiduMap.setViewport([p1,p2]);   //调整到最佳视野
         },1000);*/
-
-        //console.log(path);
-        //console.log(route_detail);
 
     } else if (transit.getStatus() == BMAP_STATUS_UNKNOWN_ROUTE) { //导航结果未知。对应数值“3”。
         return;
@@ -269,7 +262,7 @@ function submit() {
     $.ajax({
         type: "POST",
         url: "{:U('Home/DistrictMap/ajax_transfer_route_plan')}",
-        timeout: 2000,
+        dataType: 'JSON',
         data: {
             "production_unit_id": selectProductionUnitVal,
             "reception_unit_id": selectReceptionUnitVal,
@@ -295,7 +288,7 @@ function submit() {
             }
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) {
-            myAlertFail("ajax请求失败");
+            myAlertFail("提交路线规划ajax请求失败");
             console.log("Error:Ajax_Content_Load" + errorThrown);
             console.log("XMLHttpRequest.status:" + XMLHttpRequest.status);
             console.log("XMLHttpRequest.readyState:" + XMLHttpRequest.readyState);

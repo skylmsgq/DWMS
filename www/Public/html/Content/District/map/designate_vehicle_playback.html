@@ -19,13 +19,13 @@
             <div class="row">
                 <div class="col-md-2">
                     <label class="sr-only" for="selectTransportUnit">运输单位：</label>
-                    <select class="form-control input-sm" id="selectTransportUnit" onchange="getVehicleList();">
+                    <select class="form-control input-sm" id="selectTransportUnit" onchange="getVehicleList();showTransportUnit();">
                         <option value='-1'>请选择运输单位</option>
                     </select>
                 </div>
                 <div class="col-md-2">
                     <label class="sr-only" for="selectVehicle">运输车辆：</label>
-                    <select class="form-control input-sm" id="selectVehicle">
+                    <select class="form-control input-sm" id="selectVehicle" onchange="showVehicle();">
                         <option value='-1'>请选择运输车辆</option>
                     </select>
                 </div>
@@ -56,13 +56,13 @@
             <div class="row">
                 <div class="col-md-6">
                     <label class="sr-only" for="selectTransportUnitFull">运输单位：</label>
-                    <select class="form-control input-sm" id="selectTransportUnitFull" onchange="getVehicleList();">
+                    <select class="form-control input-sm" id="selectTransportUnitFull" onchange="getVehicleList();showTransportUnit();">
                         <option value='-1'>请选择运输单位</option>
                     </select>
                 </div>
                 <div class="col-md-6">
                     <label class="sr-only" for="selectVehicleFull">运输车辆：</label>
-                    <select class="form-control input-sm" id="selectVehicleFull">
+                    <select class="form-control input-sm" id="selectVehicleFull" onchange="showVehicle();">
                         <option value='-1'>请选择运输车辆</option>
                     </select>
                 </div>
@@ -88,6 +88,9 @@
                     <button type="button" class="btn btn-info btn-sm" onclick="getVehicleRoute();">回放</button>
                 </div>
             </div>
+            <div id="playbackTimeDivFull"></div>
+            <div id="transport_unit_panel"></div>
+            <div id="vehicle_panel"></div>
             <div id="route_panel"></div>
         </div>
 
@@ -105,6 +108,8 @@ if (typeof(playbackTimeout) != 'undefined') {
     clearTimeout(playbackTimeout);
 }
 var fullScreen = 0;
+var vehicle_json;
+var polylineList = new Array();
 
 function setBMap() {
     var windowHeight = $(window).height();
@@ -125,13 +130,18 @@ function setBMap() {
     BaiduMap.setMapStyle(mapStyle);
 
     var selectTransportUnit = $('#selectTransportUnit');
-    for (var idx in transport_unit_json) {
-        selectTransportUnit.append('<option value="' + transport_unit_json[idx].transport_unit_id + '">' + transport_unit_json[idx].transport_unit_name + '</option>');
-    }
     var selectTransportUnitFull = $('#selectTransportUnitFull');
     for (var idx in transport_unit_json) {
-        selectTransportUnitFull.append('<option value="' + transport_unit_json[idx].transport_unit_id + '">' + transport_unit_json[idx].transport_unit_name + '</option>');
+        selectTransportUnit.append('<option value="' + idx + '">' + transport_unit_json[idx].transport_unit_name + '</option>');
+        selectTransportUnitFull.append('<option value="' + idx + '">' + transport_unit_json[idx].transport_unit_name + '</option>');
     }
+
+    BaiduMap.addEventListener("click", function() {
+        while (polyline = polylineList.pop()) {
+            BaiduMap.removeOverlay(polyline);
+        }
+        $('#route_panel').html("");
+    });
 
     $(".anchorBL").hide();
 }
@@ -157,27 +167,27 @@ function getVehicleList() {
     $.ajax({
         type: "POST",
         url: "{:U('Home/DistrictMap/ajax_get_vehicle_list')}",
-        timeout: 3000,
+        dataType: 'JSON',
         data: {
-            "transport_unit_id": selectTransportUnitVal
+            "transport_unit_id": transport_unit_json[selectTransportUnitVal].transport_unit_id,
         },
         success: function(vehicleList) {
-            console.log(vehicleList);
             if (vehicleList == 'fail') {
                 myAlertFail("获取车辆列表失败");
                 return;
             }
+
+            vehicle_json = vehicleList;
+
             var selectVehicle = $('#selectVehicle');
-            selectVehicle.html("<option value='-1'>请选择运输车辆</option>");
-            for (var idx in vehicleList) {
-                selectVehicle.append('<option value="' + vehicleList[idx].vehicle_id + '">车牌号为：' + vehicleList[idx].vehicle_num + '的' + vehicleList[idx].vehicle_type + '</option>');
-            }
             var selectVehicleFull = $('#selectVehicleFull');
+
+            selectVehicle.html("<option value='-1'>请选择运输车辆</option>");
             selectVehicleFull.html("<option value='-1'>请选择运输车辆</option>");
             for (var idx in vehicleList) {
-                selectVehicleFull.append('<option value="' + vehicleList[idx].vehicle_id + '">车牌号为：' + vehicleList[idx].vehicle_num + '的' + vehicleList[idx].vehicle_type + '</option>');
+                selectVehicle.append('<option value="' + idx + '">车牌号为：' + vehicleList[idx].vehicle_num + '的' + vehicleList[idx].vehicle_type + '</option>');
+                selectVehicleFull.append('<option value="' + idx + '">车牌号为：' + vehicleList[idx].vehicle_num + '的' + vehicleList[idx].vehicle_type + '</option>');
             }
-
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) {
             myAlertFail("获取车辆列表ajax请求失败");
@@ -187,6 +197,24 @@ function getVehicleList() {
             console.log("textStatus:" + textStatus);
         }
     });
+}
+
+function showTransportUnit() {
+    if (fullScreen) {
+        var selectTransportUnitVal = $('#selectTransportUnitFull').val();
+    } else {
+        var selectTransportUnitVal = $('#selectTransportUnit').val();
+    }
+    $('#transport_unit_panel').html("<p>运输单位名称：" + transport_unit_json[selectTransportUnitVal].transport_unit_name + "</p><p>运输单位地址：" + transport_unit_json[selectTransportUnitVal].transport_unit_address + "</p><p>运输单位电话：" + transport_unit_json[selectTransportUnitVal].transport_unit_phone + "</p><p>运输单位环保联系人姓名：" + transport_unit_json[selectTransportUnitVal].transport_unit_contacts_name + "</p><p>运输单位环保联系人电话：" + transport_unit_json[selectTransportUnitVal].transport_unit_contacts_phone + "</p>");
+}
+
+function showVehicle() {
+    if (fullScreen) {
+        var selectVehicleVal = $('#selectVehicleFull').val();
+    } else {
+        var selectVehicleVal = $('#selectVehicle').val();
+    }
+    $('#vehicle_panel').html("<p>运输车辆牌照：" + vehicle_json[selectVehicleVal].vehicle_num + "</p><p>运输车辆类型：" + vehicle_json[selectVehicleVal].vehicle_type + "</p>");
 }
 
 function getVehicleRoute() {
@@ -220,12 +248,12 @@ function getVehicleRoute() {
     }
     $.ajax({
         type: "POST",
-        url: "{:U('Home/DistrictMap/ajax_get_vehicle_route')}",
-        timeout: 2000,
+        url: "{:U('Home/DistrictMap/ajax_get_vehicle_gps_data')}",
+        dataType: 'JSON',
         data: {
-            "vehicle_id": selectVehicleVal,
+            "vehicle_id": vehicle_json[selectVehicleVal].vehicle_id,
             "beginDate": beginDateVal,
-            "endDate": endDateVal
+            "endDate": endDateVal,
         },
         success: function(gpsRoute) {
             if (gpsRoute == 'fail') {
@@ -257,27 +285,109 @@ function getVehicleRoute() {
             });
             BaiduMap.addOverlay(vehicleMarker);
 
+            vehicleMarker.addEventListener("click", function(e) {
+                var infoWindowContent = "<p>运输车辆牌照：" + vehicle_json[selectVehicleVal].vehicle_num + "</p><p>运输车辆类型：" + vehicle_json[selectVehicleVal].vehicle_type + "</p><p>运输单位名称：" + transport_unit_json[selectTransportUnitVal].transport_unit_name + "</p><p>运输单位地址：" + transport_unit_json[selectTransportUnitVal].transport_unit_address + "</p><p>运输单位电话：" + transport_unit_json[selectTransportUnitVal].transport_unit_phone + "</p><p>运输单位环保联系人姓名：" + transport_unit_json[selectTransportUnitVal].transport_unit_contacts_name + "</p><p>运输单位环保联系人电话：" + transport_unit_json[selectTransportUnitVal].transport_unit_contacts_phone + "</p>";
+                var infoWindowOption = {
+                    width: 0, // 信息窗口宽度
+                    height: 0, // 信息窗口高度
+                    title: "", // 信息窗口标题
+                };
+                var infoWindow = new BMap.InfoWindow(infoWindowContent, infoWindowOption);
+                BaiduMap.openInfoWindow(infoWindow, this.getPosition());
+            });
+
+            vehicleMarker.addEventListener("rightclick", function(e) {
+                $.ajax({
+                    type: "POST",
+                    url: "{:U('Home/DistrictMap/ajax_get_vehicle_route')}",
+                    dataType: 'JSON',
+                    data: {
+                        "vehicle_id": vehicle_json[selectVehicleVal].vehicle_id,
+                        "datetime": playbackTimeObj.getFullYear() + "-" + (playbackTimeObj.getMonth() + 1) + "-" + playbackTimeObj.getDate(),
+                    },
+                    success: function(routeObj) {
+                        var routeDecodeObj = JSON.parse(routeObj.route_lng_lat.replace(/&quot;/g, '"'));
+                        var routeDetailDecodeObj = routeObj.route_detail.replace(/&lt;/g, '<').replace(/&gt;/g, '>');
+                        var pointArray = new Array();
+                        for (var pointIdx in routeDecodeObj) {
+                            var lng = routeDecodeObj[pointIdx].lng;
+                            var lat = routeDecodeObj[pointIdx].lat;
+                            pointArray.push(new BMap.Point(lng, lat));
+                        }
+                        var polyline = new BMap.Polyline(pointArray, {
+                            strokeColor: "blue",
+                            strokeWeight: 5, // 折线的宽度，以像素为单位。
+                            strokeOpacity: 0.8 // 折线的透明度，取值范围0 - 1。
+                        });
+                        BaiduMap.addOverlay(polyline);
+                        polylineList.push(polyline);
+                        $('#route_panel').html(routeDetailDecodeObj);
+                    },
+                    error: function(XMLHttpRequest, textStatus, errorThrown) {
+                        myAlertFail("获取车辆指定路线ajax请求失败");
+                        console.log("Error:Ajax_Content_Load" + errorThrown);
+                        console.log("XMLHttpRequest.status:" + XMLHttpRequest.status);
+                        console.log("XMLHttpRequest.readyState:" + XMLHttpRequest.readyState);
+                        console.log("textStatus:" + textStatus);
+                    }
+
+                });
+            });
+
             var routeLength = gpsRoute.length;
-            var dataIdx = 1;
+            var startTime = gpsRoute[0].datetime;
+            var endTime = gpsRoute[routeLength - 1].datetime;
+            var gpsRouteTime = new Array();
+            for (var dataIdx in gpsRoute) {
+                if (!gpsRoute[dataIdx]) {
+                    continue;
+                }
+                var dateTime = gpsRoute[dataIdx].datetime;
+                var dateTimeObj = new Date(dateTime);
+                var newIdx = Math.floor(dateTimeObj.getHours() * 360 + dateTimeObj.getMinutes() * 6 + dateTimeObj.getSeconds() / 10);
+                gpsRouteTime[newIdx] = gpsRoute[dataIdx];
+            }
+
+            var startTimeObj = new Date(startTime);
+            var endTimeObj = new Date(endTime);
+            var startIdx = Math.floor(startTimeObj.getHours() * 360 + startTimeObj.getMinutes() * 6 + startTimeObj.getSeconds() / 10);
+            var endIdx = Math.floor(endTimeObj.getHours() * 360 + endTimeObj.getMinutes() * 6 + endTimeObj.getSeconds() / 10);
+            var playbackTimeObj = startTimeObj;
+
+            var playbackTimeDiv = $('#playbackTimeDivFull');
+            if (fullScreen) {
+                var intervalTime = 200 / $('#selectSpeedFull').val();
+            } else {
+                var intervalTime = 200 / $('#selectSpeed').val();
+            }
 
             function playback(dataIdx) {
-                var newPoint = new BMap.Point(gpsRoute[dataIdx].bmap_longitude, gpsRoute[dataIdx].bmap_latitude);
-                vehicleMarker.setPosition(newPoint);
-                if (gpsRoute[dataIdx].offset_distance < 0.5) {
-                    vehicleMarker.setIcon(lorryIconGreen);
-                } else if ((gpsRoute[dataIdx].offset_distance >= 0.5) && (gpsRoute[dataIdx].offset_distance < 1)) {
-                    vehicleMarker.setIcon(lorryIconYellow);
-                } else {
-                    vehicleMarker.setIcon(lorryIconRed);
+                playbackTimeObj.setSeconds(playbackTimeObj.getSeconds() + 10);
+                playbackTimeDiv.html(playbackTimeObj.getFullYear() + '/' + (playbackTimeObj.getMonth() + 1) + '/' + playbackTimeObj.getDate() + ' ' + playbackTimeObj.getHours() + ':' + playbackTimeObj.getMinutes());
+                for (var i = 0; i < 1; ++i) {
+                    if (!gpsRouteTime[dataIdx]) {
+                        continue;
+                    }
+                    var newPoint = new BMap.Point(gpsRouteTime[dataIdx].bmap_longitude, gpsRouteTime[dataIdx].bmap_latitude);
+                    vehicleMarker.setPosition(newPoint);
+                    offsetDistance = gpsRouteTime[dataIdx].offset_distance;
+                    offsetDistance = Math.round(offsetDistance * 1000) / 1000;
+                    if (offsetDistance < 0.5) {
+                        vehicleMarker.setIcon(lorryIconGreen);
+                    } else if ((offsetDistance >= 0.5) && (offsetDistance < 1)) {
+                        vehicleMarker.setIcon(lorryIconYellow);
+                    } else {
+                        vehicleMarker.setIcon(lorryIconRed);
+                    }
                 }
                 if (fullScreen) {
                     var selectSpeedVal = $('#selectSpeedFull').val();
                 } else {
                     var selectSpeedVal = $('#selectSpeed').val();
                 }
-                var intervalTime = 200 / selectSpeedVal;
+                intervalTime = 200 / selectSpeedVal;
 
-                if (dataIdx < routeLength) {
+                if (dataIdx < endIdx) {
                     playbackTimeout = setTimeout(function() {
                         ++dataIdx;
                         playback(dataIdx);
@@ -286,7 +396,7 @@ function getVehicleRoute() {
                     return;
                 }
             }
-            playback(0);
+            playback(startIdx);
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) {
             myAlertFail("获取车辆历史数据ajax请求失败");

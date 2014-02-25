@@ -97,20 +97,16 @@ function setBMap() {
     BaiduMap.setMapStyle(mapStyle);
 
     var selectProductionUnit = $('#selectProductionUnit');
-    for (var idx in production_unit_json) {
-        selectProductionUnit.append('<option value="' + idx + '">' + production_unit_json[idx] + '</option>');
-    }
-    var selectReceptionUnit = $('#selectReceptionUnit');
-    for (var idx in reception_unit_json) {
-        selectReceptionUnit.append('<option value="' + idx + '">' + reception_unit_json[idx] + '</option>');
-    }
-
     var selectProductionUnitFull = $('#selectProductionUnitFull');
     for (var idx in production_unit_json) {
+        selectProductionUnit.append('<option value="' + idx + '">' + production_unit_json[idx] + '</option>');
         selectProductionUnitFull.append('<option value="' + idx + '">' + production_unit_json[idx] + '</option>');
     }
+
+    var selectReceptionUnit = $('#selectReceptionUnit');
     var selectReceptionUnitFull = $('#selectReceptionUnitFull');
     for (var idx in reception_unit_json) {
+        selectReceptionUnit.append('<option value="' + idx + '">' + reception_unit_json[idx] + '</option>');
         selectReceptionUnitFull.append('<option value="' + idx + '">' + reception_unit_json[idx] + '</option>');
     }
 
@@ -144,27 +140,28 @@ function searchRoute() {
         },
         success: function(routeObj) {
             BaiduMap.clearOverlays();
-            $('#route_panel').html("");
             if (routeObj == 'fail') {
-                myAlertFail("此生产单位至此接受单位的路线不存在，请先规划")
-            } else {
-                route_id = routeObj.route_id;
-                var routeDecode = routeObj.route_lng_lat.replace(/&quot;/g, '"');
-                var routeDecodeObj = JSON.parse(routeDecode);
-                var pointArray = new Array();
-                for (var pointIdx in routeDecodeObj) {
-                    var lng = routeDecodeObj[pointIdx].lng;
-                    var lat = routeDecodeObj[pointIdx].lat;
-                    pointArray.push(new BMap.Point(lng, lat));
-                }
-                var polyline = new BMap.Polyline(pointArray, {
-                    strokeColor: "blue",
-                    strokeWeight: 5,
-                    strokeOpacity: 0.8
-                });
-                BaiduMap.addOverlay(polyline);
-
+                myAlertFail("此生产单位至此接受单位的路线不存在，请先规划");
+                return;
             }
+            route_id = routeObj.route_id;
+            var routeDecodeObj = JSON.parse(routeObj.route_lng_lat.replace(/&quot;/g, '"'));
+            var routeDetailDecodeObj = routeObj.route_detail.replace(/&lt;/g, '<').replace(/&gt;/g, '>');
+            $('#route_panel').html(routeDetailDecodeObj);
+            var pointArray = new Array();
+            for (var pointIdx in routeDecodeObj) {
+                var lng = routeDecodeObj[pointIdx].lng;
+                var lat = routeDecodeObj[pointIdx].lat;
+                pointArray.push(new BMap.Point(lng, lat));
+            }
+            var polyline = new BMap.Polyline(pointArray, {
+                strokeColor: "blue",
+                strokeWeight: 5,
+                strokeOpacity: 0.8
+            });
+            BaiduMap.addOverlay(polyline);
+
+
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) {
             myAlertFail("获取路线ajax请求失败");
@@ -178,18 +175,18 @@ function searchRoute() {
 
 function deleteRoute() {
     $.ajax({
-        type: 'post',
+        type: 'POST',
         url: "{:U('Home/DistrictMap/ajax_delete_route')}",
-        dataType: 'json',
+        dataType: 'JSON',
         data: {
             "route_id": route_id
         },
         success: function(data) {
             if (data == "success") {
-                myAlertSucc("删除成功");
+                myAlertSucc("路线删除成功");
                 BaiduMap.clearOverlays();
             } else {
-                myAlertFail("删除失败");
+                myAlertFail("路线删除失败");
             }
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) {

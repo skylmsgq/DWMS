@@ -66,6 +66,8 @@
                 </div>s
             </div>
             <div id="playbackTimeDivFull"></div>
+            <div id="transport_unit_panel"></div>
+            <div id="vehicle_panel"></div>
             <div id="route_panel"></div>
         </div>
 
@@ -83,11 +85,9 @@ if (typeof(playbackTimeout) != 'undefined') {
     clearTimeout(playbackTimeout);
 }
 var fullScreen = 0;
-
-var routeDecodeObj = new Array();
+var vehicleMarkerList = new Array();
 var infoWindowList = new Array();
 var polylineList = new Array();
-var infoWindowList = new Array();
 
 function setBMap() {
     var windowHeight = $(window).height();
@@ -107,14 +107,13 @@ function setBMap() {
     };
     BaiduMap.setMapStyle(mapStyle);
 
-    for (var idx in route_json) {
-        routeDecodeObj[idx] = JSON.parse(route_json[idx].route_lng_lat.replace(/&quot;/g, '"'));
-    }
-
     BaiduMap.addEventListener("click", function() {
         while (polyline = polylineList.pop()) {
             BaiduMap.removeOverlay(polyline);
         }
+        $('#transport_unit_panel').html("");
+        $('#vehicle_panel').html("");
+        $('#route_panel').html("");
     });
 
     $(".anchorBL").hide();
@@ -146,14 +145,13 @@ function getVehicleRoutes() {
     }
     $.ajax({
         type: "POST",
-        url: "{:U('Home/DistrictMap/ajax_get_vehicle_routes')}",
-        timeout: 5000,
+        url: "{:U('Home/DistrictMap/ajax_get_vehicles_gps_data')}",
+        dataType: 'JSON',
         data: {
             "beginDate": beginDateVal,
             "endDate": endDateVal
         },
         success: function(gpsRouteArray) {
-            console.log(gpsRouteArray);
             if (gpsRouteArray == 'fail') {
                 myAlertFail("获取转移地图历史数据失败");
                 return;
@@ -206,34 +204,79 @@ function getVehicleRoutes() {
                 BaiduMap.addOverlay(vehicleMarker);
                 vehicleMarkerList.push(vehicleMarker);
 
-                var infoWindowContent = "<p>运输车辆牌照：" + vehicle_json[gpsIdx].vehicle_num + "</p><p>运输车辆类型：" + vehicle_json[gpsIdx].vehicle_type + "</p><p>运输单位名称：" + vehicle_json[gpsIdx].transport_unit_name + "</p><p>运输单位地址：" + vehicle_json[gpsIdx].transport_unit_address + "</p><p>运输单位电话：" + vehicle_json[gpsIdx].transport_unit_phone + "</p><p>运输单位环保联系人姓名：" + vehicle_json[gpsIdx].transport_unit_contacts_name + "</p><p>运输单位环保联系人电话：" + vehicle_json[gpsIdx].transport_unit_contacts_phone;
-                var infoWindowOption = {
-                    width: 0, // 信息窗口宽度
-                    height: 0, // 信息窗口高度
-                    title: "", // 信息窗口标题
-                };
-                var infoWindow = new BMap.InfoWindow(infoWindowContent, infoWindowOption);
-                infoWindowList.push(infoWindow);
-
                 vehicleMarker.addEventListener("click", function(e) {
-                    BaiduMap.openInfoWindow(infoWindowList[this.getTitle() - '0'], this.getPosition());
+                    var markerIdx = this.getTitle() - '0';
+                    $.ajax({
+                        type: 'POST',
+                        url: "{:U('Home/DistrictMap/ajax_get_vehicle_transport_unit')}",
+                        dataType: 'JSON',
+                        data: {
+                            "vehicle_id": gpsRouteArray[markerIdx][0].vehicle_id,
+                        },
+                        success: function(vehicleTransportUnit) {
+                            if (vehicleTransportUnit == "fail") {
+                                myAlertFail("获取车辆和运输单位信息失败");
+                                return;
+                            }
+
+                            $('#transport_unit_panel').html("<p>运输单位地址：" + vehicleTransportUnit.transport_unit_address + "</p><p>运输单位电话：" + vehicleTransportUnit.transport_unit_phone + "</p><p>运输单位环保联系人姓名：" + vehicleTransportUnit.transport_unit_contacts_name + "</p><p>运输单位环保联系人电话：" + vehicleTransportUnit.transport_unit_contacts_phone + "</p>");
+                            $('#vehicle_panel').html("<p>运输车辆牌照：" + vehicleTransportUnit.vehicle_num + "</p><p>运输车辆类型：" + vehicleTransportUnit.vehicle_type + "</p>");
+
+                            var infoWindowContent = "<p>运输车辆牌照：" + vehicleTransportUnit.vehicle_num + "</p><p>运输车辆类型：" + vehicleTransportUnit.vehicle_type + "</p><p>运输单位名称：" + vehicleTransportUnit.transport_unit_name + "</p><p>运输单位地址：" + vehicleTransportUnit.transport_unit_address + "</p><p>运输单位电话：" + vehicleTransportUnit.transport_unit_phone + "</p><p>运输单位环保联系人姓名：" + vehicleTransportUnit.transport_unit_contacts_name + "</p><p>运输单位环保联系人电话：" + vehicleTransportUnit.transport_unit_contacts_phone + "</p>";
+                            var infoWindowOption = {
+                                width: 0, // 信息窗口宽度
+                                height: 0, // 信息窗口高度
+                                title: "", // 信息窗口标题
+                            };
+                            var infoWindow = new BMap.InfoWindow(infoWindowContent, infoWindowOption);
+                            BaiduMap.openInfoWindow(infoWindow, vehicleMarkerList[markerIdx].getPosition());
+                        },
+                        error: function(XMLHttpRequest, textStatus, errorThrown) {
+                            myAlertFail("获取车辆和运输单位ajax请求失败");
+                            console.log("Error:Ajax_Content_Load" + errorThrown);
+                            console.log("XMLHttpRequest.status:" + XMLHttpRequest.status);
+                            console.log("XMLHttpRequest.readyState:" + XMLHttpRequest.readyState);
+                            console.log("textStatus:" + textStatus);
+                        }
+                    });
                 });
 
                 vehicleMarker.addEventListener("rightclick", function(e) {
-                    var markerIdx = this.getTitle() - '0';
-                    var pointArray = new Array();
-                    for (var pointIdx in routeDecodeObj[markerIdx]) {
-                        var lng = routeDecodeObj[markerIdx][pointIdx].lng;
-                        var lat = routeDecodeObj[markerIdx][pointIdx].lat;
-                        pointArray.push(new BMap.Point(lng, lat));
-                    }
-                    var polyline = new BMap.Polyline(pointArray, {
-                        strokeColor: "blue",
-                        strokeWeight: 5, // 折线的宽度，以像素为单位。
-                        strokeOpacity: 0.8 // 折线的透明度，取值范围0 - 1。
+                    $.ajax({
+                        type: "POST",
+                        url: "{:U('Home/DistrictMap/ajax_get_vehicle_route')}",
+                        dataType: 'JSON',
+                        data: {
+                            "vehicle_id": gpsRouteArray[this.getTitle() - '0'][0].vehicle_id,
+                            "datetime": playbackTimeObj.getFullYear() + "-" + (playbackTimeObj.getMonth() + 1) + "-" + playbackTimeObj.getDate(),
+                        },
+                        success: function(routeObj) {
+                            var routeDecodeObj = JSON.parse(routeObj.route_lng_lat.replace(/&quot;/g, '"'));
+                            var routeDetailDecodeObj = routeObj.route_detail.replace(/&lt;/g, '<').replace(/&gt;/g, '>');
+                            var pointArray = new Array();
+                            for (var pointIdx in routeDecodeObj) {
+                                var lng = routeDecodeObj[pointIdx].lng;
+                                var lat = routeDecodeObj[pointIdx].lat;
+                                pointArray.push(new BMap.Point(lng, lat));
+                            }
+                            var polyline = new BMap.Polyline(pointArray, {
+                                strokeColor: "blue",
+                                strokeWeight: 5, // 折线的宽度，以像素为单位。
+                                strokeOpacity: 0.8 // 折线的透明度，取值范围0 - 1。
+                            });
+                            BaiduMap.addOverlay(polyline);
+                            polylineList.push(polyline);
+                            $('#route_panel').html(routeDetailDecodeObj);
+                        },
+                        error: function(XMLHttpRequest, textStatus, errorThrown) {
+                            myAlertFail("获取车辆指定路线ajax请求失败");
+                            console.log("Error:Ajax_Content_Load" + errorThrown);
+                            console.log("XMLHttpRequest.status:" + XMLHttpRequest.status);
+                            console.log("XMLHttpRequest.readyState:" + XMLHttpRequest.readyState);
+                            console.log("textStatus:" + textStatus);
+                        }
+
                     });
-                    BaiduMap.addOverlay(polyline);
-                    polylineList.push(polyline);
                 });
 
                 for (var dataIdx in gpsRouteArray[gpsIdx]) {
@@ -278,9 +321,6 @@ function getVehicleRoutes() {
                     } else {
                         vehicleMarkerList[gpsIdx].setIcon(lorryIconRed);
                     }
-                    // var infoWindowTitle = "偏离" + offsetDistance + "千米，时速" + gpsRouteTimeArray[gpsIdx][dataIdx].speed + "千米/小时";
-                    // infoWindowList[gpsIdx].setTitle(infoWindowTitle);
-                    // infoWindowList[gpsIdx].redraw();
                 }
                 if (fullScreen) {
                     var selectSpeedVal = $('#selectSpeedFull').val();

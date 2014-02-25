@@ -70,15 +70,17 @@ if (typeof(intervalWarning) != 'undefined') {
 if (typeof(playbackTimeout) != 'undefined') {
     clearTimeout(playbackTimeout);
 }
-var fullScreen = 0;
+var fullScreen = 0;     //是否处于全屏状态的标志
 
 var routeDecodeObj = new Array();
+var routeDetailDecodeObj = new Array();
+var ajaxSendData = new Array();
 var vehicleMarkerList = new Array();
 var infoWindowList = new Array();
 var polylineList = new Array();
 
-var warningDistance = alarm_distance_json[0].warning_distance;
-var alarmDistance = alarm_distance_json[0].alarm_distance;
+var warningDistance = alarm_distance_json.warning_distance;
+var alarmDistance = alarm_distance_json.alarm_distance;
 
 function setBMap() {
     var windowHeight = $(window).height();
@@ -98,14 +100,19 @@ function setBMap() {
     };
     BaiduMap.setMapStyle(mapStyle);
 
+    $('#warningDistance').val(alarm_distance_json.warning_distance);
+    $('#warningDistanceFull').val(alarm_distance_json.warning_distance);
+    $('#alarmDistance').val(alarm_distance_json.alarm_distance);
+    $('#alarmDistanceFull').val(alarm_distance_json.alarm_distance);
+
     for (var idx in route_json) {
         routeDecodeObj[idx] = JSON.parse(route_json[idx].route_lng_lat.replace(/&quot;/g, '"'));
+        routeDetailDecodeObj[idx] = route_json[idx].route_detail.replace(/&lt;/g, '<').replace(/&gt;/g, '>');
+        ajaxSendData[idx] = {
+            "vehicle_id": route_json[idx].vehicle_id,
+            "device_id": route_json[idx].device_id,
+        }
     }
-
-    $('#warningDistance').val(alarm_distance_json[0].warning_distance);
-    $('#warningDistanceFull').val(alarm_distance_json[0].warning_distance);
-    $('#alarmDistance').val(alarm_distance_json[0].alarm_distance);
-    $('#alarmDistanceFull').val(alarm_distance_json[0].alarm_distance);
 
     lorryIconGreen = new BMap.Icon("__PUBLIC__/image/truck_green.png", new BMap.Size(32, 40), {
         anchor: new BMap.Size(16, 40),
@@ -124,6 +131,7 @@ function setBMap() {
         while (polyline = polylineList.pop()) {
             BaiduMap.removeOverlay(polyline);
         }
+        $('#route_panel').html("");
     });
 
     $(".anchorBL").hide();
@@ -139,18 +147,15 @@ loadScript();
 
 function transferWarning() {
     $.ajax({
-        type: "GET",
-        url: "{:U('Home/DistrictMap/ajax_gps_data')}",
-        timeout: 5000,
+        type: "POST",
+        url: "{:U('Home/DistrictMap/ajax_get_gps_data')}",
+        dataType: 'JSON',
+        data: {
+            'ajaxSendData': JSON.stringify(ajaxSendData),
+        },
         success: function(gpsDataArray) {
             while (vehicleMarker = vehicleMarkerList.pop()) {
                 BaiduMap.removeOverlay(vehicleMarker);
-            }
-            while (infoWindow = infoWindowList.pop()) {
-                BaiduMap.removeOverlay(infoWindow);
-            }
-            while (polyline = polylineList.pop()) {
-                BaiduMap.removeOverlay(polyline);
             }
 
             for (var gpsIdx in gpsDataArray) {
@@ -170,8 +175,8 @@ function transferWarning() {
                     pointLocation = "" + addComp.province + addComp.city + addComp.district + addComp.street + addComp.streetNumber;
                 });
 
-                var infoWindowContent = "<p>运输车辆牌照：" + vehicle_json[gpsIdx].vehicle_num + "</p><p>运输车辆类型：" + vehicle_json[gpsIdx].vehicle_type + "</p><p>运输单位名称：" + vehicle_json[gpsIdx].transport_unit_name + "</p><p>运输单位地址：" + vehicle_json[gpsIdx].transport_unit_address + "</p><p>运输单位电话：" + vehicle_json[gpsIdx].transport_unit_phone + "</p><p>运输单位环保联系人姓名：" + vehicle_json[gpsIdx].transport_unit_contacts_name + "</p><p>运输单位环保联系人电话：" + vehicle_json[gpsIdx].transport_unit_contacts_phone;
-                var messageContent = "车辆牌照为：" + vehicle_json[gpsIdx].vehicle_num + "的" + vehicle_json[gpsIdx].vehicle_type + "，大致位置为：" + pointLocation;
+                var infoWindowContent = "<p>运输车辆牌照：" + route_json[gpsIdx].vehicle_num + "</p><p>运输车辆类型：" + route_json[gpsIdx].vehicle_type + "</p><p>运输单位名称：" + transport_unit_json[gpsIdx].transport_unit_name + "</p><p>运输单位地址：" + transport_unit_json[gpsIdx].transport_unit_address + "</p><p>运输单位电话：" + transport_unit_json[gpsIdx].transport_unit_phone + "</p><p>运输单位环保联系人姓名：" + transport_unit_json[gpsIdx].transport_unit_contacts_name + "</p><p>运输单位环保联系人电话：" + transport_unit_json[gpsIdx].transport_unit_contacts_phone;
+                var messageContent = "车辆牌照为：" + route_json[gpsIdx].vehicle_num + "的" + route_json[gpsIdx].vehicle_type + "，大致位置为：" + pointLocation;
                 var infoWindowOption = {
                     width: 0, // 信息窗口宽度
                     height: 0, // 信息窗口高度
@@ -221,6 +226,7 @@ function transferWarning() {
                     });
                     BaiduMap.addOverlay(polyline);
                     polylineList.push(polyline);
+                    $('#route_panel').html(routeDetailDecodeObj[markerIdx]);
                 });
             }
         },
@@ -234,22 +240,22 @@ function transferWarning() {
     });
 }
 
-transferWarning();
+setTimeout("transferWarning()", 2000);
 var intervalWarning = setInterval("transferWarning()", 15000);
 
 function setting() {
     var inputWarningDistance = $('#warningDistance');
     var inputAlarmDistance = $('#alarmDistance');
     if (!inputWarningDistance.val()) {
-        warningDistance = alarm_distance_json[0].warning_distance;
-        inputWarningDistance.val(alarm_distance_json[0].warning_distance);
+        warningDistance = alarm_distance_json.warning_distance;
+        inputWarningDistance.val(alarm_distance_json.warning_distance);
     } else {
         warningDistance = inputWarningDistance.val();
         $('#warningDistanceFull').val(warningDistance);
     }
     if (!inputAlarmDistance.val()) {
-        alarmDistance = val(alarm_distance_json[0].alarm_distance);
-        inputAlarmDistance.val(alarm_distance_json[0].alarm_distance);
+        alarmDistance = val(alarm_distance_json.alarm_distance);
+        inputAlarmDistance.val(alarm_distance_json.alarm_distance);
     } else {
         alarmDistance = inputAlarmDistance.val();
         $('#alarmDistanceFull').val(alarmDistance);
@@ -261,15 +267,15 @@ function settingFull() {
     var inputWarningDistanceFull = $('#warningDistanceFull');
     var inputAlarmDistanceFull = $('#alarmDistanceFull');
     if (!inputWarningDistanceFull.val()) {
-        inputWarningDistanceFull.val(alarm_distance_json[0].warning_distance);
-        warningDistance = alarm_distance_json[0].warning_distance;
+        inputWarningDistanceFull.val(alarm_distance_json.warning_distance);
+        warningDistance = alarm_distance_json.warning_distance;
     } else {
         warningDistance = inputWarningDistanceFull.val();
         $('#warningDistance').val(warningDistance);
     }
     if (!inputAlarmDistanceFull.val()) {
-        inputAlarmDistanceFull.val(alarm_distance_json[0].alarm_distance);
-        alarmDistance = val(alarm_distance_json[0].alarm_distance);
+        inputAlarmDistanceFull.val(alarm_distance_json.alarm_distance);
+        alarmDistance = val(alarm_distance_json.alarm_distance);
     } else {
         alarmDistance = inputAlarmDistanceFull.val();
         $('#alarmDistance').val(alarmDistance);
@@ -278,13 +284,13 @@ function settingFull() {
 }
 
 function settingAlarmDistance() {
-    if ((warningDistance != alarm_distance_json[0].warning_distance) || (alarmDistance != alarm_distance_json[0].alarm_distance)) {
+    if ((warningDistance != alarm_distance_json.warning_distance) || (alarmDistance != alarm_distance_json.alarm_distance)) {
         $.ajax({
             type: "POST",
             url: "{:U('Home/DistrictMap/ajax_setting_alarm_distance')}",
-            timeout: 3000,
+            dataType: 'JSON',
             data: {
-                "id": alarm_distance_json[0].id,
+                "id": alarm_distance_json.id,
                 "warning_distance": warningDistance,
                 "alarm_distance": alarmDistance,
             },
@@ -303,8 +309,9 @@ function settingAlarmDistance() {
                 console.log("textStatus:" + textStatus);
             }
         });
-        alarm_distance_json[0].warning_distance = warningDistance;
-        alarm_distance_json[0].alarm_distance = alarmDistance;
+        alarm_distance_json.warning_distance = warningDistance;
+        alarm_distance_json.alarm_distance = alarmDistance;
+
     } else {
         myAlertInfo("告警距离未修改，请修改后再设置");
     }
