@@ -67,6 +67,7 @@
                     </select>
                 </div>
             </div>
+            <div class="blank_div"></div>
             <div class="row">
                 <div class="col-md-6">
                     <input type="date" class="form-control input-sm" id="beginDateFull" value="2014-01-13">
@@ -75,6 +76,7 @@
                     <input type="date" class="form-control input-sm" id="endDateFull" value="2014-01-14">
                 </div>
             </div>
+            <div class="blank_div"></div>
             <div class="row">
                 <div class="col-md-6">
                     <label class="sr-only" for="selectSpeedFull">回放速度：</label>
@@ -88,9 +90,13 @@
                     <button type="button" class="btn btn-info btn-sm" onclick="getVehicleRoute();">回放</button>
                 </div>
             </div>
-            <div id="playbackTimeDivFull"></div>
-            <div id="transport_unit_panel"></div>
-            <div id="vehicle_panel"></div>
+            <div class="blank_div"></div>
+            <table id="playbackTimeDivFull" class="table table-striped table-bordered table-hover table-condensed table-responsive" style="margin-bottom:0px"></table>
+            <div class="blank_div"></div>
+            <table id="transport_unit_panel" class="table table-striped table-bordered table-hover table-condensed table-responsive" style="margin-bottom:0px"></table>
+            <div class="blank_div"></div>
+            <table id="vehicle_panel" class="table table-striped table-bordered table-hover table-condensed table-responsive" style="margin-bottom:0px"></table>
+            <div class="blank_div"></div>
             <div id="route_panel"></div>
         </div>
 
@@ -205,7 +211,7 @@ function showTransportUnit() {
     } else {
         var selectTransportUnitVal = $('#selectTransportUnit').val();
     }
-    $('#transport_unit_panel').html("<p>运输单位名称：" + transport_unit_json[selectTransportUnitVal].transport_unit_name + "</p><p>运输单位地址：" + transport_unit_json[selectTransportUnitVal].transport_unit_address + "</p><p>运输单位电话：" + transport_unit_json[selectTransportUnitVal].transport_unit_phone + "</p><p>运输单位环保联系人姓名：" + transport_unit_json[selectTransportUnitVal].transport_unit_contacts_name + "</p><p>运输单位环保联系人电话：" + transport_unit_json[selectTransportUnitVal].transport_unit_contacts_phone + "</p>");
+    $('#transport_unit_panel').html("<tr><td>运输单位名称：</td><td>" + transport_unit_json[selectTransportUnitVal].transport_unit_name + "</td></tr><tr><td>运输单位地址：</td><td>" + transport_unit_json[selectTransportUnitVal].transport_unit_address + "</td></tr><tr><td>运输单位电话：</td><td>" + transport_unit_json[selectTransportUnitVal].transport_unit_phone + "</td></tr><tr><td>运输单位环保联系人姓名：</td><td>" + transport_unit_json[selectTransportUnitVal].transport_unit_contacts_name + "</td></tr><tr><td>运输单位环保联系人电话：</td><td>" + transport_unit_json[selectTransportUnitVal].transport_unit_contacts_phone + "</td></tr>");
 }
 
 function showVehicle() {
@@ -214,7 +220,7 @@ function showVehicle() {
     } else {
         var selectVehicleVal = $('#selectVehicle').val();
     }
-    $('#vehicle_panel').html("<p>运输车辆牌照：" + vehicle_json[selectVehicleVal].vehicle_num + "</p><p>运输车辆类型：" + vehicle_json[selectVehicleVal].vehicle_type + "</p>");
+    $('#vehicle_panel').html("<tr><td>运输车辆牌照：</td><td>" + vehicle_json[selectVehicleVal].vehicle_num + "</td></tr><tr><td>运输车辆类型：</td><td>" + vehicle_json[selectVehicleVal].vehicle_type + "</td></tr>");
 }
 
 function getVehicleRoute() {
@@ -363,7 +369,7 @@ function getVehicleRoute() {
 
             function playback(dataIdx) {
                 playbackTimeObj.setSeconds(playbackTimeObj.getSeconds() + 10);
-                playbackTimeDiv.html(playbackTimeObj.getFullYear() + '/' + (playbackTimeObj.getMonth() + 1) + '/' + playbackTimeObj.getDate() + ' ' + playbackTimeObj.getHours() + ':' + playbackTimeObj.getMinutes());
+                playbackTimeDiv.html("<tr><td>回放时间：</td><td>" + playbackTimeObj.getFullYear() + '/' + (playbackTimeObj.getMonth() + 1) + '/' + playbackTimeObj.getDate() + ' ' + playbackTimeObj.getHours() + ':' + playbackTimeObj.getMinutes() + "</td></tr>");
                 for (var i = 0; i < 1; ++i) {
                     if (!gpsRouteTime[dataIdx]) {
                         continue;

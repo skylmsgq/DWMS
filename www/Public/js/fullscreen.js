@@ -35,7 +35,7 @@ function toFullScreen() {
 function exitFullScreen() {
     BaiduMap.disableAutoResize();
     var curPixel = BaiduMap.pointToPixel(BaiduMap.getCenter());
-    var newPixel = new BMap.Pixel(curPixel.x + 135, curPixel.y + 99);
+    var newPixel = new BMap.Pixel(curPixel.x + 135, curPixel.y + 103);
     var newCenter = BaiduMap.pixelToPoint(newPixel);
     $('#div_header').css("display", "inherit");
     $('#div_footer').css("display", "inherit");

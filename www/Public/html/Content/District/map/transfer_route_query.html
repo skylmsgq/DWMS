@@ -20,13 +20,13 @@
                 <div class="col-md-3">
                     <label class="sr-only" for="selectProductionUnit">产生单位：</label>
                     <select class="form-control input-sm" id="selectProductionUnit">
-                        <option>请选择生产单位</option>
+                        <option value="-1">请选择生产单位</option>
                     </select>
                 </div>
                 <div class="col-md-3">
                     <label class="sr-only" for="selectReceptionUnit">接受单位：</label>
                     <select class="form-control input-sm" id="selectReceptionUnit">
-                        <option>请选择接受单位</option>
+                        <option value="-1">请选择接受单位</option>
                     </select>
                 </div>
                 <div class="col-md-2">
@@ -44,12 +44,14 @@
             <div id="myAlertFull"></div>
             <label class="sr-only" for="selectProductionUnitFull">产生单位：</label>
             <select class="form-control input-sm" id="selectProductionUnitFull">
-                <option>请选择生产单位</option>
+                <option value="-1">请选择生产单位</option>
             </select>
+            <div class="blank_div"></div>
             <label class="sr-only" for="selectReceptionUnitFull">接受单位：</label>
             <select class="form-control input-sm" id="selectReceptionUnitFull">
-                <option>请选择接受单位</option>
+                <option value="-1">请选择接受单位</option>
             </select>
+            <div class="blank_div"></div>
             <div class="row">
                 <div class="col-md-4">
                     <button class="btn btn-info btn-sm" onclick="searchRoute();">查询</button>
@@ -60,6 +62,7 @@
                 <div class="col-md-4">
                 </div>
             </div>
+            <div class="blank_div"></div>
             <div id="route_panel"></div>
         </div>
 
@@ -129,6 +132,14 @@ function searchRoute() {
         var selectProductionUnitVal = $('#selectProductionUnit').val();
         var selectReceptionUnitVal = $('#selectReceptionUnit').val();
     }
+    if (selectProductionUnitVal == '-1') {
+        myAlertFail("请先选择生产单位");
+        return;
+    }
+    if (selectReceptionUnitVal == '-1') {
+        myAlertFail("请先选择接受单位");
+        return;
+    }
 
     $.ajax({
         type: 'POST',
@@ -160,8 +171,6 @@ function searchRoute() {
                 strokeOpacity: 0.8
             });
             BaiduMap.addOverlay(polyline);
-
-
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) {
             myAlertFail("获取路线ajax请求失败");
@@ -174,6 +183,14 @@ function searchRoute() {
 }
 
 function deleteRoute() {
+    if (selectProductionUnitVal == '-1') {
+        myAlertFail("请先选择生产单位");
+        return;
+    }
+    if (selectReceptionUnitVal == '-1') {
+        myAlertFail("请先选择接受单位");
+        return;
+    }
     $.ajax({
         type: 'POST',
         url: "{:U('Home/DistrictMap/ajax_delete_route')}",

@@ -20,13 +20,13 @@
                 <div class="col-md-3">
                     <label class="sr-only" for="selectProductionUnit">产生单位：</label>
                     <select class="form-control input-sm" id="selectProductionUnit">
-                        <option>请选择生产单位</option>
+                        <option value="-1">请选择生产单位</option>
                     </select>
                 </div>
                 <div class="col-md-3">
                     <label class="sr-only" for="selectReceptionUnit">接受单位：</label>
                     <select class="form-control input-sm" id="selectReceptionUnit">
-                        <option>请选择接受单位</option>
+                        <option value="-1">请选择接受单位</option>
                     </select>
                 </div>
                 <div class="col-md-2">
@@ -55,18 +55,21 @@
             <div id="myAlertFull"></div>
             <label class="sr-only" for="selectProductionUnitFull">产生单位：</label>
             <select class="form-control input-sm" id="selectProductionUnitFull">
-                <option>请选择生产单位</option>
+                <option value="-1">请选择生产单位</option>
             </select>
+            <div class="blank_div"></div>
             <label class="sr-only" for="selectReceptionUnitFull">接受单位：</label>
             <select class="form-control input-sm" id="selectReceptionUnitFull">
-                <option>请选择接受单位</option>
+                <option value="-1">请选择接受单位</option>
             </select>
+            <div class="blank_div"></div>
             <label class="sr-only" for="selectStrategyFull">驾车策略：</label>
             <select class="form-control input-sm" id="selectStrategyFull">
                 <option value="0">最小时间</option>
                 <option value="1">最短距离</option>
                 <option value="2">避开高速</option>
             </select>
+            <div class="blank_div"></div>
             <div class="row">
                 <div class="col-md-4">
                     <button type="button" class="btn btn-info btn-sm" onclick="search();">查询</button>
@@ -78,6 +81,7 @@
                     <button type="button" class="btn btn-success btn-sm" onclick="submit();">提交</button>
                 </div>
             </div>
+            <div class="blank_div"></div>
             <div id="route_panel"></div>
         </div>
 
@@ -117,15 +121,15 @@ function setBMap() {
     var selectProductionUnit = $('#selectProductionUnit');
     var selectProductionUnitFull = $('#selectProductionUnitFull');
     for (var idx in production_unit_json) {
-        selectProductionUnit.append('<option value="' + production_unit_json[idx].production_unit_id + '">' + production_unit_json[idx].production_unit_name + '</option>');
-        selectProductionUnitFull.append('<option value="' + production_unit_json[idx].production_unit_id + '">' + production_unit_json[idx].production_unit_name + '</option>');
+        selectProductionUnit.append('<option value="' + idx + '">' + production_unit_json[idx].production_unit_name + '</option>');
+        selectProductionUnitFull.append('<option value="' + idx + '">' + production_unit_json[idx].production_unit_name + '</option>');
     }
 
     var selectReceptionUnit = $('#selectReceptionUnit');
     var selectReceptionUnitFull = $('#selectReceptionUnitFull');
     for (var idx in reception_unit_json) {
-        selectReceptionUnit.append('<option value="' + reception_unit_json[idx].reception_unit_id + '">' + reception_unit_json[idx].reception_unit_name + '</option>');
-        selectReceptionUnitFull.append('<option value="' + reception_unit_json[idx].reception_unit_id + '">' + reception_unit_json[idx].reception_unit_name + '</option>');
+        selectReceptionUnit.append('<option value="' + idx + '">' + reception_unit_json[idx].reception_unit_name + '</option>');
+        selectReceptionUnitFull.append('<option value="' + idx + '">' + reception_unit_json[idx].reception_unit_name + '</option>');
     }
 
     $(".anchorBL").hide();
@@ -178,6 +182,7 @@ var searchComplete = function(results) {
 };
 
 function search() {
+
     BaiduMap.clearOverlays();
     if (typeof(transit) != 'undefined') {
         transit.clearResults(); //清除导航结果
@@ -211,21 +216,16 @@ function search() {
     var p1_lng, p1_lat;
     var p2_lng, p2_lat;
 
-    for (var idx in production_unit_json) {
-        if (production_unit_json[idx].production_unit_id == selectProductionUnitVal) {
-            p1_lng = production_unit_json[idx].production_unit_longitude;
-            p1_lat = production_unit_json[idx].production_unit_latitude;
-            break;
-        }
-    }
 
-    for (var idx in reception_unit_json) {
-        if (reception_unit_json[idx].reception_unit_id == selectReceptionUnitVal) {
-            p2_lng = reception_unit_json[idx].reception_unit_longitude;
-            p2_lat = reception_unit_json[idx].reception_unit_latitude;
-            break;
-        }
-    }
+    p1_lng = production_unit_json[selectProductionUnitVal].production_unit_longitude;
+    p1_lat = production_unit_json[selectProductionUnitVal].production_unit_latitude;
+
+
+
+    p2_lng = reception_unit_json[selectReceptionUnitVal].reception_unit_longitude;
+    p2_lat = reception_unit_json[selectReceptionUnitVal].reception_unit_latitude;
+
+
     var p1 = new BMap.Point(p1_lng, p1_lat);
     var p2 = new BMap.Point(p2_lng, p2_lat);
     transit.search(p1, p2);
@@ -264,8 +264,8 @@ function submit() {
         url: "{:U('Home/DistrictMap/ajax_transfer_route_plan')}",
         dataType: 'JSON',
         data: {
-            "production_unit_id": selectProductionUnitVal,
-            "reception_unit_id": selectReceptionUnitVal,
+            "production_unit_id": production_unit_json[selectProductionUnitVal].production_unit_id,
+            "reception_unit_id": reception_unit_json[selectReceptionUnitVal].reception_unit_id,
             "route_lng_lat": JSON.stringify(path),
             "route_detail": route_detail
         },

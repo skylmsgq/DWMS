@@ -52,6 +52,7 @@
                     <input type="date" class="form-control input-sm" id="endDateFull" value="2014-01-14">
                 </div>
             </div>
+            <div class="blank_div"></div>
             <div class="row">
                 <div class="col-md-6">
                     <label class="sr-only" for="selectSpeedFull">回放速度：</label>
@@ -63,11 +64,15 @@
                 </div>
                 <div class="col-md-6">
                     <button type="button" class="btn btn-info btn-sm" onclick="getVehicleRoutes();">回放</button>
-                </div>s
+                </div>
             </div>
-            <div id="playbackTimeDivFull"></div>
-            <div id="transport_unit_panel"></div>
-            <div id="vehicle_panel"></div>
+            <div class="blank_div"></div>
+            <table id="playbackTimeDivFull" class="table table-striped table-bordered table-hover table-condensed table-responsive" style="margin-bottom:0px"></table>
+            <div class="blank_div"></div>
+            <table id="vehicle_panel"></table>
+            <div class="blank_div"></div>
+            <table id="transport_unit_panel" class="table table-striped table-bordered table-hover table-condensed table-responsive" style="margin-bottom:0px"></table>
+            <div class="blank_div"></div>
             <div id="route_panel"></div>
         </div>
 
@@ -85,9 +90,13 @@ if (typeof(playbackTimeout) != 'undefined') {
     clearTimeout(playbackTimeout);
 }
 var fullScreen = 0;
+
 var vehicleMarkerList = new Array();
 var infoWindowList = new Array();
 var polylineList = new Array();
+
+var tableData = new Array();
+var tableData = [];
 
 function setBMap() {
     var windowHeight = $(window).height();
@@ -107,12 +116,47 @@ function setBMap() {
     };
     BaiduMap.setMapStyle(mapStyle);
 
+    $('#vehicle_panel').dataTable({
+        "aaData": tableData,
+        "aoColumns": [{
+            "sTitle": "车牌号"
+        }, {
+            "sTitle": "时速"
+        }, {
+            "sTitle": "偏移距离"
+        }],
+        "bPaginate": true, //翻页功能
+        "bLengthChange": true, //改变每页显示数据数量
+        "bFilter": true, //过滤功能
+        "bSort": true, //排序功能
+        "bInfo": true, //页脚信息
+        "bAutoWidth": true, //自动宽度
+        "bStateSave": true, //状态保存，使用了翻页或者改变了每页显示数据数量，会保存在cookie中，下回访问时会显示上一次关闭页面时的内容。
+        "sPaginationType": "full_numbers", //显示数字的翻页样式
+
+        "oLanguage": {
+            "sLengthMenu": "每页显示 _MENU_ 条记录",
+            "sSearch": "搜索 _INPUT_",
+            "sZeroRecords": "抱歉， 没有找到",
+            "sInfo": "从 _START_ 到 _END_ /共 _TOTAL_ 条数据",
+            "sInfoEmpty": "没有数据",
+            "sInfoFiltered": "(从 _MAX_ 条数据中检索)",
+            "oPaginate": {
+                "sFirst": "首页",
+                "sPrevious": "前一页",
+                "sNext": "后一页",
+                "sLast": "尾页"
+            },
+            "sZeroRecords": "没有检索到数据"
+
+        }
+    });
+
     BaiduMap.addEventListener("click", function() {
         while (polyline = polylineList.pop()) {
             BaiduMap.removeOverlay(polyline);
         }
         $('#transport_unit_panel').html("");
-        $('#vehicle_panel').html("");
         $('#route_panel').html("");
     });
 
@@ -219,8 +263,7 @@ function getVehicleRoutes() {
                                 return;
                             }
 
-                            $('#transport_unit_panel').html("<p>运输单位地址：" + vehicleTransportUnit.transport_unit_address + "</p><p>运输单位电话：" + vehicleTransportUnit.transport_unit_phone + "</p><p>运输单位环保联系人姓名：" + vehicleTransportUnit.transport_unit_contacts_name + "</p><p>运输单位环保联系人电话：" + vehicleTransportUnit.transport_unit_contacts_phone + "</p>");
-                            $('#vehicle_panel').html("<p>运输车辆牌照：" + vehicleTransportUnit.vehicle_num + "</p><p>运输车辆类型：" + vehicleTransportUnit.vehicle_type + "</p>");
+                            $('#transport_unit_panel').html("<tr><td>运输单位地址：</td><td>" + vehicleTransportUnit.transport_unit_address + "</td></tr><tr><td>运输单位电话：</td><td>" + vehicleTransportUnit.transport_unit_phone + "</td></tr><tr><td>运输单位环保联系人姓名：</td><td>" + vehicleTransportUnit.transport_unit_contacts_name + "</td></tr><tr><td>运输单位环保联系人电话：</td><td>" + vehicleTransportUnit.transport_unit_contacts_phone + "</td></tr><tr><td>运输车辆牌照：</td><td>" + vehicleTransportUnit.vehicle_num + "</td></tr><tr><td>运输车辆类型：</td><td>" + vehicleTransportUnit.vehicle_type + "</td></tr>");
 
                             var infoWindowContent = "<p>运输车辆牌照：" + vehicleTransportUnit.vehicle_num + "</p><p>运输车辆类型：" + vehicleTransportUnit.vehicle_type + "</p><p>运输单位名称：" + vehicleTransportUnit.transport_unit_name + "</p><p>运输单位地址：" + vehicleTransportUnit.transport_unit_address + "</p><p>运输单位电话：" + vehicleTransportUnit.transport_unit_phone + "</p><p>运输单位环保联系人姓名：" + vehicleTransportUnit.transport_unit_contacts_name + "</p><p>运输单位环保联系人电话：" + vehicleTransportUnit.transport_unit_contacts_phone + "</p>";
                             var infoWindowOption = {
@@ -305,11 +348,25 @@ function getVehicleRoutes() {
 
             function playback(dataIdx) {
                 playbackTimeObj.setSeconds(playbackTimeObj.getSeconds() + 10);
-                playbackTimeDiv.html(playbackTimeObj.getFullYear() + '/' + (playbackTimeObj.getMonth() + 1) + '/' + playbackTimeObj.getDate() + ' ' + playbackTimeObj.getHours() + ':' + playbackTimeObj.getMinutes());
+                playbackTimeDiv.html("<tr><td>回放时间：</td><td>" + playbackTimeObj.getFullYear() + '/' + (playbackTimeObj.getMonth() + 1) + '/' + playbackTimeObj.getDate() + ' ' + playbackTimeObj.getHours() + ':' + playbackTimeObj.getMinutes() + "</td></tr>");
                 for (var gpsIdx in gpsRouteTimeArray) {
+                    if (!gpsRouteTimeArray[gpsIdx]) {
+                        continue;
+                    }
                     if (!gpsRouteTimeArray[gpsIdx][dataIdx]) {
                         continue;
                     }
+
+                    var itemData = new Array();
+                    // itemData[0] = gpsRouteTimeArray[gpsIdx][dataIdx].vehicle_id;
+                    itemData[0] = gpsIdx;
+                    itemData[1] = gpsRouteTimeArray[gpsIdx][dataIdx].speed;
+                    itemData[2] = gpsRouteTimeArray[gpsIdx][dataIdx].offset_distance;
+                    tableData[gpsIdx] = itemData;
+                    var dataTable = $('#vehicle_panel').dataTable();
+                    dataTable.fnClearTable();
+                    dataTable.fnAddData(tableData);
+
                     var newPoint = new BMap.Point(gpsRouteTimeArray[gpsIdx][dataIdx].bmap_longitude, gpsRouteTimeArray[gpsIdx][dataIdx].bmap_latitude);
                     vehicleMarkerList[gpsIdx].setPosition(newPoint);
                     offsetDistance = gpsRouteTimeArray[gpsIdx][dataIdx].offset_distance;
