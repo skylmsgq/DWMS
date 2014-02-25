@@ -66,11 +66,11 @@
                 <tr>
                     <td>产生单位</td>
                     <td>
-                        {$manifest.production_unit_name}
+                        {$p_name}
                     </td>
                     <td>运输单位</td>
                     <td>
-                        {$manifest.transport_unit_name}
+                        {$t_name}
                     </td>
                 </tr>                 
                 <tr>
@@ -254,6 +254,8 @@
 </center>
 
 <script type="text/javascript">
+
+
 function ajaxAction() {
     var form_serialize = "" + $('#manifest_request').serialize();
 

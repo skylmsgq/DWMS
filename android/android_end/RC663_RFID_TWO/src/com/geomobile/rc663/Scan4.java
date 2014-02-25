@@ -241,7 +241,7 @@ public class Scan4 extends ScanActivity implements OnClickListener {
     				else
     				{
     					int temp=Integer.parseInt(jObject.getString("mstatus"));
-    					if (temp==11)
+    					if (temp==4 || temp>=9)
     					{
     						String res=rfid;
     						if (addway.equals("0"))

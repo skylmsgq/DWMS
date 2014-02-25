@@ -48,6 +48,22 @@ class DistrictBusinessAction extends CommonAction{
 			'record_id' => $record_id,
 			'record_status' => $record_status,
 		);
+		$rfid_table=M('record')->where("record_id='$record_id'")->getField('rfid_table_id');
+		$rfid_list=explode(",",$rfid_table);
+		foreach ($rfid_list as  $value) {
+			# code...
+			if ($value!="")
+			{
+				$rfid=M('rfid');
+				$old_rfidstatus=$rfid->where("rfid_id='$value' ")->getField('transfer_status');
+				if ($old_rfidstatus!=1)
+				{	
+				$resultrfid=$rfid->where("rfid_id='$value' ")->setField('transfer_status',1);
+				if (!$resultrfid)
+					$this->ajaxReturn( 0, '修改数据库失败！', 0 );
+				}
+			}
+		}
 		$result = M( 'record' )->save( $current_record_status );
 		if ( $result ) {
 			$this->ajaxReturn( 1, '审核成功！', 1 );

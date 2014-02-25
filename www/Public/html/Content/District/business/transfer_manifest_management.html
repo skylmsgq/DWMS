@@ -27,7 +27,20 @@
 
 <script type="text/javascript">
 var c = new Array();
-var manifest_json = c.concat(production_manifest_json,reception_manifest_json);
+if(production_manifest_json == null){
+    if(reception_manifest_json == null){
+        var manifest_json = null;
+    }else{
+        var manifest_json = reception_manifest_json;
+    }
+}else{
+    if(reception_manifest_json = null){
+        var manifest_json = production_manifest_json;
+    }else{
+        var manifest_json = c.concat(production_manifest_json,reception_manifest_json);
+    }
+}
+
 function setTable() {
     var tableData = new Array();
     for (var idx in manifest_json) {
