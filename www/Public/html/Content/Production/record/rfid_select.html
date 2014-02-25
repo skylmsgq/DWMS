@@ -1,0 +1,87 @@
+<form role="form" id="record_detail">
+    <div class="panel panel-primary">
+        <div class="panel-heading">RFID 列表</div>
+        <div class="panel-body">
+            <div class="table-responsive">
+                <table id="rfid_form" class="table table-striped table-bordered table-hover table-condensed">
+                    
+                </table>
+            </div>
+        </div>
+    </div>
+</form>
+
+<center>
+    <button class="btn btn-info btn-lg" id="button_save" data-loading-text="正在保存..." data-complete-text="保存成功！" onclick="ajaxAction(0)">保存</button>
+    <button class="btn btn-info btn-lg" onclick="$('#myModal').modal('hide');">关闭页面</button>
+</center>
+
+
+<script type="text/javascript">
+
+$('#rfid_form').html('<tr><td>请选择 RFID 标签</td></tr>');
+for (var idx in rfid) {
+$('#rfid_form').append('<tr><td><input type="checkbox" name="' + rfid[idx].add_method + '" value="' + rfid[idx].waste_total + '">' + rfid[idx].rfid_id + '</td></tr>');
+}
+
+function ajaxAction(actionID) {
+    $('#button_save').button('loading');
+    var selected_1=document.getElementsByName("0"); 
+    var weight = 0; 
+    for(var i=0;i <selected_1.length;i++){ 
+      if(selected_1[i].checked==true){ 
+          weight = selected_1[i].value + weight;       
+        } 
+    }
+    var selected_2=document.getElementsByName("1"); 
+    var num = 0; 
+    for(var i=0;i <selected_2.length;i++){ 
+      if(selected_2[i].checked==true){ 
+          num =selected_2[i].value + num;     
+        } 
+    }
+    $('#button_save').button('complete');
+    setTimeout("$('#button_save').button('reset')", 3000);
+    
+    $.ajax({
+        type: "post",
+        url: "num_weight",
+        timeout: 2000,
+        data: {
+            num: num,
+            weight: weight
+        },
+
+        success: function(data) {
+            switch (actionID) {
+                case 0:
+                    $('#button_save').button('complete');
+                    $('#button_submit').removeClass('disabled');
+                    setTimeout("$('#button_save').button('reset')", 3000);
+                    break;
+                case 1:
+                    $('#button_save').removeClass('disabled');
+                    $('#button_submit').button('complete');
+                    setTimeout("$('#button_submit').button('reset')", 3000);
+                    break;
+                default:
+                    break;
+            }
+            $('input').val('');
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+            alert('保存失败，请重新保存。');
+            console.log("Error: Ajax_Content_Load " + errorThrown);
+            console.log("XMLHttpRequest.status: " + XMLHttpRequest.status);
+            console.log("XMLHttpRequest.readyState: " + XMLHttpRequest.readyState);
+            console.log("textStatus: " + textStatus);
+        }
+    });
+
+}
+
+
+var a = 0;
+a = a+1;
+
+</script>
