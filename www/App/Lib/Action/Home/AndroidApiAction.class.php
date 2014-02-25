@@ -11,6 +11,11 @@ class AndroidApiAction extends Action{
 		$postData=$_POST['txt_json'];
 		echo urldecode(json_encode(login($postData)));
 	}
+	public function checkOut()
+	{
+		$postData=$_POST['txt_json'];
+		echo urldecode(json_encode(checkout($postData)));
+	}
 	//查看rfid对应信息
 	public function check()
 	{

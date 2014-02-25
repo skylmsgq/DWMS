@@ -26,8 +26,6 @@
 <!-- /.modal -->
 
 <script type="text/javascript">
-console.log(manifest_json);
-console.log(unit_json);
 function setTable() {
     var tableData = new Array();
     for (var idx in manifest_json) {
@@ -43,7 +41,10 @@ function setTable() {
                 itemData[3] = "<span class='label label-primary'>已保存未提交</span>";
                 break;
             case '10':
-                itemData[3] = "<span class='label label-warning'>已提交待审核</span>";
+                itemData[3] = "<span class='label label-info'>已提交待审核</span>";
+                break;
+            case '11':
+                itemData[3] = "<span class='label label-success'>已通过</span>";
                 break;
             case '13':
                 itemData[3] = "<span class='label label-primary'>已修改未提交</span>";

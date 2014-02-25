@@ -91,7 +91,7 @@
                     </td>
                     <td>危废外运目的</td>
                     <td>
-                        <input type="text" name="waste_transport_goal" class="form-control input-sm" placeholder="{$manifest.waste_transport_goal}" value="{$manifest.waste_goal}">
+                        <input type="text" name="waste_transport_goal" class="form-control input-sm" placeholder="{$manifest.waste_transport_goal}" value="{$manifest.waste_transport_goal}">
                     </td>
                 </tr>
                 <tr>
@@ -128,8 +128,6 @@
 </center>
 
 <script type="text/javascript">
-console.log($production_unit);
-console.log($manifest);
 function ajaxAction() {
     var form_serialize = "" + $('#manifest_modify').serialize();
 

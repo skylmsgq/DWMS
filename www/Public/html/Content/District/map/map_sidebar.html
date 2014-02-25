@@ -1,6 +1,5 @@
 <include file="./Public/html/Content/District/district_config.html" />
 <script type="text/javascript">
-
 DWMS_page_config.pageid = 1;
 
 DWMS_sidebar_config = {
@@ -9,44 +8,39 @@ DWMS_sidebar_config = {
         "sidebar_group_title": "地图展示",
         "sidebar_group_content": [{
             "id": 0,
-            "name": "转移地图展示",
+            "name": "转移地图实时展示",
             "url": "{:U('Home/DistrictMap/transfer_map_display')}"
-        },{
+        }, {
             "id": 1,
-            "name": "仓库地图展示",
+            "name": "指定车辆历史回放",
+            "url": "{:U('Home/DistrictMap/designate_vehicle_playback')}"
+        }, {
+            "id": 2,
+            "name": "转移地图历史回放",
+            "url": "{:U('Home/DistrictMap/transfer_map_playback')}"
+        }, {
+            "id": 3,
+            "name": "仓库地图实时展示",
             "url": "{:U('Home/DistrictMap/warehouse_map_display')}"
         }]
     }, {
         "sidebar_group_id": 1,
         "sidebar_group_title": "路线管理",
-        "sidebar_group_content": [/*{
-            "id": 0,
-            "name": "运输路线规划_1",
-            "url": "{:U('Home/DistrictMap/transfer_route_plan_1')}"
-        },{
-            "id": 1,
-            "name": "运输路线规划_2",
-            "url": "{:U('Home/DistrictMap/transfer_route_plan_2')}"
-        },*/{
+        "sidebar_group_content": [{
             "id": 0,
             "name": "运输路线规划",
-            "url": "{:U('Home/DistrictMap/transfer_route_plan_3')}"
-        },{
+            "url": "{:U('Home/DistrictMap/transfer_route_plan')}"
+        }, {
             "id": 1,
             "name": "运输路线查询",
             "url": "{:U('Home/DistrictMap/transfer_route_query')}"
+        }, {
+            "id": 2,
+            "name": "GPS数据模拟器",
+            "url": "{:U('Home/DistrictMap/gps_data_simulator')}"
         }]
-    }/*, {
-        "sidebar_group_id": 2,
-        "sidebar_group_title": "车辆绑定",
-        "sidebar_group_content": [{
-            "id": 0,
-            "name": "路线车辆绑定",
-            "url": "{:U('Home/DistrictMap/route_vehicle_binding')}"
-        }]
-    }*/]
+    }]
 }
-
 </script>
 
 <div class="row" id="div_row">

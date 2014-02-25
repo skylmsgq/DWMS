@@ -1,157 +1,299 @@
-<div class="panel panel-primary">
-    <div class="panel panel-heading" style="margin-bottom:1px">
-        <h3 class="panel-title">路线管理</h3>
+<div class="panel panel-primary" style="margin-bottom:0px;">
+    <div class="panel panel-heading" style="margin-bottom:0px; height:40px;">
+        <h3 class="panel-title" style="float:left;">运输路线规划</h3>
+        <button type="button" class="btn btn-default btn-xs" id="toFullScreen" onclick="toFullScreen(); fullScreen=1;" style="float:right;">全屏</button>
+        <div id="exitFullScreen" style="display:none; float:right;">
+            <button type="button" class="btn btn-default btn-xs" id="showSidebar" onclick="showSidebar();">
+                <span class="glyphicon glyphicon-chevron-left"></span>显示右侧边栏
+            </button>
+            <button type="button" class="btn btn-default btn-xs" id="hideSidebar" onclick="hideSidebar();" style="display:none">
+                <span class="glyphicon glyphicon-chevron-right"></span>隐藏右侧边栏
+            </button>
+            <button type="button" class="btn btn-default btn-xs" onclick="exitFullScreen(); fullScreen=0;">退出全屏</button>
+        </div>
     </div>
-    <div class="panel panel-body" style="margin-bottom:1px">
-        <div style="width:auto" id="container"></div>
-        <div class="panel panel-info" style="position:absolute;left:100%;top:60px;margin-left:-260px">
-            <div class="panel-heading">路线选择</div>
-            <div class="panel-body">
-                <div id="noSelectionAlert"></div>
-                <div class="btn-group">
-                    <button type="button" class="btn btn-default btn-lg dropdown-toggle" data-toggle="dropdown">
-                        <span class="glyphicon glyphicon-road"></span>
-                        <span id="gps_name">选择 GPS 设备</span>
-                    </button>
-                    <ul class="dropdown-menu" role="menu" id="dropdown-button">
-                        <!--<li><a href="#">Action</a></li>-->
-                    </ul>
+    <div class="panel panel-body" style="margin-bottom:0px">
+
+        <div id="div_input-group">
+            <div id="myAlert"></div>
+            <div class="row">
+                <div class="col-md-3">
+                    <label class="sr-only" for="selectProductionUnit">产生单位：</label>
+                    <select class="form-control input-sm" id="selectProductionUnit">
+                        <option>请选择生产单位</option>
+                    </select>
                 </div>
-                <select id="mySelect" style="visibility: hidden">
-                    正在获取 GPS 设备信息... 请稍候...
-                </select>
-                <p>
-                    <input class="btn btn-default navbar-btn" id="startBtn" type="button" onclick="startTool();" value="开始取点" />
-                    <input id="myclear" class="btn btn-default navbar-btn" type="button" onclick="map.clearOverlays();document.getElementById('info').innerHTML = '';points=[];mypoints=[];" value="清除" />
-                    <input class="btn btn-default navbar-btn" type="button" onclick="submit();" value="提交" />
-                </p>
-                <div id="info"></div>
+                <div class="col-md-3">
+                    <label class="sr-only" for="selectReceptionUnit">接受单位：</label>
+                    <select class="form-control input-sm" id="selectReceptionUnit">
+                        <option>请选择接受单位</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label class="sr-only" for="selectStrategy">驾车策略：</label>
+                    <select class="form-control input-sm" id="selectStrategy">
+                        <option value="0">最小时间</option>
+                        <option value="1">最短距离</option>
+                        <option value="2">避开高速</option>
+                    </select>
+                </div>
+                <div class="col-md-1">
+                    <button type="button" class="btn btn-info btn-sm" onclick="search();">查询</button>
+                </div>
+                <div class="col-md-1">
+                    <button type="button" class="btn btn-warning btn-sm" onclick="clearScreen();">清除</button>
+                </div>
+                <div class="col-md-1">
+                    <button type="button" class="btn btn-success btn-sm" onclick="submit();">提交</button>
+                </div>
             </div>
+        </div>
+
+        <div id="map_container" style="width:100%;float:left;"></div>
+
+        <div id="map_panel" style="display:none;height:100%;width:20%;float:right;">
+            <div id="myAlertFull"></div>
+            <label class="sr-only" for="selectProductionUnitFull">产生单位：</label>
+            <select class="form-control input-sm" id="selectProductionUnitFull">
+                <option>请选择生产单位</option>
+            </select>
+            <label class="sr-only" for="selectReceptionUnitFull">接受单位：</label>
+            <select class="form-control input-sm" id="selectReceptionUnitFull">
+                <option>请选择接受单位</option>
+            </select>
+            <label class="sr-only" for="selectStrategyFull">驾车策略：</label>
+            <select class="form-control input-sm" id="selectStrategyFull">
+                <option value="0">最小时间</option>
+                <option value="1">最短距离</option>
+                <option value="2">避开高速</option>
+            </select>
+            <div class="row">
+                <div class="col-md-4">
+                    <button type="button" class="btn btn-info btn-sm" onclick="search();">查询</button>
+                </div>
+                <div class="col-md-4">
+                    <button type="button" class="btn btn-warning btn-sm" onclick="clearScreen();">清除</button>
+                </div>
+                <div class="col-md-4">
+                    <button type="button" class="btn btn-success btn-sm" onclick="submit();">提交</button>
+                </div>
+            </div>
+            <div id="route_panel"></div>
         </div>
 
     </div>
 </div>
 
+<script type="text/javascript" src="__PUBLIC__/js/fullscreen.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/myAlert.js"></script>
+
 <script type="text/javascript">
-var windowHeight = $(window).height();
-$("#container").css("height", "" + windowHeight - 200 + "px");
-
-map = new BMap.Map("container"); // 创建Map实例
-map.centerAndZoom("上海", 13); // 初始化地图,设置中心点坐标和地图级别
-
-var key = 1; //开关
-var newpoint; //一个经纬度
-var points = []; //数组，放经纬度信息
-var mypoints = [];
-var polyline = new BMap.Polyline(); //折线覆盖物
-window.mySelection = "";
-
-function startTool() { //开关函数
-    if (key == 1) {
-        if (window.mySelection == "") {
-            myAlert("请先选择 GPS 设备");
-            return;
-        }
-
-        //document.getElementById("startBtn").style.background = "green";
-        //document.getElementById("startBtn").style.color = "white";
-        document.getElementById("startBtn").value = "正在取点";
-        key = 0;
-    } else {
-        //document.getElementById("startBtn").style.background = "red";
-        document.getElementById("startBtn").value = "开始取点";
-        key = 1;
-    }
+if (typeof(intervalWarning) != 'undefined') {
+    clearInterval(intervalWarning);
 }
-map.addEventListener("click", function(e) { //单击地图，形成折线覆盖物
-    newpoint = new BMap.Point(e.point.lng, e.point.lat);
-    mynewpoint = {
-        "latitude": e.point.lat,
-        "longitude": e.point.lng
+if (typeof(playbackTimeout) != 'undefined') {
+    clearTimeout(playbackTimeout);
+}
+var fullScreen = 0;
+
+function setBMap() {
+    var windowHeight = $(window).height();
+    $("#map_container").css("height", "" + windowHeight - 350 + "px");
+
+    BaiduMap = new BMap.Map("map_container"); // 创建Map实例
+    BaiduMap.centerAndZoom("上海", 11); // 初始化地图,设置中心点坐标和地图级别
+    BaiduMap.addControl(new BMap.NavigationControl()); // 添加默认缩放平移控件
+    BaiduMap.addControl(new BMap.ScaleControl()); // 添加默认比例尺控件
+    BaiduMap.addControl(new BMap.OverviewMapControl()); //添加默认缩略地图控件
+    BaiduMap.enableScrollWheelZoom(); //启用滚轮放大缩小
+    BaiduMap.addControl(new BMap.MapTypeControl()); // 添加默认地图控件
+    BaiduMap.setCurrentCity("上海"); // 设置地图显示的城市 此项是必须设置的
+    var mapStyle = {
+        features: ["road", "building", "water", "land", "point"],
+        style: "normal"
     };
-    if (key == 0) {
-        //    if(points[points.length].lng==points[points.length-1].lng){alert(111);}
-        points.push(newpoint); //将新增的点放到数组中
-        mypoints.push(mynewpoint);
-        polyline.setPath(points); //设置折线的点数组
-        map.addOverlay(polyline); //将折线添加到地图上
-        //document.getElementById("info").innerHTML += "new BMap.Point(" + e.point.lng + "," + e.point.lat + "),</br>";    //输出数组里的经纬度
-    }
-});
-map.addEventListener("dblclick", function(e) { //双击地图，形成多边形覆盖物
-    if (key == 0) {
-        map.disableDoubleClickZoom(); //关闭双击放大
-        var polygon = new BMap.Polygon(points);
-        map.addOverlay(polygon); //将折线添加到地图上
-    }
-});
+    BaiduMap.setMapStyle(mapStyle);
 
-function myAlert(msg) {
-    $("#noSelectionAlert").html('<div class="alert alert-warning alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>错误: </strong> ' + msg + ' </div>');
+    var selectProductionUnit = $('#selectProductionUnit');
+    var selectProductionUnitFull = $('#selectProductionUnitFull');
+    for (var idx in production_unit_json) {
+        selectProductionUnit.append('<option value="' + production_unit_json[idx].production_unit_id + '">' + production_unit_json[idx].production_unit_name + '</option>');
+        selectProductionUnitFull.append('<option value="' + production_unit_json[idx].production_unit_id + '">' + production_unit_json[idx].production_unit_name + '</option>');
+    }
+
+    var selectReceptionUnit = $('#selectReceptionUnit');
+    var selectReceptionUnitFull = $('#selectReceptionUnitFull');
+    for (var idx in reception_unit_json) {
+        selectReceptionUnit.append('<option value="' + reception_unit_json[idx].reception_unit_id + '">' + reception_unit_json[idx].reception_unit_name + '</option>');
+        selectReceptionUnitFull.append('<option value="' + reception_unit_json[idx].reception_unit_id + '">' + reception_unit_json[idx].reception_unit_name + '</option>');
+    }
+
+    $(".anchorBL").hide();
 }
 
-function myAlertSucc(msg) {
-    $("#noSelectionAlert").html('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>状态: </strong> ' + msg + ' </div>');
+function loadScript() {
+    var script = document.createElement("script");
+    script.src = "http://api.map.baidu.com/api?v=2.0&ak=KDdzQZSRLv89h4yrti56L5Gy&callback=setBMap";
+    document.body.appendChild(script);
 }
 
+loadScript();
 
-function submit() {
-    if (window.mySelection == "") {
-        myAlert('请先选择 GPS 设备。');
+var path = new Array();
+var route_detail = '';
+var routePolicy = [BMAP_DRIVING_POLICY_LEAST_TIME, BMAP_DRIVING_POLICY_LEAST_DISTANCE, BMAP_DRIVING_POLICY_AVOID_HIGHWAYS];
+
+var searchComplete = function(results) {
+    path = [];
+    route_detail = '';
+    if (transit.getStatus() == BMAP_STATUS_SUCCESS) { //检索成功。对应数值“0”。
+        // 获取第一个方案，目前仅有一条驾车方案，但是以后可能会同时给出多条方案
+        var plan = results.getPlan(0);
+        /*
+        // 获取方案的驾车线路，索引0表示第一条线路。
+        var route = plan.getRoute(0);
+        // 获取驾车路线的经纬度坐标
+        path = route.getPath();
+        */
+        var steps = new Array();
+        for (var routeIdx = 0; routeIdx < plan.getNumRoutes(); ++routeIdx) {
+            var route = plan.getRoute(routeIdx);
+            var tmpPath = route.getPath();
+            path = path.concat(tmpPath);
+            for (var stepIdx = 0; stepIdx < route.getNumSteps(); ++stepIdx) {
+                var step = route.getStep(stepIdx);
+                steps.push((routeIdx + 1) + "." + (stepIdx + 1) + " " + step.getDescription());
+            }
+        }
+        route_detail = steps.join('<br/>');
+        /*setTimeout(function(){
+            BaiduMap.setViewport([p1,p2]);   //调整到最佳视野
+        },1000);*/
+
+    } else if (transit.getStatus() == BMAP_STATUS_UNKNOWN_ROUTE) { //导航结果未知。对应数值“3”。
+        return;
+    } else {
         return;
     }
+};
+
+function search() {
+    BaiduMap.clearOverlays();
+    if (typeof(transit) != 'undefined') {
+        transit.clearResults(); //清除导航结果
+    }
+
+    path = [];
+    route_detail = '';
+
+    if (fullScreen) {
+        var selectStrategyVal = $('#selectStrategyFull').val();
+        var selectProductionUnitVal = $('#selectProductionUnitFull').val();
+        var selectReceptionUnitVal = $('#selectReceptionUnitFull').val();
+    } else {
+        var selectStrategyVal = $('#selectStrategy').val();
+        var selectProductionUnitVal = $('#selectProductionUnit').val();
+        var selectReceptionUnitVal = $('#selectReceptionUnit').val();
+    }
+    var options = {
+        renderOptions: {
+            map: BaiduMap,
+            panel: "route_panel",
+            autoViewport: false, //启用自动调整地图层级，当指定了搜索结果所展现的地图时有效。
+            enableDragging: true //起终点可进行拖拽
+        },
+        policy: routePolicy[selectStrategyVal],
+        onSearchComplete: searchComplete
+    };
+
+    transit = new BMap.DrivingRoute(BaiduMap, options);
+
+    var p1_lng, p1_lat;
+    var p2_lng, p2_lat;
+
+    for (var idx in production_unit_json) {
+        if (production_unit_json[idx].production_unit_id == selectProductionUnitVal) {
+            p1_lng = production_unit_json[idx].production_unit_longitude;
+            p1_lat = production_unit_json[idx].production_unit_latitude;
+            break;
+        }
+    }
+
+    for (var idx in reception_unit_json) {
+        if (reception_unit_json[idx].reception_unit_id == selectReceptionUnitVal) {
+            p2_lng = reception_unit_json[idx].reception_unit_longitude;
+            p2_lat = reception_unit_json[idx].reception_unit_latitude;
+            break;
+        }
+    }
+    var p1 = new BMap.Point(p1_lng, p1_lat);
+    var p2 = new BMap.Point(p2_lng, p2_lat);
+    transit.search(p1, p2);
+}
+
+function clearScreen(){
+    BaiduMap.clearOverlays();
+    $('#route_panel').html("");
+}
+
+function submit() {
+    if (path == []) {
+        myAlertFail("数据为空，不能提交");
+        return;
+    }
+    /*
+    var BMapPointArray = new Array();
+    for (var point_idx in path) {
+        var BMapPoint = {
+            "lng": path[point_idx].lng,
+            "lat": path[point_idx].lat
+        };
+        BMapPointArray.push(BMapPoint);
+    }
+    */
+    if (fullScreen) {
+        var selectProductionUnitVal = $('#selectProductionUnitFull').val();
+        var selectReceptionUnitVal = $('#selectReceptionUnitFull').val();
+    } else {
+        var selectProductionUnitVal = $('#selectProductionUnit').val();
+        var selectReceptionUnitVal = $('#selectReceptionUnit').val();
+    }
+
     $.ajax({
         type: "POST",
-        url: "city?id=ajax_map_plan_receiver",
-        timeout: 2000,
+        url: "{:U('Home/DistrictMap/ajax_transfer_route_plan')}",
+        dataType: 'JSON',
         data: {
-            "gps_id": window.mySelection,
-            "gps_serial": window.mySerial,
-            "route_detail": JSON.stringify(mypoints)
+            "production_unit_id": selectProductionUnitVal,
+            "reception_unit_id": selectReceptionUnitVal,
+            "route_lng_lat": JSON.stringify(path),
+            "route_detail": route_detail
         },
         success: function(data) {
-            if (data == "succ") {
-                myAlertSucc("提交成功");
-                $("#myclear").click();
-            } else {
-                myAlert("提交失败");
+            switch (data) {
+                case 'exist':
+                    myAlertFail("此生产单位到此接受单位的路线已存在，需要调整请删除后重新规划");
+                    break;
+                case 'success':
+                    myAlertSucc("提交成功");
+                    clearScreen();
+                    path = [];
+                    break;
+                case 'fail':
+                    myAlertFail("提交失败");
+                    break;
+                default:
+                    myAlertFail("未知错误");
+                    break;
             }
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) {
-            myAlert("提交失败");
+            myAlertFail("提交路线规划ajax请求失败");
+            console.log("Error:Ajax_Content_Load" + errorThrown);
+            console.log("XMLHttpRequest.status:" + XMLHttpRequest.status);
+            console.log("XMLHttpRequest.readyState:" + XMLHttpRequest.readyState);
+            console.log("textStatus:" + textStatus);
         }
     });
-
 }
-
-window.mySelection = "";
-
-
-function setData(data) {
-    $("#mySelect").html("");
-    $("#dropdown-button").html("");
-    // myjson = JSON.parse(data);
-    myarr = data; // myjson["GPS"];
-    for (var i = 0; i < myarr.length; i++) {
-        //$("#mySelect").append('<option value="' + myarr[i]["value"] + '">' + myarr[i]["name"] + "</option>");
-        $("#dropdown-button").append('<li><a onclick="$(\'#gps_name\').html(\'' + myarr[i]["transport_unit_name"] + myarr[i]["vehicle_type"] + '\'); window.mySelection=\'' + myarr[i]["device_id"] + '\'; window.mySerial=\'' + myarr[i]["device_serial_num"] + '\';">' + myarr[i]["transport_unit_name"] + myarr[i]["vehicle_type"] + "</a></li>");
-
-    }
-
-}
-
-$(document).ready(function() {
-    /*$.ajax({
-        type: "GET",
-        url: "city?id=GIS_gps_getter",
-        timeout: 2000,
-        success: function(data) {
-            setData(data);
-        },
-        error: function (XMLHttpRequest, textStatus, errorThrown) {
-            myAlert("获取 GPS 失败");
-        }
-    });*/
-    setData(page_json);
-});
 </script>

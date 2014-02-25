@@ -58,49 +58,82 @@ class DistrictBusinessAction extends CommonAction{
 
 	// 业务办理->待办业务->转移联单管理
 	public function transfer_manifest_management() {
-		// $manifest = M( 'manifest' )->where( 'manifest_status=1' )->getField( 'manifest_id,production_unit_id,transport_unit_id,reception_unit_id,manifest_num,manifest_add_time.manifest_status' );
-		// $manifest_json = json_encode( $manifest );
-		$manifest = M( 'manifest' )->where( 'manifest_status>0' )->getField( 'manifest_id,production_unit_id,transport_unit_id,reception_unit_id,manifest_num,manifest_add_time,manifest_status' );
-		$manifest_json = json_encode( $manifest );
+		$manifest = M( 'manifest' );
+		$condition['jurisdiction_id'] = array('EQ', session( 'jurisdiction_id' ) );
+		$condition['manifest_status'] = array('EQ', 3);
+		$production_manifest = $manifest->join( 'production_unit ON manifest.production_unit_id = production_unit.production_unit_id' )->where( $condition )->select();
+		$production_manifest_json = json_encode( $production_manifest );
 
-		$production_unit_name = M( 'production_unit' )->getField( 'production_unit_id,production_unit_name' );
-		$production_unit_name_json = json_encode( $production_unit_name );
+		$condition['jurisdiction_id'] = array('EQ', session( 'jurisdiction_id' ) );
+		$condition['manifest_status'] = array('EQ', 10);
+		$reception_manifest = $manifest->join( 'reception_unit ON manifest.reception_unit_id = reception_unit.reception_unit_id' )->where( $condition )->select();
+		$reception_manifest_json = json_encode( $reception_manifest );
 
-		$reception_unit_name = M( 'reception_unit' )->getField( 'reception_unit_id,reception_unit_name' );
-		$reception_unit_name_json = json_encode( $reception_unit_name );
-
-		if( $manifest_json == null ){
-			$this->ajaxReturn( "联单没有找到：" .  $manifest_json );
-		} else if ( $production_unit_name_json == null ) {
-				$this->ajaxReturn( "生产单位表没有找到：" .  $manifest_json );
-			} else if( $reception_unit_name_json == null ){
-					$this->ajaxReturn( "接受单位表没有找到：" .  $manifest_json );
-				} else{
-				$tmp_content=$this->fetch( './Public/html/Content/District/business/transfer_manifest_management.html' );
-				$tmp_content = "<script>manifest_json = $manifest_json; production_unit_name_json = $production_unit_name_json; reception_unit_name_json = $reception_unit_name_json; </script> $tmp_content";
-				$this->ajaxReturn( $tmp_content );
-		}
+		$tmp_content=$this->fetch( './Public/html/Content/District/business/transfer_manifest_management.html' );
+		$tmp_content = "<script>production_manifest_json = $production_manifest_json;reception_manifest_json = $reception_manifest_json </script> $tmp_content";
+		$this->ajaxReturn( $tmp_content );
+		
 	}
-
+		
 	// 业务办理->待办业务->转移联单管理：详细信息页
 	public function transfer_manifest_management_page($manifest_id="") {
 		$manifest = M( 'manifest' )->where( array( 'manifest_id' =>$manifest_id ) )->find();
-		// $production_unit = M( 'production_unit' )->where( array( 'production_unit_id' => $manifest['production_unit_id'] ) )->find();
 		$this->manifest = $manifest;
-		// $this->unit = $production_unit;
 
 		$manifest_id_json = json_encode( $manifest_id );
 		$manifest_status_json = json_encode( $manifest['manifest_status'] );
+		$production_unit_id_json = json_encode( $manifest['production_unit_id'] );
+		$reception_unit_id_json = json_encode( $manifest['reception_unit_id'] );
 
 		$tmp_content=$this->fetch( './Public/html/Content/District/business/transfer_manifest_management_page.html' );
-		$tmp_content = "<script>manifest_id_json = $manifest_id_json; manifest_status_json = $manifest_status_json; </script> $tmp_content";
+		$tmp_content = "<script>manifest_id_json = $manifest_id_json; manifest_status_json = $manifest_status_json; production_unit_id = $production_unit_id_json; reception_unit_id = $reception_unit_id_json; </script> $tmp_content";
 		$this->ajaxReturn( $tmp_content );
 	}
 
 	// 业务办理->待办业务->转移联单管理：审核
-	public function transfer_manifest_management_audit($manifest_id="") {
+	public function transfer_manifest_management_audit_1($manifest_id="") {
 		$manifest_status = I( 'post.manifest_status' );
+		$time = date( 'Y-m-d H:i:s', time() );
 		$current_manifest_status = array(
+			'manifest_modify_time' => $time,
+			'manifest_id' => $manifest_id,
+			'manifest_status' => $manifest_status,
+		);
+		$result = M( 'manifest' )->save( $current_manifest_status );
+
+		if(I( 'post.manifest_status' )==4){
+			$route = M( 'route' )->where( array( 'production_unit_id' => I( 'post.production_unit_id' ),'reception_unit_id' => I( 'post.reception_unit_id' ) ) )->find();
+			$route_id = $route['route_id'];
+			$manifest = M('manifest')->where( array( 'manifest_id' => $manifest_id ) )->find();
+			$route_vehicle = M('route_vehicle');
+			$route_vehicle->create();
+			$route_vehicle->route_id = $route_id;
+			$route_vehicle->vehicle_id = $manifest['vehicle_id_1'];
+			$route_vehicle->manifest_id = $manifest_id;
+			$route_vehicle->transport_date = $manifest['waste_transport_time'];
+			$time = date( 'Y-m-d H:i:s', time() );
+			$route_vehicle->correlation_add_time = $time;
+			$route_vehicle->correlation_status = 0;
+
+			$result = $route_vehicle->add(); // 根据条件保存修改的数据
+
+			if ( $result ) {
+				$this->ajaxReturn( 1, '保存成功！', 1 );
+			} else {
+				$this->ajaxReturn( 0, '保存失败！', 0 );
+			}
+
+
+
+
+		}
+	}
+
+	public function transfer_manifest_management_audit_2($manifest_id="") {
+		$manifest_status = I( 'post.manifest_status' );
+		$time = date( 'Y-m-d H:i:s', time() );
+		$current_manifest_status = array(
+			'manifest_modify_time' => $time,
 			'manifest_id' => $manifest_id,
 			'manifest_status' => $manifest_status,
 		);
@@ -130,11 +163,11 @@ class DistrictBusinessAction extends CommonAction{
 
 		$userModel = new Model();
 		$all_user = $userModel->query("
-			(SELECT `user`.`user_id`, `username`, `user_type`, `production_unit_name` AS `unit_name`, `production_unit_code` AS `unit_code`, `production_unit_username` AS `unit_username`, `waste_location_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN production_unit ON user.user_id = production_unit.user_id)
+			(SELECT `user`.`user_id`, `username`, `user_type`, `production_unit_name` AS `unit_name`, `production_unit_id` AS `unit_code`, `production_unit_username` AS `unit_username`, `waste_location_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN production_unit ON user.user_id = production_unit.user_id)
 			UNION
-			(SELECT `user`.`user_id`, `username`, `user_type`, `transport_unit_name` AS `unit_name`, `transport_unit_code` AS `unit_code`, `transport_unit_username` AS `unit_username`, `transport_unit_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN transport_unit ON user.user_id = transport_unit.user_id)
+			(SELECT `user`.`user_id`, `username`, `user_type`, `transport_unit_name` AS `unit_name`, `transport_unit_id` AS `unit_code`, `transport_unit_username` AS `unit_username`, `transport_unit_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN transport_unit ON user.user_id = transport_unit.user_id)
 			UNION
-			(SELECT `user`.`user_id`, `username`, `user_type`, `reception_unit_name` AS `unit_name`, `reception_unit_code` AS `unit_code`, `reception_unit_username` AS `unit_username`, `reception_unit_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN reception_unit ON user.user_id = reception_unit.user_id)");
+			(SELECT `user`.`user_id`, `username`, `user_type`, `reception_unit_name` AS `unit_name`, `reception_unit_id` AS `unit_code`, `reception_unit_username` AS `unit_username`, `reception_unit_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN reception_unit ON user.user_id = reception_unit.user_id)");
 
 		$record_json = json_encode( $all_user );
 
@@ -170,8 +203,12 @@ class DistrictBusinessAction extends CommonAction{
 
 	//
 	public function enterprise_user_management_ajaxpost() {
+					// 		$A=1;
+					// 		$ans=json_encode($A);
+					// $this->ajaxReturn( "shibai");
 		$munit=M( 'user' );
-
+		$userid=I( 'post.user_id' );
+		$type=I( 'post.usertype' );
 		if ( I( 'post.action' )=="lock" ) {
 			if ( I( 'post.value' )=='0' )
 				$data['lock'] = '0';
@@ -181,18 +218,60 @@ class DistrictBusinessAction extends CommonAction{
 			$this->show( "lock_ok".I( 'post.user_id' ) );
 		}
 		else if ( I( 'post.action' )=="verify" ) {
-				if ( I( 'post.value' )=='0' )
-					$data['is_verify'] = '0';
+				$result=$munit->where( "user_id='$userid'" )->setField('is_verify', 1 );
+				if ($result>0)
+				{
+					if ($type==5)
+						$prefix="production_unit";
+					else if ($type==7)
+						$prefix="reception_unit";
+					else
+					{
+						$ans=json_encode("成功");
+						$this->ajaxReturn( $ans ,'JSON');				
+					}
+					$mx=M($prefix)->where("user_id='$userid'")->getField($prefix.'_id');
+					$tablename=$prefix."_".$mx;
+					$sql='create table '. $tablename.
+					' (
+ 					id int(11) NOT NULL AUTO_INCREMENT,
+ 					rfid_id varchar(255) DEFAULT NULL,
+  					waste_id int(11) DEFAULT NULL,
+  					add_weight double DEFAULT NULL,
+  					add_date_time datetime DEFAULT NULL,
+  					add_num int(11) DEFAULT NULL,
+  					android_num varchar(255) DEFAULT NULL,
+  					PRIMARY KEY (id),
+  					KEY fk_waste_id_'.$tablename.' (waste_id) USING BTREE,
+  					CONSTRAINT fk_waste_id_'.$tablename.' FOREIGN KEY (waste_id) REFERENCES waste (waste_id)
+					)';
+					$model=new Model();
+					$model->execute($sql);
+					$num=M('information_schema.tables')->where("table_schema = 'dwms' 
+							AND table_name = '$tablename'")->count();
+					if ($num>0)
+					{
+						$ans=json_encode("成功");
+						$this->ajaxReturn( $ans ,'JSON');	
+					}
+					else
+					{
+						$ans=json_encode("创建数据库出现错误");
+						$this->ajaxReturn( $ans ,'JSON');	
+					}		
+				}
 				else
-					$data['is_verify'] = '1';
-
-				$munit->where( array( 'user_id' =>I( 'post.user_id' ) ) )->save( $data );
-				$this->show( "verify_ok".I( 'post.user_id' ) );
+				{
+					$ans=json_encode("未知错误");
+					$this->ajaxReturn( $ans ,'JSON');			
+				}
+			//	$this->show( "verify_ok".I( 'post.user_id' ) );
 			}
 
 		else {
 			$this->error( "action_error" );
 		}
+		
 	}
 
 	// 业务办理->待办业务->企业信息管理
@@ -223,6 +302,40 @@ class DistrictBusinessAction extends CommonAction{
 	public function user_information_query(){
 		$tmp_content=$this->fetch( './Public/html/Content/District/business/user_information_query.html' );
 		$this->ajaxReturn( $tmp_content );
+	}
+	public function get_chart()
+	{
+		$str="";
+		$pnum=M('production_unit')->count();
+		$tnum=M('transport_unit')->count();
+		$rnum=M('reception_unit')->count();
+		$manifestnum=M('manifest')->count();
+		$tong_num=M('rfid')->where("add_method=0")->sum('waste_total');
+		$dai_num=M('rfid')->where("add_method=1")->sum('waste_total');
+		$dict=array();
+		$count_waste=0;
+		$wastelist=M('production_unit')->select();
+		foreach ($wastelist as  $value) {
+			$type_list=explode(",", $value['production_unit_waste']);
+			foreach ($type_list as  $val) {
+				if (!array_key_exists($val, $dict))
+				{
+					$count_waste++;
+					$dict[$val]=1;
+					$str=$str. $val;
+				}
+			}
+		}
+		$result->count_waste=$count_waste;
+		$result->str=$wastelist;
+		$result->pnum=$pnum;
+		$result->tnum=$tnum;
+		$result->rnum=$rnum;
+		$result->manifestnum=$manifestnum;
+		$result->tong_num=$tong_num;
+		$result->dai_num=$dai_num;
+		$result=json_encode($result);
+		$this->ajaxReturn( $result);	
 	}
 
 }

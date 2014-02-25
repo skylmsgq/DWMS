@@ -12,26 +12,14 @@
     <application
         android:icon="@drawable/sjtu"
         android:label="@string/app_name" >
-        <service android:name="com.geomobile.rc663.MyServiceStartUp" android:label="My Service Startup">
-		    <intent-filter>
-		        <action android:name="com.myapp.MyServiceStartup" />
-		    </intent-filter>
-		</service>		
-        <receiver
-		    android:name="com.geomobile.rc663.receiver.StartMyServiceAtBootReceiver"
-		    android:enabled="true"
-		    android:exported="true"
-		    android:label="StartMyServiceAtBootReceiver">
-		    <intent-filter>
-		        <action android:name="android.intent.action.BOOT_COMPLETED" />
-		    </intent-filter>
-		</receiver>
-        
+   	
+    
         <activity
             android:name="com.geomobile.rc663.login"    
 			android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
             android:label="@string/app_name" 
-             >
+            android:windowSoftInputMode="stateHidden|adjustResize" >
+             
 		    
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

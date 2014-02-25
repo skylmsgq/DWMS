@@ -31,8 +31,10 @@
         android:id="@+id/button_scan3"
         android:layout_width="95dp"
         android:layout_height="64dp"
+        
         android:layout_x="75dp"
-        android:layout_y="140dp"
+        android:layout_y="210dp"
+        
         android:text="转移"
         android:textSize="25dp" />
 
@@ -41,7 +43,7 @@
         android:layout_width="95dp"
         android:layout_height="64dp"
         android:layout_x="75dp"
-        android:layout_y="210dp"
+        android:layout_y="140dp"
         android:text="新增"
         android:textSize="25dp" />
 

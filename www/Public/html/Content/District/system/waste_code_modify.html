@@ -1,0 +1,130 @@
+<form role="form" id="waste_modify">
+ <div class="panel panel-primary">
+        <div class="panel-heading">基本信息</div>
+        <div class="panel-body">
+            <div class="table-responsive">
+                <table class="table table-striped table-bordered table-hover table-condensed">
+                <tr>
+                    <td>危废名称</td>
+                    <td>
+                        <input type="text" name="waste_name" class="form-control input-sm" placeholder="{$waste.waste_name}" value="{$waste.waste_name}">  
+                    </td>
+                    <td>危废 ID</td>
+                    <td>
+                        <input type="text" name="waste_id" class="form-control input-sm" placeholder="{$waste.waste_id}" value="{$waste.waste_id}">  
+                    </td>
+                </tr>
+                <tr>
+                    <td>主要危险成分</td>
+                    <td>
+                        <input type="text" name="waste_ingredient" class="form-control input-sm" placeholder="{$waste.waste_ingredient}" value="{$waste.waste_ingredient}">  
+                    </td>
+                    <td>危废代码</td>
+                    <td>
+                        <input type="text" name="waste_code" class="form-control input-sm" placeholder="{$waste.waste_code}" value="{$waste.waste_code}">  
+                    </td>
+                </tr>
+                <tr>
+                    <td>危废形态</td>
+                    <td>
+                        <select type="text" name="waste_form" class="form-control input-sm" placeholder="{$waste.waste_form}" value="{$waste.waste_form}">
+                        <option>{$waste_form[0].waste_form}</option>
+                        <option>{$waste_form[1].waste_form}</option>
+                        <option>{$waste_form[2].waste_form}</option>
+                        <option>{$waste_form[3].waste_form}</option>
+                        <option>{$waste_form[4].waste_form}</option>
+                        </select>  
+                    </td>
+                    <td>危废特性</td>
+                    <td>
+                        <input type="text" name="waste_property" class="form-control input-sm" placeholder="{$waste.waste_property}" value="{$waste.waste_property}">  
+                    </td>
+                </tr>
+                <tr>
+                    <td>类别编号</td>
+                    <td>
+                        <select type="text" id="waste_category_code" name="waste_category_code" class="form-control input-sm" placeholder="{$waste.waste_category_code}" value="{$waste.waste_category_code}" onchange="change_waste_category(this.options[this.options.selectedIndex].value)">
+                        <option value="{$waste.waste_category_code}">{$waste.waste_category_code}</option>
+                        </select>  
+                    </td>
+                    <td>废物类别</td>
+                    <td>
+                        <select type="text" id="waste_category" name="waste_category" class="form-control input-sm" placeholder="{$waste.waste_category}" value="{$waste.waste_category}">
+                        <option value="{$waste.waste_category}">请选择废物类别</option>
+                        </select>                           
+                    </td>
+                </tr>
+                <tr>
+                    <td>行业来源</td>
+                    <td>
+                        <input type="text" name="waste_from" class="form-control input-sm" placeholder="{$waste.waste_from}" value="{$waste.waste_from}">  
+                    </td>
+                    <td></td>
+                    <td>                         
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+</form>
+
+<center>
+    <button class="btn btn-warning btn-lg" onclick="ajaxAction()">修改</button>
+    <button class="btn btn-info btn-lg" onclick="$('#myModal').modal('hide');">关闭页面</button>
+</center>
+<script type="text/javascript">
+    $('#waste_category_code').html('<option value="{$waste.waste_category_code}">{$waste.waste_category_code}</option>');
+    for (var idx in waste_category_json) {
+    $('#waste_category_code').append('<option value="' + waste_category_json[idx].waste_category_code + '">' + waste_category_json[idx].waste_category_code + '</option>');
+                } 
+
+function change_waste_category(waste_category_code){
+    $.ajax({
+            type: "post",
+            url: "{:U('Home/DistrictSystem/change_waste_category')}",
+            dataType: "json",
+            data:{
+                'code': waste_category_code
+            },
+            success: function(waste_category) {
+                $('#waste_category').html('<option value="{$waste.waste_category}">请选择废物类别</option>');
+                for (var idx in waste_category) {
+                $('#waste_category').append('<option value="' + waste_category[idx].waste_category + '">' + waste_category[idx].waste_category + '</option>');
+                }
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                console.log("Error:Ajax_Content_Load" + errorThrown);
+                console.log("XMLHttpRequest.status:" + XMLHttpRequest.status);
+                console.log("XMLHttpRequest.readyState:" + XMLHttpRequest.readyState);
+                console.log("textStatus:" + textStatus);
+            }
+         });
+}
+
+function ajaxAction() {
+    var form_serialize = "" + $('#waste_modify').serialize();
+
+    $("#model-content").html('<center style="margin:50px"><h4>提交中...</h4><div class="progress progress-striped active" style="width: 50%"><div class="progress-bar"  role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div></div></center>');
+
+    $.ajax({
+        type: "post",
+        url: "waste_code_modified?waste_id=" + waste_id_json,
+        timeout: 2000,
+        data: form_serialize,
+        success: function(data) {
+            $('#myModal').modal('hide');
+            $('#myModal').on('hidden.bs.modal', function(e) {
+                refresh_page();
+            });
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+            console.log("Error: Ajax_Content_Load " + errorThrown);
+            console.log("XMLHttpRequest.status: " + XMLHttpRequest.status);
+            console.log("XMLHttpRequest.readyState: " + XMLHttpRequest.readyState);
+            console.log("textStatus: " + textStatus);
+        }
+    });
+
+}
+</script>

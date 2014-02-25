@@ -87,7 +87,7 @@
                 <tr>
                     <td>道路运输证号</td>
                     <td>
-                        {$manifest.transport_lisence_num_1}
+                        {$manifest.transport_license_num_1}
                     </td>
                     <td>运输起点</td>
                     <td>
@@ -127,7 +127,7 @@
                 <tr>
                     <td>道路运输证号</td>
                     <td>
-                        {$manifest.transport_lisence_num_2}
+                        {$manifest.transport_license_num_2}
                     </td>
                     <td>运输起点</td>
                     <td>
@@ -201,23 +201,53 @@
 </div>
 
 <center>
+<!--     <button class='btn btn-success btn-lg' id='button_pass' onclick='ajaxAction(1)'>通过联单</button>
+    <button class='btn btn-danger btn-lg' id='button_reject' onclick='ajaxAction(0)'>退回联单</button> -->
     <button class="btn btn-warning btn-lg" id="button_close" onclick="$('#myModal').modal('hide');">关闭页面</button>
 </center>
 
 <script type="text/javascript">
 // console.log(manifest);
-if (manifest_status_json == '2') {
-    $('#button_close').before("<button class='btn btn-success btn-lg' id='button_pass' onclick='ajaxAction(3)'>通过联单</button>&nbsp;<button class='btn btn-danger btn-lg' id='button_reject' onclick='ajaxAction(4)'>退回联单</button>&nbsp;");
+if (manifest_status_json == '3') {
+    $('#button_close').before("<button class='btn btn-success btn-lg' id='button_pass' onclick='ajaxAction_1(4)'>通过联单</button>&nbsp;<button class='btn btn-danger btn-lg' id='button_reject' onclick='ajaxAction_1(7)'>退回生产单位</button>&nbsp;<button class='btn btn-danger btn-lg' id='button_reject' onclick='ajaxAction_1(5)'>退回运输单位</button>&nbsp;");
+} else if (manifest_status_json == '10') {
+    $('#button_close').before("<button class='btn btn-success btn-lg' id='button_pass' onclick='ajaxAction_2(11)'>通过联单</button>&nbsp;<button class='btn btn-danger btn-lg' id='button_reject' onclick='ajaxAction_2(12)'>退回处置单位</button>&nbsp;");
 }
 
-function ajaxAction(actionID) {
+function ajaxAction_1(actionID) {
     $("#model-content").html('<center style="margin:50px"><h4>提交中...</h4><div class="progress progress-striped active" style="width: 50%"><div class="progress-bar"  role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div></div></center>');
     $.ajax({
         type: "post",
-        url: "transfer_manifest_management_audit?manifest_id=" + manifest_id_json,
+        url: "transfer_manifest_management_audit_1?manifest_id=" + manifest_id_json,
         timeout: 2000,
         data: {
-            manifest_status: actionID
+            manifest_status: actionID,
+            production_unit_id: production_unit_id,
+            reception_unit_id: reception_unit_id,
+        },
+        success: function(data) {
+            $('#myModal').modal('hide');
+            $('#myModal').on('hidden.bs.modal', function(e) {
+                refresh_page();
+            });
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+            console.log("Error: Ajax_Content_Load " + errorThrown);
+            console.log("XMLHttpRequest.status: " + XMLHttpRequest.status);
+            console.log("XMLHttpRequest.readyState: " + XMLHttpRequest.readyState);
+            console.log("textStatus: " + textStatus);
+        }
+    });
+
+}
+function ajaxAction_2(actionID) {
+    $("#model-content").html('<center style="margin:50px"><h4>提交中...</h4><div class="progress progress-striped active" style="width: 50%"><div class="progress-bar"  role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div></div></center>');
+    $.ajax({
+        type: "post",
+        url: "transfer_manifest_management_audit_2?manifest_id=" + manifest_id_json,
+        timeout: 2000,
+        data: {
+            manifest_status: actionID,
         },
         success: function(data) {
             $('#myModal').modal('hide');

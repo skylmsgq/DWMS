@@ -1,61 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<AbsoluteLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:orientation="vertical"
-    tools:context=".ScanAndUpload" >
-
-    <LinearLayout
-        android:id="@+id/linearLayout1"
-        android:layout_width="match_parent"
+    android:layout_height="fill_parent" >
+    
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="48dp"
+        android:layout_height="50dp"
+        android:layout_x="184dp"
+        android:layout_y="5dp"
+        android:src="@drawable/header_logo" />
+    
+    <TextView
+        android:id="@+id/textView_addNew"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical" >
+        android:text="环保局查看"
+        android:layout_y="10dp"
+        android:textSize="20dp"
+      />
 
-        <TextView
-            android:id="@+id/textView_addNew"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scrollbarStyle="insideInset"
-            android:scrollbars="vertical"
-            android:text="废物查看" />
+    <Button
+        android:id="@+id/button_15693_search"
+        android:layout_width="95dp"
+        android:layout_height="64dp"
+        android:layout_x="70dp"
+        android:layout_y="130dp"
+        android:text="扫描"
+        android:textSize="25dp" />
 
-        <LinearLayout
-            android:id="@+id/linearLayout2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
-
-            <Button
-                android:id="@+id/button_15693_search"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:textSize="18dp"
-                android:text="扫描" />
-        </LinearLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/linearLayout4"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.20"
-        android:orientation="vertical" >
-
-        <TextView
-            android:id="@+id/textView_15693_info"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scrollbarStyle="insideInset"
-            android:scrollbars="vertical"
-            android:text="@string/text_null"
-            android:textSize="15dp"/>
-
-        <TextView
-            android:id="@+id/textView_15693_cardinfo"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="0.55"
-            android:text="@string/text_null" />
-    </LinearLayout>
-
-</LinearLayout>
+</AbsoluteLayout>

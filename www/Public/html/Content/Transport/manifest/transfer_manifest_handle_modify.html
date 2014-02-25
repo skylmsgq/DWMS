@@ -31,7 +31,7 @@
                     </td>
                     <td>危废外运目的</td>
                     <td>
-                        {$manifest.transport_goal}
+                        {$manifest.waste_transport_goal}
                     </td>
                 </tr>
                 <tr>
@@ -41,7 +41,7 @@
                     </td>
                     <td>危废发运人</td>
                     <td>
-                        {$manifest.shipper}
+                        {$manifest.waste_shipper}
                     </td>
                 </tr>
                 <tr>
@@ -76,7 +76,7 @@
                 <tr>
                     <td>运输日期</td>
                     <td>
-                        <input type="text" name="transport_date_1" class="form-control input-sm" placeholder="{$manifest.transport_date_1}" value="{$manifest.transport_date_1}">  
+                        <input type="date" name="transport_date_1" class="form-control input-sm" placeholder="{$manifest.transport_date_1}" value="{$manifest.transport_date_1}">  
                     </td>
                     <td>车辆1 ID</td>
                     <td>
@@ -116,7 +116,7 @@
                 <tr>
                     <td>运输日期</td>
                     <td>
-                        <input type="text" name="transport_date_2" class="form-control input-sm" placeholder="{$manifest.transport_date_2}" value="{$manifest.transport_date_2}">  
+                        <input type="date" name="transport_date_2" class="form-control input-sm" placeholder="{$manifest.transport_date_2}" value="{$manifest.transport_date_2}">  
                     </td>
                     <td>车辆2 ID</td>
                     <td>
@@ -156,8 +156,6 @@
 </center>
 
 <script type="text/javascript">
-// console.log($transport_unit);
-// console.log(manifest_id_json);
 function ajaxAction() {
     var form_serialize = "" + $('#manifest_modify').serialize();
 
