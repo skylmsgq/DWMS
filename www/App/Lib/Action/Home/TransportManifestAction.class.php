@@ -74,6 +74,12 @@ class TransportManifestAction extends CommonAction{
 		$this->manifest = $manifest;
 		$this->transport_unit = $transport_unit;
 
+		$p_id=M('manifest')->where("manifest_id='$manifest_id'")->getField('production_unit_id');
+		$r_id=M('manifest')->where("manifest_id='$manifest_id'")->getField('reception_unit_id');
+		$p_name=M('production_unit')->where("production_unit_id='$p_id'")->getField('production_unit_name');
+		$r_name=M('reception_unit')->where("reception_unit_id='$r_id'")->getField('reception_unit_name');
+		$this->p_name=$p_name;
+		$this->r_name=$r_name;
 		$tmp_content=$this->fetch( './Public/html/Content/Transport/manifest/transfer_manifest_handle_modify.html' );
 		$tmp_content = "<script>manifest_id_json = $manifest_id_json; manifest_status_json = $manifest_status_json;</script> $tmp_content";
 		$this->ajaxReturn( $tmp_content );
@@ -120,6 +126,12 @@ class TransportManifestAction extends CommonAction{
 
 		$this->manifest = $manifest;
 		$this->transport_unit = $transport_unit;
+		$p_id=M('manifest')->where("manifest_id='$manifest_id'")->getField('production_unit_id');
+		$r_id=M('manifest')->where("manifest_id='$manifest_id'")->getField('reception_unit_id');
+		$p_name=M('production_unit')->where("production_unit_id='$p_id'")->getField('production_unit_name');
+		$r_name=M('reception_unit')->where("reception_unit_id='$r_id'")->getField('reception_unit_name');
+		$this->p_name=$p_name;
+		$this->r_name=$r_name;
 
 		$tmp_content=$this->fetch( './Public/html/Content/Transport/manifest/transfer_manifest_handle_submit.html' );
 		$tmp_content = "<script>manifest_id_json = $manifest_id_json; manifest_status_json = $manifest_status_json;</script> $tmp_content";
@@ -160,7 +172,12 @@ class TransportManifestAction extends CommonAction{
 		$transport_unit = M( 'transport_unit' )->where( array( 'transport_unit_id' => session( 'transport_unit_id' ) ) )->find();
 		$this->manifest = $manifest;
 		$this->unit = $transport_unit;
-
+		$p_id=M('manifest')->where("manifest_id='$manifest_id'")->getField('production_unit_id');
+		$r_id=M('manifest')->where("manifest_id='$manifest_id'")->getField('reception_unit_id');
+		$p_name=M('production_unit')->where("production_unit_id='$p_id'")->getField('production_unit_name');
+		$r_name=M('reception_unit')->where("reception_unit_id='$r_id'")->getField('reception_unit_name');
+		$this->p_name=$p_name;
+		$this->r_name=$r_name;
 		$tmp_content=$this->fetch( './Public/html/Content/Transport/manifest/transfer_manifest_query_detail.html' );
 		$this->ajaxReturn( $tmp_content );
 	}
