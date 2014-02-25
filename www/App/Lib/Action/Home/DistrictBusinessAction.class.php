@@ -305,6 +305,7 @@ class DistrictBusinessAction extends CommonAction{
 	}
 	public function get_chart()
 	{
+		$str="";
 		$pnum=M('production_unit')->count();
 		$tnum=M('transport_unit')->count();
 		$rnum=M('reception_unit')->count();
@@ -314,19 +315,19 @@ class DistrictBusinessAction extends CommonAction{
 		$dict=array();
 		$count_waste=0;
 		$wastelist=M('production_unit')->select();
-		$wastelist[0]['production_unit'];
-		//$waste_list=$wastelist['production_unit_waste'];
-		// foreach ($waste_list as  $value) {
-		// 	$type_list=explode(",", $value['production_unit_waste']);
-		// 	foreach ($type_list as  $val) {
-		// 		if (!array_key_exists($val, $dict))
-		// 		{
-		// 			$count_waste++;
-		// 			$dict[$val]=1;
-		// 		}
-		// 	}
-		// }
-		$result->count_waste=""+$wastelist[0]['production_unit'];
+		foreach ($wastelist as  $value) {
+			$type_list=explode(",", $value['production_unit_waste']);
+			foreach ($type_list as  $val) {
+				if (!array_key_exists($val, $dict))
+				{
+					$count_waste++;
+					$dict[$val]=1;
+					$str=$str. $val;
+				}
+			}
+		}
+		$result->count_waste=$count_waste;
+		$result->str=$wastelist;
 		$result->pnum=$pnum;
 		$result->tnum=$tnum;
 		$result->rnum=$rnum;
