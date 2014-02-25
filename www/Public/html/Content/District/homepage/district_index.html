@@ -63,6 +63,7 @@ $.ajax({
         dataType: "json",
         success: function(data) {
             var result=JSON.parse(data);
+            console.log(result.str);
             p_number=parseInt(result.pnum);
             r_number=parseInt(result.rnum);
             t_number=parseInt(result.tnum);
