@@ -44,11 +44,16 @@ class ProductionManifestAction extends CommonAction{
 		$data['record_status'] = 5;
 		$record->where( array( 'record_id' =>$record_id ) )->save($data);
 
+		$table = M('record')->where( array( 'record_id' =>$record_id ) )->select();
+
 		$manifest = M( 'manifest' ); //实例化record对象
 		$manifest->create(); // 根据表单提交的POST数据创建数据对象
 		$time = date( 'Y-m-d H:i:s', time() );
 		$manifest->manifest_add_time = $time;
 		$manifest->manifest_modify_time = $time;
+		
+		$manifest->rfid_table_id = $table['rfid_table_id'];
+		$manifest->manifest_record_id = $record_id;
 
 		$manifest->transport_unit_id = I( 'post.transport_unit_id' );
 		$manifest->reception_unit_id = I( 'post.reception_unit_id' );
