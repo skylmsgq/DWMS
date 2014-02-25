@@ -182,15 +182,6 @@ var searchComplete = function(results) {
 };
 
 function search() {
-
-    BaiduMap.clearOverlays();
-    if (typeof(transit) != 'undefined') {
-        transit.clearResults(); //清除导航结果
-    }
-
-    path = [];
-    route_detail = '';
-
     if (fullScreen) {
         var selectStrategyVal = $('#selectStrategyFull').val();
         var selectProductionUnitVal = $('#selectProductionUnitFull').val();
@@ -200,6 +191,23 @@ function search() {
         var selectProductionUnitVal = $('#selectProductionUnit').val();
         var selectReceptionUnitVal = $('#selectReceptionUnit').val();
     }
+    if (selectProductionUnitVal == '-1') {
+        myAlertFail("请先选择生产单位");
+        return;
+    }
+    if (selectReceptionUnitVal == '-1') {
+        myAlertFail("请先选择接受单位");
+        return;
+    }
+
+    BaiduMap.clearOverlays();
+    if (typeof(transit) != 'undefined') {
+        transit.clearResults(); //清除导航结果
+    }
+
+    path = [];
+    route_detail = '';
+
     var options = {
         renderOptions: {
             map: BaiduMap,
@@ -216,15 +224,11 @@ function search() {
     var p1_lng, p1_lat;
     var p2_lng, p2_lat;
 
-
     p1_lng = production_unit_json[selectProductionUnitVal].production_unit_longitude;
     p1_lat = production_unit_json[selectProductionUnitVal].production_unit_latitude;
 
-
-
     p2_lng = reception_unit_json[selectReceptionUnitVal].reception_unit_longitude;
     p2_lat = reception_unit_json[selectReceptionUnitVal].reception_unit_latitude;
-
 
     var p1 = new BMap.Point(p1_lng, p1_lat);
     var p2 = new BMap.Point(p2_lng, p2_lat);
@@ -237,6 +241,22 @@ function clearScreen(){
 }
 
 function submit() {
+    if (fullScreen) {
+        var selectProductionUnitVal = $('#selectProductionUnitFull').val();
+        var selectReceptionUnitVal = $('#selectReceptionUnitFull').val();
+    } else {
+        var selectProductionUnitVal = $('#selectProductionUnit').val();
+        var selectReceptionUnitVal = $('#selectReceptionUnit').val();
+    }
+    if (selectProductionUnitVal == '-1') {
+        myAlertFail("请先选择生产单位");
+        return;
+    }
+    if (selectReceptionUnitVal == '-1') {
+        myAlertFail("请先选择接受单位");
+        return;
+    }
+
     if (path == []) {
         myAlertFail("数据为空，不能提交");
         return;
@@ -251,13 +271,6 @@ function submit() {
         BMapPointArray.push(BMapPoint);
     }
     */
-    if (fullScreen) {
-        var selectProductionUnitVal = $('#selectProductionUnitFull').val();
-        var selectReceptionUnitVal = $('#selectReceptionUnitFull').val();
-    } else {
-        var selectProductionUnitVal = $('#selectProductionUnit').val();
-        var selectReceptionUnitVal = $('#selectReceptionUnit').val();
-    }
 
     $.ajax({
         type: "POST",

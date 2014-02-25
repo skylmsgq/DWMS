@@ -183,6 +183,13 @@ function searchRoute() {
 }
 
 function deleteRoute() {
+    if (fullScreen) {
+        var selectProductionUnitVal = $('#selectProductionUnitFull').val();
+        var selectReceptionUnitVal = $('#selectReceptionUnitFull').val();
+    } else {
+        var selectProductionUnitVal = $('#selectProductionUnit').val();
+        var selectReceptionUnitVal = $('#selectReceptionUnit').val();
+    }
     if (selectProductionUnitVal == '-1') {
         myAlertFail("请先选择生产单位");
         return;
