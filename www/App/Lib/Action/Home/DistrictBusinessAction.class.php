@@ -82,9 +82,11 @@ class DistrictBusinessAction extends CommonAction{
 
 		$manifest_id_json = json_encode( $manifest_id );
 		$manifest_status_json = json_encode( $manifest['manifest_status'] );
+		$production_unit_id_json = json_encode( $manifest['production_unit_id'] );
+		$reception_unit_id_json = json_encode( $manifest['reception_unit_id'] );
 
 		$tmp_content=$this->fetch( './Public/html/Content/District/business/transfer_manifest_management_page.html' );
-		$tmp_content = "<script>manifest_id_json = $manifest_id_json; manifest_status_json = $manifest_status_json; </script> $tmp_content";
+		$tmp_content = "<script>manifest_id_json = $manifest_id_json; manifest_status_json = $manifest_status_json; production_unit_id = $production_unit_id_json; reception_unit_id = $reception_unit_id_json; </script> $tmp_content";
 		$this->ajaxReturn( $tmp_content );
 	}
 
@@ -93,22 +95,45 @@ class DistrictBusinessAction extends CommonAction{
 		$manifest_status = I( 'post.manifest_status' );
 		$time = date( 'Y-m-d H:i:s', time() );
 		$current_manifest_status = array(
-			'manifest_modify_time' => $time;
+			'manifest_modify_time' => $time,
 			'manifest_id' => $manifest_id,
 			'manifest_status' => $manifest_status,
 		);
 		$result = M( 'manifest' )->save( $current_manifest_status );
-		if ( $result ) {
-			$this->ajaxReturn( 1, '审核成功！', 1 );
-		} else {
-			$this->ajaxReturn( 0, '审核失败！', 0 );
+
+		if(I( 'post.manifest_status' )==4){
+			$route = M( 'route' )->where( array( 'production_unit_id' => I( 'post.production_unit_id' ),'reception_unit_id' => I( 'post.reception_unit_id' ) ) )->find();
+			$route_id = $route['route_id'];
+			$manifest = M('manifest')->where( array( 'manifest_id' => $manifest_id ) )->find();
+			$route_vehicle = M('route_vehicle');
+			$route_vehicle->create();
+			$route_vehicle->route_id = $route_id;
+			$route_vehicle->vehicle_id = $manifest['vehicle_id_1'];
+			$route_vehicle->manifest_id = $manifest_id;
+			$route_vehicle->transport_date = $manifest['waste_transport_time'];
+			$time = date( 'Y-m-d H:i:s', time() );
+			$route_vehicle->correlation_add_time = $time;
+			$route_vehicle->correlation_status = 0;
+
+			$result = $route_vehicle->add(); // 根据条件保存修改的数据
+
+			if ( $result ) {
+				$this->ajaxReturn( 1, '保存成功！', 1 );
+			} else {
+				$this->ajaxReturn( 0, '保存失败！', 0 );
+			}
+
+
+
+
 		}
 	}
+
 	public function transfer_manifest_management_audit_2($manifest_id="") {
 		$manifest_status = I( 'post.manifest_status' );
 		$time = date( 'Y-m-d H:i:s', time() );
 		$current_manifest_status = array(
-			'manifest_modify_time' => $time;
+			'manifest_modify_time' => $time,
 			'manifest_id' => $manifest_id,
 			'manifest_status' => $manifest_status,
 		);
@@ -277,6 +302,39 @@ class DistrictBusinessAction extends CommonAction{
 	public function user_information_query(){
 		$tmp_content=$this->fetch( './Public/html/Content/District/business/user_information_query.html' );
 		$this->ajaxReturn( $tmp_content );
+	}
+	public function get_chart()
+	{
+		$pnum=M('production_unit')->count();
+		$tnum=M('transport_unit')->count();
+		$rnum=M('reception_unit')->count();
+		$manifestnum=M('manifest')->count();
+		$tong_num=M('rfid')->where("add_method=0")->sum('waste_total');
+		$dai_num=M('rfid')->where("add_method=1")->sum('waste_total');
+		$dict=array();
+		$count_waste=0;
+		$wastelist=M('production_unit')->select();
+		$wastelist[0]['production_unit'];
+		//$waste_list=$wastelist['production_unit_waste'];
+		// foreach ($waste_list as  $value) {
+		// 	$type_list=explode(",", $value['production_unit_waste']);
+		// 	foreach ($type_list as  $val) {
+		// 		if (!array_key_exists($val, $dict))
+		// 		{
+		// 			$count_waste++;
+		// 			$dict[$val]=1;
+		// 		}
+		// 	}
+		// }
+		$result->count_waste=""+$wastelist[0]['production_unit'];
+		$result->pnum=$pnum;
+		$result->tnum=$tnum;
+		$result->rnum=$rnum;
+		$result->manifestnum=$manifestnum;
+		$result->tong_num=$tong_num;
+		$result->dai_num=$dai_num;
+		$result=json_encode($result);
+		$this->ajaxReturn( $result);	
 	}
 
 }
