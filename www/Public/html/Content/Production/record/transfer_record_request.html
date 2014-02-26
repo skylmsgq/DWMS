@@ -222,33 +222,29 @@
                             </select>
                         </td>
                         <td>所在区县</td>
-                        <td>
-                            <select type="text" id="transport_unit_county" class="form-control input-sm" placeholder="所在区县">
-                                    <option>所在区县</option>
-                                </select>
+                        <td id="transport_unit_county">
+                            
                         </td>
                     </tr>
                     <tr>
                         <td>运输单位地址</td>
-                        <td>
-                            <input type="text" class="form-control input-sm" placeholder="运输单位地址">
+                        <td id="transport_unit_address">
+                           
                         </td>
                         <td>运输单位邮编</td>
-                        <td>
-                            <select type="text" id="transport_unit_county_code" class="form-control input-sm" placeholder="运输单位邮编">
-                                <option>运输单位邮编</option>
-                            </select>
+                        <td id="transport_unit_postcode">
+                           
                         </td>
 
                     </tr>
                     <tr>
                         <td>运输单位联系人姓名</td>
-                        <td>
-                            <input type="text" class="form-control input-sm" placeholder="运输单位联系人姓名">
+                        <td id="transport_unit_contacts_name">
+                            
                         </td>
                         <td>运输单位联系电话</td>
-                        <td>
-                            <input type="text" class="form-control input-sm" placeholder="运输单位联系电话">
+                        <td id="transport_unit_contacts_phone">
+                            
                         </td>
                     </tr>
                 </table>
@@ -269,33 +265,29 @@
                             </select>
                         </td>
                         <td>所在区县</td>
-                        <td>
-                            <select type="text" id="reception_unit_county" class="form-control input-sm" placeholder="所在区县">
-                                    <option>所在区县</option>
-                                </select>
+                        <td id="reception_unit_county">
+                           
                         </td>
                     </tr>
                     <tr>
                         <td>接受单位地址</td>
-                        <td>
-                            <input type="text" class="form-control input-sm" placeholder="接受单位地址">
+                        <td id="reception_unit_address">
+                            
                         </td>
                         <td>接受单位邮编</td>
-                        <td>
-                            <select type="text" id="reception_unit_county_code" class="form-control input-sm" placeholder="接受单位邮编">
-                                <option>接受单位邮编</option>
-                            </select>
+                        <td id="reception_unit_postcode">
+                            
                         </td>
 
                     </tr>
                     <tr>
                         <td>接受单位联系人姓名</td>
-                        <td>
-                            <input type="text" class="form-control input-sm" placeholder="接受单位联系人姓名">
+                        <td id="reception_unit_contacts_name">
+                           
                         </td>
                         <td>接受单位联系电话</td>
-                        <td>
-                            <input type="text" class="form-control input-sm" placeholder="接受单位联系电话">
+                        <td id="reception_unit_contacts_phone">
+                            
                         </td>
                     </tr>
                 </table>
@@ -323,21 +315,24 @@ $('#reception_unit_id').html('<option>请选择接受单位</option>');
 for (var idx in transport_unit) {
 $('#reception_unit_id').append('<option value="' + reception_unit[idx].reception_unit_id + '">' + reception_unit[idx].reception_unit_name + '</option>');
     }   
-
 function transport_select(transport_unit_id){
-    console.log(transport_unit_id);
-    $('#transport_unit_county').html('<option>所在区县</option>');
-    $('#transport_unit_county').append('<option value="' + transport_unit[transport_unit_id-1].transport_unit_county + '">' + transport_unit[transport_unit_id-1].transport_unit_county + '</option>');
-    $('#transport_unit_county_code').html('<option>运输单位邮编</option>');
-    $('#transport_unit_county_code').append('<option value="' + transport_unit[transport_unit_id-1].transport_unit_code + '">' + transport_unit[transport_unit_id-1].transport_unit_code + '</option>');
+    // console.log(transport_unit_id);
+    $('#transport_unit_county').html(transport_unit[transport_unit_id-1].transport_unit_county);
+    $('#transport_unit_address').html(transport_unit[transport_unit_id-1].transport_unit_address);
+    $('#transport_unit_postcode').html(transport_unit[transport_unit_id-1].transport_unit_postcode);
+    $('#transport_unit_contacts_name').html(transport_unit[transport_unit_id-1].transport_unit_contacts_name);
+    $('#transport_unit_contacts_phone').html(transport_unit[transport_unit_id-1].transport_unit_contacts_phone);
+    
 }
 
 function reception_select(reception_unit_id){
-    console.log(reception_unit_id);
-    $('#reception_unit_county').html('<option>所在区县</option>');
-    $('#reception_unit_county').append('<option value="' + reception_unit[reception_unit_id-1].reception_unit_county + '">' + reception_unit[reception_unit_id-1].reception_unit_county + '</option>');
-    $('#reception_unit_county_code').html('<option>接受单位邮编</option>');
-    $('#reception_unit_county_code').append('<option value="' + reception_unit[reception_unit_id-1].reception_unit_code + '">' + reception_unit[reception_unit_id-1].reception_unit_code + '</option>');
+    // console.log(reception_unit_id);
+    $('#reception_unit_county').html(reception_unit[reception_unit_id-1].reception_unit_county);
+    $('#reception_unit_address').html(reception_unit[reception_unit_id-1].reception_unit_address);
+    $('#reception_unit_postcode').html(reception_unit[reception_unit_id-1].reception_unit_postcode);
+    $('#reception_unit_contacts_name').html(reception_unit[reception_unit_id-1].reception_unit_contacts_name);
+    $('#reception_unit_contacts_phone').html(reception_unit[reception_unit_id-1].reception_unit_contacts_phone);
+    
 }
 
 function ajaxAction(actionID) {

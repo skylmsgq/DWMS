@@ -141,7 +141,7 @@ function ajaxAction(actionID,transport_unit_name) {
         default:
             break;
     }
-
+    console.log($('#manifest_request').serialize());
     $.ajax({
         type: "post",
         url: "transfer_manifest_request_form?record_id=" + record_json.record_id,
