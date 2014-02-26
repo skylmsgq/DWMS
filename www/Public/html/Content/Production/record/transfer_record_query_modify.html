@@ -86,10 +86,6 @@
                         </td>
                     </tr>
                     <tr>
-                        <td>危废代码</td>
-                        <td>
-                            <input type="text" name="waste_code" class="form-control input-sm" placeholder="{$record.waste_code}" value="{$record.waste_code}">
-                        </td>
                         <td>相关产品</td>
                         <td>
                             <input type="text" name="relational_production" class="form-control input-sm" placeholder="{$record.relational_production}" value="{$record.relational_production}">
@@ -118,11 +114,11 @@
                     <tr>
                         <td>预计危废重量（吨）</td>
                         <td>
-                            <input type="text" name="predict_output_weight" class="form-control input-sm" placeholder="{$record.predict_output_weight}" value="{$record.predict_output_weight}">
+                            {$record.predict_output_weight}
                         </td>
                         <td>预计危废数量（桶）</td>
                         <td>
-                            <input type="text" name="predict_output_quantity" class="form-control input-sm" placeholder="{$record.predict_output_quantity}" value="{$record.predict_output_quantity}">
+                            {$record.predict_output_quantity}
                         </td>
                     </tr>
                 </table>

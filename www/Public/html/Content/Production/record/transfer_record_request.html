@@ -30,7 +30,7 @@
     <!-- /.modal-dialog -->
 </div>
 <!-- /.modal -->
-
+<script type="text/javascript" src="__PUBLIC__/js/yourAlert.js"></script>
 <form role="form" id="record_request">
     <div class="panel panel-primary">
         <div class="panel-heading">基本信息</div>
@@ -48,13 +48,13 @@
                         </td>
                     </tr>
                     <tr>
-                        <td>备案类型</td>
-                        <td>
-                            <input type="text" name="record_type" class="form-control input-sm" placeholder="备案类型">
-                        </td>
                         <td>备案日期</td>
                         <td>
                             <input type="date" name="record_date" class="form-control input-sm" placeholder="备案日期">
+                        </td>
+                        <td>备案类型</td>
+                        <td>
+                            <input type="text" name="record_type" class="form-control input-sm" placeholder="备案类型">
                         </td>
                     </tr>
                     <tr>
@@ -120,7 +120,7 @@
                     <tr>
                         <td>危废代码</td>
                         <td>
-                            <select id="waste_code" type="text" name="waste_code" class="form-control input-sm" placeholder="危废代码">      
+                            <select id="waste_code" type="text" class="form-control input-sm" placeholder="危废代码">      
                         </td>
                         <td>相关产品</td>
                         <td>
@@ -169,7 +169,7 @@
  -->                        </td>
                     </tr>
                     <tr>
-                        <td>预计危废数量（桶）</td>
+                        <td>预计危废数量（袋）</td>
                         <td id="num_content">
                             <!-- <input type="text" name="predict_output_quantity" class="form-control input-sm" placeholder="预计危废数量（桶）"> -->
                         </td>
@@ -296,9 +296,11 @@
     </div>
 </form>
 
+
+<div id="myAlert"></div>
 <center>
-    <button class="btn btn-info btn-lg" id="button_save" data-loading-text="正在保存..." data-complete-text="保存成功！" onclick="ajaxAction(0)">保存</button>
-    <button class="btn btn-warning btn-lg" id="button_submit" data-loading-text="正在提交..." data-complete-text="提交成功！" onclick="ajaxAction(1)">提交</button>
+    <button class="btn btn-info btn-lg" id="button_save" onclick="ajaxAction(0)">保存</button>
+    <button class="btn btn-warning btn-lg" id="button_submit" onclick="ajaxAction(1)">提交</button>
 </center>
 
 <script type="text/javascript">
@@ -341,36 +343,49 @@ function reception_select(reception_unit_id){
 }
 
 function ajaxAction(actionID) {
-    switch (actionID) {
-        case 0:
-            $('#button_save').button('loading');
-            $('#button_submit').addClass('disabled');
-            break;
-        case 1:
-            $('#button_save').addClass('disabled');
-            $('#button_submit').button('loading');
-            break;
-        default:
-            break;
-    }
+    // switch (actionID) {
+    //     case 0:
+    //         $('#button_save').button('loading');
+    //         $('#button_submit').addClass('disabled');
+    //         break;
+    //     case 1:
+    //         $('#button_save').addClass('disabled');
+    //         $('#button_submit').button('loading');
+    //         break;
+    //     default:
+    //         break;
+    // }
+
+console.log($('#record_request').serialize());
+console.log($('#record_request_1').serialize());
 
     $.ajax({
         type: "post",
         url: "transfer_record_request_form",
         timeout: 2000,
-        data: $('#record_request_1').serialize() + $('#record_request').serialize() + '&record_status=' + actionID + '&rfid_table_id=' + rfid_table_id + '&predict_output_quantity=' + num + 'predict_output_weight=' + weight,
+        data: $('#record_request').serialize() + '&' + $('#record_request_1').serialize() + '&record_status=' + actionID + '&rfid_table_id=' + rfid_table_id + '&predict_output_quantity=' + num + '&predict_output_weight=' + weight,
 
         success: function(data) {
             switch (actionID) {
                 case 0:
-                    $('#button_save').button('complete');
-                    $('#button_submit').removeClass('disabled');
-                    setTimeout("$('#button_save').button('reset')", 3000);
+                    if(data='保存成功！'){
+                    myAlertSucc("保存成功！");
+                    } else{
+                        myAlertFail("保存失败！");
+                    }
+                    // $('#button_save').button('complete');
+                    // $('#button_submit').removeClass('disabled');
+                    // setTimeout("$('#button_save').button('reset')", 3000);
                     break;
                 case 1:
-                    $('#button_save').removeClass('disabled');
-                    $('#button_submit').button('complete');
-                    setTimeout("$('#button_submit').button('reset')", 3000);
+                    if(data='保存成功！'){
+                    myAlertSucc("提交成功！");
+                    } else{
+                        myAlertFail("提交失败！");
+                    }
+                    // $('#button_save').removeClass('disabled');
+                    // $('#button_submit').button('complete');
+                    // setTimeout("$('#button_submit').button('reset')", 3000);
                     break;
                 default:
                     break;

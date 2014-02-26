@@ -28,7 +28,13 @@ class ProductionManifestAction extends CommonAction{
 
 		$production_unit = M( 'production_unit' )->where( array( 'production_unit_id' => session('production_unit_id' ) ) )->find();
 		//$this->ajaxReturn("<script>record_data=$record_json.reception_unit_name;</script>");
-		
+		$t_id = M( 'record' )->where( array( 'record_id' =>$record_id ) )->getField('transport_unit_id');
+		$r_id = M( 'record' )->where( array( 'record_id' =>$record_id ) )->getField('reception_unit_id');
+		$t_name = M( 'transport_unit' )->where( array( 'transport_unit_id' => $t_id ) )->getField('transport_unit_name');
+		$r_name = M( 'reception_unit' )->where( array( 'reception_unit_id' => $r_id ) )->getField('reception_unit_name');
+		$this->t_name = $t_name;
+		$this->r_name = $r_name; 
+
 		$this->record = $record;
 		$this->production_unit = $production_unit;
 
@@ -57,7 +63,7 @@ class ProductionManifestAction extends CommonAction{
 
 		$manifest->transport_unit_id = I( 'post.transport_unit_id' );
 		$manifest->reception_unit_id = I( 'post.reception_unit_id' );
-		$manifest->waste_id = I( 'post.waste_id' );
+		// $manifest->waste_id = I( 'post.waste_id' );
 		$manifest->waste_weight = I( 'post.waste_weight' );
 		$manifest->waste_num = I( 'post.waste_num' );
 		
@@ -99,7 +105,12 @@ class ProductionManifestAction extends CommonAction{
 		$production_unit = M( 'production_unit' )->where( array( 'production_unit_id' => session( 'production_unit_id' ) ) )->find();
 		$this->manifest = $manifest;
 		$this->unit = $production_unit;
-
+		$t_id = M( 'manifest' )->where( array( 'manifest_id' =>$manifest_id ) )->getField('transport_unit_id');
+		$r_id = M( 'manifest' )->where( array( 'manifest_id' =>$manifest_id ) )->getField('reception_unit_id');
+		$t_name = M( 'transport_unit' )->where( array( 'transport_unit_id' => $t_id ) )->getField('transport_unit_name');
+		$r_name = M( 'reception_unit' )->where( array( 'reception_unit_id' => $r_id ) )->getField('reception_unit_name');
+		$this->t_name = $t_name;
+		$this->r_name = $r_name;
 		$tmp_content=$this->fetch( './Public/html/Content/Production/manifest/transfer_manifest_query_detail.html' );
 		$this->ajaxReturn( $tmp_content );
 	}
@@ -112,6 +123,13 @@ class ProductionManifestAction extends CommonAction{
 
 		$manifest_id_json = json_encode( $manifest_id );
 		$manifest_status_json = json_encode( $manifest['manifest_status'] );
+
+		$t_id = M( 'manifest' )->where( array( 'manifest_id' =>$manifest_id ) )->getField('transport_unit_id');
+		$r_id = M( 'manifest' )->where( array( 'manifest_id' =>$manifest_id ) )->getField('reception_unit_id');
+		$t_name = M( 'transport_unit' )->where( array( 'transport_unit_id' => $t_id ) )->getField('transport_unit_name');
+		$r_name = M( 'reception_unit' )->where( array( 'reception_unit_id' => $r_id ) )->getField('reception_unit_name');
+		$this->t_name = $t_name;
+		$this->r_name = $r_name;
 
 		$tmp_content=$this->fetch( './Public/html/Content/Production/manifest/transfer_manifest_query_modify.html' );
 		$tmp_content = "<script>manifest_id_json = $manifest_id_json; manifest_status_json = $manifest_status_json; </script> $tmp_content";
@@ -157,6 +175,13 @@ class ProductionManifestAction extends CommonAction{
 		$production_unit = M( 'production_unit' )->where( array( 'production_unit_id' => session( 'production_unit_id' ) ) )->find();
 		$this->manifest = $manifest;
 		$this->production_unit = $production_unit;
+		
+		$t_id = M( 'manifest' )->where( array( 'manifest_id' =>$manifest_id ) )->getField('transport_unit_id');
+		$r_id = M( 'manifest' )->where( array( 'manifest_id' =>$manifest_id ) )->getField('reception_unit_id');
+		$t_name = M( 'transport_unit' )->where( array( 'transport_unit_id' => $t_id ) )->getField('transport_unit_name');
+		$r_name = M( 'reception_unit' )->where( array( 'reception_unit_id' => $r_id ) )->getField('reception_unit_name');
+		$this->t_name = $t_name;
+		$this->r_name = $r_name;
 
 		$manifest_id_json = json_encode( $manifest_id );
 		$manifest_status_json = json_encode( $manifest['manifest_status'] );
