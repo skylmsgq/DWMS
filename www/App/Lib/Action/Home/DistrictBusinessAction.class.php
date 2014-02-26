@@ -256,8 +256,15 @@ class DistrictBusinessAction extends CommonAction{
 				$data['lock'] = '0';
 			else
 				$data['lock'] = '1';
-			$munit->where( array( 'user_id' =>I( 'post.user_id' ) ) )->save( $data );
-			$this->show( "lock_ok".I( 'post.user_id' ) );
+			$result = $munit->where( array( 'user_id' =>I( 'post.user_id' ) ) )->save( $data );
+			if($result){
+				$ans=json_encode("成功");
+				$this->ajaxReturn( $ans ,'JSON');
+			} else{
+				$ans=json_encode("失败");
+				$this->ajaxReturn( $ans ,'JSON');
+			}
+			// $this->show( "lock_ok".I( 'post.user_id' ) );
 		}
 		else if ( I( 'post.action' )=="verify" ) {
 				$result=$munit->where( "user_id='$userid'" )->setField('is_verify', 1 );

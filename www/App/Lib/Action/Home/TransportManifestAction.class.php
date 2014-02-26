@@ -57,9 +57,10 @@ class TransportManifestAction extends CommonAction{
 // 转移联单->转移联单处理->填写页->表单保存
 	public function transfer_manifest_handle_request_form($manifest_id="") {
 		$manifest = M( 'manifest' ); // 实例化record对象
+		$data = I( 'post.' );
 		$time = date( 'Y-m-d H:i:s', time() );
 		$data['manifest_modify_time'] = $time;
-		$data = I( 'post.' );
+		
 		$manifest_status_old = I( 'post.manifest_status_old' );
 		switch ( $manifest_status_old ) {
 		case '1':

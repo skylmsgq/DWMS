@@ -34,22 +34,19 @@ function setTable() {
         var itemData = new Array();
         itemData[0] = "" + record_json[idx].county_code;
         itemData[1] = "" + record_json[idx].county_name;
-        itemData[2] = "" + record_json[idx].county_english_name;
-        itemData[3] = "" + itemDelete + itemModify;
+        // itemData[2] = "" + itemDelete + itemModify;
         tableData.push(itemData);
     }
  
     $('#table-container').dataTable({
         "aaData": tableData,
         "aoColumns": [{
-            "sTitle": "邮政编码"
+            "sTitle": "行政区划代码"
         }, {
             "sTitle": "区县名称"
-        }, {
-            "sTitle": "英文名称"
-        }, {
+        }/*, {
             "sTitle": "操作"
-        }],
+        }*/],
         "bPaginate": true, 
         "bLengthChange": true, 
         "bFilter": true, 
