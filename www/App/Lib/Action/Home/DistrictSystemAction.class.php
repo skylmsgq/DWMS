@@ -14,6 +14,7 @@ class DistrictSystemAction extends CommonAction{
 
 		$waste = M( 'waste' )->order( 'waste_id DESC' )->select();
 		$waste_json = json_encode( $waste );
+		
 		$tmp_content=$this->fetch( './Public/html/Content/District/system/waste_code.html' );
 		$tmp_content="<script> record_json=$waste_json;</script> $tmp_content";
 		$this->ajaxReturn( $tmp_content );

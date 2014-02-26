@@ -13,6 +13,8 @@ class ProductionRecordAction extends CommonAction{
 	public function transfer_record_request() {
 		$reception_unit = M( 'reception_unit' )->select();
 		$transport_unit = M( 'transport_unit' )->select();
+		$waste = M( 'waste' )->order( 'waste_code DESC' )->select();
+		$waste_code_json = json_encode( $waste );
 
 		$unit = M( 'production_unit' )->where( array('production_unit_id' => session( 'production_unit_id' ) ) )->find();
 		
@@ -24,18 +26,9 @@ class ProductionRecordAction extends CommonAction{
 		$rfid_json = json_encode($rfid);
 
 		$tmp_content=$this->fetch( './Public/html/Content/Production/record/transfer_record_request.html' );
-		$tmp_content="<script>rfid = $rfid_json;reception_unit=$reception_unit_json;transport_unit=$transport_unit_json;</script> $tmp_content";
+		$tmp_content="<script>waste = $waste_code_json;rfid = $rfid_json;reception_unit=$reception_unit_json;transport_unit=$transport_unit_json;</script> $tmp_content";
 		$this->ajaxReturn( $tmp_content );
 	}
-
-	// 转移备案->转移备案申请->rfid 选择
-	// public function rfid_select(){
-	// 	$rfid = M( 'rfid' )->where(array( 'rfid_status' => 3, 'production_unit_id'=>session('production_unit_id')))->select();
-	// 	$rfid_json = json_encode($rfid);
-	// 	$tmp_content=$this->fetch( './Public/html/Content/Production/record/rfid_select.html' );
-	// 	$tmp_content="<script>rfid = $rfid_json;</script> $tmp_content";
-	// 	$this->ajaxReturn( $tmp_content );
-	// }
 
 	// 转移备案->转移备案申请->表单提交
 	public function transfer_record_request_form() {

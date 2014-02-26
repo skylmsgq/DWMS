@@ -67,19 +67,19 @@
                 <tr>
                     <td>运输单位</td>
                     <td>
-                        {$record.transport_unit_id}
+                        {$t_name}
                     </td>
                     <td>接受单位</td>
                     <td>
-                        {$record.reception_unit_id}
+                        {$r_name}
                     </td>
                 </tr>                 
                 <tr>
-                    <td>危废编号</td>
+                    <td>危废数量（袋/个）</td>
                     <td>
-                        {$record.waste_id}
+                        {$record.predict_output_quantity}
                     </td>
-                    <td>危废重量</td>
+                    <td>危废重量（桶/公斤）</td>
                     <td>
                         {$record.predict_output_weight}
                     </td>
@@ -147,7 +147,7 @@ function ajaxAction(actionID,transport_unit_name) {
         url: "transfer_manifest_request_form?record_id=" + record_json.record_id,
         timeout: 2000,
         // data: $('#manifest_request').serialize() + '&manifest_status=' + actionID +'&reception_unit_name=' + + '&transport_unit_name=' + transport_unit_name ,
-        data: $('#manifest_request').serialize() + '&manifest_status=' + actionID  + '&transport_unit_id=' + record_json.transport_unit_id + '&reception_unit_id=' + record_json.reception_unit_id + '&waste_id=' + record_json.waste_id + '&waste_weight=' + record_json.predict_output_weight,
+        data: $('#manifest_request').serialize() + '&manifest_status=' + actionID  + '&transport_unit_id=' + record_json.transport_unit_id + '&reception_unit_id=' + record_json.reception_unit_id + '&waste_weight=' + record_json.predict_output_weight + '&waste_num=' + record_json.predict_output_quantity + '&rfid_table_id=' + record_json.rfid_table_id,
         success: function(data) {
             switch (actionID) {
                 case 0:

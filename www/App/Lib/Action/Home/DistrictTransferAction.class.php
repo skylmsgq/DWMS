@@ -114,7 +114,7 @@ class DistrictTransferAction extends CommonAction{
 		// $reception_transfer_manifest_json = json_encode( $reception_transfer_manifest );
 		$manifest = M( 'manifest' );
 		$condition['jurisdiction_id'] = array('EQ', session( 'jurisdiction_id' ) );
-		$condition['_string'] = 'manifest_status>10';
+		$condition['_string'] = 'manifest_status>9';
 		$reception_transfer_manifest = $manifest->join( 'reception_unit ON manifest.reception_unit_id = reception_unit.reception_unit_id' )->where( $condition )->select();
 		$reception_transfer_manifest_json = json_encode( $reception_transfer_manifest );
 
