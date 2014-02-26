@@ -308,8 +308,9 @@ var num = 0;
 
 $('#waste_code').html('<option>请选择主要危废代码</option>')
 for (var idx in waste) {
-    $('#waste_code').append('<option value="' + waste[idx].waste_code + '">'+ waste[idx].waste_code + '<option>')
+    $('#waste_code').append('<option value="' + waste[idx].waste_code + '">'+ waste[idx].waste_code + '</option>');
 }
+
 $('#transport_unit_id').html('<option>请选择运输单位</option>');
 for (var idx in transport_unit) {
     $('#transport_unit_id').append('<option value="' + transport_unit[idx].transport_unit_id + '">' + transport_unit[idx].transport_unit_name + '</option>');
