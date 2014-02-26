@@ -147,7 +147,7 @@ function ajaxAction(actionID,transport_unit_name) {
         url: "transfer_manifest_request_form?record_id=" + record_json.record_id,
         timeout: 2000,
         // data: $('#manifest_request').serialize() + '&manifest_status=' + actionID +'&reception_unit_name=' + + '&transport_unit_name=' + transport_unit_name ,
-        data: $('#manifest_request').serialize() + '&manifest_status=' + actionID  + '&transport_unit_id=' + record_json.transport_unit_id + '&reception_unit_id=' + record_json.reception_unit_id + '&waste_id=' + record_json.waste_id + '&waste_weight=' + record_json.predict_output_weight,
+        data: $('#manifest_request').serialize() + '&manifest_status=' + actionID  + '&transport_unit_id=' + record_json.transport_unit_id + '&reception_unit_id=' + record_json.reception_unit_id + '&waste_id=' + record_json.waste_id + '&waste_weight=' + record_json.predict_output_weight + '&waste_num=' + record_json.predict_output_quantity + '&rfid_table_id=' + record_json.rfid_table_id,
         success: function(data) {
             switch (actionID) {
                 case 0:

@@ -120,7 +120,7 @@
                     <tr>
                         <td>危废代码</td>
                         <td>
-                            <input type="text" name="waste_code" class="form-control input-sm" placeholder="危废代码">
+                            <select id="waste_code" type="text" name="waste_code" class="form-control input-sm" placeholder="危废代码">      
                         </td>
                         <td>相关产品</td>
                         <td>
@@ -314,9 +314,13 @@ var rfid_table_id = "";
 var weight = 0;
 var num = 0; 
 
+$('#waste_code').html('<option>请选择主要危废代码</option>')
+for (var idx in waste) {
+    $('#waste_code').append('<option value="' + waste[idx].waste_code + '">'+ waste[idx].waste_code + '<option>')
+}
 $('#transport_unit_id').html('<option>请选择运输单位</option>');
 for (var idx in transport_unit) {
-$('#transport_unit_id').append('<option value="' + transport_unit[idx].transport_unit_id + '">' + transport_unit[idx].transport_unit_name + '</option>');
+    $('#transport_unit_id').append('<option value="' + transport_unit[idx].transport_unit_id + '">' + transport_unit[idx].transport_unit_name + '</option>');
     }
 
 $('#reception_unit_id').html('<option>请选择接受单位</option>');
