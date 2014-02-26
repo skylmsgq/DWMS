@@ -322,8 +322,9 @@ function search() {
         renderOptions: {
             map: BaiduMap,
             panel: "route_panel",
-            autoViewport: false, //启用自动调整地图层级，当指定了搜索结果所展现的地图时有效。
-            enableDragging: true //起终点可进行拖拽
+            autoViewport: true, //启用自动调整地图层级，当指定了搜索结果所展现的地图时有效。
+            enableDragging: true, //起终点可进行拖拽
+            highlightMode: BMAP_HIGHLIGHT_ROUTE, // 驾车结果展现中点击列表后的展现策略。
         },
         policy: routePolicy[selectStrategyVal],
         onSearchComplete: searchComplete

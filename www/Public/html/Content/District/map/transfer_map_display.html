@@ -82,9 +82,12 @@ var fullScreen = 0; //是否处于全屏状态的标志
 var routeDecodeObj = new Array();
 var routeDetailDecodeObj = new Array();
 var ajaxSendData = new Array();
+
 var vehicleMarkerList = new Array();
 var infoWindowList = new Array();
 var polylineList = new Array();
+var startMarkerList = new Array();
+var endMarkerList = new Array();
 
 var warningDistance = alarm_distance_json.warning_distance;
 var alarmDistance = alarm_distance_json.alarm_distance;
@@ -123,7 +126,6 @@ function setBMap() {
             "device_id": route_json[idx].device_id,
         }
     }
-    $('#vehicle_panel').html()
 
     lorryIconGreen = new BMap.Icon("__PUBLIC__/image/truck_green.png", new BMap.Size(32, 40), {
         anchor: new BMap.Size(16, 40),
@@ -136,6 +138,16 @@ function setBMap() {
     lorryIconRed = new BMap.Icon("__PUBLIC__/image/truck_red.png", new BMap.Size(32, 40), {
         anchor: new BMap.Size(16, 40),
         imageOffset: new BMap.Size(0, 0)
+    });
+
+    startIcon = new BMap.Icon("__PUBLIC__/image/qidian.png", new BMap.Size(30, 32), {
+        anchor: new BMap.Size(15, 32),
+        imageOffset: new BMap.Size(0, 0) // 设置图片偏移
+    });
+
+    endIcon = new BMap.Icon("__PUBLIC__/image/zhongdian.png", new BMap.Size(30, 32), {
+        anchor: new BMap.Size(15, 32),
+        imageOffset: new BMap.Size(0, 0) // 设置图片偏移
     });
 
     $('#vehicle_panel').dataTable({
@@ -177,6 +189,12 @@ function setBMap() {
     BaiduMap.addEventListener("click", function() {
         while (polyline = polylineList.pop()) {
             BaiduMap.removeOverlay(polyline);
+        }
+        while (startMarker = startMarkerList.pop()) {
+            BaiduMap.removeOverlay(startMarker);
+        }
+        while (endMarker = endMarkerList.pop()) {
+            BaiduMap.removeOverlay(endMarker);
         }
         $('#route_panel').html("");
     });
@@ -221,15 +239,15 @@ function transferWarning() {
                 dataTable.fnClearTable();
                 dataTable.fnAddData(tableData);
 
-                var iconPoint = new BMap.Point(gpsDataArray[gpsIdx].lng, gpsDataArray[gpsIdx].lat);
-                var vehicleMarker = new BMap.Marker(iconPoint, {
+                var vehiclePoint = new BMap.Point(gpsDataArray[gpsIdx].lng, gpsDataArray[gpsIdx].lat);
+                var vehicleMarker = new BMap.Marker(vehiclePoint, {
                     title: "危废运输车辆", // 覆盖物标题
                 });
                 vehicleMarkerList.push(vehicleMarker);
 
                 var geoCoder = new BMap.Geocoder();
                 var pointLocation = "";
-                geoCoder.getLocation(iconPoint, function(rs) {
+                geoCoder.getLocation(vehiclePoint, function(rs) {
                     var addComp = rs.addressComponents;
                     pointLocation = "" + addComp.province + addComp.city + addComp.district + addComp.street + addComp.streetNumber;
                 });
@@ -283,6 +301,24 @@ function transferWarning() {
                     });
                     BaiduMap.addOverlay(polyline);
                     polylineList.push(polyline);
+
+                    var startPoint = new BMap.Point(routeDecodeObj[markerIdx][0].lng, routeDecodeObj[markerIdx][0].lat);
+                    var startMarker = new BMap.Marker(startPoint, {
+                        icon: startIcon,
+                        title: "起点"
+                    });
+                    BaiduMap.addOverlay(startMarker);
+                    startMarkerList.push(startMarker);
+
+                    var routeLength = routeDecodeObj[markerIdx].length;
+                    var endPoint = new BMap.Point(routeDecodeObj[markerIdx][routeLength - 1].lng, routeDecodeObj[markerIdx][routeLength - 1].lat);
+                    var endMarker = new BMap.Marker(endPoint, {
+                        icon: endIcon,
+                        title: "终点"
+                    });
+                    BaiduMap.addOverlay(endMarker);
+                    endMarkerList.push(endMarker);
+
                     $('#route_panel').html("<h2 style='margin:0px;border-top:2px solid #ccc;padding:10px 0 5px 0px;font:bold 16px arial,sans-serif'>当前车辆指定路线详情：</h2>" + routeDetailDecodeObj[markerIdx]);
                 });
             }
@@ -324,15 +360,15 @@ function settingFull() {
     var inputWarningDistanceFull = $('#warningDistanceFull');
     var inputAlarmDistanceFull = $('#alarmDistanceFull');
     if (!inputWarningDistanceFull.val()) {
-        inputWarningDistanceFull.val(alarm_distance_json.warning_distance);
         warningDistance = alarm_distance_json.warning_distance;
+        inputWarningDistanceFull.val(alarm_distance_json.warning_distance);
     } else {
         warningDistance = inputWarningDistanceFull.val();
         $('#warningDistance').val(warningDistance);
     }
     if (!inputAlarmDistanceFull.val()) {
-        inputAlarmDistanceFull.val(alarm_distance_json.alarm_distance);
         alarmDistance = val(alarm_distance_json.alarm_distance);
+        inputAlarmDistanceFull.val(alarm_distance_json.alarm_distance);
     } else {
         alarmDistance = inputAlarmDistanceFull.val();
         $('#alarmDistance').val(alarmDistance);

@@ -101,6 +101,8 @@ var vehicleMarkerList = new Array();
 var infoWindowList = new Array();
 var polylineRouteList = new Array();
 var polylineGPSList = new Array();
+var startMarkerList = new Array();
+var endMarkerList = new Array();
 
 var tableData = new Array();
 var tableData = [];
@@ -159,9 +161,32 @@ function setBMap() {
         }
     });
 
+    lorryIconGreen = new BMap.Icon("__PUBLIC__/image/truck_green.png", new BMap.Size(32, 40), {
+        anchor: new BMap.Size(16, 40),
+        imageOffset: new BMap.Size(0, 0)
+    });
+    lorryIconYellow = new BMap.Icon("__PUBLIC__/image/truck_yellow.png", new BMap.Size(32, 40), {
+        anchor: new BMap.Size(16, 40),
+        imageOffset: new BMap.Size(0, 0)
+    });
+    lorryIconRed = new BMap.Icon("__PUBLIC__/image/truck_red.png", new BMap.Size(32, 40), {
+        anchor: new BMap.Size(16, 40),
+        imageOffset: new BMap.Size(0, 0)
+    });
+
+    startIcon = new BMap.Icon("__PUBLIC__/image/qidian.png", new BMap.Size(30, 32), {
+        anchor: new BMap.Size(15, 32),
+        imageOffset: new BMap.Size(0, 0) // 设置图片偏移
+    });
+
+    endIcon = new BMap.Icon("__PUBLIC__/image/zhongdian.png", new BMap.Size(30, 32), {
+        anchor: new BMap.Size(15, 32),
+        imageOffset: new BMap.Size(0, 0) // 设置图片偏移
+    });
+
     BaiduMap.addEventListener("click", function() {
-        while (polyline = polylineRouteList.pop()) {
-            BaiduMap.removeOverlay(polyline);
+        while (polylineRoute = polylineRouteList.pop()) {
+            BaiduMap.removeOverlay(polylineRoute);
         }
         $('#transport_unit_panel').html("");
         $('#route_panel').html("");
@@ -212,24 +237,12 @@ function getVehicleRoutes() {
                 clearTimeout(playbackTimeout);
             }
             BaiduMap.clearOverlays();
-
-            var lorryIconGreen = new BMap.Icon("__PUBLIC__/image/truck_green.png", new BMap.Size(32, 40), {
-                anchor: new BMap.Size(16, 40),
-                imageOffset: new BMap.Size(0, 0)
-            });
-            var lorryIconYellow = new BMap.Icon("__PUBLIC__/image/truck_yellow.png", new BMap.Size(32, 40), {
-                anchor: new BMap.Size(16, 40),
-                imageOffset: new BMap.Size(0, 0)
-            });
-            var lorryIconRed = new BMap.Icon("__PUBLIC__/image/truck_red.png", new BMap.Size(32, 40), {
-                anchor: new BMap.Size(16, 40),
-                imageOffset: new BMap.Size(0, 0)
-            });
+            $('#transport_unit_panel').html("");
+            $('#route_panel').html("");
 
             var vehicleMarkerList = new Array();
             var startTime = "9999-12-31 23:59:59";
             var endTime = "0000-00-00 00:00:00";
-
             var gpsRouteTimeArray = new Array();
             for (var gpsIdx in gpsRouteArray) {
 
@@ -292,12 +305,13 @@ function getVehicleRoutes() {
                 });
 
                 vehicleMarker.addEventListener("rightclick", function(e) {
+                    var markerIdx = this.getTitle() - '0';
                     $.ajax({
                         type: "POST",
                         url: "{:U('Home/DistrictMap/ajax_get_vehicle_route')}",
                         dataType: 'JSON',
                         data: {
-                            "vehicle_id": gpsRouteArray[this.getTitle() - '0'][0].vehicle_id,
+                            "vehicle_id": gpsRouteArray[markerIdx][0].vehicle_id,
                             "datetime": playbackTimeObj.getFullYear() + "-" + (playbackTimeObj.getMonth() + 1) + "-" + playbackTimeObj.getDate(),
                         },
                         success: function(routeObj) {
@@ -309,14 +323,14 @@ function getVehicleRoutes() {
                                 var lat = routeDecodeObj[pointIdx].lat;
                                 pointArray.push(new BMap.Point(lng, lat));
                             }
-                            var polyline = new BMap.Polyline(pointArray, {
+                            var polylineRoute = new BMap.Polyline(pointArray, {
                                 strokeColor: "#762a83",
                                 strokeWeight: 5, // 折线的宽度，以像素为单位。
                                 strokeOpacity: 0.8, // 折线的透明度，取值范围0 - 1。
                                 strokeStyle: "solid", // 折线的样式，solid或dashed。
                             });
-                            BaiduMap.addOverlay(polyline);
-                            polylineRouteList.push(polyline);
+                            BaiduMap.addOverlay(polylineRoute);
+                            polylineRouteList.push(polylineRoute);
                             $('#route_panel').html("<h2 style='margin:0px;border-top:2px solid #ccc;padding:10px 0 5px 0px;font:bold 16px arial,sans-serif'>回放车辆指定路线详情：</h2>" + routeDetailDecodeObj);
                         },
                         error: function(XMLHttpRequest, textStatus, errorThrown) {
@@ -344,24 +358,41 @@ function getVehicleRoutes() {
                     var lat = gpsRouteArray[gpsIdx][dataIdx].bmap_latitude;
                     pointArray.push(new BMap.Point(lng, lat));
                 }
-                var polyline = new BMap.Polyline(pointArray, {
+                var polylineGPS = new BMap.Polyline(pointArray, {
                     strokeColor: "#8c510a",
                     strokeWeight: 5, // 折线的宽度，以像素为单位。
                     strokeOpacity: 0.8, // 折线的透明度，取值范围0 - 1。
                     strokeStyle: "solid", // 折线的样式，solid或dashed。
                 });
-                polylineGPSList.push(polyline);
+                polylineGPSList.push(polylineGPS);
+
+                var startPoint = new BMap.Point(gpsRouteArray[gpsIdx][0].bmap_longitude, gpsRouteArray[gpsIdx][0].bmap_latitude);
+                var startMarker = new BMap.Marker(startPoint, {
+                    icon: startIcon,
+                    title: "起点"
+                });
+                startMarkerList.push(startMarker);
+
+                var endPoint = new BMap.Point(gpsRouteArray[gpsIdx][idxLength - 1].bmap_longitude, gpsRouteArray[gpsIdx][idxLength - 1].bmap_latitude);
+                var endMarker = new BMap.Marker(endPoint, {
+                    icon: endIcon,
+                    title: "终点"
+                });
+                endMarkerList.push(endMarker);
 
                 vehicleMarker.addEventListener("mouseover", function(e) {
-                    var gpsIdx = this.getTitle() - '0';
-                    BaiduMap.addOverlay(polylineGPSList[gpsIdx]);
+                    var markerIdx = this.getTitle() - '0';
+                    BaiduMap.addOverlay(polylineGPSList[markerIdx]);
+                    BaiduMap.addOverlay(startMarkerList[markerIdx]);
+                    BaiduMap.addOverlay(endMarkerList[markerIdx]);
                 });
 
-                vehicleMarker.addEventListener("mouseout", function(e){
-                    var gpsIdx = this.getTitle() - '0';
-                    BaiduMap.removeOverlay(polylineGPSList[gpsIdx]);
+                vehicleMarker.addEventListener("mouseout", function(e) {
+                    var markerIdx = this.getTitle() - '0';
+                    BaiduMap.removeOverlay(polylineGPSList[markerIdx]);
+                    BaiduMap.removeOverlay(startMarkerList[markerIdx]);
+                    BaiduMap.removeOverlay(endMarkerList[markerIdx]);
                 });
-
             }
 
             var startTimeObj = new Date(startTime);
