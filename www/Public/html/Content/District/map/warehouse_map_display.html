@@ -66,7 +66,10 @@
                     </div>
                 </div>
             </div>
-            <div id="route_panel"></div>
+            <div class="blank_div"></div>
+            <table id="production_unit_panel"><caption>生产单位统计表</caption></table>
+            <div class="blank_div"></div>
+            <table id="reception_unit_panel"><caption>接受单位统计表</caption></table>
         </div>
 
     </div>
@@ -89,6 +92,9 @@ var productionInfoWindowList = new Array();
 var receptionMarkerList = new Array();
 var receptionInfoWindowList = new Array();
 
+var productionTableData = new Array();
+var receptionTableData = new Array();
+
 function setBMap() {
     var windowHeight = $(window).height();
     $("#map_container").css("height", "" + windowHeight - 350 + "px");
@@ -108,6 +114,12 @@ function setBMap() {
     BaiduMap.setMapStyle(mapStyle);
 
     for (var idx in production_unit_json) {
+        var itemData = new Array();
+        itemData[0] = production_unit_json[idx].production_unit_name;
+        itemData[1] = production_unit_json[idx].production_unit_phone;
+        itemData[2] = production_unit_json[idx].production_unit_address;
+        productionTableData[idx] = itemData;
+
         var iconPoint = new BMap.Point(production_unit_json[idx].production_unit_longitude, production_unit_json[idx].production_unit_latitude);
         var productionUnitIcon = new BMap.Icon("__PUBLIC__/image/02green_48.png", new BMap.Size(48, 48), {
             anchor: new BMap.Size(24, 24),
@@ -146,7 +158,49 @@ function setBMap() {
         });
     }
 
+    $('#production_unit_panel').dataTable({
+        "aaData": productionTableData,
+        "aoColumns": [{
+            "sTitle": "生产单位名称"
+        }, {
+            "sTitle": "电话"
+        }, {
+            "sTitle": "地址"
+        }],
+        "bPaginate": true, //翻页功能
+        "bLengthChange": true, //改变每页显示数据数量
+        "bFilter": true, //过滤功能
+        "bSort": true, //排序功能
+        "bInfo": true, //页脚信息
+        "bAutoWidth": true, //自动宽度
+        "bStateSave": true, //状态保存，使用了翻页或者改变了每页显示数据数量，会保存在cookie中，下回访问时会显示上一次关闭页面时的内容。
+        "sPaginationType": "full_numbers", //显示数字的翻页样式
+
+        "oLanguage": {
+            "sLengthMenu": "每页显示 _MENU_ 条记录",
+            "sSearch": "搜索 _INPUT_",
+            "sZeroRecords": "抱歉， 没有找到",
+            "sInfo": "从 _START_ 到 _END_ /共 _TOTAL_ 条数据",
+            "sInfoEmpty": "没有数据",
+            "sInfoFiltered": "(从 _MAX_ 条数据中检索)",
+            "oPaginate": {
+                "sFirst": "首页",
+                "sPrevious": "前一页",
+                "sNext": "后一页",
+                "sLast": "尾页"
+            },
+            "sProcessing": "正在加载数据...",
+            "sZeroRecords": "没有检索到数据"
+        }
+    });
+
     for (var idx in reception_unit_json) {
+        var itemData = new Array();
+        itemData[0] = reception_unit_json[idx].reception_unit_name;
+        itemData[1] = reception_unit_json[idx].reception_unit_phone;
+        itemData[2] = reception_unit_json[idx].reception_unit_address;
+        receptionTableData[idx] = itemData;
+
         var iconPoint = new BMap.Point(reception_unit_json[idx].reception_unit_longitude, reception_unit_json[idx].reception_unit_latitude);
         var receptionUnitIcon = new BMap.Icon("__PUBLIC__/image/04yellow_48.png", new BMap.Size(48, 48), {
             anchor: new BMap.Size(24, 24),
@@ -182,6 +236,42 @@ function setBMap() {
             BaiduMap.openInfoWindow(receptionInfoWindowList[this.getTitle() - '0'], this.getPosition());
         });
     }
+
+    $('#reception_unit_panel').dataTable({
+        "aaData": receptionTableData,
+        "aoColumns": [{
+            "sTitle": "接受单位名称"
+        }, {
+            "sTitle": "电话"
+        }, {
+            "sTitle": "地址"
+        }],
+        "bPaginate": true, //翻页功能
+        "bLengthChange": true, //改变每页显示数据数量
+        "bFilter": true, //过滤功能
+        "bSort": true, //排序功能
+        "bInfo": true, //页脚信息
+        "bAutoWidth": true, //自动宽度
+        "bStateSave": true, //状态保存，使用了翻页或者改变了每页显示数据数量，会保存在cookie中，下回访问时会显示上一次关闭页面时的内容。
+        "sPaginationType": "full_numbers", //显示数字的翻页样式
+
+        "oLanguage": {
+            "sLengthMenu": "每页显示 _MENU_ 条记录",
+            "sSearch": "搜索 _INPUT_",
+            "sZeroRecords": "抱歉， 没有找到",
+            "sInfo": "从 _START_ 到 _END_ /共 _TOTAL_ 条数据",
+            "sInfoEmpty": "没有数据",
+            "sInfoFiltered": "(从 _MAX_ 条数据中检索)",
+            "oPaginate": {
+                "sFirst": "首页",
+                "sPrevious": "前一页",
+                "sNext": "后一页",
+                "sLast": "尾页"
+            },
+            "sProcessing": "正在加载数据...",
+            "sZeroRecords": "没有检索到数据"
+        }
+    });
 
     $(".anchorBL").hide();
 }
