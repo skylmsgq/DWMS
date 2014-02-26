@@ -50,12 +50,6 @@ class DistrictSystemAction extends CommonAction{
 		$this->ajaxReturn( $tmp_content );
 	}
 
-	public function change_waste_category(){
-		$waste_category = M( 'waste_category' )->where( array('waste_category_code'=> I('post.code') ) )->select();
-		$waste_category_json = json_encode( $waste_category );
-		$this->ajaxReturn( $waste_category, 'JSON');
-	}
-
 	// 系统管理->系统信息设置->废物代码->保存修改
 	public function waste_code_modified($waste_id="") {
 		$waste = M( 'waste' ); // 实例化record对象

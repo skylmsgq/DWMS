@@ -1,3 +1,4 @@
+<script type="text/javascript" src="__PUBLIC__/js/yourAlert.js"></script>
 <script type="text/javascript">
 function hide_page()
 {
@@ -47,7 +48,7 @@ function ajaxAction(){
     passbag.user_id={$Think.session.user_id};
 //    console.log(passbag);
 
-     $("#model-content_pass").html('<center style="margin:50px"><h4>修改中...</h4><div class="progress progress-striped active" style="width: 50%"><div class="progress-bar"  role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div></div></center>');
+     // $("#model-content_pass").html('<center style="margin:50px"><h4>修改中...</h4><div class="progress progress-striped active" style="width: 50%"><div class="progress-bar"  role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div></div></center>');
 
     $.ajax({
         type: "post",
@@ -57,11 +58,14 @@ function ajaxAction(){
         success: function(data) {
             console.log(data);
             if (data=="0")
-                     $("#model-content_pass").html("<h1>密码有误</h1> <center><button class='btn btn-info btn-lg' onclick='hide_page();'>关闭页面</button><center>");
+                     // $("#model-content_pass").html("<h1>密码有误</h1> <center><button class='btn btn-info btn-lg' onclick='hide_page();'>关闭页面</button><center>");
+                 myAlertFail("密码有误！");
             else if (data=="1")
-                     $("#model-content_pass").html("<h1>修改成功</h1> <center><button class='btn btn-info btn-lg' onclick='hide_page();'>关闭页面</button><center>");
+                     // $("#model-content_pass").html("<h1>修改成功</h1> <center><button class='btn btn-info btn-lg' onclick='hide_page();'>关闭页面</button><center>");
+                 myAlertSucc("修改成功！");
             else 
-                     $("#model-content_pass").html("<h1>未知错误</h1> <center><button class='btn btn-info btn-lg' onclick='hide_page();'>关闭页面</button><center>");   
+                     // $("#model-content_pass").html("<h1>未知错误</h1> <center><button class='btn btn-info btn-lg' onclick='hide_page();'>关闭页面</button><center>");   
+                 myAlertFail("修改失败！");
 
 
  //           $('#myModal').html(data);

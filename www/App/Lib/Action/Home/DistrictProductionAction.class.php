@@ -37,8 +37,10 @@ class DistrictProductionAction extends CommonAction{
 
 	// 危废产生单位->危险废物台账->危废产生统计->详情
 	public function waste_account_monthly_statistics_page($production_unit_id=""){
-		$rfid = M( 'rfid' )->where( array( 'production_unit_id' =>$production_unit_id ) )->select();
-		$rfid_json = json_encode( $rfid );
+		$rfid = M('rfid');
+		$condition['production_unit_id'] = array('EQ',$production_unit_id);
+		$join = $rfid->join('waste ON rfid.waste_id = waste.waste_id')->where($condition)->select();
+		$rfid_json = json_encode($join);
 		$tmp_content = $this->fetch( './Public/html/Content/District/production/waste_account_monthly_statistics_page.html' );
 		$tmp_content = "<script>rfid_json = $rfid_json;</script> $tmp_content";
 		$this->ajaxReturn( $tmp_content );

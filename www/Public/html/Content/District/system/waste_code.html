@@ -38,7 +38,7 @@ function setTable() {
         // itemData[3] = "" + record_json[idx].waste_name;
         itemData[3] = "" + record_json[idx].waste_property;
         itemData[4] = "" + record_json[idx].waste_category_code;
-        itemData[5] = "" + itemDelete + itemModify;
+        // itemData[5] = "" + itemDelete + itemModify;
         tableData.push(itemData);
     }
  
@@ -54,9 +54,9 @@ function setTable() {
             "sTitle": "危险特性"
         },{
             "sTitle": "类别编号"
-        },{
+        }/*,{
             "sTitle": "操作"
-        }],
+        }*/],
         "bPaginate": true, 
         "bLengthChange": true, 
         "bFilter": true, 

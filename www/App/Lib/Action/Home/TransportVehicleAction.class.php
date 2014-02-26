@@ -129,10 +129,12 @@ class TransportVehicleAction extends CommonAction{
 		$device->where( array( 'device_id' => I('post.device_id') ) )->save($data_1);
 
 		$vehicle = M( 'vehicle' );
+		$data = I('post.');
 		$time = date( 'Y-m-d H:i:s', time() );
 		$data['vehicle_modify_time'] = $time;
 		$data['vehicle_status'] = 1;
-		$data = I('post.');
+		
+		
 		$vehicle->where( array( 'vehicle_id' => I('post.vehicle_id') ) )->save($data);
 	}
 }

@@ -34,7 +34,7 @@ function setTable() {
         var itemData = new Array();
         itemData[0] = "" + record_json[idx].package_method_code;
         itemData[1] = "" + record_json[idx].package_method;
-        itemData[2] = "" + itemDelete + itemModify;
+        // itemData[2] = "" + itemDelete + itemModify;
         tableData.push(itemData);
     }
  
@@ -44,9 +44,9 @@ function setTable() {
             "sTitle": "危废形态编号"
         }, {
             "sTitle": "危废形态"
-        }, {
+        }/*, {
             "sTitle": "操作"
-        }],
+        }*/],
         "bPaginate": true, 
         "bLengthChange": true, 
         "bFilter": true, 
