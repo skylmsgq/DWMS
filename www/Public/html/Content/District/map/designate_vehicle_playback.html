@@ -44,7 +44,9 @@
                     </select>
                 </div>
                 <div class="col-md-1">
-                    <button type="button" class="btn btn-info btn-sm" onclick="getVehicleRoute();">回放</button>
+                    <center>
+                        <button type="button" class="btn btn-info btn-sm" onclick="getVehicleRoute();">回放</button>
+                    </center>
                 </div>
             </div>
         </div>
@@ -87,7 +89,9 @@
                     </select>
                 </div>
                 <div class="col-md-6">
-                    <button type="button" class="btn btn-info btn-sm" onclick="getVehicleRoute();">回放</button>
+                    <center>
+                        <button type="button" class="btn btn-info btn-sm" onclick="getVehicleRoute();">回放</button>
+                    </center>
                 </div>
             </div>
             <div class="blank_div"></div>
@@ -327,7 +331,7 @@ function getVehicleRoute() {
                         });
                         BaiduMap.addOverlay(polyline);
                         polylineList.push(polyline);
-                        $('#route_panel').html(routeDetailDecodeObj);
+                        $('#route_panel').html("<h2 style='margin:0px;border-top:2px solid #ccc;padding:10px 0 5px 0px;font:bold 16px arial,sans-serif'>回放车辆指定路线详情：</h2>" + routeDetailDecodeObj);
                     },
                     error: function(XMLHttpRequest, textStatus, errorThrown) {
                         myAlertFail("获取车辆指定路线ajax请求失败");

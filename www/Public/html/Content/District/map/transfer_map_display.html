@@ -57,7 +57,9 @@
                 <button type="button" class="btn btn-success btn-sm" onclick="settingFull();">设置</button>
             </center>
             <div class="blank_div"></div>
-            <table id="vehicle_panel"></table>
+            <table id="vehicle_panel">
+                <caption>当前运行车辆统计表</caption>
+            </table>
             <div class="blank_div"></div>
             <div id="route_panel"></div>
         </div>
@@ -167,8 +169,8 @@ function setBMap() {
                 "sNext": "后一页",
                 "sLast": "尾页"
             },
+            "sProcessing": "正在加载数据...",
             "sZeroRecords": "没有检索到数据"
-
         }
     });
 
@@ -281,7 +283,7 @@ function transferWarning() {
                     });
                     BaiduMap.addOverlay(polyline);
                     polylineList.push(polyline);
-                    $('#route_panel').html(routeDetailDecodeObj[markerIdx]);
+                    $('#route_panel').html("<h2 style='margin:0px;border-top:2px solid #ccc;padding:10px 0 5px 0px;font:bold 16px arial,sans-serif'>当前车辆指定路线详情：</h2>" + routeDetailDecodeObj[markerIdx]);
                 });
             }
         },

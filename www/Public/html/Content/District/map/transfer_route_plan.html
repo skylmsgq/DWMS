@@ -72,13 +72,19 @@
             <div class="blank_div"></div>
             <div class="row">
                 <div class="col-md-4">
-                    <button type="button" class="btn btn-info btn-sm" onclick="search();">查询</button>
+                    <center>
+                        <button type="button" class="btn btn-info btn-sm" onclick="search();">查询</button>
+                    </center>
                 </div>
                 <div class="col-md-4">
-                    <button type="button" class="btn btn-warning btn-sm" onclick="clearScreen();">清除</button>
+                    <center>
+                        <button type="button" class="btn btn-warning btn-sm" onclick="clearScreen();">清除</button>
+                    </center>
                 </div>
                 <div class="col-md-4">
-                    <button type="button" class="btn btn-success btn-sm" onclick="submit();">提交</button>
+                    <center>
+                        <button type="button" class="btn btn-success btn-sm" onclick="submit();">提交</button>
+                    </center>
                 </div>
             </div>
             <div class="blank_div"></div>
@@ -235,7 +241,7 @@ function search() {
     transit.search(p1, p2);
 }
 
-function clearScreen(){
+function clearScreen() {
     BaiduMap.clearOverlays();
     $('#route_panel').html("");
 }
