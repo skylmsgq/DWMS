@@ -236,7 +236,7 @@ class SelectSocketServer
 												$alarmDistance = $row['alarm_distance'];
 											}
 											if($wanderR>=$alarmDistance){
-												$sql2 = "INSERT INTO alarm (alarm_date_time, alarm_longitude, alarm_latitude, vehicle_offset_distance, vehicle_id, alarm_add_time, alarm_status, agency_id) VALUES ('$time', '$long', '$lat', '$wanderR', '$vehicleId', '$time', '0', '$agencyId')";
+												$sql2 = "INSERT INTO alarm (alarm_date_time, alarm_longitude, alarm_latitude, vehicle_offset_distance, vehicle_id, alarm_add_time, alarm_status, agency_id,alarm_distance) VALUES ('$time', '$long', '$lat', '$wanderR', '$vehicleId', '$time', '0', '$agencyId','$alarmDistance')";
 												if(!mysql_query($sql2,$con)){	
 													$msg =  "插入告警数据失败：".mysql_error();
 													$this->writeLog($msg);
