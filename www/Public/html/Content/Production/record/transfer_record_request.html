@@ -50,11 +50,11 @@
                     <tr>
                         <td>备案日期</td>
                         <td>
-                            <input type="date" name="record_date" class="form-control input-sm" placeholder="备案日期">
+                            <input type="date" name="record_date" class="form-control input-sm required-cn" placeholder="备案日期">
                         </td>
                         <td>备案类型</td>
                         <td>
-                            <input type="text" name="record_type" class="form-control input-sm" placeholder="备案类型">
+                            <input type="text" name="record_type" class="form-control input-sm required-cn" placeholder="备案类型">
                         </td>
                     </tr>
                     <tr>
@@ -138,15 +138,22 @@
             <div class="table-responsive">
                 <table class="table table-striped table-bordered table-hover table-condensed">
                     <tr>
-                        <td>废物名称</td>
+                        <td>主要废物名称</td>
                         <td>
                             <input type="text" name="waste_name" class="form-control input-sm" placeholder="废物名称">
                         </td>
                     </tr>
                     <tr>
-                        <td>废物形态</td>
+                        <td>主要废物形态</td>
                         <td>
-                            <input type="text" name="waste_form" class="form-control input-sm" placeholder="废物形态">
+                            <select type="text" name="waste_form" class="form-control input-sm" placeholder="废物形态">
+                            <option>请选择废物形态</option>
+                            <option>半固态</option>
+                            <option>固态</option>
+                            <option>液态</option>
+                            <option>气态</option>
+                            <option>其他</option>
+                            </select>  
                         </td>
                     </tr>
                 </table>
@@ -154,13 +161,14 @@
         </div>
     </div>
 </form>
+
     <div class="panel panel-primary">
         <div class="panel-heading">RFID 标签选择</div>
             <div class="panel-body">
                 <div class="table-responsive">
-                    <table class="table table-striped table-bordered table-hover table-condensed">
+                    <table type="submit" class="table table-striped table-bordered table-hover table-condensed">
                     <tr>
-                        <td><button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal"> 请选择需要运输的危废 RFID 编号</button></td><td></td>
+                        <td><button class="btn btn-primary" data-toggle="modal" data-target="#myModal"> 请选择需要运输的危废 RFID 编号</button></td><td></td>
                     </tr>
                     <tr>
                         <td>预计危废重量（吨）</td>
@@ -191,13 +199,13 @@
                         </td>
                         <td>贮存面积（平方米）</td>
                         <td>
-                            <input type="text" name="storage_area" class="form-control input-sm" placeholder="贮存面积（平方米）">
+                            <input type="text" name="storage_area" class="form-control input-sm number-cn" placeholder="贮存面积（平方米）">
                         </td>
                     </tr>
                     <tr>
                         <td>危废容积（立方米）</td>
                         <td>
-                            <input type="text" name="waste_volume" class="form-control input-sm" placeholder="危废容积（立方米）">
+                            <input type="text" name="waste_volume" class="form-control input-sm number-cn" placeholder="危废容积（立方米）">
                         </td>
                         <td>贮存用途</td>
                         <td>
@@ -217,8 +225,8 @@
                     <tr>
                         <td>运输单位名称</td>
                         <td>
-                            <select type="text" id="transport_unit_id" name="transport_unit_id" class="form-control input-sm" onchange="transport_select(this.options[this.options.selectedIndex].value)">
-                                <option>请选择运输单位</option>
+                            <select type="text" id="transport_unit_id" name="transport_unit_id" class="form-control input-sm required-cn" onchange="transport_select(this.options[this.options.selectedIndex].value)">
+                                <!-- <option>请选择运输单位</option> -->
                             </select>
                         </td>
                         <td>所在区县</td>
@@ -260,8 +268,8 @@
                       <tr>
                         <td>接受单位名称</td>
                         <td>
-                            <select type="text" id="reception_unit_id" name="reception_unit_id" class="form-control input-sm" onchange="reception_select(this.options[this.options.selectedIndex].value)">
-                                <option>请选择接受单位</option>
+                            <select type="text" id="reception_unit_id" name="reception_unit_id" class="form-control input-sm required-cn" onchange="reception_select(this.options[this.options.selectedIndex].value)">
+                                <!-- <option>请选择接受单位</option> -->
                             </select>
                         </td>
                         <td>所在区县</td>
@@ -302,7 +310,13 @@
     <button class="btn btn-info btn-lg" id="button_save" onclick="ajaxAction(0)">保存</button>
     <button class="btn btn-warning btn-lg" id="button_submit" onclick="ajaxAction(1)">提交</button>
 </center>
+<script type="text/javascript" src="__PUBLIC__/js/jquery-validate.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/jquery-myvalidate.js"></script>
+<script>
+$("#record_request_1").validate();
+$("#record_request").validate();
 
+</script>
 <script type="text/javascript">
 var rfid_table_id = "";
 var weight = 0;
@@ -313,12 +327,24 @@ for (var idx in waste) {
     $('#waste_code').append('<option value="' + waste[idx].waste_code + '">'+ waste[idx].waste_code + '</option>');
 }
 
-$('#transport_unit_id').html('<option>请选择运输单位</option>');
+// $('#transport_unit_id').html('<option>请选择运输单位</option>');
+$('#transport_unit_county').html(transport_unit[0].transport_unit_county);
+    $('#transport_unit_address').html(transport_unit[0].transport_unit_address);
+    $('#transport_unit_postcode').html(transport_unit[0].transport_unit_postcode);
+    $('#transport_unit_contacts_name').html(transport_unit[0].transport_unit_contacts_name);
+    $('#transport_unit_contacts_phone').html(transport_unit[0].transport_unit_contacts_phone);
+
+$('#reception_unit_county').html(reception_unit[0].reception_unit_county);
+    $('#reception_unit_address').html(reception_unit[0].reception_unit_address);
+    $('#reception_unit_postcode').html(reception_unit[0].reception_unit_postcode);
+    $('#reception_unit_contacts_name').html(reception_unit[0].reception_unit_contacts_name);
+    $('#reception_unit_contacts_phone').html(reception_unit[0].reception_unit_contacts_phone);
+
 for (var idx in transport_unit) {
     $('#transport_unit_id').append('<option value="' + transport_unit[idx].transport_unit_id + '">' + transport_unit[idx].transport_unit_name + '</option>');
     }
 
-$('#reception_unit_id').html('<option>请选择接受单位</option>');
+// $('#reception_unit_id').html('<option>请选择接受单位</option>');
 for (var idx in transport_unit) {
 $('#reception_unit_id').append('<option value="' + reception_unit[idx].reception_unit_id + '">' + reception_unit[idx].reception_unit_name + '</option>');
     }   
@@ -355,10 +381,9 @@ function ajaxAction(actionID) {
     //     default:
     //         break;
     // }
-
-console.log($('#record_request').serialize());
-console.log($('#record_request_1').serialize());
-
+    if(!$('#record_request').valid()){
+        return;
+    }
     $.ajax({
         type: "post",
         url: "transfer_record_request_form",
@@ -369,7 +394,7 @@ console.log($('#record_request_1').serialize());
             switch (actionID) {
                 case 0:
                     if(data='保存成功！'){
-                    myAlertSucc("保存成功！");
+                    myAlertSucc("保存成功！稍后自动刷新。。");
                     } else{
                         myAlertFail("保存失败！");
                     }
@@ -379,7 +404,7 @@ console.log($('#record_request_1').serialize());
                     break;
                 case 1:
                     if(data='保存成功！'){
-                    myAlertSucc("提交成功！");
+                    myAlertSucc("提交成功！稍后自动刷新。。");
                     } else{
                         myAlertFail("提交失败！");
                     }
@@ -390,7 +415,8 @@ console.log($('#record_request_1').serialize());
                 default:
                     break;
             }
-            $('input').val('');
+            // $('input').val('');
+            setTimeout(function(){refresh_page();},3000);
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) {
             alert('保存失败，请重新保存。');

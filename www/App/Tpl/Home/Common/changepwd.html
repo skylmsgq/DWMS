@@ -7,19 +7,19 @@
                     <tr>
                         <td id="old_prompt" class="col-md-6">输入旧密码     </td>
                         <td class="col-md-6">
-                            <input type="password" name="old_pass" id="old_pass" class="form-control " >
+                            <input type="password" name="old_pass" id="old_pass" class="form-control required-cn" >
                         </td>       
                     </tr>
                     <tr>
                         <td id="new_prompt" class="col-md-6">输入新密码     </td>
                         <td class="col-md-6">
-                            <input type="password" name="new_pass" id="new_pass" class="form-control ">
+                            <input type="password" name="password" id="password" class="form-control required-cn">
                         </td>
                     </tr>
                     <tr>              
                         <td id="newnew_prompt" class="col-md-6">重新输入新密码     </td>
                         <td class="col-md-6">
-                            <input type="password" name="new_pass_again" id="new_pass_again" class="form-control " >
+                            <input type="password" name="new_pass_again" id="new_pass_again" class="form-control required-cn " >
                         </td>
                     </tr>
                 </table>
@@ -32,3 +32,8 @@
     <button class="btn btn-warning btn-lg" onclick="ajaxAction()">确认修改</button>
     <button class="btn btn-info btn-lg" onclick="$('#myModal_pass').modal('hide');">关闭页面</button>
 </center>
+<script type="text/javascript" src="__PUBLIC__/js/jquery-validate.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/jquery-myvalidate.js"></script>
+<script>
+$("#pass_list").validate();
+</script>

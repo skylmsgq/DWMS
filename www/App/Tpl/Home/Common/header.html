@@ -27,24 +27,27 @@ function show_page() {
 function ajaxAction(){
    
    //$("#model-content").html("<h1>hello</h1>");
+   if(!$('#pass_list').valid()){
+        return;
+    }
     var passbag={};
    // var form_serialize = "" + $('#record_modify').serialize();
     //console.log(passbag);
-    if ($('#new_pass').val()!=$('#new_pass_again').val())
-    {
-        //alert("新密码不一样");
-        $('#new_prompt').html("输入新密码");
-        $('#newnew_prompt').html("重新输入新密码 <font color='red'>密码不一致</font>");
-        return;
-    }
-    if ($('#new_pass').val().length<6)
-    {
-        $('#new_prompt').html("输入新密码 <font color='red'>密码长度至少为6位</font>");
-        $('#newnew_prompt').html("重新输入新密码");
-        return;
-    }
+    // if ($('#new_pass').val()!=$('#new_pass_again').val())
+    // {
+    //     //alert("新密码不一样");
+    //     $('#new_prompt').html("输入新密码");
+    //     $('#newnew_prompt').html("重新输入新密码 <font color='red'>密码不一致</font>");
+    //     return;
+    // }
+    // if ($('#new_pass').val().length<6)
+    // {
+    //     $('#new_prompt').html("输入新密码 <font color='red'>密码长度至少为6位</font>");
+    //     $('#newnew_prompt').html("重新输入新密码");
+    //     return;
+    // }
     passbag.old_pass=$.md5($('#old_pass').val());
-    passbag.new_pass=$.md5($('#new_pass').val());
+    passbag.new_pass=$.md5($('#password').val());
     passbag.user_id={$Think.session.user_id};
 //    console.log(passbag);
 
