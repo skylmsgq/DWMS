@@ -66,11 +66,11 @@
                     <tr>
                         <td>车辆牌照</td>
                         <td>
-                            <input type="text" name="vehicle_num" class="form-control input-sm" placeholder="车辆牌照">
+                            <input type="text" name="vehicle_num" class="form-control input-sm required-cn" placeholder="车辆牌照">
                         </td>
                         <td>车辆类型</td>
                         <td>
-                            <input type="text" name="vehicle_type" class="form-control input-sm" placeholder="车辆类型">
+                            <input type="text" name="vehicle_type" class="form-control input-sm required-cn" placeholder="车辆类型">
                         </td>
                     </tr>
                 </table>
@@ -82,9 +82,16 @@
 <center>
     <button class="btn btn-warning btn-lg" id="button_submit" data-loading-text="正在提交..." data-complete-text="提交成功！" onclick="ajaxAction()">提交</button>
 </center>
-
+<script type="text/javascript" src="__PUBLIC__/js/jquery-validate.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/jquery-myvalidate.js"></script>
+<script>
+$("#vehicle_add").validate();
+</script>
 <script type="text/javascript">
 function ajaxAction() {
+    if(!$('#vehicle_add').valid()){
+        return;
+    }
     $('#button_save').addClass('disabled');
     $('#button_submit').button('loading');
     $.ajax({
