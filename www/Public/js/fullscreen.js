@@ -4,7 +4,7 @@ var containerWidth = $('#div_container').css("width");
 function toFullScreen() {
     BaiduMap.disableAutoResize();
     var curPixel = BaiduMap.pointToPixel(BaiduMap.getCenter());
-    var newPixel = new BMap.Pixel(curPixel.x - 135, curPixel.y - 103);
+    var newPixel = new BMap.Pixel(curPixel.x - 135, curPixel.y - 78);
     var newCenter = BaiduMap.pixelToPoint(newPixel);
     $('#div_header').css("display", "none");
     $('#div_footer').css("display", "none");
@@ -18,15 +18,18 @@ function toFullScreen() {
 
     var div_container = $('#div_container');
     div_container.css("height", windowHeight + "px");
-    div_container.css("width", windowWidth - 4 + "px");
+    div_container.css("width", windowWidth + "px");
 
-    $('#map_container').css("height", windowHeight - 70 - 6 + "px");
+    $('#map_container').css("height", windowHeight - 40 - 6 + "px");
 
     $('#showSidebar').css("display", "inline");
     $('#hideSidebar').css("display", "none");
 
     $('#toFullScreen').css("display", "none");
     $('#exitFullScreen').css("display", "inline");
+
+    $('#map_parent').css("padding", "0px");
+
     BaiduMap.checkResize();
     BaiduMap.setCenter(newCenter);
     BaiduMap.enableAutoResize();
@@ -35,7 +38,7 @@ function toFullScreen() {
 function exitFullScreen() {
     BaiduMap.disableAutoResize();
     var curPixel = BaiduMap.pointToPixel(BaiduMap.getCenter());
-    var newPixel = new BMap.Pixel(curPixel.x + 135, curPixel.y + 103);
+    var newPixel = new BMap.Pixel(curPixel.x + 135, curPixel.y + 78);
     var newCenter = BaiduMap.pixelToPoint(newPixel);
     $('#div_header').css("display", "inherit");
     $('#div_footer').css("display", "inherit");
@@ -54,8 +57,9 @@ function exitFullScreen() {
     $('#toFullScreen').css("display", "inline");
     $('#exitFullScreen').css("display", "none");
 
-    $('#map_container').css("width", "100%");
     $('#map_panel').css("display", "none");
+
+    $('#map_parent').css("padding", "15px");
 
     BaiduMap.checkResize();
     BaiduMap.setCenter(newCenter);
@@ -65,15 +69,11 @@ function exitFullScreen() {
 function showSidebar() {
     $('#showSidebar').css("display", "none");
     $('#hideSidebar').css("display", "inline");
-
-    $('#map_container').css("width", "80%");
     $('#map_panel').css("display", "inline");
 }
 
 function hideSidebar() {
     $('#showSidebar').css("display", "inline");
     $('#hideSidebar').css("display", "none");
-
-    $('#map_container').css("width", "100%");
     $('#map_panel').css("display", "none");
 }

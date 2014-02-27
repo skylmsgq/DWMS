@@ -12,11 +12,13 @@
             <button type="button" class="btn btn-default btn-xs" onclick="exitFullScreen(); fullScreen=0;">退出全屏</button>
         </div>
     </div>
-    <div class="panel panel-body" style="margin-bottom:0px">
+    <div class="panel panel-body" id="map_parent" style="margin-bottom:0px">
 
         <div id="div_input-group">
             <div id="myAlert"></div>
-            <div class="row">
+            <div class="row" style="position:absolute; z-index:1;">
+                <div class="col-md-3">
+                </div>
                 <div class="col-md-3">
                     <div class="input-group">
                         <span class="input-group-addon">
@@ -37,12 +39,12 @@
                         </span>
                     </div>
                 </div>
+                <div class="col-md-3">
+                </div>
             </div>
         </div>
 
-        <div id="map_container" style="width:100%;float:left;">地图加载中...</div>
-
-        <div id="map_panel" style="display:none;height:100%;width:20%;float:right;">
+        <div id="map_panel" style="display:none; height:90%; width:20%; float:right; position:absolute; right:0px; z-index:1; ">
             <div id="myAlertFull"></div>
             <div class="row">
                 <div class="col-md-6">
@@ -67,10 +69,20 @@
                 </div>
             </div>
             <div class="blank_div"></div>
-            <table id="production_unit_panel"><caption>生产单位统计表</caption></table>
+            <div style="background-color:#FFFFFF; padding:4px; padding-bottom:50px;">
+                <table id="production_unit_panel">
+                    <caption>生产单位统计表</caption>
+                </table>
+            </div>
             <div class="blank_div"></div>
-            <table id="reception_unit_panel"><caption>接受单位统计表</caption></table>
+            <div style="background-color:#FFFFFF; padding:4px; padding-bottom:50px;">
+                <table id="reception_unit_panel">
+                    <caption>接受单位统计表</caption>
+                </table>
+            </div>
         </div>
+
+        <div id="map_container" style="width:100%;float:left;">地图加载中...</div>
 
     </div>
 </div>
@@ -105,7 +117,9 @@ function setBMap() {
     BaiduMap.addControl(new BMap.ScaleControl()); // 添加默认比例尺控件
     BaiduMap.addControl(new BMap.OverviewMapControl()); //添加默认缩略地图控件
     BaiduMap.enableScrollWheelZoom(); //启用滚轮放大缩小
-    BaiduMap.addControl(new BMap.MapTypeControl()); // 添加默认地图控件
+    BaiduMap.addControl(new BMap.MapTypeControl({
+        anchor: BMAP_ANCHOR_BOTTOM_RIGHT
+    })); // 添加默认地图控件
     BaiduMap.setCurrentCity("上海"); // 设置地图显示的城市 此项是必须设置的
     var mapStyle = {
         features: ["road", "building", "water", "land", "point"],

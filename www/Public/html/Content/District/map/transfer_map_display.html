@@ -12,57 +12,56 @@
             <button type="button" class="btn btn-default btn-xs" onclick="exitFullScreen(); fullScreen=0;">退出全屏</button>
         </div>
     </div>
-    <div class="panel panel-body" style="margin-bottom:0px;">
+    <div class="panel panel-body" id="map_parent" style="margin-bottom:0px;">
 
-        <div id="div_input-group" style="position:absolute; z-index:1;">
+        <div id="div_input-group">
             <div id="myAlert"></div>
-            <div class="row">
-                <div class="col-md-1">
+            <div class="row" style="position:absolute; z-index:1;">
+                <div class="col-md-2">
                 </div>
-                <div class="col-md-7">
+                <div class="col-md-8">
                     <div class="input-group input-group-sm">
                         <span class="input-group-addon">当偏移距离大于</span>
                         <input type="text" class="form-control" id="warningDistance" value="0.5" placeholder="">
-                        <span class="input-group-addon">千米时提醒，</span>
+                        <span class="input-group-addon">千米时提醒</span>
                         <span class="input-group-addon">当偏移距离大于</span>
                         <input type="text" class="form-control" id="alarmDistance" value="1.0" placeholder="">
                         <span class="input-group-addon">千米时报警</span>
+                        <button type="button" class="btn btn-success btn-sm" onclick="setting();">设置</button>
                     </div>
-                </div>
-                <div class="col-md-2">
-                    <button type="button" class="btn btn-success btn-sm" onclick="setting();">设置</button>
                 </div>
                 <div class="col-md-2">
                 </div>
             </div>
         </div>
 
-        <div id="map_container" style="width:100%; float:left;">地图加载中...</div>
-
-        <div id="map_panel" style="display:none;height:100%;width:20%;float:right;">
+        <div id="map_panel" style="display:none; height:90%; width:20%; float:right; position:absolute; right:0px; z-index:1; ">
             <div id="myAlertFull"></div>
             <div class="input-group input-group-sm">
                 <span class="input-group-addon">当偏移距离大于</span>
                 <input type="text" class="form-control" id="warningDistanceFull" value="0.5" placeholder="">
                 <span class="input-group-addon">千米时提醒</span>
             </div>
-            <div class="blank_div"></div>
             <div class="input-group input-group-sm">
                 <span class="input-group-addon">当偏移距离大于</span>
                 <input type="text" class="form-control" id="alarmDistanceFull" value="1.0" placeholder="">
                 <span class="input-group-addon">千米时报警</span>
             </div>
-            <div class="blank_div"></div>
+
             <center>
                 <button type="button" class="btn btn-success btn-sm" onclick="settingFull();">设置</button>
             </center>
             <div class="blank_div"></div>
-            <table id="vehicle_panel">
-                <caption>当前运行车辆统计表</caption>
-            </table>
+            <div style="background-color:#FFFFFF; padding:4px; padding-bottom:50px;">
+                <table id="vehicle_panel">
+                    <caption>当前运行车辆统计表</caption>
+                </table>
+            </div>
             <div class="blank_div"></div>
             <div id="route_panel"></div>
         </div>
+
+        <div id="map_container" style="width:100%; float:left;">地图加载中...</div>
 
     </div>
 </div>
@@ -105,7 +104,9 @@ function setBMap() {
     BaiduMap.addControl(new BMap.ScaleControl()); // 添加默认比例尺控件
     BaiduMap.addControl(new BMap.OverviewMapControl()); //添加默认缩略地图控件
     BaiduMap.enableScrollWheelZoom(); //启用滚轮放大缩小
-    BaiduMap.addControl(new BMap.MapTypeControl()); // 添加默认地图控件
+    BaiduMap.addControl(new BMap.MapTypeControl({
+        anchor: BMAP_ANCHOR_BOTTOM_RIGHT
+    })); // 添加默认地图控件
     BaiduMap.setCurrentCity("上海"); // 设置地图显示的城市 此项是必须设置的
     var mapStyle = {
         features: ["road", "building", "water", "land", "point"],
@@ -113,10 +114,10 @@ function setBMap() {
     };
     BaiduMap.setMapStyle(mapStyle);
 
-    $('#warningDistance').val(alarm_distance_json.warning_distance);
-    $('#warningDistanceFull').val(alarm_distance_json.warning_distance);
-    $('#alarmDistance').val(alarm_distance_json.alarm_distance);
-    $('#alarmDistanceFull').val(alarm_distance_json.alarm_distance);
+    $('#warningDistance').val(warningDistance);
+    $('#warningDistanceFull').val(warningDistance);
+    $('#alarmDistance').val(alarmDistance);
+    $('#alarmDistanceFull').val(alarmDistance);
 
     for (var idx in route_json) {
         routeDecodeObj[idx] = JSON.parse(route_json[idx].route_lng_lat.replace(/&quot;/g, '"'));
@@ -196,7 +197,7 @@ function setBMap() {
         while (endMarker = endMarkerList.pop()) {
             BaiduMap.removeOverlay(endMarker);
         }
-        $('#route_panel').html("");
+        $('#route_panel').html("").css("background-color", "");
     });
 
     $(".anchorBL").hide();
@@ -264,20 +265,20 @@ function transferWarning() {
                 var infoWindow = new BMap.InfoWindow(infoWindowContent, infoWindowOption);
                 infoWindowList.push(infoWindow);
 
-                var warningTextGreen = "<h3 style=' color:#a1d76a; border-bottom:1px solid #ccc; padding:0px 0px 5px 0px; font:bold 20px arial,sans-serif; '>偏离" + offsetDistance + "千米，安全。</h3>";
-                var warningTextYellow = "<h3 style=' color:#ffff99; border-bottom:1px solid #ccc; padding:0px 0px 5px 0px; font:bold 20px arial,sans-serif; '>偏离" + offsetDistance + "千米，注意！</h3>";
-                var warningTextRed = "<h3 style=' color:#e41a1c; border-bottom:1px solid #ccc; padding:0px 0px 5px 0px; font:bold 20px arial,sans-serif; '>偏离" + offsetDistance + "千米，报警!</h3>";
+                var warningTextGreen = "<h3 style=' color:#33a02c; border-bottom:1px solid #ccc; padding:0px 0px 5px 0px; font:bold 20px arial,sans-serif; '>偏离" + offsetDistance + "千米，安全。</h3>";
+                var warningTextYellow = "<h3 style=' color:#ffff33; border-bottom:1px solid #ccc; padding:0px 0px 5px 0px; font:bold 20px arial,sans-serif; '>偏离" + offsetDistance + "千米，注意！</h3>";
+                var warningTextRed = "<h3 style=' color:#e31a1c; border-bottom:1px solid #ccc; padding:0px 0px 5px 0px; font:bold 20px arial,sans-serif; '>偏离" + offsetDistance + "千米，报警!</h3>";
 
                 vehicleMarker.setTitle(gpsIdx);
                 if (offsetDistance < warningDistance) {
                     vehicleMarker.setIcon(lorryIconGreen);
-                    infoWindow.setTitle(warningTextGreen);
-                } else if (offsetDistance > warningDistance && offsetDistance < alarmDistance) {
+                    infoWindowList[gpsIdx].setTitle(warningTextGreen);
+                } else if ((offsetDistance > warningDistance) && (offsetDistance < alarmDistance)) {
                     vehicleMarker.setIcon(lorryIconYellow);
-                    infoWindow.setTitle(warningTextYellow);
+                    infoWindowList[gpsIdx].setTitle(warningTextYellow);
                 } else {
                     vehicleMarker.setIcon(lorryIconRed);
-                    infoWindow.setTitle(warningTextRed);
+                    infoWindowList[gpsIdx].setTitle(warningTextRed);
                 }
 
                 BaiduMap.addOverlay(vehicleMarker);
@@ -319,7 +320,7 @@ function transferWarning() {
                     BaiduMap.addOverlay(endMarker);
                     endMarkerList.push(endMarker);
 
-                    $('#route_panel').html("<h2 style='margin:0px;border-top:2px solid #ccc;padding:10px 0 5px 0px;font:bold 16px arial,sans-serif'>当前车辆指定路线详情：</h2>" + routeDetailDecodeObj[markerIdx]);
+                    $('#route_panel').css("background-color", "#FFFFFF").html("<h2 style='margin:0px;border-top:2px solid #ccc;padding:10px 0 5px 0px;font:bold 16px arial,sans-serif'>当前车辆指定路线详情：</h2>" + routeDetailDecodeObj[markerIdx]);
                 });
             }
         },
@@ -340,15 +341,13 @@ function setting() {
     var inputWarningDistance = $('#warningDistance');
     var inputAlarmDistance = $('#alarmDistance');
     if (!inputWarningDistance.val()) {
-        warningDistance = alarm_distance_json.warning_distance;
-        inputWarningDistance.val(alarm_distance_json.warning_distance);
+        inputWarningDistance.val(warningDistance);
     } else {
         warningDistance = inputWarningDistance.val();
         $('#warningDistanceFull').val(warningDistance);
     }
     if (!inputAlarmDistance.val()) {
-        alarmDistance = val(alarm_distance_json.alarm_distance);
-        inputAlarmDistance.val(alarm_distance_json.alarm_distance);
+        inputAlarmDistance.val(alarmDistance);
     } else {
         alarmDistance = inputAlarmDistance.val();
         $('#alarmDistanceFull').val(alarmDistance);
@@ -360,15 +359,13 @@ function settingFull() {
     var inputWarningDistanceFull = $('#warningDistanceFull');
     var inputAlarmDistanceFull = $('#alarmDistanceFull');
     if (!inputWarningDistanceFull.val()) {
-        warningDistance = alarm_distance_json.warning_distance;
-        inputWarningDistanceFull.val(alarm_distance_json.warning_distance);
+        inputWarningDistanceFull.val(warningDistance);
     } else {
         warningDistance = inputWarningDistanceFull.val();
         $('#warningDistance').val(warningDistance);
     }
     if (!inputAlarmDistanceFull.val()) {
-        alarmDistance = val(alarm_distance_json.alarm_distance);
-        inputAlarmDistanceFull.val(alarm_distance_json.alarm_distance);
+        inputAlarmDistanceFull.val(alarmDistance);
     } else {
         alarmDistance = inputAlarmDistanceFull.val();
         $('#alarmDistance').val(alarmDistance);
@@ -393,6 +390,8 @@ function settingAlarmDistance() {
                 } else {
                     myAlertFail("告警距离设置失败，请重新设置");
                 }
+                alarm_distance_json.warning_distance = warningDistance;
+                alarm_distance_json.alarm_distance = alarmDistance;
             },
             error: function(XMLHttpRequest, textStatus, errorThrown) {
                 myAlertFail("设置告警距离ajax请求失败，请重新设置");
@@ -400,11 +399,10 @@ function settingAlarmDistance() {
                 console.log("XMLHttpRequest.status:" + XMLHttpRequest.status);
                 console.log("XMLHttpRequest.readyState:" + XMLHttpRequest.readyState);
                 console.log("textStatus:" + textStatus);
+                warningDistance = alarm_distance_json.warning_distance;
+                alarmDistance = alarm_distance_json.alarm_distance;
             }
         });
-        alarm_distance_json.warning_distance = warningDistance;
-        alarm_distance_json.alarm_distance = alarmDistance;
-
     } else {
         myAlertInfo("告警距离未修改，请修改后再设置");
     }

@@ -12,58 +12,52 @@
             <button type="button" class="btn btn-default btn-xs" onclick="exitFullScreen(); fullScreen=0;">退出全屏</button>
         </div>
     </div>
-    <div class="panel panel-body" style="margin-bottom:0px">
+    <div class="panel panel-body" id="map_parent" style="margin-bottom:0px">
 
         <div id="div_input-group">
             <div id="myAlert"></div>
-            <div class="row">
-                <div class="col-md-3">
-                    <label class="sr-only" for="selectProductionUnit">产生单位：</label>
-                    <select class="form-control input-sm" id="selectProductionUnit" onchange="showProductionUnit();">
-                        <option value="-1">请选择生产单位</option>
-                    </select>
+            <div class="row" style="position:absolute; z-index:1;">
+                <div class="col-md-1">
                 </div>
-                <div class="col-md-3">
-                    <label class="sr-only" for="selectReceptionUnit">接受单位：</label>
-                    <select class="form-control input-sm" id="selectReceptionUnit" onchange="showReceptionUnit();">
-                        <option value="-1">请选择接受单位</option>
-                    </select>
-                </div>
-                <div class="col-md-2">
-                    <label class="sr-only" for="selectStrategy">驾车策略：</label>
-                    <select class="form-control input-sm" id="selectStrategy">
-                        <option value="0">最小时间</option>
-                        <option value="1">最短距离</option>
-                        <option value="2">避开高速</option>
-                    </select>
+                <div class="col-md-10">
+                    <div class="input-group input-group-sm">
+                        <span class="input-group-addon"></span>
+                        <select class="form-control input-sm" id="selectProductionUnit" onchange="showProductionUnit();">
+                            <option value="-1">请选择生产单位</option>
+                        </select>
+                        <span class="input-group-addon"></span>
+                        <select class="form-control input-sm" id="selectReceptionUnit" onchange="showReceptionUnit();">
+                            <option value="-1">请选择接受单位</option>
+                        </select>
+                        <span class="input-group-addon"></span>
+                        <select class="form-control input-sm" id="selectStrategy">
+                            <option value="0">最小时间</option>
+                            <option value="1">最短距离</option>
+                            <option value="2">避开高速</option>
+                        </select>
+                        <span class="input-group-addon"></span>
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-info btn-sm" onclick="search();">查询</button>
+                            <button type="button" class="btn btn-warning btn-sm" onclick="clearScreen();">清除</button>
+                            <button type="button" class="btn btn-success btn-sm" onclick="submit();">提交</button>
+                        </div>
+                    </div>
                 </div>
                 <div class="col-md-1">
-                    <button type="button" class="btn btn-info btn-sm" onclick="search();">查询</button>
-                </div>
-                <div class="col-md-1">
-                    <button type="button" class="btn btn-warning btn-sm" onclick="clearScreen();">清除</button>
-                </div>
-                <div class="col-md-1">
-                    <button type="button" class="btn btn-success btn-sm" onclick="submit();">提交</button>
                 </div>
             </div>
         </div>
 
-        <div id="map_container" style="width:100%;float:left;"></div>
-
-        <div id="map_panel" style="display:none;height:100%;width:20%;float:right;">
+        <div id="map_panel" style="display:none; height:90%; width:20%; float:right; position:absolute; right:0px; z-index:1; ">
             <div id="myAlertFull"></div>
-            <label class="sr-only" for="selectProductionUnitFull">产生单位：</label>
             <select class="form-control input-sm" id="selectProductionUnitFull" onchange="showProductionUnit();">
                 <option value="-1">请选择生产单位</option>
             </select>
             <div class="blank_div"></div>
-            <label class="sr-only" for="selectReceptionUnitFull">接受单位：</label>
             <select class="form-control input-sm" id="selectReceptionUnitFull" onchange="showReceptionUnit();">
                 <option value="-1">请选择接受单位</option>
             </select>
             <div class="blank_div"></div>
-            <label class="sr-only" for="selectStrategyFull">驾车策略：</label>
             <select class="form-control input-sm" id="selectStrategyFull">
                 <option value="0">最小时间</option>
                 <option value="1">最短距离</option>
@@ -90,6 +84,8 @@
             <div class="blank_div"></div>
             <div id="route_panel"></div>
         </div>
+
+        <div id="map_container" style="width:100%;float:left;"></div>
 
     </div>
 </div>
@@ -128,7 +124,9 @@ function setBMap() {
     BaiduMap.addControl(new BMap.ScaleControl()); // 添加默认比例尺控件
     BaiduMap.addControl(new BMap.OverviewMapControl()); //添加默认缩略地图控件
     BaiduMap.enableScrollWheelZoom(); //启用滚轮放大缩小
-    BaiduMap.addControl(new BMap.MapTypeControl()); // 添加默认地图控件
+    BaiduMap.addControl(new BMap.MapTypeControl({
+        anchor: BMAP_ANCHOR_BOTTOM_RIGHT
+    })); // 添加默认地图控件
     BaiduMap.setCurrentCity("上海"); // 设置地图显示的城市 此项是必须设置的
     var mapStyle = {
         features: ["road", "building", "water", "land", "point"],
@@ -322,7 +320,7 @@ function search() {
         renderOptions: {
             map: BaiduMap,
             panel: "route_panel",
-            autoViewport: true, //启用自动调整地图层级，当指定了搜索结果所展现的地图时有效。
+            autoViewport: false, //启用自动调整地图层级，当指定了搜索结果所展现的地图时有效。
             enableDragging: true, //起终点可进行拖拽
             highlightMode: BMAP_HIGHLIGHT_ROUTE, // 驾车结果展现中点击列表后的展现策略。
         },

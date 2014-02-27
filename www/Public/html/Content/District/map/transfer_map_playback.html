@@ -12,75 +12,79 @@
             <button type="button" class="btn btn-default btn-xs" onclick="exitFullScreen(); fullScreen=0;">退出全屏</button>
         </div>
     </div>
-    <div class="panel panel-body" style="margin-bottom:0px">
+    <div class="panel panel-body" id="map_parent" style="margin-bottom:0px">
 
         <div id="div_input-group">
             <div id="myAlert"></div>
-            <div class="row">
-                <div class="col-md-3">
-                    <input type="date" class="form-control input-sm" id="beginDate" value="2014-01-13">
+            <div class="row" style="position:absolute; z-index:1;">
+                <div class="col-md-1">
                 </div>
-                <div class="col-md-3">
-                    <input type="date" class="form-control input-sm" id="endDate" value="2014-01-14">
-                </div>
-                <div class="col-md-2">
-                    <label class="sr-only" for="selectSpeed">回放速度：</label>
-                    <select class="form-control input-sm" id="selectSpeed">
-                        <option value='1'>慢</option>
-                        <option value='2' selected="selected">中</option>
-                        <option value='4'>快</option>
-                    </select>
+                <div class="col-md-10">
+                    <div class="input-group input-group-sm">
+                        <span class="input-group-addon" style="border:0px; padding:0px;"></span>
+                        <input type="date" class="form-control" id="beginDate" value="2014-01-13">
+                        <span class="input-group-addon">-</span>
+                        <input type="date" class="form-control" id="endDate" value="2014-01-14">
+                        <span class="input-group-addon" style="border:0px; padding:0px;"></span>
+                        <select class="form-control" id="selectSpeed">
+                            <option value='1'>慢</option>
+                            <option value='2' selected="selected">中</option>
+                            <option value='4'>快</option>
+                        </select>
+                        <span class="input-group-addon" style="border:0px; padding:0px;"></span>
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-info btn-sm" onclick="getVehicleRoutes();">回放</button>
+                        </div>
+                        <span class="input-group-addon" id="playbackTimeDiv" style="border:0px; padding:0px;"></span>
+                    </div>
                 </div>
                 <div class="col-md-1">
-                    <center>
-                        <button type="button" class="btn btn-info btn-sm" onclick="getVehicleRoutes();">回放</button>
-                    </center>
-                </div>
-                <div class="col-md-3">
-                    <div id="playbackTimeDiv"></div>
                 </div>
             </div>
         </div>
 
-        <div id="map_container" style="width:100%;float:left;">地图加载中...</div>
-
-        <div id="map_panel" style="display:none;height:100%;width:20%;float:right;">
+        <div id="map_panel" style="display:none; height:90%; width:20%; float:right; position:absolute; right:0px; z-index:1; ">
             <div id="myAlertFull"></div>
-            <div class="row">
-                <div class="col-md-6">
-                    <input type="date" class="form-control input-sm" id="beginDateFull" value="2014-01-13">
-                </div>
-                <div class="col-md-6">
-                    <input type="date" class="form-control input-sm" id="endDateFull" value="2014-01-14">
-                </div>
-            </div>
-            <div class="blank_div"></div>
-            <div class="row">
-                <div class="col-md-6">
-                    <label class="sr-only" for="selectSpeedFull">回放速度：</label>
-                    <select class="form-control input-sm" id="selectSpeedFull">
-                        <option value='1'>慢</option>
-                        <option value='2' selected="selected">中</option>
-                        <option value='4'>快</option>
-                    </select>
-                </div>
-                <div class="col-md-6">
-                    <center>
-                        <button type="button" class="btn btn-info btn-sm" onclick="getVehicleRoutes();">回放</button>
-                    </center>
-                </div>
-            </div>
-            <div class="blank_div"></div>
-            <table id="playbackTimeDivFull" class="table table-striped table-bordered table-hover table-condensed table-responsive" style="margin-bottom:0px"></table>
-            <div class="blank_div"></div>
-            <table id="vehicle_panel">
-                <caption>当前回放车辆统计表</caption>
+            <table class="table table-bordered table-hover table-condensed table-responsive" style="margin-bottom:0px; background-color:#FFFFFF;">
+                <tr>
+                    <td>
+                        <input type="date" class="form-control input-sm" id="beginDateFull" value="2014-01-13">
+                    </td>
+                    <td>
+                        <input type="date" class="form-control input-sm" id="endDateFull" value="2014-01-14">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <select class="form-control input-sm" id="selectSpeedFull">
+                            <option value='1'>慢</option>
+                            <option value='2' selected="selected">中</option>
+                            <option value='4'>快</option>
+                        </select>
+                    </td>
+                    <td>
+                        <center>
+                            <button type="button" class="btn btn-info btn-sm" onclick="getVehicleRoutes();">回放</button>
+                        </center>
+                    </td>
+                </tr>
             </table>
+
             <div class="blank_div"></div>
-            <table id="transport_unit_panel" class="table table-striped table-bordered table-hover table-condensed table-responsive" style="margin-bottom:0px"></table>
+            <table id="playbackTimeDivFull" class="table table-striped table-bordered table-hover table-condensed table-responsive" style="margin-bottom:0px; background-color:#FFFFFF;"></table>
+            <div class="blank_div"></div>
+            <div id="vehicle_panel_div" style="display:none; background-color:#FFFFFF; padding:4px; padding-bottom:30px;">
+                <table id="vehicle_panel">
+                    <caption>当前回放车辆统计表</caption>
+                </table>
+            </div>
+            <div class="blank_div"></div>
+            <table id="transport_unit_panel" class="table table-striped table-bordered table-hover table-condensed table-responsive" style="margin-bottom:0px; background-color:#FFFFFF;"></table>
             <div class="blank_div"></div>
             <div id="route_panel"></div>
         </div>
+
+        <div id="map_container" style="width:100%;float:left;">地图加载中...</div>
 
     </div>
 </div>
@@ -117,7 +121,9 @@ function setBMap() {
     BaiduMap.addControl(new BMap.ScaleControl()); // 添加默认比例尺控件
     BaiduMap.addControl(new BMap.OverviewMapControl()); //添加默认缩略地图控件
     BaiduMap.enableScrollWheelZoom(); //启用滚轮放大缩小
-    BaiduMap.addControl(new BMap.MapTypeControl()); // 添加默认地图控件
+    BaiduMap.addControl(new BMap.MapTypeControl({
+        anchor: BMAP_ANCHOR_BOTTOM_RIGHT
+    })); // 添加默认地图控件
     BaiduMap.setCurrentCity("上海"); // 设置地图显示的城市 此项是必须设置的
     var mapStyle = {
         features: ["road", "building", "water", "land", "point"],
@@ -189,7 +195,7 @@ function setBMap() {
             BaiduMap.removeOverlay(polylineRoute);
         }
         $('#transport_unit_panel').html("");
-        $('#route_panel').html("");
+        $('#route_panel').html("").css("background-color", "");
     });
 
     $(".anchorBL").hide();
@@ -239,6 +245,8 @@ function getVehicleRoutes() {
             BaiduMap.clearOverlays();
             $('#transport_unit_panel').html("");
             $('#route_panel').html("");
+
+            $('#vehicle_panel_div').css("display","inherit");
 
             var vehicleMarkerList = new Array();
             var startTime = "9999-12-31 23:59:59";
@@ -331,7 +339,7 @@ function getVehicleRoutes() {
                             });
                             BaiduMap.addOverlay(polylineRoute);
                             polylineRouteList.push(polylineRoute);
-                            $('#route_panel').html("<h2 style='margin:0px;border-top:2px solid #ccc;padding:10px 0 5px 0px;font:bold 16px arial,sans-serif'>回放车辆指定路线详情：</h2>" + routeDetailDecodeObj);
+                            $('#route_panel').css("background-color", "#FFFFFF").html("<h2 style='margin:0px;border-top:2px solid #ccc;padding:10px 0 5px 0px;font:bold 16px arial,sans-serif'>回放车辆指定路线详情：</h2>" + routeDetailDecodeObj);
                         },
                         error: function(XMLHttpRequest, textStatus, errorThrown) {
                             myAlertFail("获取车辆指定路线ajax请求失败");
@@ -401,16 +409,17 @@ function getVehicleRoutes() {
             var endIdx = Math.floor(endTimeObj.getHours() * 360 + endTimeObj.getMinutes() * 6 + endTimeObj.getSeconds() / 10);
             var playbackTimeObj = startTimeObj;
             if (fullScreen) {
-                var playbackTimeDiv = $('#playbackTimeDivFull');
                 var intervalTime = 200 / $('#selectSpeedFull').val();
             } else {
-                var playbackTimeDiv = $('#playbackTimeDiv');
                 var intervalTime = 200 / $('#selectSpeed').val();
             }
+            var playbackTimeDiv = $('#playbackTimeDiv');
+            var playbackTimeDivFull = $('#playbackTimeDivFull');
 
             function playback(dataIdx) {
                 playbackTimeObj.setSeconds(playbackTimeObj.getSeconds() + 10);
-                playbackTimeDiv.html("<tr><td>回放时间：</td><td>" + playbackTimeObj.getFullYear() + '/' + (playbackTimeObj.getMonth() + 1) + '/' + playbackTimeObj.getDate() + ' ' + playbackTimeObj.getHours() + ':' + playbackTimeObj.getMinutes() + "</td></tr>");
+                playbackTimeDiv.html(playbackTimeObj.getFullYear() + '/' + (playbackTimeObj.getMonth() + 1) + '/' + playbackTimeObj.getDate() + ' ' + playbackTimeObj.getHours() + ':' + playbackTimeObj.getMinutes());
+                playbackTimeDivFull.html("<tr><td>回放时间：</td><td>" + playbackTimeObj.getFullYear() + '/' + (playbackTimeObj.getMonth() + 1) + '/' + playbackTimeObj.getDate() + ' ' + playbackTimeObj.getHours() + ':' + playbackTimeObj.getMinutes() + "</td></tr>");
                 for (var gpsIdx in gpsRouteTimeArray) {
                     if (!gpsRouteTimeArray[gpsIdx]) {
                         continue;

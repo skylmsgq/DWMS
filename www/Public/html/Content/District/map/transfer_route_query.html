@@ -12,39 +12,36 @@
             <button type="button" class="btn btn-default btn-xs" onclick="exitFullScreen(); fullScreen=0;">退出全屏</button>
         </div>
     </div>
-    <div class="panel panel-body" style="margin-bottom:0px">
+    <div class="panel panel-body" id="map_parent" style="margin-bottom:0px">
 
         <div id="div_input-group">
             <div id="myAlert"></div>
-            <div class="row">
-                <div class="col-md-4">
-                    <label class="sr-only" for="selectProductionUnit">产生单位：</label>
-                    <select class="form-control input-sm" id="selectProductionUnit" onchange="showProductionUnit();">
-                        <option value="-1">请选择生产单位</option>
-                    </select>
+            <div class="row" style="position:absolute; z-index:1;">
+                <div class="col-md-1">
                 </div>
-                <div class="col-md-4">
-                    <label class="sr-only" for="selectReceptionUnit">接受单位：</label>
-                    <select class="form-control input-sm" id="selectReceptionUnit" onchange="showReceptionUnit();">
-                        <option value="-1">请选择接受单位</option>
-                    </select>
+                <div class="col-md-10">
+                    <div class="input-group input-group-sm">
+                        <span class="input-group-addon"></span>
+                        <select class="form-control input-sm" id="selectProductionUnit" onchange="showProductionUnit();">
+                            <option value="-1">请选择生产单位</option>
+                        </select>
+                        <span class="input-group-addon"></span>
+                        <select class="form-control input-sm" id="selectReceptionUnit" onchange="showReceptionUnit();">
+                            <option value="-1">请选择接受单位</option>
+                        </select>
+                        <span class="input-group-addon"></span>
+                        <div class="btn-group">
+                            <button class="btn btn-info btn-sm" onclick="searchRoute();">查询</button>
+                            <button class="btn btn-danger btn-sm" onclick="deleteRoute();">删除</button>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-md-2">
-                    <center>
-                        <button class="btn btn-info btn-sm" onclick="searchRoute();">查询</button>
-                    </center>
-                </div>
-                <div class="col-md-2">
-                    <center>
-                        <button class="btn btn-danger btn-sm" onclick="deleteRoute();">删除</button>
-                    </center>
+                <div class="col-md-1">
                 </div>
             </div>
         </div>
 
-        <div id="map_container" style="width:100%;float:left;">地图加载中...</div>
-
-        <div id="map_panel" style="display:none;height:100%;width:20%;float:right;">
+        <div id="map_panel" style="display:none; height:90%; width:20%; float:right; position:absolute; right:0px; z-index:1; ">
             <div id="myAlertFull"></div>
             <label class="sr-only" for="selectProductionUnitFull">产生单位：</label>
             <select class="form-control input-sm" id="selectProductionUnitFull" onchange="showProductionUnit();">
@@ -71,6 +68,8 @@
             <div class="blank_div"></div>
             <div id="route_panel"></div>
         </div>
+
+        <div id="map_container" style="width:100%;float:left;">地图加载中...</div>
 
     </div>
 </div>
@@ -109,7 +108,9 @@ function setBMap() {
     BaiduMap.addControl(new BMap.ScaleControl()); // 添加默认比例尺控件
     BaiduMap.addControl(new BMap.OverviewMapControl()); //添加默认缩略地图控件
     BaiduMap.enableScrollWheelZoom(); //启用滚轮放大缩小
-    BaiduMap.addControl(new BMap.MapTypeControl()); // 添加默认地图控件
+    BaiduMap.addControl(new BMap.MapTypeControl({
+        anchor: BMAP_ANCHOR_BOTTOM_RIGHT
+    })); // 添加默认地图控件
     BaiduMap.setCurrentCity("上海"); // 设置地图显示的城市 此项是必须设置的
     var mapStyle = {
         features: ["road", "building", "water", "land", "point"],
@@ -272,7 +273,7 @@ function searchRoute() {
             route_id = routeObj.route_id;
             var routeDecodeObj = JSON.parse(routeObj.route_lng_lat.replace(/&quot;/g, '"'));
             var routeDetailDecodeObj = routeObj.route_detail.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"');
-            $('#route_panel').html("<h2 style='margin:0px;border-top:2px solid #ccc;padding:10px 0 5px 0px;font:bold 16px arial,sans-serif'>运输路线详情：</h2>" + routeDetailDecodeObj);
+            $('#route_panel').css("background-color", "#FFFFFF").html("<h2 style='margin:0px;border-top:2px solid #ccc;padding:10px 0 5px 0px;font:bold 16px arial,sans-serif'>运输路线详情：</h2>" + routeDetailDecodeObj);
             var pointArray = new Array();
             for (var pointIdx in routeDecodeObj) {
                 var lng = routeDecodeObj[pointIdx].lng;
