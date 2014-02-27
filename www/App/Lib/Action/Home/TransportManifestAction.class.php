@@ -60,10 +60,10 @@ class TransportManifestAction extends CommonAction{
 		$data = I( 'post.' );
 		$time = date( 'Y-m-d H:i:s', time() );
 		$data['manifest_modify_time'] = $time;
-		if(I('post.vehicle_code_2')){
-			$vehicle_id_2 = M('vehicle')->where(array('vehicle_num' => I('post.vehicle_code_2')))->getField('vehicle_id');
-			$data['vehicle_id_2'] = $vehicle_id_2;
-		}
+		// if(I('post.vehicle_code_2')){
+		// 	$vehicle_id_2 = M('vehicle')->where(array('vehicle_num' => I('post.vehicle_code_2')))->getField('vehicle_id');
+		// 	$data['vehicle_id_2'] = $vehicle_id_2;
+		// }
 		$manifest_status_old = I( 'post.manifest_status_old' );
 		switch ( $manifest_status_old ) {
 		case '1':
