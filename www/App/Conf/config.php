@@ -1,6 +1,7 @@
 <?php
 return array(
 	//'配置项'=>'配置值'
+	'ERROR_PAGE' =>'/Public/error.html',
 	//开启应用分组
 	'APP_GROUP_LIST'	=>	'Home,Admin',
 	'DEFAULT_GROUP'		=>	'Home',  //默认分组

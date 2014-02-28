@@ -7,14 +7,14 @@
             <table class="table table-hover table-striped table-bordered">
                 <!-- <caption>企业基本信息</caption> -->
                 <tr>
-                    <td>产生单位编号</td>
-                    <td>{$unit.production_unit_id}</td>
+                    <td>产生单位名称</td>
+                    <td>{$unit.production_unit_name}</td>
                     <td>产生单位乡镇街道</td>
                     <td>{$unit.production_unit_street}</td>
                 </tr>
                 <tr>
-                    <td>产生单位名称</td>
-                    <td>{$unit.production_unit_name}</td>
+                    <td>产生单位所属行业</td>
+                    <td>{$unit.production_unit_trade}</td>
                     <td>产生单位注册类型</td>
                     <td>{$unit.production_unit_registration_type}</td>
                 </tr>
@@ -68,13 +68,12 @@
                 </tr>
                 <tr>
                     <td>产生单位管辖权属</td>
-                    <td>{$unit.jurisdiction_id}</td>
+                    <td>{$jurisdiction_name}</td>
                     <td>产生单位中心经度</td>
                     <td>{$unit.production_unit_longitude}</td>
                 </tr>
                 <tr>
-                    <td>产生单位所属行业</td>
-                    <td>{$unit.production_unit_trade}</td>
+                    
                     <td>产生单位中心纬度</td>
                     <td>{$unit.production_unit_latitude}</td>
                 </tr>
