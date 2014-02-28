@@ -5,7 +5,7 @@ return array(
 	//开启应用分组
 	'APP_GROUP_LIST'	=>	'Home,Admin',
 	'DEFAULT_GROUP'		=>	'Home',  //默认分组
-
+/*
 	// 添加数据库配置信息
 	'DB_TYPE'   => 'mysql',   // 数据库类型
 	'DB_HOST'   => '10.50.6.70', // 服务器地址
@@ -15,9 +15,18 @@ return array(
 	'DB_PORT'   => 3306,    // 端口
 	'DB_NAME'   => 'dwms',  // 数据库名
 	'DB_PREFIX' => '',  // 数据库表前缀
+*/
+	// 添加数据库配置信息
+	'DB_TYPE'   => 'mysql',   // 数据库类型
+	'DB_HOST'   => '202.120.58.100', // 服务器地址
+	'DB_USER'   => 'root',    // 用户名
+	'DB_PWD'    => 'omnilab',  // 密码
+	'DB_PORT'   => 3306,    // 端口
+	'DB_NAME'   => 'dwms',  // 数据库名
+	'DB_PREFIX' => '',  // 数据库表前缀
 
 	// 显示页面Trace信息
-	'SHOW_PAGE_TRACE' => true,
+	'SHOW_PAGE_TRACE' => false,
 	// 关闭布局模板配置，使用layout控制模板布局
 	'LAYOUT_ON'   => false,
 	// 自动侦测模板主题

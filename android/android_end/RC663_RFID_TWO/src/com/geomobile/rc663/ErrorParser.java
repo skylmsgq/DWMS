@@ -35,6 +35,7 @@ public class ErrorParser {
 			}
 			activity.alertMessage(errmsg);
 		} catch (JSONException e) {
+			//没有error key的时候跳转到这里
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			if(value.contains("error")) {

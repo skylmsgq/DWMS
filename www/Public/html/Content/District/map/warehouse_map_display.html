@@ -44,7 +44,7 @@
             </div>
         </div>
 
-        <div id="map_panel" style="display:none; width:20%; float:right; position:absolute; right:0px; z-index:1; ">
+        <div id="map_panel" style="display:none; width:35%; float:right; position:absolute; right:0px; z-index:1; ">
             <div id="myAlertFull"></div>
             <div class="row">
                 <div class="col-md-6">
@@ -69,15 +69,15 @@
                 </div>
             </div>
             <div class="blank_div"></div>
-            <div style="background-color:#FFFFFF; padding:4px; padding-bottom:50px;">
+            <div style="background-color:#FFFFFF; padding:5px; padding-bottom:50px; border-radius:5px;">
                 <table id="production_unit_panel">
-                    <caption>生产单位统计表</caption>
+                    <caption style="font:bold 16px arial,sans-serif">生产单位统计表</caption>
                 </table>
             </div>
             <div class="blank_div"></div>
-            <div style="background-color:#FFFFFF; padding:4px; padding-bottom:50px;">
+            <div style="background-color:#FFFFFF; padding:5px; padding-bottom:50px; border-radius:5px;">
                 <table id="reception_unit_panel">
-                    <caption>接受单位统计表</caption>
+                    <caption style="font:bold 16px arial,sans-serif">接受单位统计表</caption>
                 </table>
             </div>
         </div>
@@ -303,12 +303,12 @@ function productionUnit() {
         for (var idx in productionMarkerList) {
             productionMarkerList[idx].show();
         }
-        $('#productionUnitFull').attr('checked', true);
+        $('#productionUnitFull').attr('checked', false);
     } else {
         for (var idx in productionMarkerList) {
             productionMarkerList[idx].hide();
         }
-        $('#productionUnitFull').attr('checked', false);
+        $('#productionUnitFull').attr('checked', true);
     }
 }
 
@@ -317,12 +317,12 @@ function receptionUnit() {
         for (var idx in receptionMarkerList) {
             receptionMarkerList[idx].show();
         }
-        $('#receptionUnitFull').attr('checked', true);
+        $('#receptionUnitFull').attr('checked', false);
     } else {
         for (var idx in receptionMarkerList) {
             receptionMarkerList[idx].hide();
         }
-        $('#receptionUnitFull').attr('checked', false);
+        $('#receptionUnitFull').attr('checked', true);
     }
 }
 
@@ -331,12 +331,12 @@ function productionUnitFull() {
         for (var idx in productionMarkerList) {
             productionMarkerList[idx].show();
         }
-        $('#productionUnit').attr('checked', true);
+        $('#productionUnit').attr('checked', false);
     } else {
         for (var idx in productionMarkerList) {
             productionMarkerList[idx].hide();
         }
-        $('#productionUnit').attr('checked', false);
+        $('#productionUnit').attr('checked', true);
     }
 }
 
@@ -345,12 +345,12 @@ function receptionUnitFull() {
         for (var idx in receptionMarkerList) {
             receptionMarkerList[idx].show();
         }
-        $('#receptionUnit').attr('checked', true);
+        $('#receptionUnit').attr('checked', false);
     } else {
         for (var idx in receptionMarkerList) {
             receptionMarkerList[idx].hide();
         }
-        $('#receptionUnit').attr('checked', false);
+        $('#receptionUnit').attr('checked', true);
     }
 }
 </script>
