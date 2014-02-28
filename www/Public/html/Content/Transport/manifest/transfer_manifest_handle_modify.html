@@ -78,9 +78,11 @@
                     <td>
                         <input type="date" name="transport_date_1" class="form-control input-sm required-cn" placeholder="{$manifest.transport_date_1}" value="{$manifest.transport_date_1}">  
                     </td>
-                    <td>车辆1 牌照</td>
+                    <td>车辆1 ID</td>
                     <td>
-                        <input type="text" name="vehicle_id_1" class="form-control input-sm required-cn" placeholder="{$manifest.vehicle_id_1}" value="{$manifest.vehicle_id_1}">  
+                        <select type="text" id="vehicle_1" name="vehicle_id_1" class="form-control input-sm required-cn" placeholder="{$manifest.vehicle_id_1}" value="{$manifest.vehicle_id_1}">
+                        <option>{$manifest.vehicle_id_1}</option>  
+                        </select>
                     </td>
                 </tr>
                 <tr>
@@ -118,9 +120,11 @@
                     <td>
                         <input type="date" name="transport_date_2" class="form-control input-sm" placeholder="{$manifest.transport_date_2}" value="{$manifest.transport_date_2}">  
                     </td>
-                    <td>车辆2 牌照</td>
+                    <td>车辆2 ID</td>
                     <td>
-                        <input type="text" name="vehicle_id_2" class="form-control input-sm" placeholder="{$manifest.vehicle_id_2}" value="{$manifest.vehicle_id_2}">  
+                        <select type="text" id="vehicle_2" name="vehicle_id_2" class="form-control input-sm" placeholder="{$manifest.vehicle_id_1}" value="{$manifest.vehicle_id_2}"> 
+                            <option>{$manifest.vehicle_id_2}</option> 
+                        </select> 
                     </td>
                 </tr>
                 <tr>
@@ -160,13 +164,22 @@
 $("#manifest_modify").validate();
 </script>
 <script type="text/javascript">
+// $('#vehicle_1').html('<option>请选择车辆牌照</option>');
+for(var idx in vehicle){
+    $('#vehicle_1').append('<option value = "' + vehicle[idx].vehicle_id + '">' + vehicle[idx].vehicle_id + '</option>');
+}
+
+// $('#vehicle_2').html('<option>请选择车辆牌照</option>');
+for(var idx in vehicle){
+    $('#vehicle_2').append('<option value = "' + vehicle[idx].vehicle_id + '">' + vehicle[idx].vehicle_id + '</option>');
+}
 function ajaxAction() {
     if(!$('#manifest_modify').valid()){
         return;
     }
 
     var form_serialize = "" + $('#manifest_modify').serialize();
-
+    console.log(form_serialize);
     $("#model-content").html('<center style="margin:50px"><h4>提交中...</h4><div class="progress progress-striped active" style="width: 50%"><div class="progress-bar"  role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div></div></center>');
 
     $.ajax({
