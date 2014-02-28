@@ -223,8 +223,8 @@ class DistrictMapAction extends CommonAction{
 
 	// 转移地图->路线管理->运输路线查询
 	public function transfer_route_query() {
-		$production_unit = M( 'production_unit' )->where( array( 'jurisdiction_id' => session( 'jurisdiction_id' ) ) )->field( 'production_unit_id, production_unit_name' )->select();
-		$reception_unit = M( 'reception_unit' )->where( array( 'jurisdiction_id' => session( 'jurisdiction_id' ) ) )->field( 'reception_unit_id, reception_unit_name' )->select();
+		$production_unit = M( 'production_unit' )->where( array( 'jurisdiction_id' => session( 'jurisdiction_id' ) ) )->select();
+		$reception_unit = M( 'reception_unit' )->where( array( 'jurisdiction_id' => session( 'jurisdiction_id' ) ) )->select();
 		$production_unit_json = json_encode( $production_unit );
 		$reception_unit_json = json_encode( $reception_unit );
 		if ( $production_unit_json && $reception_unit_json ) {

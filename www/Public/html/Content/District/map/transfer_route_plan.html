@@ -12,58 +12,52 @@
             <button type="button" class="btn btn-default btn-xs" onclick="exitFullScreen(); fullScreen=0;">退出全屏</button>
         </div>
     </div>
-    <div class="panel panel-body" style="margin-bottom:0px">
+    <div class="panel panel-body" id="map_parent" style="margin-bottom:0px">
 
         <div id="div_input-group">
             <div id="myAlert"></div>
-            <div class="row">
-                <div class="col-md-3">
-                    <label class="sr-only" for="selectProductionUnit">产生单位：</label>
-                    <select class="form-control input-sm" id="selectProductionUnit">
-                        <option value="-1">请选择生产单位</option>
-                    </select>
+            <div class="row" style="position:absolute; z-index:1;">
+                <div class="col-md-1">
                 </div>
-                <div class="col-md-3">
-                    <label class="sr-only" for="selectReceptionUnit">接受单位：</label>
-                    <select class="form-control input-sm" id="selectReceptionUnit">
-                        <option value="-1">请选择接受单位</option>
-                    </select>
-                </div>
-                <div class="col-md-2">
-                    <label class="sr-only" for="selectStrategy">驾车策略：</label>
-                    <select class="form-control input-sm" id="selectStrategy">
-                        <option value="0">最小时间</option>
-                        <option value="1">最短距离</option>
-                        <option value="2">避开高速</option>
-                    </select>
+                <div class="col-md-10">
+                    <div class="input-group input-group-sm">
+                        <span class="input-group-addon"></span>
+                        <select class="form-control input-sm" id="selectProductionUnit" onchange="showProductionUnit();">
+                            <option value="-1">请选择生产单位</option>
+                        </select>
+                        <span class="input-group-addon"></span>
+                        <select class="form-control input-sm" id="selectReceptionUnit" onchange="showReceptionUnit();">
+                            <option value="-1">请选择接受单位</option>
+                        </select>
+                        <span class="input-group-addon"></span>
+                        <select class="form-control input-sm" id="selectStrategy">
+                            <option value="0">最小时间</option>
+                            <option value="1">最短距离</option>
+                            <option value="2">避开高速</option>
+                        </select>
+                        <span class="input-group-addon"></span>
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-info btn-sm" onclick="search();">查询</button>
+                            <button type="button" class="btn btn-warning btn-sm" onclick="clearScreen();">清除</button>
+                            <button type="button" class="btn btn-success btn-sm" onclick="submit();">提交</button>
+                        </div>
+                    </div>
                 </div>
                 <div class="col-md-1">
-                    <button type="button" class="btn btn-info btn-sm" onclick="search();">查询</button>
-                </div>
-                <div class="col-md-1">
-                    <button type="button" class="btn btn-warning btn-sm" onclick="clearScreen();">清除</button>
-                </div>
-                <div class="col-md-1">
-                    <button type="button" class="btn btn-success btn-sm" onclick="submit();">提交</button>
                 </div>
             </div>
         </div>
 
-        <div id="map_container" style="width:100%;float:left;"></div>
-
-        <div id="map_panel" style="display:none;height:100%;width:20%;float:right;">
+        <div id="map_panel" style="display:none; width:20%; float:right; position:absolute; right:0px; z-index:1; ">
             <div id="myAlertFull"></div>
-            <label class="sr-only" for="selectProductionUnitFull">产生单位：</label>
-            <select class="form-control input-sm" id="selectProductionUnitFull">
+            <select class="form-control input-sm" id="selectProductionUnitFull" onchange="showProductionUnit();">
                 <option value="-1">请选择生产单位</option>
             </select>
             <div class="blank_div"></div>
-            <label class="sr-only" for="selectReceptionUnitFull">接受单位：</label>
-            <select class="form-control input-sm" id="selectReceptionUnitFull">
+            <select class="form-control input-sm" id="selectReceptionUnitFull" onchange="showReceptionUnit();">
                 <option value="-1">请选择接受单位</option>
             </select>
             <div class="blank_div"></div>
-            <label class="sr-only" for="selectStrategyFull">驾车策略：</label>
             <select class="form-control input-sm" id="selectStrategyFull">
                 <option value="0">最小时间</option>
                 <option value="1">最短距离</option>
@@ -91,6 +85,8 @@
             <div id="route_panel"></div>
         </div>
 
+        <div id="map_container" style="width:100%;float:left;"></div>
+
     </div>
 </div>
 
@@ -106,6 +102,18 @@ if (typeof(playbackTimeout) != 'undefined') {
 }
 var fullScreen = 0;
 
+var path = new Array();
+var route_detail = '';
+var routePolicy = [BMAP_DRIVING_POLICY_LEAST_TIME, BMAP_DRIVING_POLICY_LEAST_DISTANCE, BMAP_DRIVING_POLICY_AVOID_HIGHWAYS];
+
+var selectProductionUnitVal;
+var selectReceptionUnitVal;
+
+var productionUnitMarker;
+var receptionUnitMarker;
+var productionUnitInfoWindow;
+var receptionUnitInfoWindow;
+
 function setBMap() {
     var windowHeight = $(window).height();
     $("#map_container").css("height", "" + windowHeight - 350 + "px");
@@ -116,7 +124,9 @@ function setBMap() {
     BaiduMap.addControl(new BMap.ScaleControl()); // 添加默认比例尺控件
     BaiduMap.addControl(new BMap.OverviewMapControl()); //添加默认缩略地图控件
     BaiduMap.enableScrollWheelZoom(); //启用滚轮放大缩小
-    BaiduMap.addControl(new BMap.MapTypeControl()); // 添加默认地图控件
+    BaiduMap.addControl(new BMap.MapTypeControl({
+        anchor: BMAP_ANCHOR_BOTTOM_RIGHT
+    })); // 添加默认地图控件
     BaiduMap.setCurrentCity("上海"); // 设置地图显示的城市 此项是必须设置的
     var mapStyle = {
         features: ["road", "building", "water", "land", "point"],
@@ -138,6 +148,49 @@ function setBMap() {
         selectReceptionUnitFull.append('<option value="' + idx + '">' + reception_unit_json[idx].reception_unit_name + '</option>');
     }
 
+    var iconPoint = new BMap.Point(production_unit_json[0].production_unit_longitude, production_unit_json[0].production_unit_latitude);
+    var productionUnitIcon = new BMap.Icon("__PUBLIC__/image/06red.png", new BMap.Size(32, 32), {
+        anchor: new BMap.Size(16, 16),
+        imageOffset: new BMap.Size(0, 0) // 设置图片偏移
+    });
+    // 创建标注对象并添加到地图
+    productionUnitMarker = new BMap.Marker(iconPoint, {
+        icon: productionUnitIcon,
+        title: "危废产生单位"
+    });
+
+    var infoWindowContent = "危废产生单位";
+    var infoWindowOption = {
+        width: 0, // 信息窗口宽度
+        height: 0, // 信息窗口高度
+        title: "", // 信息窗口标题
+    };
+    productionUnitInfoWindow = new BMap.InfoWindow(infoWindowContent, infoWindowOption);
+    productionUnitMarker.addEventListener("click", function(e) {
+        BaiduMap.openInfoWindow(productionUnitInfoWindow, this.getPosition());
+    });
+
+    var iconPoint = new BMap.Point(reception_unit_json[0].reception_unit_longitude, reception_unit_json[0].reception_unit_latitude);
+    var receptionUnitIcon = new BMap.Icon("__PUBLIC__/image/03black_32.png", new BMap.Size(32, 32), {
+        anchor: new BMap.Size(16, 16),
+        imageOffset: new BMap.Size(0, 0) // 设置图片偏移
+    });
+    // 创建标注对象并添加到地图
+    receptionUnitMarker = new BMap.Marker(iconPoint, {
+        icon: receptionUnitIcon,
+        title: "危废接受单位"
+    });
+    var infoWindowContent = "危废接受单位";
+    var infoWindowOption = {
+        width: 0, // 信息窗口宽度
+        height: 0, // 信息窗口高度
+        title: "", // 信息窗口标题
+    };
+    receptionUnitInfoWindow = new BMap.InfoWindow(infoWindowContent, infoWindowOption);
+    receptionUnitMarker.addEventListener("click", function(e) {
+        BaiduMap.openInfoWindow(receptionUnitInfoWindow, this.getPosition());
+    });
+
     $(".anchorBL").hide();
 }
 
@@ -149,9 +202,63 @@ function loadScript() {
 
 loadScript();
 
-var path = new Array();
-var route_detail = '';
-var routePolicy = [BMAP_DRIVING_POLICY_LEAST_TIME, BMAP_DRIVING_POLICY_LEAST_DISTANCE, BMAP_DRIVING_POLICY_AVOID_HIGHWAYS];
+function judgeProductionUnit() {
+    if (fullScreen) {
+        selectProductionUnitVal = $('#selectProductionUnitFull').val();
+    } else {
+        selectProductionUnitVal = $('#selectProductionUnit').val();
+    }
+    if (selectProductionUnitVal == '-1') {
+        myAlertFail("请先选择生产单位");
+        return 1;
+    }
+    return 0;
+}
+
+function judgeReceptionUnit() {
+    if (fullScreen) {
+        selectReceptionUnitVal = $('#selectReceptionUnitFull').val();
+    } else {
+        selectReceptionUnitVal = $('#selectReceptionUnit').val();
+    }
+    if (selectReceptionUnitVal == '-1') {
+        myAlertFail("请先选择接受单位");
+        return 1;
+    }
+    return 0;
+}
+
+function showProductionUnit() {
+    judgeProductionUnit();
+
+    if (productionUnitMarker) {
+        BaiduMap.removeOverlay(productionUnitMarker);
+    }
+    if (polylineRoute) {
+        BaiduMap.removeOverlay(polylineRoute);
+    }
+
+    productionUnitMarker.setPosition(new BMap.Point(production_unit_json[selectProductionUnitVal].production_unit_longitude, production_unit_json[selectProductionUnitVal].production_unit_latitude));
+    productionUnitInfoWindow.setContent("<table class='table table-striped table-bordered table-hover table-condensed table-responsive' style='margin-top:10px; margin-bottom:0px;'><tr><td>接受单位名称：</td><td>" + production_unit_json[selectProductionUnitVal].production_unit_name + "</td></tr><tr><td>接受单位电话：</td><td>" + production_unit_json[selectProductionUnitVal].production_unit_phone + "</td></tr><tr><td>接受单位地址：</td><td>" + production_unit_json[selectProductionUnitVal].production_unit_address + "</td></tr><tr><td>环保联系人姓名：</td><td>" + production_unit_json[selectProductionUnitVal].production_unit_contacts_name + "</td></tr><tr><td>环保联系人电话：</td><td>" + production_unit_json[selectProductionUnitVal].production_unit_contacts_phone + "</td></tr></table>");
+
+    BaiduMap.addOverlay(productionUnitMarker);
+}
+
+function showReceptionUnit() {
+    judgeReceptionUnit();
+
+    if (receptionUnitMarker) {
+        BaiduMap.removeOverlay(receptionUnitMarker);
+    }
+    if (polylineRoute) {
+        BaiduMap.removeOverlay(polylineRoute);
+    }
+
+    receptionUnitMarker.setPosition(new BMap.Point(reception_unit_json[selectReceptionUnitVal].reception_unit_longitude, reception_unit_json[selectReceptionUnitVal].reception_unit_latitude));
+    receptionUnitInfoWindow.setContent("<table class='table table-striped table-bordered table-hover table-condensed table-responsive' style='margin-top:10px; margin-bottom:0px;'><tr><td>接受单位名称：</td><td>" + reception_unit_json[selectReceptionUnitVal].reception_unit_name + "</td></tr><tr><td>接受单位电话：</td><td>" + reception_unit_json[selectReceptionUnitVal].reception_unit_phone + "</td></tr><tr><td>接受单位地址：</td><td>" + reception_unit_json[selectReceptionUnitVal].reception_unit_address + "</td></tr><tr><td>环保联系人姓名：</td><td>" + reception_unit_json[selectReceptionUnitVal].reception_unit_contacts_name + "</td></tr><tr><td>环保联系人电话：</td><td>" + reception_unit_json[selectReceptionUnitVal].reception_unit_contacts_phone + "</td></tr></table>");
+
+    BaiduMap.addOverlay(receptionUnitMarker);
+}
 
 var searchComplete = function(results) {
     path = [];
@@ -166,16 +273,18 @@ var searchComplete = function(results) {
         path = route.getPath();
         */
         var steps = new Array();
+        steps.push('<table style="font:12px arial,sans-serif;border-collapse:collapse" cellpadding="0" cellspacing="0" border="0"><tbody>');
         for (var routeIdx = 0; routeIdx < plan.getNumRoutes(); ++routeIdx) {
             var route = plan.getRoute(routeIdx);
             var tmpPath = route.getPath();
             path = path.concat(tmpPath);
             for (var stepIdx = 0; stepIdx < route.getNumSteps(); ++stepIdx) {
                 var step = route.getStep(stepIdx);
-                steps.push((routeIdx + 1) + "." + (stepIdx + 1) + " " + step.getDescription());
+                steps.push('<tr style="cursor:pointer"><td style="border-bottom:1px solid #ccc;width:20px;vertical-align:top;text-align:right;padding:4px 3px">' + (routeIdx + 1) + '.' + (stepIdx + 1) + '</td><td style="border-bottom:1px solid #ccc;padding:2px;line-height:18px">' + step.getDescription() + '</td></tr>');
             }
         }
-        route_detail = steps.join('<br/>');
+        steps.push('</tbody></table><div style="border-bottom:1px solid #ccc;margin-bottom:10px;color:#7777cc;background:#e5ecf9;overflow:hidden;padding:2px;text-align:right"><span style="float:left;padding-left:6px">路线总距离：' + plan.getDistance() + ' / 预计总时间：' + plan.getDuration() + '</span></div>');
+        route_detail = steps.join('');
         /*setTimeout(function(){
             BaiduMap.setViewport([p1,p2]);   //调整到最佳视野
         },1000);*/
@@ -190,23 +299,16 @@ var searchComplete = function(results) {
 function search() {
     if (fullScreen) {
         var selectStrategyVal = $('#selectStrategyFull').val();
-        var selectProductionUnitVal = $('#selectProductionUnitFull').val();
-        var selectReceptionUnitVal = $('#selectReceptionUnitFull').val();
     } else {
         var selectStrategyVal = $('#selectStrategy').val();
-        var selectProductionUnitVal = $('#selectProductionUnit').val();
-        var selectReceptionUnitVal = $('#selectReceptionUnit').val();
     }
-    if (selectProductionUnitVal == '-1') {
-        myAlertFail("请先选择生产单位");
+    if (judgeProductionUnit()) {
         return;
     }
-    if (selectReceptionUnitVal == '-1') {
-        myAlertFail("请先选择接受单位");
+    if (judgeReceptionUnit()) {
         return;
     }
 
-    BaiduMap.clearOverlays();
     if (typeof(transit) != 'undefined') {
         transit.clearResults(); //清除导航结果
     }
@@ -219,7 +321,8 @@ function search() {
             map: BaiduMap,
             panel: "route_panel",
             autoViewport: false, //启用自动调整地图层级，当指定了搜索结果所展现的地图时有效。
-            enableDragging: true //起终点可进行拖拽
+            enableDragging: true, //起终点可进行拖拽
+            highlightMode: BMAP_HIGHLIGHT_ROUTE, // 驾车结果展现中点击列表后的展现策略。
         },
         policy: routePolicy[selectStrategyVal],
         onSearchComplete: searchComplete
@@ -247,19 +350,10 @@ function clearScreen() {
 }
 
 function submit() {
-    if (fullScreen) {
-        var selectProductionUnitVal = $('#selectProductionUnitFull').val();
-        var selectReceptionUnitVal = $('#selectReceptionUnitFull').val();
-    } else {
-        var selectProductionUnitVal = $('#selectProductionUnit').val();
-        var selectReceptionUnitVal = $('#selectReceptionUnit').val();
-    }
-    if (selectProductionUnitVal == '-1') {
-        myAlertFail("请先选择生产单位");
+    if (judgeProductionUnit()) {
         return;
     }
-    if (selectReceptionUnitVal == '-1') {
-        myAlertFail("请先选择接受单位");
+    if (judgeReceptionUnit()) {
         return;
     }
 

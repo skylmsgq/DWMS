@@ -54,13 +54,16 @@ class TransportManifestAction extends CommonAction{
 		$this->ajaxReturn( $tmp_content );
 	}
 
-// 转移联单->转移联单处理->填写页->表单保存
+	// 转移联单->转移联单处理->填写页->表单保存
 	public function transfer_manifest_handle_request_form($manifest_id="") {
 		$manifest = M( 'manifest' ); // 实例化record对象
 		$data = I( 'post.' );
 		$time = date( 'Y-m-d H:i:s', time() );
 		$data['manifest_modify_time'] = $time;
-		
+		// if(I('post.vehicle_code_2')){
+		// 	$vehicle_id_2 = M('vehicle')->where(array('vehicle_num' => I('post.vehicle_code_2')))->getField('vehicle_id');
+		// 	$data['vehicle_id_2'] = $vehicle_id_2;
+		// }
 		$manifest_status_old = I( 'post.manifest_status_old' );
 		switch ( $manifest_status_old ) {
 		case '1':
@@ -86,6 +89,9 @@ class TransportManifestAction extends CommonAction{
 		$this->manifest = $manifest;
 		$this->transport_unit = $transport_unit;
 
+		$vehicle = M('vehicle')->where( array( 'transport_unit_id' => session('transport_unit_id') ) )->select();
+		$vehicle_json = json_encode($vehicle);
+
 		$p_id=M('manifest')->where("manifest_id='$manifest_id'")->getField('production_unit_id');
 		$r_id=M('manifest')->where("manifest_id='$manifest_id'")->getField('reception_unit_id');
 		$p_name=M('production_unit')->where("production_unit_id='$p_id'")->getField('production_unit_name');
@@ -93,7 +99,7 @@ class TransportManifestAction extends CommonAction{
 		$this->p_name=$p_name;
 		$this->r_name=$r_name;
 		$tmp_content=$this->fetch( './Public/html/Content/Transport/manifest/transfer_manifest_handle_modify.html' );
-		$tmp_content = "<script>manifest_id_json = $manifest_id_json; manifest_status_json = $manifest_status_json;</script> $tmp_content";
+		$tmp_content = "<script>vehicle = $vehicle_json;manifest_id_json = $manifest_id_json; manifest_status_json = $manifest_status_json;</script> $tmp_content";
 		$this->ajaxReturn( $tmp_content );
 	}
 
