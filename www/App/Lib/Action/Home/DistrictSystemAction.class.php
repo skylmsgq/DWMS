@@ -9,7 +9,7 @@ class DistrictSystemAction extends CommonAction{
 		$this->display( './Public/html/Content/District/system/system_sidebar.html' );
 	}
 
-		// 系统管理->系统信息设置->废物代码
+	// 系统管理->系统信息设置->废物代码
 	public function waste_code(){
 
 		$waste = M( 'waste' )->order( 'waste_id DESC' )->select();

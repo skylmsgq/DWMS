@@ -23,7 +23,7 @@
     <script type="text/javascript">
   
     function sel_city(province_id){
-        console.log(province_id);
+        // console.log(province_id);
           $.ajax({
             type: "post",
             url: "{:U('Home/Register/select_city_name')}",
@@ -48,7 +48,7 @@
     }
 
      function sel_county(city_id){
-        console.log(city_id);
+        // console.log(city_id);
           $.ajax({
             type: "post",
             url: "{:U('Home/Register/select_county_name')}",
@@ -74,7 +74,7 @@
     }
 
     function county_code_jurisdiction(county_name){
-        console.log(county_name);
+        // console.log(county_name);
         $.ajax({
             type: "post",
             url: "{:U('Home/Register/select_code_jurisdiction')}",
@@ -153,7 +153,7 @@
                                 <tr>
                                     <td>用户名</td>
                                     <td>
-                                        <input type="text" class="form-control required-cn" name="username" id="username" placeholder="用户名">
+                                        <input type="text" class="form-control required-cn pwdEqual_1" name="username" id="username" placeholder="用户名">
                                     </td>
                                 </tr>
                                 <tr>

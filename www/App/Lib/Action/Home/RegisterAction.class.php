@@ -4,6 +4,7 @@
  */
 class RegisterAction extends Action{
 	public function index( $id="" ) {
+		$username = M( 'user' )->getField('username',true);
 		$enterprise_scale = M( 'enterprise_scale' )->select();
 		$county_code = M( 'county_code' )->where('county_id < 34')->select();
 		$enterprise_register_type = M( 'enterprise_register_type' )->select();
@@ -14,11 +15,13 @@ class RegisterAction extends Action{
 		$this->county_code = $county_code;
 		$this->enterprise_register_type = $enterprise_register_type;
 		$this->waste = $waste;
+		$username_json = json_encode($username);
 		switch ( $id ) {
 
 		case 'production':
 			
 			$tmp_content = $this->fetch( "./App/Tpl/Home/Register/register_production.html" );
+			$tmp_content = "<script>username = $username_json;</script> $tmp_content";
 			$this->show( $tmp_content );
 			break;
 
