@@ -22,22 +22,22 @@ class ReceptionWarehouseAction extends CommonAction{
 		//$pdname[]=$pdu;
 		}
 		$pd_json = json_encode( $pdname );
-		$tmp_content=$this->fetch( './Public/html/Content/Reception/warehouse/storage_input_record.html' );
+		$tmp_content=$this->fetch( './Public/html/Content/Reception/warehouse/storage_input_management.html' );
 		$tmp_content="<script> record_json=$rfid_json; production_unit_name=$pd_json;</script> $tmp_content";
 
 		$this->ajaxReturn( $tmp_content );
 	}
 
 	// 危废库存->危废库存管理->详情
-	public function storage_input_management_page($record_id="") {
-		$reception_unit = "reception_unit_".session( 'reception_unit_id' );
-		$waste = M( $reception_unit )->where( array( 'rfid_id' => $record_id ) )->select();
-		$rfid_json = json_encode( $waste );
-		//$this->waste_data=$rfid_json;
-		$tmp_content=$this->fetch( './Public/html/Content/Reception/warehouse/storage_input_management_page.html' );
-		$tmp_content="<script> waste_data=$rfid_json; </script> $tmp_content";
-		$this->ajaxReturn( $tmp_content );
-	}
+	// public function storage_input_management_page($record_id="") {
+	// 	$reception_unit = "reception_unit_".session( 'reception_unit_id' );
+	// 	$waste = M( $reception_unit )->where( array( 'rfid_id' => $record_id ) )->select();
+	// 	$rfid_json = json_encode( $waste );
+	// 	//$this->waste_data=$rfid_json;
+	// 	$tmp_content=$this->fetch( './Public/html/Content/Reception/warehouse/storage_input_management_page.html' );
+	// 	$tmp_content="<script> waste_data=$rfid_json; </script> $tmp_content";
+	// 	$this->ajaxReturn( $tmp_content );
+	// }
 
 	// 危废库存->危废在库查询
 	// public function storage_query() {

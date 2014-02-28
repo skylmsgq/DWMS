@@ -27,7 +27,6 @@
 
 <script type="text/javascript">
 function setTable() {
-	console.log(record_json);
     var tmp_page_name;
     var tableData = new Array();
     for (var idx in record_json) {
@@ -139,7 +138,7 @@ function ajaxAction(actionID, usertype, userIdx, actionValue) {
         success: function(rdata) {
             //console.log(data);
 			xdata=JSON.parse(rdata);
-			console.log(xdata);
+			// console.log(xdata);
             refresh_page();
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) {

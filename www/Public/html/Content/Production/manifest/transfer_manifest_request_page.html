@@ -67,19 +67,19 @@
                 <tr>
                     <td>运输单位</td>
                     <td>
-                        {$record.transport_unit_id}
+                        {$t_name}
                     </td>
                     <td>接受单位</td>
                     <td>
-                        {$record.reception_unit_id}
+                        {$r_name}
                     </td>
                 </tr>                 
                 <tr>
-                    <td>危废编号</td>
+                    <td>危废数量（袋/个）</td>
                     <td>
-                        {$record.waste_id}
+                        {$record.predict_output_quantity}
                     </td>
-                    <td>危废重量</td>
+                    <td>危废重量（桶/公斤）</td>
                     <td>
                         {$record.predict_output_weight}
                     </td>
@@ -87,11 +87,11 @@
                 <tr>
                     <td>危废包装方式</td>
                     <td>
-                        <input type="text" name="waste_package" class="form-control input-sm" placeholder="危废包装方式">
+                        <input type="text" name="waste_package" class="form-control input-sm required-cn" placeholder="危废包装方式">
                     </td>
                     <td>危废外运目的</td>
                     <td>
-                        <input type="text" name="waste_transport_goal" class="form-control input-sm" placeholder="危废外运目的">
+                        <input type="text" name="waste_transport_goal" class="form-control input-sm required-cn" placeholder="危废外运目的">
                     </td>
                 </tr>
                 <tr>
@@ -101,18 +101,18 @@
                     </td>
                     <td>危废发运人</td>
                     <td>
-                        <input type="text" name="waste_shipper" class="form-control input-sm" placeholder="危废发运人">
+                        <input type="text" name="waste_shipper" class="form-control input-sm required-cn" placeholder="危废发运人">
                     </td>
                 </tr>
                 <tr>
                     <td>危废运达地</td>
                     <td>
-                        <input type="text" name="waste_destination" class="form-control input-sm" placeholder="危废运达地">
+                        <input type="text" name="waste_destination" class="form-control input-sm required-cn" placeholder="危废运达地">
                         <!-- {$reception_unit.reception_unit_address} -->
                     </td>
                     <td>危废转移时间</td>
                     <td>
-                        <input type="date" name="waste_transport_time" class="form-control input-sm" placeholder="危废转移时间">
+                        <input type="date" name="waste_transport_time" class="form-control input-sm required-cn" placeholder="危废转移时间">
                     </td>
                 </tr>
             </table>
@@ -126,10 +126,17 @@
     <button class="btn btn-info btn-lg" id="button_save" data-loading-text="正在保存..." data-complete-text="保存成功！" onclick="ajaxAction(0)">保存</button>
     <button class="btn btn-warning btn-lg" id="button_submit" data-loading-text="正在提交..." data-complete-text="提交成功！" onclick="ajaxAction(1)">提交</button>
 </center>
-
+<script type="text/javascript" src="__PUBLIC__/js/jquery-validate.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/jquery-myvalidate.js"></script>
+<script>
+$("#manifest_request").validate();
+</script>
 <script type="text/javascript">
 function ajaxAction(actionID,transport_unit_name) {
-     switch (actionID) {
+    if(!$('#manifest_request').valid()){
+        return;
+    }
+    switch (actionID) {
         case 0:
             $('#button_save').button('loading');
             $('#button_submit').addClass('disabled');
@@ -141,13 +148,13 @@ function ajaxAction(actionID,transport_unit_name) {
         default:
             break;
     }
-
+    console.log($('#manifest_request').serialize());
     $.ajax({
         type: "post",
         url: "transfer_manifest_request_form?record_id=" + record_json.record_id,
         timeout: 2000,
         // data: $('#manifest_request').serialize() + '&manifest_status=' + actionID +'&reception_unit_name=' + + '&transport_unit_name=' + transport_unit_name ,
-        data: $('#manifest_request').serialize() + '&manifest_status=' + actionID  + '&transport_unit_id=' + record_json.transport_unit_id + '&reception_unit_id=' + record_json.reception_unit_id + '&waste_id=' + record_json.waste_id + '&waste_weight=' + record_json.predict_output_weight,
+        data: $('#manifest_request').serialize() + '&manifest_status=' + actionID  + '&transport_unit_id=' + record_json.transport_unit_id + '&reception_unit_id=' + record_json.reception_unit_id + '&waste_weight=' + record_json.predict_output_weight + '&waste_num=' + record_json.predict_output_quantity + '&rfid_table_id=' + record_json.rfid_table_id,
         success: function(data) {
             switch (actionID) {
                 case 0:

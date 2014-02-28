@@ -67,19 +67,19 @@
                 <tr>
                     <td>运输单位</td>
                     <td>
-                        {$manifest.transport_unit_id}
+                        {$t_name}
                     </td>
                     <td>接受单位</td>
                     <td>
-                        {$manifest.reception_unit_id}
+                        {$r_name}
                     </td>
                 </tr>                 
                 <tr>
-                    <td>危废编号</td>
+                    <td>危废数量（袋/个）</td>
                     <td>
-                        {$manifest.waste_id}
+                        {$manifest.waste_num}
                     </td>
-                    <td>危废重量</td>
+                    <td>危废重量（桶/公斤）</td>
                     <td>
                         {$manifest.waste_weight}
                     </td>
@@ -87,11 +87,11 @@
                 <tr>
                     <td>危废包装方式</td>
                     <td>
-                        <input type="text" name="waste_package" class="form-control input-sm" placeholder="{$manifest.waste_package}" value="{$manifest.waste_package}">
+                        <input type="text" name="waste_package" class="form-control input-sm required-cn" placeholder="{$manifest.waste_package}" value="{$manifest.waste_package}">
                     </td>
                     <td>危废外运目的</td>
                     <td>
-                        <input type="text" name="waste_transport_goal" class="form-control input-sm" placeholder="{$manifest.waste_transport_goal}" value="{$manifest.waste_transport_goal}">
+                        <input type="text" name="waste_transport_goal" class="form-control input-sm required-cn" placeholder="{$manifest.waste_transport_goal}" value="{$manifest.waste_transport_goal}">
                     </td>
                 </tr>
                 <tr>
@@ -101,18 +101,18 @@
                     </td>
                     <td>危废发运人</td>
                     <td>
-                        <input type="text" name="waste_shipper" class="form-control input-sm" placeholder="{$manifest.waste_shipper}" value="{$manifest.waste_shipper}">
+                        <input type="text" name="waste_shipper" class="form-control input-sm required-cn" placeholder="{$manifest.waste_shipper}" value="{$manifest.waste_shipper}">
                     </td>
                 </tr>
                 <tr>
                     <td>危废运达地</td>
                     <td>
-                        <input type="text" name="waste_destination" class="form-control input-sm" placeholder="{$manifest.waste_destination}" value="{$manifest.waste_destination}">
+                        <input type="text" name="waste_destination" class="form-control input-sm required-cn" placeholder="{$manifest.waste_destination}" value="{$manifest.waste_destination}">
                         <!-- {$reception_unit.reception_unit_address} -->
                     </td>
                     <td>危废转移时间</td>
                     <td>
-                        <input type="date" name="waste_transport_time" class="form-control input-sm" placeholder="$manifest.waste_transport_time" value="{$manifest.waste_transport_time}">
+                        <input type="date" name="waste_transport_time" class="form-control input-sm required-cn" placeholder="$manifest.waste_transport_time" value="{$manifest.waste_transport_time}">
                     </td>
                 </tr>
             </table>
@@ -126,9 +126,16 @@
     <button class="btn btn-warning btn-lg" onclick="ajaxAction()">修改备案</button>
     <button class="btn btn-info btn-lg" onclick="$('#myModal').modal('hide');">关闭页面</button>
 </center>
-
+<script type="text/javascript" src="__PUBLIC__/js/jquery-validate.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/jquery-myvalidate.js"></script>
+<script>
+$("#manifest_modify").validate();
+</script>
 <script type="text/javascript">
 function ajaxAction() {
+    if(!$('#manifest_modify').valid()){
+        return;
+    }
     var form_serialize = "" + $('#manifest_modify').serialize();
 
     $("#model-content").html('<center style="margin:50px"><h4>提交中...</h4><div class="progress progress-striped active" style="width: 50%"><div class="progress-bar"  role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div></div></center>');

@@ -223,13 +223,13 @@ class DistrictMapAction extends CommonAction{
 
 	// 转移地图->路线管理->运输路线查询
 	public function transfer_route_query() {
-		$production_unit = M( 'production_unit' )->where( array( 'jurisdiction_id' => session( 'jurisdiction_id' ) ) )->getField( 'production_unit_id, production_unit_name' );
-		$reception_unit = M( 'reception_unit' )->where( array( 'jurisdiction_id' => session( 'jurisdiction_id' ) ) )->getField( 'reception_unit_id, reception_unit_name' );
+		$production_unit = M( 'production_unit' )->where( array( 'jurisdiction_id' => session( 'jurisdiction_id' ) ) )->select();
+		$reception_unit = M( 'reception_unit' )->where( array( 'jurisdiction_id' => session( 'jurisdiction_id' ) ) )->select();
 		$production_unit_json = json_encode( $production_unit );
 		$reception_unit_json = json_encode( $reception_unit );
 		if ( $production_unit_json && $reception_unit_json ) {
 			$tmp_content=$this->fetch( './Public/html/Content/District/map/transfer_route_query.html' );
-			$tmp_content = "<script>production_unit_json=$production_unit_json; reception_unit_json=$reception_unit_json; </script> $tmp_content";
+			$tmp_content = "<script> production_unit_json=$production_unit_json; reception_unit_json=$reception_unit_json; </script> $tmp_content";
 			$this->ajaxReturn( $tmp_content );
 		} else {
 			$this->ajaxReturn( 'fail' );
@@ -286,8 +286,8 @@ class DistrictMapAction extends CommonAction{
 		$gps_table_name = "gps_" . $device_serial_num;
 		$gps = M( $gps_table_name );
 		//$time = date( 'Y-m-d H:i:s', time() );
-		$time = date( 'Y-m-d H:i:s', strtotime( '2014-02-20 08:00:00' ) );
-		for ( $idx = 0; $idx < count( $gps_data_array ); ++$idx ) {
+		$time = date( 'Y-m-d H:i:s', strtotime( '2014-02-20 09:00:00' ) );
+		for ( $idx = 0; $idx < count( $gps_data_array ); $idx += 2 ) {
 			$time = date( 'Y-m-d H:i:s', strtotime($time) + 10 );
 			$data['datetime'] = $time;
 			$data['bmap_longitude'] = $gps_data_array[$idx]->lng;

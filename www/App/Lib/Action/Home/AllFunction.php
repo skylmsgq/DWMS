@@ -329,6 +329,7 @@ function bindRfid($json_string){
 				$data['add_method']=$addWay;
 				$data['production_unit_id']=$userId;
 				$data['waste_total']=0;
+				$data['transfer_status']=0;
 				$resultx=$rfidtable->add($data);
 				if (!$resultx)
 				  {

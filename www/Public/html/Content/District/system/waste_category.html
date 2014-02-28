@@ -34,7 +34,7 @@ function setTable() {
         var itemData = new Array();
         itemData[0] = "" + record_json[idx].waste_category_code;
         itemData[1] = "" + record_json[idx].waste_category;
-        itemData[2] = "" + itemDelete + itemModify;
+        // itemData[2] = "" + itemDelete + itemModify;
         tableData.push(itemData);
     }
  
@@ -44,9 +44,9 @@ function setTable() {
             "sTitle": "危废类别编号"
         }, {
             "sTitle": "危废类别"
-        }, {
+        }/*, {
             "sTitle": "操作"
-        }],
+        }*/],
         "bPaginate": true, 
         "bLengthChange": true, 
         "bFilter": true, 

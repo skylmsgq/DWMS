@@ -48,6 +48,27 @@ class DistrictBusinessAction extends CommonAction{
 			'record_id' => $record_id,
 			'record_status' => $record_status,
 		);
+		$reception_unit_id=M('record')->where("record_id='$record_id'")->getField('reception_unit_id');
+		$rfid_table=M('record')->where("record_id='$record_id'")->getField('rfid_table_id');		
+		$rfid_list=explode(",",$rfid_table);
+		foreach ($rfid_list as  $value) {
+			# code...
+			if ($value!="")
+			{
+				$rfid=M('rfid');
+				$old_rfidstatus=$rfid->where("rfid_id='$value' ")->getField('transfer_status');
+
+				if ($old_rfidstatus!=1)
+				{
+				$data['transfer_status']=1;
+				$data['record_id']=$record_id;
+				$data['reception_unit_id']=$reception_unit_id;	
+				$resultrfid=$rfid->where("rfid_id='$value' ")->save($data);
+				if (!$resultrfid)
+					$this->ajaxReturn( 0, '修改数据库失败！', 0 );
+				}
+			}
+		}
 		$result = M( 'record' )->save( $current_record_status );
 		if ( $result ) {
 			$this->ajaxReturn( 1, '审核成功！', 1 );
@@ -131,6 +152,27 @@ class DistrictBusinessAction extends CommonAction{
 
 	public function transfer_manifest_management_audit_2($manifest_id="") {
 		$manifest_status = I( 'post.manifest_status' );
+		if ($manifest_status==11)
+		{
+		$rfid_table=M('manifest')->where("manifest_id='$manifest_id'")->getField('rfid_table_id');		
+		$rfid_list=explode(",",$rfid_table);
+		foreach ($rfid_list as  $value) {
+			# code...
+			if ($value!="")
+			{
+				$rfid=M('rfid');
+				$old_rfidstatus=$rfid->where("rfid_id='$value' ")->getField('manifest_id');
+
+				if (!$old_rfidstatus)
+				{
+				$data['manifest_id']=$manifest_id;	
+				$resultrfid=$rfid->where("rfid_id='$value' ")->save($data);
+				if (!$resultrfid)
+					$this->ajaxReturn( 0, '修改数据库失败！', 0 );
+				}
+			}
+		}
+		}
 		$time = date( 'Y-m-d H:i:s', time() );
 		$current_manifest_status = array(
 			'manifest_modify_time' => $time,
@@ -214,8 +256,15 @@ class DistrictBusinessAction extends CommonAction{
 				$data['lock'] = '0';
 			else
 				$data['lock'] = '1';
-			$munit->where( array( 'user_id' =>I( 'post.user_id' ) ) )->save( $data );
-			$this->show( "lock_ok".I( 'post.user_id' ) );
+			$result = $munit->where( array( 'user_id' =>I( 'post.user_id' ) ) )->save( $data );
+			if($result){
+				$ans=json_encode("成功");
+				$this->ajaxReturn( $ans ,'JSON');
+			} else{
+				$ans=json_encode("失败");
+				$this->ajaxReturn( $ans ,'JSON');
+			}
+			// $this->show( "lock_ok".I( 'post.user_id' ) );
 		}
 		else if ( I( 'post.action' )=="verify" ) {
 				$result=$munit->where( "user_id='$userid'" )->setField('is_verify', 1 );

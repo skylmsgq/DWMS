@@ -34,7 +34,7 @@ function setTable() {
         var itemData = new Array();
         itemData[0] = "" + record_json[idx].enterprise_register_type_code;
         itemData[1] = "" + record_json[idx].enterprise_register_type_name;
-        itemData[2] = "" + itemDelete + itemModify;
+        // itemData[2] = "" + itemDelete + itemModify;
         tableData.push(itemData);
     }
  
@@ -44,9 +44,9 @@ function setTable() {
             "sTitle": "注册类型代码"
         }, {
             "sTitle": "注册类型名称"
-        }, {
+        }/*, {
             "sTitle": "操作"
-        }],
+        }*/],
         "bPaginate": true, 
         "bLengthChange": true, 
         "bFilter": true, 

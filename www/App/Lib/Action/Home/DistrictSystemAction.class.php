@@ -14,6 +14,7 @@ class DistrictSystemAction extends CommonAction{
 
 		$waste = M( 'waste' )->order( 'waste_id DESC' )->select();
 		$waste_json = json_encode( $waste );
+		
 		$tmp_content=$this->fetch( './Public/html/Content/District/system/waste_code.html' );
 		$tmp_content="<script> record_json=$waste_json;</script> $tmp_content";
 		$this->ajaxReturn( $tmp_content );
@@ -47,12 +48,6 @@ class DistrictSystemAction extends CommonAction{
 		$tmp_content = $this->fetch( './Public/html/Content/District/system/waste_code_modify.html' );
 		$tmp_content = "<script>waste_id_json = $waste_id_json;waste_category_json=$waste_category_json;</script> $tmp_content";
 		$this->ajaxReturn( $tmp_content );
-	}
-
-	public function change_waste_category(){
-		$waste_category = M( 'waste_category' )->where( array('waste_category_code'=> I('post.code') ) )->select();
-		$waste_category_json = json_encode( $waste_category );
-		$this->ajaxReturn( $waste_category, 'JSON');
 	}
 
 	// 系统管理->系统信息设置->废物代码->保存修改
