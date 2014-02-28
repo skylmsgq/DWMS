@@ -20,28 +20,36 @@
                 <div class="col-md-1">
                 </div>
                 <div class="col-md-10">
-                    <div class="input-group input-group-sm">
-                        <span class="input-group-addon" style="border:0px; padding:0px;"></span>
-                        <select class="form-control" id="selectTransportUnit" onchange="getVehicleList();showTransportUnit();">
-                            <option value='-1'>请选择运输单位</option>
-                        </select>
-                        <span class="input-group-addon" style="border:0px; padding:0px;"></span>
-                        <select class="form-control" id="selectVehicle" onchange="showVehicle();">
-                            <option value='-1'>请选择运输车辆</option>
-                        </select>
-                        <span class="input-group-addon" style="border:0px; padding:0px;"></span>
-                        <input type="date" class="form-control" id="beginDate" value="2014-01-13">
-                        <span class="input-group-addon" style="border:0px; padding:0px;"></span>
-                        <input type="date" class="form-control" id="endDate" value="2014-01-14">
-                        <span class="input-group-addon" style="border:0px; padding:0px;"></span>
-                        <select class="form-control input-sm" id="selectSpeed">
-                            <option value='1'>慢</option>
-                            <option value='2' selected="selected">中</option>
-                            <option value='4'>快</option>
-                        </select>
-                        <span class="input-group-addon" style="border:0px; padding:0px;"></span>
-                        <button type="button" class="btn btn-info btn-sm" onclick="getVehicleRoute();">回放</button>
-                    </div>
+                    <table style="background-color:#FFFFFF; border-radius:5px;">
+                        <tr>
+                            <td>
+                                <select class="form-control input-sm" id="selectTransportUnit" onchange="getVehicleList();showTransportUnit();">
+                                    <option value='-1'>请选择运输单位</option>
+                                </select>
+                            </td>
+                            <td>
+                                <select class="form-control  input-sm" id="selectVehicle" onchange="showVehicle();">
+                                    <option value='-1'>请选择运输车辆</option>
+                                </select>
+                            </td>
+                            <td>
+                                <input type="date" class="form-control input-sm" id="beginDate" value="2014-01-13">
+                            </td>
+                            <td>
+                                <input type="date" class="form-control input-sm" id="endDate" value="2014-01-14">
+                            </td>
+                            <td>
+                                <select class="form-control input-sm" id="selectSpeed" style="width:60px;">
+                                    <option value='1'>慢</option>
+                                    <option value='2' selected="selected">中</option>
+                                    <option value='4'>快</option>
+                                </select>
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-info btn-sm" onclick="getVehicleRoute();">回放</button>
+                            </td>
+                        </tr>
+                    </table>
                 </div>
                 <div class="col-md-1">
                 </div>

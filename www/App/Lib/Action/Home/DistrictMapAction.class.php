@@ -286,8 +286,8 @@ class DistrictMapAction extends CommonAction{
 		$gps_table_name = "gps_" . $device_serial_num;
 		$gps = M( $gps_table_name );
 		//$time = date( 'Y-m-d H:i:s', time() );
-		$time = date( 'Y-m-d H:i:s', strtotime( '2014-02-20 08:00:00' ) );
-		for ( $idx = 0; $idx < count( $gps_data_array ); ++$idx ) {
+		$time = date( 'Y-m-d H:i:s', strtotime( '2014-02-20 09:00:00' ) );
+		for ( $idx = 0; $idx < count( $gps_data_array ); $idx += 2 ) {
 			$time = date( 'Y-m-d H:i:s', strtotime($time) + 10 );
 			$data['datetime'] = $time;
 			$data['bmap_longitude'] = $gps_data_array[$idx]->lng;

@@ -114,7 +114,7 @@ function setBMap() {
     BaiduMap.setCurrentCity("上海"); // 设置地图显示的城市 此项是必须设置的
     var mapStyle = {
         features: ["road", "building", "water", "land", "point"],
-        style: "normal"
+        style: "light"
     };
     BaiduMap.setMapStyle(mapStyle);
 
@@ -317,7 +317,7 @@ function deleteRoute() {
             if (data == "success") {
                 myAlertSucc("路线删除成功");
                 BaiduMap.clearOverlays();
-                $('#route_panel').html("");
+                $('#route_panel').html("").css("background-color","");
             } else {
                 myAlertFail("路线删除失败");
             }
