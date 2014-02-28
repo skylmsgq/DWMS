@@ -16,7 +16,7 @@ return array(
 	'DB_PREFIX' => '',  // 数据库表前缀
 
 	// 显示页面Trace信息
-	'SHOW_PAGE_TRACE' => true,
+	'SHOW_PAGE_TRACE' => false,
 	// 关闭布局模板配置，使用layout控制模板布局
 	'LAYOUT_ON'   => false,
 	// 自动侦测模板主题
