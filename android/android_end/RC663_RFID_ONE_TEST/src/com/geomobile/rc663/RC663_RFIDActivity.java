@@ -60,7 +60,7 @@ public class RC663_RFIDActivity extends Activity implements OnClickListener {
 	@Override
 	public void onClick(View arg0) {
 		// TODO Auto-generated method stub
-		
+		//选择三种功能，跳转到相应界面
 		if(arg0 == start_scan) {
 			Intent i = new Intent();
 			i.setClass(this, ScanAndUpload.class);

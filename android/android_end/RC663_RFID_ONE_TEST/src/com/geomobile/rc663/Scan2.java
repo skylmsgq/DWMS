@@ -139,10 +139,10 @@ public class Scan2 extends ScanActivity implements OnClickListener {
     	public FetchItemCallbackController(final Scan2 activity, String sn) {
     		this.sn = sn;
     		this.activity = activity;
-    
+    		//在这里向后台发起请求
     		running=new LongRunningGetIO(getString(R.string.url_prefix) + "getRfidWasteName?imei=" + activity.imei + "&rfid=" + sn, nameValuePairs, this);
     		running.execute();
-    		
+    		//该progDialog可以取消，在下面进行设置
     		progDialog = ProgressDialog.show(activity, "正在获取信息",
     	            "请稍候...", true,true,new OnCancelListener(){
     			public void onCancel(DialogInterface pd)//fecth只是读取，可以取消
@@ -156,6 +156,7 @@ public class Scan2 extends ScanActivity implements OnClickListener {
     	public void parseJSON(String value) throws JSONException
     	{
     		JSONObject jObject = new JSONObject(value);
+    		//判断类型，桶装or袋装
     		if (jObject.getString("way").equals("0"))
     		activity.popupEditText(sn, "原先数值: " + jObject.getString("total")+"公斤", jObject);
     		else if (jObject.getString("way").equals("1"))
@@ -250,6 +251,7 @@ public class Scan2 extends ScanActivity implements OnClickListener {
     
     public void popupEditText(final String sn, String value, final JSONObject original)
     {
+    	//弹出选择框
     	AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
     	alert.setTitle("新增重量");
@@ -290,6 +292,7 @@ public class Scan2 extends ScanActivity implements OnClickListener {
     		JSONObject toUpload = new JSONObject();
     		
     		try {
+    			//组装向后台发送的json数据包
     			toUpload.put("rfid", sn);
 				toUpload.put("wasteid", original.getString("id"));
 				toUpload.put("imei", myself.imei);

@@ -13,15 +13,16 @@ import com.geomobile.rc6631.R;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
-import android.os.Handler;
 import android.telephony.TelephonyManager;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.ScrollView;
 
 
 public class login extends ScanActivity implements OnClickListener {
@@ -33,9 +34,10 @@ public class login extends ScanActivity implements OnClickListener {
 	private String imei="";
 	private IOCallback submitController = null;
 	public ScanActivity my=this;
-	//public String myURL = "http://202.120.58.116/test/dwms/index.php";
+	private CheckBox rem_pw;
+	private SharedPreferences sp;  
 	public String myURL; 
-	//public String myURL ="http://202.120.58.116/test/dwms/www/index.php/Home/AndroidApi/login";
+	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,11 +46,31 @@ public class login extends ScanActivity implements OnClickListener {
         bnlogin.setOnClickListener(this);
         name=(EditText)findViewById(R.id.editText_name);
         pass=(EditText)findViewById(R.id.editText_pass);
+        rem_pw = (CheckBox) findViewById(R.id.rmb);  
         TelephonyManager telephonyManager = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
         this.imei = telephonyManager.getDeviceId();
         this.myURL= getString(R.string.url_prefix) + "login";
+        sp = this.getSharedPreferences("userInfo", Context.MODE_PRIVATE);
+        if(sp.getBoolean("ISCHECK", false))  
+        {
+        	 rem_pw.setChecked(true);  
+             name.setText(sp.getString("USER_NAME", ""));  
+             pass.setText(sp.getString("PASSWORD", ""));  
+        }
+      //监听记住密码多选框按钮事件  
+        rem_pw.setOnCheckedChangeListener(new CheckBox.OnCheckedChangeListener() {  
+            public void onCheckedChanged(CompoundButton buttonView,boolean isChecked) {  
+                if (rem_pw.isChecked()) {   
+                   // System.out.println("记住密码已选中");  
+                    sp.edit().putBoolean("ISCHECK", true).commit();  
+                }else {  
+                   // System.out.println("记住密码没有选中");  
+                    sp.edit().putBoolean("ISCHECK", false).commit();  
+                }  
+            }  
+        }); 
     }
-
+    
     public class SubmitCallbackController implements IOCallback {
 		login activity;
     	ProgressDialog progDialog;
@@ -65,10 +87,21 @@ public class login extends ScanActivity implements OnClickListener {
     	
     	public void httpRequestDidFinish(int success, String value) {
     		progDialog.dismiss();
+    		//判断后台返回的code，确认用户信息
     		if (value.equals("0"))
     		{
-    			name.setText("");
-				pass.setText("");
+    			
+				if(rem_pw.isChecked())  
+                {  
+                 //记住用户名、密码、  
+                  Editor editor = sp.edit();  
+                  editor.putString("USER_NAME", name.getText().toString());  
+                  editor.putString("PASSWORD",pass.getText().toString());  
+                  editor.commit();  
+                } 
+				else
+				{name.setText("");
+				pass.setText("");}
 				Intent i = new Intent();
 				i.setClass(my, RC663_RFIDActivity.class);
 				startActivity(i);
@@ -118,6 +151,7 @@ public class login extends ScanActivity implements OnClickListener {
 				try {
 					myupload.put("user", username);
 					myupload.put("pass", pwd);
+					//生产企业的type是5
 					myupload.put("type", 5);
 					myupload.put("imei", imei);
 				} catch (JSONException e) {
