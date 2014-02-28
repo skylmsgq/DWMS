@@ -3,6 +3,7 @@ package com.geomobile.rc663;
 import com.android.hflibs.Iso15693_native;
 import com.geomobile.rc6631.R;
 
+
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -53,7 +54,6 @@ public class ScanAndUpload extends ScanActivity implements OnClickListener {
 
 	private String imei = "";
 	private ArrayAdapter adapter;
-	// private String[] myStringArray = {"gen1", "gen2"};
 	private List<String> items = new ArrayList<String>();
 	private IOCallback optionFetch, submitController = null;
 	private HashMap<String, String> wasteOptionsMap = new HashMap<String, String>();
@@ -71,10 +71,7 @@ public class ScanAndUpload extends ScanActivity implements OnClickListener {
         TelephonyManager telephonyManager = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
         this.imei = telephonyManager.getDeviceId();
         
-        //start_demo = (Button)findViewById(R.id.button_15693_demo);
-        //start_demo.setOnClickListener(this);
-        //start_demo.setEnabled(false);
-        
+ 
         get_info = (Button)findViewById(R.id.button_15693_search);
         get_info.setOnClickListener(this);
         get_info.setEnabled(true);
@@ -85,14 +82,7 @@ public class ScanAndUpload extends ScanActivity implements OnClickListener {
         
         main_info = (TextView)findViewById(R.id.textView_15693_info);
         main_info.setMovementMethod(ScrollingMovementMethod.getInstance());
-        
-        //block_nr = (EditText)findViewById(R.id.editText_15693_block);
-        
-        //lock_block = (CheckBox)findViewById(R.id.checkBox_15693_lockblock);
-        //lock_afi = (CheckBox)findViewById(R.id.checkBox_15693_lockafi);
-        //lock_dsfid = (CheckBox)findViewById(R.id.checkBox_15693_lockdsfid);
-        
-        //items.add(new String("aloha_1"));
+      
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, items);
         listView = (ListView) findViewById(R.id.listView1);
         listView.setLongClickable(true);
@@ -215,7 +205,7 @@ public class ScanAndUpload extends ScanActivity implements OnClickListener {
 		adapter.notifyDataSetChanged();
     }
     
-    
+    //弹出选择框，选择桶装or袋装
     public void popupSelect(final String sn)
     {
     	AlertDialog levelDialog;
@@ -248,19 +238,6 @@ public class ScanAndUpload extends ScanActivity implements OnClickListener {
     	TextView main_info = (TextView)findViewById(R.id.textView_15693_info);
 		main_info.setText(msg);
 		
-		/*
-		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Debug msg")
-        .setMessage(msg)
-        .setCancelable(false)
-        .setNegativeButton("确定",new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                dialog.cancel();
-            }
-        });
-        AlertDialog alert = builder.create();
-        alert.show();
-        */
     }
     
     public class NullCallback implements IOCallback {
@@ -268,7 +245,7 @@ public class ScanAndUpload extends ScanActivity implements OnClickListener {
     		
     	}
     }
-    
+    //为自动向后台发起请求，获取废物类型描述
     public class OptionsCallbackController implements IOCallback {
     	ScanAndUpload activity;
     	List<String> list = new ArrayList<String>();
@@ -324,7 +301,7 @@ public class ScanAndUpload extends ScanActivity implements OnClickListener {
     		
     	}
     }
-    
+    //用于提交绑定信息
     public class SubmitCallbackController implements IOCallback {
     	ScanAndUpload activity;
     	ProgressDialog progDialog;

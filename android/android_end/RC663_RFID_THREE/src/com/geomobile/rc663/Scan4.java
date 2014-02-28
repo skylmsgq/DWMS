@@ -32,7 +32,6 @@ public class Scan4 extends ScanActivity implements OnClickListener {
 	private static final String PW_DEV = "/proc/driver/as3992";
 	private Iso15693_native dev = new Iso15693_native();
 	private Button get_info;
-	//public TextView main_info;
 	private DeviceControl power;
 	public String myTitle = "环保局查看";
 	public String myURL =  "";	
@@ -53,15 +52,10 @@ public class Scan4 extends ScanActivity implements OnClickListener {
         get_info.setOnClickListener(this);
         get_info.setEnabled(true);
         
-
-       // main_info = (TextView)findViewById(R.id.textView_15693_info);
-        //main_info.setMovementMethod(ScrollingMovementMethod.getInstance());
-      
         power = new DeviceControl();
         if(power.DeviceOpen(PW_DEV) < 0)
         {
         	this.alertMessage(getString(R.string.msg_error_power));
-        	//main_info.setText(R.string.msg_error_power);
         	return;
         }
         Log.d(TAG, "open file ok");
@@ -102,13 +96,6 @@ public class Scan4 extends ScanActivity implements OnClickListener {
     	power.DeviceClose();
     	super.onDestroy();
     }
-
-    
-//    public void debugMessage(String msg)
-//    {
-//    	//TextView main_info = (TextView)findViewById(R.id.textView_15693_info);
-//	//	main_info.setText(msg);
-//    }
     
     public class NullCallback implements IOCallback {
     	public void httpRequestDidFinish(int success, String value) {
@@ -127,7 +114,7 @@ public class Scan4 extends ScanActivity implements OnClickListener {
     		nameValuePairs.add(postContent);
     		running=new LongRunningGetIO(activity.myURL, nameValuePairs, this);
     		running.execute();
-    		
+    		//只读型，设置为可以取消
     		progDialog = ProgressDialog.show(activity, "正在查询",
     	            "请稍候...", true, true, new OnCancelListener(){
     			public void onCancel(DialogInterface pd)
@@ -149,7 +136,6 @@ public class Scan4 extends ScanActivity implements OnClickListener {
     		progDialog.dismiss();
     		
     		this.parseJSON(value);
-    	//	main_info.setText(sn);
     		if (swh)
     		{Intent intent = new Intent(activity, show.class);
     		intent.putExtra("result", sn);

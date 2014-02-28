@@ -55,6 +55,7 @@ public class Scan3 extends ScanActivity implements OnClickListener {
 	private ArrayAdapter adapter;
 	// private String[] myStringArray = {"gen1", "gen2"};
 	private List<String> items = new ArrayList<String>();
+	//checkController为读取单个rfid信息所调用，submitController为提交时所调用
 	private IOCallback optionFetch, submitController,checkController = null;
 	
     @Override
@@ -66,11 +67,7 @@ public class Scan3 extends ScanActivity implements OnClickListener {
         TelephonyManager telephonyManager = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
         this.imei = telephonyManager.getDeviceId();
         ((TextView)findViewById(R.id.textView_addNew)).setText(myTitle);
-        
-        //start_demo = (Button)findViewById(R.id.button_15693_demo);
-        //start_demo.setOnClickListener(this);
-        //start_demo.setEnabled(false);
-        
+  
         get_info = (Button)findViewById(R.id.button_15693_search);
         get_info.setOnClickListener(this);
         get_info.setEnabled(true);
@@ -203,7 +200,7 @@ public class Scan3 extends ScanActivity implements OnClickListener {
     		
     	}
     }
-    
+    //用于提交
     public class SubmitCallbackController implements IOCallback {
     	Scan3 activity;
     	ProgressDialog progDialog;
@@ -234,6 +231,7 @@ public class Scan3 extends ScanActivity implements OnClickListener {
 	        activity.submitController = null;
     	}
     }
+    //用于检测单个rfid是否可以出库
     public class CheckCallbackController implements IOCallback {
     	Scan3 activity;
     	ProgressDialog progDialog;
@@ -274,6 +272,7 @@ public class Scan3 extends ScanActivity implements OnClickListener {
     			rfid=jObject.getString("rfid");
     			 addway=jObject.getString("addway");
     			 total=jObject.getString("total");
+    			 //status为rfid_status
     			 status=jObject.getString("status");
     			if (status.equals("3"))
     				{
@@ -282,8 +281,10 @@ public class Scan3 extends ScanActivity implements OnClickListener {
     				else
     				{
     					int temp=Integer.parseInt(jObject.getString("mstatus"));
-    					if (temp==4 || temp>=9)
+    					//temp为联单状态
+    					if (temp==11)
     					{
+    						//添加该RFID对应废物重量或个数信息
     						String res=rfid;
     						if (addway.equals("0"))
     							res+=" "+total+"公斤";
