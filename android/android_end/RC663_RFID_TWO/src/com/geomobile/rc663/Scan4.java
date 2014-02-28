@@ -233,6 +233,7 @@ public class Scan4 extends ScanActivity implements OnClickListener {
     			 addway=jObject.getString("addway");
     			 total=jObject.getString("total");
     			 status=jObject.getString("status");
+    			 //status为rfid_status
     			if (status.equals("1"))
     				{
     				
@@ -241,6 +242,7 @@ public class Scan4 extends ScanActivity implements OnClickListener {
     				else
     				{
     					int temp=Integer.parseInt(jObject.getString("mstatus"));
+    					//temp为联单status
     					if (temp==11)
     					{
     						String res=rfid;

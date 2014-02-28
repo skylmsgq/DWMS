@@ -43,15 +43,15 @@
                 <tr>
                     <td>类别编号</td>
                     <td>
-                        <select type="text" id="waste_category_code" name="waste_category_code" class="form-control input-sm" placeholder="{$waste.waste_category_code}" value="{$waste.waste_category_code}" onchange="change_waste_category(this.options[this.options.selectedIndex].value)">
-                        <option value="{$waste.waste_category_code}">{$waste.waste_category_code}</option>
+                        <select type="text" id="waste_category_code" name="waste_category_code" class="form-control input-sm" placeholder="{$waste.waste_category_code}" value="{$waste.waste_category_code}" onchange="change_waste_category(this.options[this.options.selectedIndex].id)">
+                        <option value="{$waste.waste_category_code}" id="{$waste.waste_category_id}">{$waste.waste_category_code}</option>
                         </select>  
                     </td>
                     <td>废物类别</td>
-                    <td>
-                        <select type="text" id="waste_category" name="waste_category" class="form-control input-sm" placeholder="{$waste.waste_category}" value="{$waste.waste_category}">
+                    <td id="waste_category">{$waste.waste_category}
+<!--                         <select type="text" id="waste_category" name="waste_category" class="form-control input-sm" placeholder="{$waste.waste_category}" value="{$waste.waste_category}">
                         <option value="{$waste.waste_category}">请选择废物类别</option>
-                        </select>                           
+                        </select>  -->                          
                     </td>
                 </tr>
                 <tr>
@@ -74,32 +74,36 @@
     <button class="btn btn-info btn-lg" onclick="$('#myModal').modal('hide');">关闭页面</button>
 </center>
 <script type="text/javascript">
-    $('#waste_category_code').html('<option value="{$waste.waste_category_code}">{$waste.waste_category_code}</option>');
     for (var idx in waste_category_json) {
-    $('#waste_category_code').append('<option value="' + waste_category_json[idx].waste_category_code + '">' + waste_category_json[idx].waste_category_code + '</option>');
-                } 
+    $('#waste_category_code').append('<option value="' + waste_category_json[idx].waste_category_code + '" id="' +waste_category_json[idx].waste_category_id + '">' + waste_category_json[idx].waste_category_code + '</option>');
+    } 
 
-function change_waste_category(waste_category_code){
-    $.ajax({
-            type: "post",
-            url: "{:U('Home/DistrictSystem/change_waste_category')}",
-            dataType: "json",
-            data:{
-                'code': waste_category_code
-            },
-            success: function(waste_category) {
-                $('#waste_category').html('<option value="{$waste.waste_category}">请选择废物类别</option>');
-                for (var idx in waste_category) {
-                $('#waste_category').append('<option value="' + waste_category[idx].waste_category + '">' + waste_category[idx].waste_category + '</option>');
-                }
-            },
-            error: function(XMLHttpRequest, textStatus, errorThrown) {
-                console.log("Error:Ajax_Content_Load" + errorThrown);
-                console.log("XMLHttpRequest.status:" + XMLHttpRequest.status);
-                console.log("XMLHttpRequest.readyState:" + XMLHttpRequest.readyState);
-                console.log("textStatus:" + textStatus);
-            }
-         });
+var waste_category = "";
+
+function change_waste_category(waste_category_id){
+    $('#waste_category').html(waste_category_json[waste_category_id-1].waste_category);
+    waste_category = waste_category_json[waste_category_id-1].waste_category;
+    // $.ajax({
+    //         type: "post",
+    //         url: "{:U('Home/DistrictSystem/change_waste_category')}",
+    //         dataType: "json",
+    //         data:{
+    //             'code': waste_category_code
+    //         },
+    //         success: function(waste_category) {
+    //             $('#waste_category').html('<option value="{$waste.waste_category}">请选择废物类别</option>');
+    //             for (var idx in waste_category) {
+    //             $('#waste_category').append('<option value="' + waste_category[idx].waste_category + '">' + waste_category[idx].waste_category + '</option>');
+    //             }
+    //         },
+    //         error: function(XMLHttpRequest, textStatus, errorThrown) {
+    //             console.log("Error:Ajax_Content_Load" + errorThrown);
+    //             console.log("XMLHttpRequest.status:" + XMLHttpRequest.status);
+    //             console.log("XMLHttpRequest.readyState:" + XMLHttpRequest.readyState);
+    //             console.log("textStatus:" + textStatus);
+    //         }
+    //      });
+
 }
 
 function ajaxAction() {
@@ -111,7 +115,7 @@ function ajaxAction() {
         type: "post",
         url: "waste_code_modified?waste_id=" + waste_id_json,
         timeout: 2000,
-        data: form_serialize,
+        data: form_serialize + '&waste_category=' + waste_category,
         success: function(data) {
             $('#myModal').modal('hide');
             $('#myModal').on('hidden.bs.modal', function(e) {

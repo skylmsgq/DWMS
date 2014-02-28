@@ -13,14 +13,20 @@ class ProductionRecordAction extends CommonAction{
 	public function transfer_record_request() {
 		$reception_unit = M( 'reception_unit' )->select();
 		$transport_unit = M( 'transport_unit' )->select();
+		$waste = M( 'waste' )->order( 'waste_code DESC' )->select();
+		$waste_code_json = json_encode( $waste );
 
-		$unit = M( 'production_unit' )->where( array( 'production_unit_id' => session( 'production_unit_id' ) ) )->find();
+		$unit = M( 'production_unit' )->where( array('production_unit_id' => session( 'production_unit_id' ) ) )->find();
 		
 		$reception_unit_json = json_encode($reception_unit);
 		$transport_unit_json = json_encode($transport_unit);
 		$this->unit = $unit;
+
+		$rfid = M( 'rfid' )->where(array( 'rfid_status' => 3, 'transfer_status' => 0,'production_unit_id'=>session('production_unit_id')))->select();
+		$rfid_json = json_encode($rfid);
+
 		$tmp_content=$this->fetch( './Public/html/Content/Production/record/transfer_record_request.html' );
-		$tmp_content="<script>reception_unit=$reception_unit_json;transport_unit=$transport_unit_json;</script> $tmp_content";
+		$tmp_content="<script>waste = $waste_code_json;rfid = $rfid_json;reception_unit=$reception_unit_json;transport_unit=$transport_unit_json;</script> $tmp_content";
 		$this->ajaxReturn( $tmp_content );
 	}
 
@@ -31,6 +37,10 @@ class ProductionRecordAction extends CommonAction{
 		$time = date( 'Y-m-d H:i:s', time() );
 		$record->record_add_time = $time;
 		$record->record_modify_time = $time;
+
+		$record->rfid_table_id = I( 'post.rfid_table_id' );
+		$record->predict_output_quantity = I( 'post.predict_output_quantity' );
+		$record->predict_output_weight = I( 'post.predict_output_weight' );
 
 		$record->production_unit_id = session( 'production_unit_id' );
 		$record->record_code = session( 'production_unit_id' ) . '-' . date( 'Y-m' ) . '-' . ( M( 'record' )->max( 'record_id' )+1 );

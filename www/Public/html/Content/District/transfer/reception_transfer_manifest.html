@@ -13,7 +13,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="myModalLabel">审核联单</h4>
+                <h4 class="modal-title" id="myModalLabel">危废联单管理</h4>
             </div>
             <div class="modal-body" id="model-content">
             </div>
@@ -32,40 +32,48 @@ function setTable() {
         var itemData = new Array();
         itemData[0] = "" + manifest_json[idx].manifest_num;
         itemData[1] = "" + manifest_json[idx].manifest_add_time;
-        itemData[2] = "" + manifest_json[idx].reception_unit_name;
-        switch (manifest_json[idx].manifest_status) {
-            case '0':
-                itemData[3] = "<span class='label label-primary'>产生单位已保存未提交</span>";
-                break;
+        itemData[2] = "" + manifest_json[idx].reception_unit_name;        switch (manifest_json[idx].manifest_status) {
             case '1':
-                itemData[3] = "<span class='label label-warning'>生产单位已提交运输单位未填写</span>";
+                itemData[3] = "<span class='label label-primary'>生产单位已提交运输单位未提交</span>";
                 break;
             case '2':
-                itemData[3] = "<span class='label label-success'>运输单位已填写未审核</span>";
+                itemData[3] = "<span class='label label-primary'>生产单位已提交运输单位未提交</span>";
                 break;
             case '3':
-                itemData[3] = "<span class='label label-danger'>已审核处置单位未确认</span>";
+                itemData[3] = "<span class='label label-danger'>生产单位运输单位已提交未审核</span>";
                 break;
             case '4':
-                itemData[3] = "<span class='label label-primary'>未通过生产单位待修改</span>";
+                itemData[3] = "<span class='label label-primary'>接受单位未提交</span>";
                 break;
             case '5':
-                itemData[3] = "<span class='label label-primary'>生产单位已修改待审核</span>";
+                itemData[3] = "<span class='label label-info'>未通过退回运输单位</span>";
                 break;
             case '6':
-                itemData[3] = "<span class='label label-primary'>处置单位已确认未审核</span>";
+                itemData[3] = "<span class='label label-info'>未通过退回运输单位</span>";
                 break;
             case '7':
-                itemData[3] = "<span class='label label-primary'>已审核已通过</span>";
+                itemData[3] = "<span class='label label-info'>未通过退回生产单位</span>";
                 break;
             case '8':
-                itemData[3] = "<span class='label label-primary'>未通过处置单位待修改</span>";
+                itemData[3] = "<span class='label label-info'>未通过退回生产单位</span>";
                 break;  
             case '9':
-                itemData[3] = "<span class='label label-primary'>处置单位已修改待审核</span>";
+                itemData[3] = "<span class='label label-primary'>接受单位未提交</span>";
+                break;  
+            case '10':
+                itemData[3] = "<span class='label label-danger'>接受单位已提交未审核</span>";
+                break;
+            case '11':
+                itemData[3] = "<span class='label label-success'>已通过</span>";
+                break;
+            case '12':
+                itemData[3] = "<span class='label label-info'>未通过退回接受单位</span>";
+                break;  
+            case '13':
+                itemData[3] = "<span class='label label-info'>未通过退回接受单位</span>";
                 break;  
             default:
-                itemData[3] = "<span class='label label-danger'>备案状态错误</span>";
+                itemData[3] = "<span class='label label-danger'>联单状态错误</span>";
                 break;
         }
 

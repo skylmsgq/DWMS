@@ -25,13 +25,14 @@ class ProductionWarehouseAction extends CommonAction{
 	}
 
 	// 危废库存->危废入库管理->详情
-	public function storage_input_management_page($record_id="") {
+	public function storage_input_management_page($record_id="",$waste_code="") {
 		$production_unit = "production_unit_".session( 'production_unit_id' );
 		$waste = M( $production_unit )->where( array( 'rfid_id' => $record_id ) )->select();
 		$rfid_json = json_encode( $waste );
-		//$this->waste_data=$rfid_json;
+		$waste_code_json = json_encode($waste_code);
+
 		$tmp_content=$this->fetch( './Public/html/Content/Production/warehouse/storage_input_management_page.html' );
-		$tmp_content="<script> waste_data=$rfid_json; </script> $tmp_content";
+		$tmp_content="<script> waste_data=$rfid_json;waste_code = $waste_code_json; </script> $tmp_content";
 		$this->ajaxReturn( $tmp_content );
 	}
 

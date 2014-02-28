@@ -41,7 +41,7 @@ class DistrictTransferAction extends CommonAction{
 	public function production_transfer_manifest(){
 		$manifest = M( 'manifest' );
 		$condition['jurisdiction_id'] = array('EQ', session( 'jurisdiction_id' ) );
-		$condition['_string'] = 'manifest_status=1 or manifest_status=4 or manifest_status=5';
+		$condition['_string'] = 'manifest_status>0';
 		$production_transfer_manifest = $manifest->join( 'production_unit ON manifest.production_unit_id = production_unit.production_unit_id' )->where( $condition )->select();
 		$production_transfer_manifest_json = json_encode( $production_transfer_manifest );
 
@@ -77,7 +77,7 @@ class DistrictTransferAction extends CommonAction{
 
 		$manifest = M( 'manifest' );
 		$condition['jurisdiction_id'] = array('EQ', session( 'jurisdiction_id' ) );
-		$condition['_string'] = 'manifest_status=2';
+		$condition['_string'] = 'manifest_status>2';
 		$transport_transfer_manifest = $manifest->join( 'transport_unit ON manifest.transport_unit_id = transport_unit.transport_unit_id' )->where( $condition )->select();
 		$transport_transfer_manifest_json = json_encode( $transport_transfer_manifest );
 
@@ -114,7 +114,7 @@ class DistrictTransferAction extends CommonAction{
 		// $reception_transfer_manifest_json = json_encode( $reception_transfer_manifest );
 		$manifest = M( 'manifest' );
 		$condition['jurisdiction_id'] = array('EQ', session( 'jurisdiction_id' ) );
-		$condition['_string'] = 'manifest_status=3 or manifest_status=6 manifest_status=7 manifest_status=8 manifest_status=9';
+		$condition['_string'] = 'manifest_status>9';
 		$reception_transfer_manifest = $manifest->join( 'reception_unit ON manifest.reception_unit_id = reception_unit.reception_unit_id' )->where( $condition )->select();
 		$reception_transfer_manifest_json = json_encode( $reception_transfer_manifest );
 

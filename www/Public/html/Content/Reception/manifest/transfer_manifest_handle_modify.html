@@ -66,19 +66,19 @@
                 <tr>
                     <td>产生单位</td>
                     <td>
-                        {$manifest.production_unit_name}
+                        {$p_name}
                     </td>
                     <td>运输单位</td>
                     <td>
-                        {$manifest.transport_unit_name}
+                        {$t_name}
                     </td>
                 </tr>                 
                 <tr>
-                    <td>危废编号</td>
+                    <td>危废数量（袋/个）</td>
                     <td>
-                        {$manifest.waste_id}
+                        {$manifest.waste_num}
                     </td>
-                    <td>危废重量</td>
+                    <td>危废重量（桶/公斤）</td>
                     <td>
                         {$manifest.waste_weight}
                     </td>
@@ -205,21 +205,21 @@
                 <tr>
                     <td>接受单位经营许可证号</td>
                     <td>
-                        <input type="text" name="reception_unit_license_num" class="form-control input-sm" placeholder="{$manifest.reception_unit_license_num}" value="{$manifest.reception_unit_license_num}">  
+                        <input type="text" name="reception_unit_license_num" class="form-control input-sm required-cn" placeholder="{$manifest.reception_unit_license_num}" value="{$manifest.reception_unit_license_num}">  
                     </td>
                     <td>接收人姓名</td>
                     <td>
-                        <input type="text" name="receiver_name" class="form-control input-sm" placeholder="{$manifest.receiver_name}" value="{$manifest.receiver_name}">  
+                        <input type="text" name="receiver_name" class="form-control input-sm required-cn" placeholder="{$manifest.receiver_name}" value="{$manifest.receiver_name}">  
                     </td>
                 </tr>
                 <tr>
                     <td>接收人工号</td>
                     <td>
-                        <input type="text" name="receiver_num" class="form-control input-sm" placeholder="{$manifest.receiver_num}" value="{$manifest.receiver_num}">  
+                        <input type="text" name="receiver_num" class="form-control input-sm required-cn" placeholder="{$manifest.receiver_num}" value="{$manifest.receiver_num}">  
                     </td>
                     <td>接收日期</td>
                     <td>
-                        <input type="text" name="receive_date" class="form-control input-sm" placeholder="{$manifest.receive_date}" value="{$manifest.receive_date}">  
+                        <input type="text" name="receive_date" class="form-control input-sm required-cn" placeholder="{$manifest.receive_date}" value="{$manifest.receive_date}">  
                     </td>
                 </tr>
                 <tr>
@@ -235,7 +235,7 @@
                 <tr>
                     <td>接受单位负责人审核日期</td>
                     <td>
-                        <input type="text" name="reception_unit_audit_date" class="form-control input-sm" placeholder="{$manifest.reception_unit_audit_date}" value="{$manifest.reception_unit_audit_date}">  
+                        <input type="text" name="reception_unit_audit_date" class="form-control input-sm required-cn" placeholder="{$manifest.reception_unit_audit_date}" value="{$manifest.reception_unit_audit_date}">  
                     </td>
                     <td></td>
                     <td>
@@ -251,8 +251,16 @@
     <button class="btn btn-warning btn-lg" onclick="ajaxAction()">修改联单</button>
     <button class="btn btn-info btn-lg" onclick="$('#myModal').modal('hide');">关闭页面</button>
 </center>
+<script type="text/javascript" src="__PUBLIC__/js/jquery-validate.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/jquery-myvalidate.js"></script>
+<script>
+$("#manifest_modify").validate();
+</script>
 <script type="text/javascript">
 function ajaxAction() {
+    if(!$('#manifest_modify').valid()){
+        return;
+    }
     var form_serialize = "" + $('#manifest_modify').serialize();
 
     $("#model-content").html('<center style="margin:50px"><h4>提交中...</h4><div class="progress progress-striped active" style="width: 50%"><div class="progress-bar"  role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div></div></center>');

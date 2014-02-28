@@ -35,21 +35,21 @@ function setTable() {
         itemData[0] = "" + record_json[idx].jurisdiction_code;
         itemData[1] = "" + record_json[idx].jurisdiction_name;
         itemData[2] = "" + record_json[idx].county_id;
-        itemData[3] = "" + itemDelete + itemModify;
+        // itemData[3] = "" + itemDelete + itemModify;
         tableData.push(itemData);
     }
  
     $('#table-container').dataTable({
         "aaData": tableData,
         "aoColumns": [{
-            "sTitle": "管辖权限代码"
+            "sTitle": "管辖权限编号"
         }, {
             "sTitle": "管辖单位名称"
         }, {
             "sTitle": "管辖区县代码"
-        }, {
+        }/*, {
             "sTitle": "操作"
-        }],
+        }*/],
         "bPaginate": true, 
         "bLengthChange": true, 
         "bFilter": true, 

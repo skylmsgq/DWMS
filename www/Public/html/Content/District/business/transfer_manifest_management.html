@@ -27,7 +27,20 @@
 
 <script type="text/javascript">
 var c = new Array();
-var manifest_json = c.concat(production_manifest_json,reception_manifest_json);
+if(production_manifest_json == null){
+    if(reception_manifest_json == null){
+        var manifest_json = "";
+    }else{
+        var manifest_json = reception_manifest_json;
+    }
+}else{
+    if(reception_manifest_json == null){
+        var manifest_json = production_manifest_json;
+    }else{
+        var manifest_json = c.concat(production_manifest_json,reception_manifest_json);
+    }
+}
+
 function setTable() {
     var tableData = new Array();
     for (var idx in manifest_json) {
@@ -51,7 +64,7 @@ function setTable() {
                 break;
         }
 
-        itemData[4] = '<a href="#" onclick="fetch_model_page(\'./transfer_manifest_management_page?manifest_id=' + manifest_json[idx].manifest_id + '\')"><span class="label label-info"><span class="glyphicon glyphicon-wrench"></span> 操作</span><a>';
+        itemData[4] = '<a href="#" onclick="fetch_model_page(\'./transfer_manifest_management_page?manifest_id=' + manifest_json[idx].manifest_id + '\')"><span class="label label-success"><span class="glyphicon glyphicon-wrench"></span> 操作</span><a>';
         
         tableData.push(itemData);
     }

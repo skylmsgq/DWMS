@@ -86,10 +86,6 @@
                         </td>
                     </tr>
                     <tr>
-                        <td>危废代码</td>
-                        <td>
-                            <input type="text" name="waste_code" class="form-control input-sm" placeholder="{$record.waste_code}" value="{$record.waste_code}">
-                        </td>
                         <td>相关产品</td>
                         <td>
                             <input type="text" name="relational_production" class="form-control input-sm" placeholder="{$record.relational_production}" value="{$record.relational_production}">
@@ -112,17 +108,24 @@
                         </td>
                         <td>废物形态</td>
                         <td>
-                            <input type="text" name="waste_form" class="form-control input-sm" placeholder="{$record.waste_form}" value="{$record.waste_form}">
+                            <select type="text" name="waste_form" class="form-control input-sm" placeholder="{$record.waste_form}" value="{$record.waste_form}">
+                            <option>请选择废物形态</option>
+                            <option>半固态</option>
+                            <option>固态</option>
+                            <option>液态</option>
+                            <option>气态</option>
+                            <option>其他</option>
+                            </select>  
                         </td>
                     </tr>
                     <tr>
                         <td>预计危废重量（吨）</td>
                         <td>
-                            <input type="text" name="predict_output_weight" class="form-control input-sm" placeholder="{$record.predict_output_weight}" value="{$record.predict_output_weight}">
+                            {$record.predict_output_weight}
                         </td>
                         <td>预计危废数量（桶）</td>
                         <td>
-                            <input type="text" name="predict_output_quantity" class="form-control input-sm" placeholder="{$record.predict_output_quantity}" value="{$record.predict_output_quantity}">
+                            {$record.predict_output_quantity}
                         </td>
                     </tr>
                 </table>
@@ -142,13 +145,13 @@
                         </td>
                         <td>贮存面积（平方米）</td>
                         <td>
-                            <input type="text" name="storage_area" class="form-control input-sm" placeholder="{$record.storage_area}" value="{$record.storage_area}">
+                            <input type="text" name="storage_area" class="form-control input-sm number-cn" placeholder="{$record.storage_area}" value="{$record.storage_area}">
                         </td>
                     </tr>
                     <tr>
                         <td>危废容积（立方米）</td>
                         <td>
-                            <input type="text" name="waste_volume" class="form-control input-sm" placeholder="{$record.waste_volume}" value="{$record.waste_volume}">
+                            <input type="text" name="waste_volume" class="form-control input-sm number-cn" placeholder="{$record.waste_volume}" value="{$record.waste_volume}">
                         </td>
                         <td>贮存用途</td>
                         <td>
@@ -255,9 +258,11 @@
     <button class="btn btn-warning btn-lg" onclick="ajaxAction()">修改备案</button>
     <button class="btn btn-info btn-lg" onclick="$('#myModal').modal('hide');">关闭页面</button>
 </center>
-
+<script type="text/javascript" src="__PUBLIC__/js/jquery-validate.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/jquery-myvalidate.js"></script>
 <script type="text/javascript">
-console.log(reception_unit_list);
+$('#record_modify').validate();
+// console.log(reception_unit_list);
 // $('#transport_unit_id').html('<option>haha</option>');
 for (var idx in transport_unit_list) {
 $('#transport_unit_id').append('<option value="' + transport_unit_list[idx].transport_unit_id + '">' + transport_unit_list[idx].transport_unit_name + '</option>');
@@ -289,6 +294,12 @@ function reception_select(reception_unit_id){
 }
 
 function ajaxAction() {
+    if(!$('#record_request').valid()){
+        return;}
+    if(!$('#record_request_1').valid()){
+        return;
+        }
+
     var form_serialize = "" + $('#record_modify').serialize();
     console.log(form_serialize);
     $("#model-content").html('<center style="margin:50px"><h4>提交中...</h4><div class="progress progress-striped active" style="width: 50%"><div class="progress-bar"  role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div></div></center>');
