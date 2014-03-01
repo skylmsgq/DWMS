@@ -321,7 +321,8 @@ $("#record_request").validate();
 var rfid_table_id = "";
 var weight = 0;
 var num = 0; 
-
+var t_length=transport_unit.length;
+var r_length=reception_unit.length;
 $('#waste_code').html('<option>请选择主要危废代码</option>')
 for (var idx in waste) {
     $('#waste_code').append('<option value="' + waste[idx].waste_code + '">'+ waste[idx].waste_code + '</option>');
@@ -345,26 +346,39 @@ for (var idx in transport_unit) {
     }
 
 // $('#reception_unit_id').html('<option>请选择接受单位</option>');
-for (var idx in transport_unit) {
+for (var idx in reception_unit) {
 $('#reception_unit_id').append('<option value="' + reception_unit[idx].reception_unit_id + '">' + reception_unit[idx].reception_unit_name + '</option>');
     }   
 function transport_select(transport_unit_id){
-    // console.log(transport_unit_id);
-    $('#transport_unit_county').html(transport_unit[transport_unit_id-1].transport_unit_county);
-    $('#transport_unit_address').html(transport_unit[transport_unit_id-1].transport_unit_address);
-    $('#transport_unit_postcode').html(transport_unit[transport_unit_id-1].transport_unit_postcode);
-    $('#transport_unit_contacts_name').html(transport_unit[transport_unit_id-1].transport_unit_contacts_name);
-    $('#transport_unit_contacts_phone').html(transport_unit[transport_unit_id-1].transport_unit_contacts_phone);
+    console.log(transport_unit_id);
+    var index=transport_unit_id;
+    for (var i=0;i<t_length;i++)
+    {
+        if (transport_unit[i].transport_unit_id==transport_unit_id)
+            {index=i;break;}
+    }
+
+    $('#transport_unit_county').html(transport_unit[index].transport_unit_county);
+    $('#transport_unit_address').html(transport_unit[index].transport_unit_address);
+    $('#transport_unit_postcode').html(transport_unit[index].transport_unit_postcode);
+    $('#transport_unit_contacts_name').html(transport_unit[index].transport_unit_contacts_name);
+    $('#transport_unit_contacts_phone').html(transport_unit[index].transport_unit_contacts_phone);
     
 }
 
 function reception_select(reception_unit_id){
     // console.log(reception_unit_id);
-    $('#reception_unit_county').html(reception_unit[reception_unit_id-1].reception_unit_county);
-    $('#reception_unit_address').html(reception_unit[reception_unit_id-1].reception_unit_address);
-    $('#reception_unit_postcode').html(reception_unit[reception_unit_id-1].reception_unit_postcode);
-    $('#reception_unit_contacts_name').html(reception_unit[reception_unit_id-1].reception_unit_contacts_name);
-    $('#reception_unit_contacts_phone').html(reception_unit[reception_unit_id-1].reception_unit_contacts_phone);
+    var index=reception_unit_id;
+    for (var i=0;i<r_length;i++)
+    {
+        if (reception_unit[i].reception_unit_id==reception_unit_id)
+            {index=i;break;}
+    }
+    $('#reception_unit_county').html(reception_unit[index].reception_unit_county);
+    $('#reception_unit_address').html(reception_unit[index].reception_unit_address);
+    $('#reception_unit_postcode').html(reception_unit[index].reception_unit_postcode);
+    $('#reception_unit_contacts_name').html(reception_unit[index].reception_unit_contacts_name);
+    $('#reception_unit_contacts_phone').html(reception_unit[index].reception_unit_contacts_phone);
     
 }
 
