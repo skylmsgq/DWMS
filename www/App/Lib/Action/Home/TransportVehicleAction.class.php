@@ -2,7 +2,7 @@
 /**
  *
  */
-class TransportVehicleAction extends CommonAction{
+class TransportVehicleAction extends TransportCommonAction{
 	// -------- 运输车辆->侧边栏 --------
 	public function vehicle_sidebar() {
 		layout( './Common/frame' );
@@ -66,7 +66,7 @@ class TransportVehicleAction extends CommonAction{
 		$vehicle = M( 'vehicle' ); // 实例化waste对象
 		$data['vehicle_status'] = 2;
 		$vehicle->where( array('vehicle_id' => $vehicle_id ) )->save( $data ); // 删除waste_id=id的用户数据
-		
+
 		if ($vehicle) {
 			$this->ajaxReturn( "删除成功" );
 		} else {
@@ -148,8 +148,8 @@ class TransportVehicleAction extends CommonAction{
 		$time = date( 'Y-m-d H:i:s', time() );
 		$data['vehicle_modify_time'] = $time;
 		$data['vehicle_status'] = 1;
-		
-		
+
+
 		$vehicle->where( array( 'vehicle_id' => I('post.vehicle_id') ) )->save($data);
 	}
 }

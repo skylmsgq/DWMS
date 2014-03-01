@@ -2,7 +2,7 @@
 /**
  *
  */
-class DistrictTransferAction extends CommonAction{
+class DistrictTransferAction extends DistrictCommonAction{
 	// -------- 危废转移->侧边栏 --------
 	public function transfer_sidebar(){
 		layout( './Common/frame' );
@@ -131,14 +131,14 @@ class DistrictTransferAction extends CommonAction{
 		$manifest = M( 'manifest' )->where( array( 'manifest_id' =>$manifest_id ) )->find();
 		$reception_unit = M( 'reception_unit' )->where( array( 'reception_unit_id' => $manifest['reception_unit_id'] ) )->find();
 		$this->manifest = $manifest;
-		$this->unit = $reception_unit;	
+		$this->unit = $reception_unit;
 		$transport_unit = M( 'transport_unit' )->where( array( 'transport_unit_id' => $manifest['transport_unit_id'] ) )->find();
 		$production_unit = M( 'production_unit' )->where( array( 'production_unit_id' => $manifest['production_unit_id'] ) )->find();
 		$this->pname = $production_unit['production_unit_name'];
 		$this->pcode=$production_unit['production_unit_code'];
 		$this->tname = $transport_unit['transport_unit_name'];
 		$this->tcode=$transport_unit['transport_unit_code'];
-		
+
 		// $manifest_id_json = json_encode( $manifest_id );
 		// $manifest_status_json = json_encode( $manifest['manifest_status'] );
 

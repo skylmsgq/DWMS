@@ -2,7 +2,7 @@
 /**
  *
  */
-class DistrictBusinessAction extends CommonAction{
+class DistrictBusinessAction extends DistrictCommonAction{
 	// -------- 业务办理->侧边栏 --------
 	public function business_sidebar() {
 		layout( './Common/frame' );
@@ -49,7 +49,7 @@ class DistrictBusinessAction extends CommonAction{
 			'record_status' => $record_status,
 		);
 		$reception_unit_id=M('record')->where("record_id='$record_id'")->getField('reception_unit_id');
-		$rfid_table=M('record')->where("record_id='$record_id'")->getField('rfid_table_id');		
+		$rfid_table=M('record')->where("record_id='$record_id'")->getField('rfid_table_id');
 		$rfid_list=explode(",",$rfid_table);
 		foreach ($rfid_list as  $value) {
 			# code...
@@ -62,7 +62,7 @@ class DistrictBusinessAction extends CommonAction{
 				{
 				$data['transfer_status']=1;
 				$data['record_id']=$record_id;
-				$data['reception_unit_id']=$reception_unit_id;	
+				$data['reception_unit_id']=$reception_unit_id;
 				$resultrfid=$rfid->where("rfid_id='$value' ")->save($data);
 				if (!$resultrfid)
 					$this->ajaxReturn( 0, '修改数据库失败！', 0 );
@@ -93,9 +93,9 @@ class DistrictBusinessAction extends CommonAction{
 		$tmp_content=$this->fetch( './Public/html/Content/District/business/transfer_manifest_management.html' );
 		$tmp_content = "<script>production_manifest_json = $production_manifest_json;reception_manifest_json = $reception_manifest_json </script> $tmp_content";
 		$this->ajaxReturn( $tmp_content );
-		
+
 	}
-		
+
 	// 业务办理->待办业务->转移联单管理：详细信息页
 	public function transfer_manifest_management_page($manifest_id="") {
 		$manifest = M( 'manifest' )->where( array( 'manifest_id' =>$manifest_id ) )->find();
@@ -154,7 +154,7 @@ class DistrictBusinessAction extends CommonAction{
 		$manifest_status = I( 'post.manifest_status' );
 		if ($manifest_status==11)
 		{
-		$rfid_table=M('manifest')->where("manifest_id='$manifest_id'")->getField('rfid_table_id');		
+		$rfid_table=M('manifest')->where("manifest_id='$manifest_id'")->getField('rfid_table_id');
 		$rfid_list=explode(",",$rfid_table);
 		foreach ($rfid_list as  $value) {
 			# code...
@@ -165,7 +165,7 @@ class DistrictBusinessAction extends CommonAction{
 
 				if (!$old_rfidstatus)
 				{
-				$data['manifest_id']=$manifest_id;	
+				$data['manifest_id']=$manifest_id;
 				$resultrfid=$rfid->where("rfid_id='$value' ")->save($data);
 				if (!$resultrfid)
 					$this->ajaxReturn( 0, '修改数据库失败！', 0 );
@@ -269,7 +269,7 @@ class DistrictBusinessAction extends CommonAction{
 					else
 					{
 						$ans=json_encode("成功");
-						$this->ajaxReturn( $ans ,'JSON');				
+						$this->ajaxReturn( $ans ,'JSON');
 					}
 					$mx=M($prefix)->where("user_id='$userid'")->getField($prefix.'_id');
 					$tablename=$prefix."_".$mx;
@@ -288,23 +288,23 @@ class DistrictBusinessAction extends CommonAction{
 					)';
 					$model=new Model();
 					$model->execute($sql);
-					$num=M('information_schema.tables')->where("table_schema = 'dwms' 
+					$num=M('information_schema.tables')->where("table_schema = 'dwms'
 							AND table_name = '$tablename'")->count();
 					if ($num>0)
 					{
 						$ans=json_encode("成功");
-						$this->ajaxReturn( $ans ,'JSON');	
+						$this->ajaxReturn( $ans ,'JSON');
 					}
 					else
 					{
 						$ans=json_encode("创建数据库出现错误");
-						$this->ajaxReturn( $ans ,'JSON');	
-					}		
+						$this->ajaxReturn( $ans ,'JSON');
+					}
 				}
 				else
 				{
 					$ans=json_encode("未知错误");
-					$this->ajaxReturn( $ans ,'JSON');			
+					$this->ajaxReturn( $ans ,'JSON');
 				}
 			//	$this->show( "verify_ok".I( 'post.user_id' ) );
 			}
@@ -312,7 +312,7 @@ class DistrictBusinessAction extends CommonAction{
 		else {
 			$this->error( "action_error" );
 		}
-		
+
 	}
 
 	// 业务办理->待办业务->企业信息管理
@@ -376,7 +376,7 @@ class DistrictBusinessAction extends CommonAction{
 		$result->tong_num=$tong_num;
 		$result->dai_num=$dai_num;
 		$result=json_encode($result);
-		$this->ajaxReturn( $result);	
+		$this->ajaxReturn( $result);
 	}
 
 }
