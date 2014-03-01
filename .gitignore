@@ -1,0 +1,22 @@
+
+/logs/
+/www/App/Runtime/
+/android/android_end/RC663_RFID_b_old
+
+# Built application files
+*.apk
+*.ap_
+
+# Files for the Dalvik VM
+*.dex
+
+# Java class files
+*.class
+
+# Generated files
+/android/android_end/RC663_RFID_ONE_TEST/bin/
+/android/android_end/RC663_RFID_THREE/bin/
+/android/android_end/RC663_RFID_TWO/bin/
+/android/android_end/RC663_RFID_ONE_TEST/gen/
+/android/android_end/RC663_RFID_THREE/gen/
+/android/android_end/RC663_RFID_TWO/gen/
