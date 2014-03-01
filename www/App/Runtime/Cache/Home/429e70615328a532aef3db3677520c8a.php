@@ -1,1 +1,0 @@
-<?php if (!defined('THINK_PATH')) exit();?><h1>危废产生单位->RFID手持端->RFID手持端绑定</h1>
