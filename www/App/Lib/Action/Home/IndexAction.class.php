@@ -71,7 +71,7 @@ class IndexAction extends Action{
 		case 6:
 			// $unit = M('transport_unit')->where( array( 'user_id' => session( 'user_id' ) ) )->find();
 			// session('transport_unit_id', $unit['transport_unit_id']);
-			
+
 			$this->redirect( 'Home/LoginTransport/homepage' );
 			break;
 		case 7:
@@ -91,7 +91,7 @@ class IndexAction extends Action{
 		import( 'ORG.Util.Image' );
 		//调用验证码生成函数，第一个参数表示验证码位数，第二个参数表示类型
 		//第二个参数=5时为大小写+数字的混合模式，严格区分大小写
-		Image::buildImageVerify( 1, 1, 'png' );
+		Image::buildImageVerify( 4, 1, 'png' );
 	}
 
 	public function register() {
