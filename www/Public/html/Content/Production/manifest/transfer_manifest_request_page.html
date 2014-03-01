@@ -116,7 +116,7 @@
                     </td>
                     <td>危废转移时间</td>
                     <td>
-                        <input type="date" name="waste_transport_time" class="form-control input-sm required-cn" placeholder="危废转移时间">
+                        {$record.record_date}
                     </td>
                 </tr>
             </table>
@@ -129,6 +129,7 @@
 <center>
     <button class="btn btn-info btn-lg" id="button_save" data-loading-text="正在保存..." data-complete-text="保存成功！" onclick="ajaxAction(0)">保存</button>
     <button class="btn btn-warning btn-lg" id="button_submit" data-loading-text="正在提交..." data-complete-text="提交成功！" onclick="ajaxAction(1)">提交</button>
+    <button class="btn btn-primary btn-lg" onclick="$('#myModal').modal('hide');">关闭页面</button>
 </center>
 <script type="text/javascript" src="__PUBLIC__/js/jquery-validate.min.js"></script>
 <script type="text/javascript" src="__PUBLIC__/js/jquery-myvalidate.js"></script>
@@ -166,7 +167,7 @@ function ajaxAction(actionID,transport_unit_name) {
         url: "transfer_manifest_request_form?record_id=" + record_json.record_id,
         timeout: 2000,
         // data: $('#manifest_request').serialize() + '&manifest_status=' + actionID +'&reception_unit_name=' + + '&transport_unit_name=' + transport_unit_name ,
-        data: $('#manifest_request').serialize() + '&manifest_status=' + actionID  + '&transport_unit_id=' + record_json.transport_unit_id + '&reception_unit_id=' + record_json.reception_unit_id + '&waste_weight=' + record_json.predict_output_weight + '&waste_num=' + record_json.predict_output_quantity + '&rfid_table_id=' + record_json.rfid_table_id,
+        data: $('#manifest_request').serialize() + '&manifest_status=' + actionID  + '&transport_unit_id=' + record_json.transport_unit_id + '&reception_unit_id=' + record_json.reception_unit_id + '&waste_weight=' + record_json.predict_output_weight + '&waste_num=' + record_json.predict_output_quantity + '&rfid_table_id=' + record_json.rfid_table_id + '&waste_transport_time=' + record_json.record_date,
         success: function(data) {
             switch (actionID) {
                 case 0:

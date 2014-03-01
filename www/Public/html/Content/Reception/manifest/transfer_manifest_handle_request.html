@@ -205,7 +205,8 @@
                 <tr>
                     <td>接受单位经营许可证号</td>
                     <td>
-                        <input type="text" name="reception_unit_license_num" class="form-control input-sm required-cn" placeholder="接受单位经营许可证号">  
+<!--                         <input type="text" name="reception_unit_license_num" class="form-control input-sm required-cn" placeholder="接受单位经营许可证号"> -->
+                        {$reception_unit.reception_unit_license_num}  
                     </td>
                     <td>接收人姓名</td>
                     <td>
@@ -264,7 +265,7 @@ function ajaxAction() {
     if(!$('#manifest_request').valid()){
         return;
     }
-    var form_serialize = "" + $('#manifest_request').serialize();
+    var form_serialize = "" + $('#manifest_request').serialize() + "&reception_unit_license_num=" + reception_unit_license_num;
 
     $("#model-content").html('<center style="margin:50px"><h4>提交中...</h4><div class="progress progress-striped active" style="width: 50%"><div class="progress-bar"  role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div></div></center>');
 

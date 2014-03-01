@@ -48,9 +48,9 @@
                         </td>
                     </tr>
                     <tr>
-                        <td>备案日期</td>
+                        <td>转移日期</td>
                         <td>
-                            <input type="date" name="record_date" class="form-control input-sm required-cn" placeholder="备案日期">
+                            <input type="date" name="record_date" class="form-control input-sm required-cn" placeholder="转移日期">
                         </td>
                         <td>备案类型</td>
                         <td>
@@ -168,13 +168,12 @@
                 <div class="table-responsive">
                     <table type="submit" class="table table-striped table-bordered table-hover table-condensed">
                     <tr>
-                        <td><button class="btn btn-primary" data-toggle="modal" data-target="#myModal"> 请选择需要运输的危废 RFID 编号</button></td><td></td>
+                        <td><button class="btn btn-primary" data-toggle="modal" data-target="#myModal"> 请点击选择需要运输的危废</button></td><td></td>
                     </tr>
                     <tr>
                         <td>预计危废重量（公斤）</td>
                         <td  id="weight_content">
-<!--                             <input type="text" name="predict_output_weight" class="form-control input-sm" placeholder="预计危废重量（吨）">
- -->                        </td>
+                   </td>
                     </tr>
                     <tr>
                         <td>预计危废数量（个）</td>
@@ -186,6 +185,7 @@
             </div>
         </div>
     </div>
+    
 <form role="form" id="record_request_1">
     <div class="panel panel-primary">
         <div class="panel-heading">危废仓库贮存情况</div>

@@ -11,7 +11,7 @@ class ReceptionWarehouseAction extends ReceptionCommonAction{
 
 	// 危废库存->危废库存管理
 	public function storage_input_management() {
-		$rfid = M( 'rfid' )->where( array( 'reception_unit_id' => session( 'reception_unit_id' ) ) )->select();
+		$rfid = M( 'rfid' )->where( array( 'reception_unit_id' => session( 'reception_unit_id' ),'rfid_status' => 2 ) )->select();
 		$rfid_json = json_encode( $rfid );
 
 		$pdname=array();
