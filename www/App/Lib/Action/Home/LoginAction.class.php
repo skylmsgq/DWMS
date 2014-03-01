@@ -46,7 +46,31 @@ class LoginAction extends CommonAction{
 	}
 	public function show_page()
 	{
+		switch ( session('user_type') ) {
+			case 4:
+				$unit_name = M('agency')->where( array( 'user_id' => session( 'user_id' ) ) )->getField('agency_name');
+				$this->unit_name = $unit_name;
+				break;
+			case 5:
+				$unit_name = M('production_unit')->where( array( 'user_id' => session( 'user_id' ) ) )->getField('production_unit_name');
+				$this->unit_name = $unit_name;
+				break;
+			case 6:
+				$unit_name = M('transport_unit')->where( array( 'user_id' => session( 'user_id' ) ) )->getField('transport_unit_name');
+				$this->unit_name = $unit_name;
+				break;
+			case 7:
+				$unit_name = M('reception_unit')->where( array( 'user_id' => session( 'user_id' ) ) )->getField('reception_unit_name');
+				$this->unit_name = $unit_name;
+				break;
+			default :
+				error('无法读取用户信息');
+				break;
+		}
+		$this->unit_name = $unit_name;
+		// $unit_name_json = json_encode($unit_name);
 		$tmp_content=$this->fetch( './App/Tpl/Home/Common/changepwd.html' );
+		// $tmp_content="<script>unit_name = $unit_name_json;</script> $tmp_content";
 		$this->ajaxReturn( $tmp_content );
 	}
 }

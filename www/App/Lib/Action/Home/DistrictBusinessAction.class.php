@@ -189,20 +189,6 @@ class DistrictBusinessAction extends CommonAction{
 
 	// 业务办理->待办业务->企业用户管理
 	public function enterprise_user_management() {
-
-		/*$productionModel = new Model();
-		$transportModel = new Model();
-		$receptionModel = new Model();
-
-		$production_user = $productionModel->query("SELECT `user`.`user_id`, `username`, `user_type`, `production_unit_name` AS `unit_name`, `production_unit_code` AS `unit_code`, `production_unit_username` AS `unit_username`, `waste_location_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN production_unit ON user.user_id = production_unit.user_id");
-
-		$transport_user = $transportModel->query("SELECT `user`.`user_id`, `username`, `user_type`, `transport_unit_name` AS `unit_name`, `transport_unit_code` AS `unit_code`, `transport_unit_username` AS `unit_username`, `transport_unit_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN transport_unit ON user.user_id = transport_unit.user_id");
-
-		$reception_user = $receptionModel->query("SELECT `user`.`user_id`, `username`, `user_type`, `reception_unit_name` AS `unit_name`, `reception_unit_code` AS `unit_code`, `reception_unit_username` AS `unit_username`, `reception_unit_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN reception_unit ON user.user_id = reception_unit.user_id");*/
-
-		/*$userModel = new Model();
-		$all_user = $userModel->union("SELECT `user`.`user_id`, `username`, `user_type`, `production_unit_name` AS `unit_name`, `production_unit_code` AS `unit_code`, `production_unit_username` AS `unit_username`, `waste_location_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN production_unit ON user.user_id = production_unit.user_id")->union("SELECT `user`.`user_id`, `username`, `user_type`, `transport_unit_name` AS `unit_name`, `transport_unit_code` AS `unit_code`, `transport_unit_username` AS `unit_username`, `transport_unit_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN transport_unit ON user.user_id = transport_unit.user_id")->union("SELECT `user`.`user_id`, `username`, `user_type`, `reception_unit_name` AS `unit_name`, `reception_unit_code` AS `unit_code`, `reception_unit_username` AS `unit_username`, `reception_unit_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN reception_unit ON user.user_id = reception_unit.user_id")->select();*/
-
 		$userModel = new Model();
 		$all_user = $userModel->query("
 			(SELECT `user`.`user_id`, `username`, `user_type`, `production_unit_name` AS `unit_name`, `production_unit_id` AS `unit_code`, `production_unit_username` AS `unit_username`, `waste_location_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN production_unit ON user.user_id = production_unit.user_id)
@@ -223,6 +209,8 @@ class DistrictBusinessAction extends CommonAction{
 	public function enterprise_user_management_page_production($record_id="") {
 		$production_unit = M( 'production_unit' )->where( array( 'user_id' => $record_id ) )->find();
 		$this->formData = $production_unit;
+		$jurisdiction = M( 'jurisdiction' )->where( array( 'jurisdiction_id' => $production_unit['jurisdiction_id'] ) )->getField('jurisdiction_name');
+		$this->jurisdiction = $jurisdiction;
 		$tmp_content=$this->fetch( './Public/html/Content/District/business/enterprise_user_management_page_production.html' );
 		$this->ajaxReturn( $tmp_content );
 	}
@@ -231,6 +219,8 @@ class DistrictBusinessAction extends CommonAction{
 	public function enterprise_user_management_page_transport($record_id="") {
 		$transport_unit = M( 'transport_unit' )->where( array( 'user_id' => $record_id ) )->find();
 		$this->formData = $transport_unit;
+		$jurisdiction = M( 'jurisdiction' )->where( array( 'jurisdiction_id' => $transport_unit['jurisdiction_id'] ) )->getField('jurisdiction_name');
+		$this->jurisdiction = $jurisdiction;
 		$tmp_content=$this->fetch( './Public/html/Content/District/business/enterprise_user_management_page_transport.html' );
 		$this->ajaxReturn( $tmp_content );
 	}
@@ -239,6 +229,8 @@ class DistrictBusinessAction extends CommonAction{
 	public function enterprise_user_management_page_reception($record_id="") {
 		$reception_unit = M( 'reception_unit' )->where( array( 'user_id' => $record_id ) )->find();
 		$this->formData = $reception_unit;
+		$jurisdiction = M( 'jurisdiction' )->where( array( 'jurisdiction_id' => $reception_unit['jurisdiction_id'] ) )->getField('jurisdiction_name');
+		$this->jurisdiction = $jurisdiction;
 		$tmp_content=$this->fetch( './Public/html/Content/District/business/enterprise_user_management_page_reception.html' );
 		$this->ajaxReturn( $tmp_content );
 	}
