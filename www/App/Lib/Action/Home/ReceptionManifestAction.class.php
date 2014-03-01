@@ -35,6 +35,7 @@ class ReceptionManifestAction extends ReceptionCommonAction{
 
 		$this->manifest = $manifest;
 		$this->reception_unit = $reception_unit;
+		$reception_unit_license_num = json_encode($reception_unit['reception_unit_license_num']);
 		$p_id=M('manifest')->where("manifest_id='$manifest_id'")->getField('production_unit_id');
 		$t_id=M('manifest')->where("manifest_id='$manifest_id'")->getField('transport_unit_id');
 		$p_name=M('production_unit')->where("production_unit_id='$p_id'")->getField('production_unit_name');
@@ -42,7 +43,7 @@ class ReceptionManifestAction extends ReceptionCommonAction{
 		$this->p_name=$p_name;
 		$this->t_name=$t_name;
 		$tmp_content=$this->fetch( './Public/html/Content/Reception/manifest/transfer_manifest_handle_request.html' );
-		$tmp_content = "<script>manifest_id_json = $manifest_id_json; manifest_status_json = $manifest_status_json;</script> $tmp_content";
+		$tmp_content = "<script>reception_unit_license_num = $reception_unit_license_num;manifest_id_json = $manifest_id_json; manifest_status_json = $manifest_status_json;</script> $tmp_content";
 		$this->ajaxReturn( $tmp_content );
 	}
 

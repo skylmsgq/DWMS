@@ -136,9 +136,9 @@
                     <td>
                         <input type="date" name="transport_date_1" class="form-control input-sm required-cn" placeholder="运输日期">  
                     </td>
-                    <td>车辆1 ID</td>
+                    <td>车辆1 牌照</td>
                     <td>
-                        <select type="text" name="vehicle_id_1" class="form-control input-sm required-cn" placeholder="车辆1 ID" id="vehicle_1">
+                        <select type="text" name="vehicle_id_1" class="form-control input-sm required-cn" placeholder="车辆1 牌照" id="vehicle_1">
                         </select>  
                     </td>
                 </tr>
@@ -175,11 +175,11 @@
                 <tr>
                     <td>运输日期</td>
                     <td>
-                        <input type="date" name="transport_date_2" class="form-control input-sm" placeholder="运输日期">  
+                        <input type="date" id="transport_date_2" class="form-control input-sm" placeholder="运输日期">  
                     </td>
-                    <td>车辆2 ID</td>
+                    <td>车辆2 牌照</td>
                     <td>
-                        <select type="text" class="form-control input-sm" placeholder="车辆2 ID" id="vehicle_2">  
+                        <select type="text" class="form-control input-sm" placeholder="车辆2 牌照" id="vehicle_2">  
                         </select>
                     </td>
                 </tr>
@@ -238,13 +238,22 @@ function ajaxAction() {
         return;
     }
 
+    var form_serialize="";
+
     var selected=document.getElementById("vehicle_2"); 
     if (selected.value > 0){
         var vehicle_id_2 = selected.value;
-        var form_serialize = "" + $('#manifest_request').serialize() + "&vehicle_id_2=" + vehicle_id_2;
+        form_serialize = "" + $('#manifest_request').serialize() + "&vehicle_id_2=" + vehicle_id_2;
     } else{
-        var form_serialize = "" + $('#manifest_request').serialize();
+        form_serialize = "" + $('#manifest_request').serialize();
     }  
+
+    var selected=document.getElementById("transport_date_2"); 
+    if (selected.value != ""){
+        var transport_date_2 = selected.value;
+        form_serialize = form_serialize + "&transport_date_2=" + transport_date_2;
+    } 
+
     console.log(form_serialize);
     $("#model-content").html('<center style="margin:50px"><h4>提交中...</h4><div class="progress progress-striped active" style="width: 50%"><div class="progress-bar"  role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div></div></center>');
 

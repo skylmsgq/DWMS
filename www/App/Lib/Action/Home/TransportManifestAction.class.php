@@ -92,6 +92,17 @@ class TransportManifestAction extends TransportCommonAction{
 		$vehicle = M('vehicle')->where( array( 'transport_unit_id' => session('transport_unit_id') ) )->select();
 		$vehicle_json = json_encode($vehicle);
 
+		$vehicle_num_1 = M('vehicle')->where( array('vehicle_id' => $manifest['vehicle_id_1'] ) )->find();
+		$this->vehicle_num_1 = $vehicle_num_1['vehicle_num'];
+
+		$vehicle_num_2 = M('vehicle')->where( array('vehicle_id' => $manifest['vehicle_id_2'] ) )->find();
+		$this->vehicle_num_2 = $vehicle_num_2['vehicle_num'];
+		// if($manifest['vehicle_id_2']){
+		// 	$vehicle_num_2 = M('vehicle')->where( array('vehicle_id') => $manifest['vehicle_2'] )
+		// 	$vehicle = M('vehicle')->where( array( 'transport_unit_id' => session('transport_unit_id') ) )->select();
+		// 	$vehicle_json = json_encode($vehicle);
+		// }
+		
 		$p_id=M('manifest')->where("manifest_id='$manifest_id'")->getField('production_unit_id');
 		$r_id=M('manifest')->where("manifest_id='$manifest_id'")->getField('reception_unit_id');
 		$p_name=M('production_unit')->where("production_unit_id='$p_id'")->getField('production_unit_name');

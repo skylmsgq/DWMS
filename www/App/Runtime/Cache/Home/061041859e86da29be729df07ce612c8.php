@@ -67,7 +67,8 @@
                     <td><?php echo ($unit["reception_unit_longitude"]); ?></td>
                 </tr>
                 <tr>
-                    
+                    <td>运输单位许可证编号</td>
+                    <td><?php echo ($unit["reception_unit_license_num"]); ?></td>
                     
                 </tr>
             </table>

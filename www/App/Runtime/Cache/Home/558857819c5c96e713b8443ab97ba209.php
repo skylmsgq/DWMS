@@ -17,9 +17,9 @@
         <div id="div_input-group">
             <div id="myAlert"></div>
             <div class="row" style="position:absolute; z-index:1;">
-                <div class="col-md-2">
+                <div class="col-md-1">
                 </div>
-                <div class="col-md-8">
+                <div class="col-md-10">
                     <div class="input-group input-group-sm">
                         <span class="input-group-addon">当偏移距离大于</span>
                         <input type="text" class="form-control" id="warningDistance" value="0.5" placeholder="">
@@ -30,35 +30,37 @@
                         <button type="button" class="btn btn-success btn-sm" onclick="setting();">设置</button>
                     </div>
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-1">
                 </div>
             </div>
         </div>
 
-        <div id="map_panel" style="display:none; width:20%; float:right; position:absolute; right:0px; z-index:1; ">
+        <div id="map_panel" style="display:none; width:300px; float:right; position:absolute; right:0px; z-index:1; ">
             <div id="myAlertFull"></div>
-            <div class="input-group input-group-sm">
-                <span class="input-group-addon">当偏移距离大于</span>
-                <input type="text" class="form-control" id="warningDistanceFull" value="0.5" placeholder="">
-                <span class="input-group-addon">千米时提醒</span>
+            <div style="background-color:#FFFFFF; padding:5px; border-radius:5px;">
+                    <div class="input-group input-group-sm">
+                        <span class="input-group-addon">当偏移距离大于</span>
+                        <input type="text" class="form-control" id="warningDistanceFull" value="0.5" placeholder="">
+                        <span class="input-group-addon">千米时提醒</span>
+                    </div>
+                    <div class="input-group input-group-sm">
+                        <span class="input-group-addon">当偏移距离大于</span>
+                        <input type="text" class="form-control" id="alarmDistanceFull" value="1.0" placeholder="">
+                        <span class="input-group-addon">千米时报警</span>
+                    </div>
+                    <div class="blank_div"></div>
+                    <center>
+                        <button type="button" class="btn btn-success btn-sm" onclick="settingFull();">设置</button>
+                    </center>
             </div>
-            <div class="input-group input-group-sm">
-                <span class="input-group-addon">当偏移距离大于</span>
-                <input type="text" class="form-control" id="alarmDistanceFull" value="1.0" placeholder="">
-                <span class="input-group-addon">千米时报警</span>
-            </div>
-
-            <center>
-                <button type="button" class="btn btn-success btn-sm" onclick="settingFull();">设置</button>
-            </center>
             <div class="blank_div"></div>
-            <div style="background-color:#FFFFFF; padding:4px; padding-bottom:50px;">
+            <div style="background-color:#FFFFFF; padding:5px; padding-bottom:50px; border-radius:5px;">
                 <table id="vehicle_panel">
-                    <caption>当前运行车辆统计表</caption>
+                    <caption style="font:bold 16px arial,sans-serif">当前运行车辆统计表</caption>
                 </table>
             </div>
             <div class="blank_div"></div>
-            <div id="route_panel"></div>
+            <div id="route_panel" style="border-radius:5px;"></div>
         </div>
 
         <div id="map_container" style="width:100%; float:left;">地图加载中...</div>
@@ -197,7 +199,7 @@ function setBMap() {
         while (endMarker = endMarkerList.pop()) {
             BaiduMap.removeOverlay(endMarker);
         }
-        $('#route_panel').html("").css("background-color", "");
+        $('#route_panel').html("").css("background-color", "").css("width", "0px").css("height", "0px");
     });
 
     $(".anchorBL").hide();
@@ -320,7 +322,8 @@ function transferWarning() {
                     BaiduMap.addOverlay(endMarker);
                     endMarkerList.push(endMarker);
 
-                    $('#route_panel').css("background-color", "#FFFFFF").html("<h2 style='margin:0px;border-top:2px solid #ccc;padding:10px 0 5px 0px;font:bold 16px arial,sans-serif'>当前车辆指定路线详情：</h2>" + routeDetailDecodeObj[markerIdx]);
+                    var windowHeight = $(window).height();
+                    $('#route_panel').css("width", '100%').css("height", windowHeight * 0.3 + "px").css("overflow", "auto").css("background-color", "#FFFFFF").html("<h2 style='margin:0px;border-top:2px solid #ccc;padding:10px 0 5px 0px;font:bold 16px arial,sans-serif'>当前车辆指定路线详情：</h2>" + routeDetailDecodeObj[markerIdx]);
                 });
             }
         },

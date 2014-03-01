@@ -115,7 +115,7 @@
                     </td>
                     <td>危废转移时间</td>
                     <td>
-                        <input type="date" name="waste_transport_time" class="form-control input-sm required-cn" placeholder="$manifest.waste_transport_time" value="<?php echo ($manifest["waste_transport_time"]); ?>">
+                        <?php echo ($manifest["waste_transport_time"]); ?>
                     </td>
                 </tr>
             </table>

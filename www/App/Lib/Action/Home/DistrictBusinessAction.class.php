@@ -48,24 +48,26 @@ class DistrictBusinessAction extends DistrictCommonAction{
 			'record_id' => $record_id,
 			'record_status' => $record_status,
 		);
-		$reception_unit_id=M('record')->where("record_id='$record_id'")->getField('reception_unit_id');
-		$rfid_table=M('record')->where("record_id='$record_id'")->getField('rfid_table_id');
-		$rfid_list=explode(",",$rfid_table);
-		foreach ($rfid_list as  $value) {
-			# code...
-			if ($value!="")
-			{
-				$rfid=M('rfid');
-				$old_rfidstatus=$rfid->where("rfid_id='$value' ")->getField('transfer_status');
-
-				if ($old_rfidstatus!=1)
+		if($record_status == 2 ){
+			$reception_unit_id=M('record')->where("record_id='$record_id'")->getField('reception_unit_id');
+			$rfid_table=M('record')->where("record_id='$record_id'")->getField('rfid_table_id');
+			$rfid_list=explode(",",$rfid_table);
+			foreach ($rfid_list as  $value) {
+				# code...
+				if ($value!="")
 				{
-				$data['transfer_status']=1;
-				$data['record_id']=$record_id;
-				$data['reception_unit_id']=$reception_unit_id;
-				$resultrfid=$rfid->where("rfid_id='$value' ")->save($data);
-				if (!$resultrfid)
-					$this->ajaxReturn( 0, '修改数据库失败！', 0 );
+					$rfid=M('rfid');
+					$old_rfidstatus=$rfid->where("rfid_id='$value' ")->getField('transfer_status');
+
+					if ($old_rfidstatus!=1)
+					{
+					$data['transfer_status']=1;
+					$data['record_id']=$record_id;
+					$data['reception_unit_id']=$reception_unit_id;
+					$resultrfid=$rfid->where("rfid_id='$value' ")->save($data);
+					if (!$resultrfid)
+						$this->ajaxReturn( 0, '修改数据库失败！', 0 );
+					}
 				}
 			}
 		}
