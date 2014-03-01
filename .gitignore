@@ -15,10 +15,12 @@ android/android_fore/RC663_RFID_b_old/
 
 # Generated files
 android/android_fore/RC663_RFID_ONE_TEST/bin/
+android/android_fore/RC663_RFID_ONE/bin/
 android/android_fore/RC663_RFID_TWO/bin/
 android/android_fore/RC663_RFID_THREE/bin/
 
 android/android_fore/RC663_RFID_ONE_TEST/gen/
+android/android_fore/RC663_RFID_ONE/gen/
 android/android_fore/RC663_RFID_TWO/gen/
 android/android_fore/RC663_RFID_THREE/gen/
 

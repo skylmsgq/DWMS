@@ -28,44 +28,55 @@
 <script type="text/javascript">
 function setTable() {
     var tableData = new Array();
-    //console.log(record_json);
-    for (var idx in record_json) {
-        var itemDetail = '<a href="#" onclick="fetch_model_page(\'./device_management_detail?record_id=' + record_json[idx].device_id + '\')"><span class="label label-info"><span class="glyphicon glyphicon-paperclip"></span> 详情</span><a>';
-        var itemModify = ' <a href="#" onclick="fetch_model_page(\'./device_management_modify?record_id=' + record_json[idx].device_id + '\')"><span class="label label-warning"><span class="glyphicon glyphicon-paperclip"></span> 修改</span><a>';
+    for (var idx in device_json) {
+        var itemDetail = '<a href="#" onclick="fetch_model_page(\'./device_management_detail?record_id=' + device_json[idx].device_id + '\')"><span class="label label-info">详情</span><a>';
+        var itemModify = ' <a href="#" onclick="fetch_model_page(\'./device_management_modify?record_id=' + device_json[idx].device_id + '\')"><span class="label label-warning">修改</span><a>';
         var itemData = new Array();
-        itemData[0] = "" + record_json[idx].device_name;
-        itemData[1] = "" + record_json[idx].device_type;
-        itemData[2] = "" + record_json[idx].device_serial_num;
-        switch (record_json[idx].ownership_type) {
+        itemData[0] = "" + device_json[idx].device_name;
+        itemData[1] = "" + device_json[idx].device_serial_num;
+        switch (device_json[idx].ownership_type) {
             case '0':
-                itemData[3] = "<span>系统管理员</span>";
+                itemData[2] = "<span>系统管理员</span>";
                 break;
             case '1':
-                itemData[3] = "<span>国家环保部</span>";
+                itemData[2] = "<span>国家环保部</span>";
                 break;
             case '2':
-                itemData[3] = "<span>省环保厅</span>";
+                itemData[2] = "<span>省环保厅</span>";
                 break;
             case '3':
-                itemData[3] = "<span>市环保局</span>";
+                itemData[2] = "<span>市环保局</span>";
                 break;
             case '4':
-                itemData[3] = "<span>区环保局</span>";
+                itemData[2] = "<span>区环保局</span>";
                 break;
             case '5':
-                itemData[3] = "<span>生产单位</span>";
+                itemData[2] = "<span>生产单位</span>";
                 break;
             case '6':
-                itemData[3] = "<span>运输单位</span>";
+                itemData[2] = "<span>运输单位</span>";
                 break;
             case '7':
-                itemData[3] = "<span>接受单位</span>";
+                itemData[2] = "<span>接受单位</span>";
                 break;
             default:
-                itemData[3] = "<span>归属错误！</span>";
+                itemData[2] = "<span>归属错误！</span>";
                 break;
         }
-
+        switch (device_json[idx].device_status) {
+            case '0':
+                itemData[3] = "未绑定";
+                break;
+            case '1':
+                itemData[3] = "已绑定";
+                break;
+            case '2':
+                itemData[3] = "运行异常";
+                break;
+            default:
+                itemData[3] = "有点错误";
+                break;
+        }
         itemData[4] = itemDetail + itemModify;
         tableData.push(itemData);
     }
@@ -73,13 +84,13 @@ function setTable() {
     $('#table-container').dataTable({
         "aaData": tableData,
         "aoColumns": [{
-            "sTitle": "名称"
-        }, {
-            "sTitle": "类型"
+            "sTitle": "设备名称"
         }, {
             "sTitle": "序列号"
         }, {
             "sTitle": "归属类型"
+        }, {
+            "sTitle": "状态"
         }, {
             "sTitle": "操作"
         }],
@@ -94,7 +105,7 @@ function setTable() {
 
         "oLanguage": {
             "sLengthMenu": "每页显示 _MENU_ 条记录",
-            "sZeroRecords": "抱歉， 没有找到",
+            "sSearch": "搜索 _INPUT_",
             "sInfo": "从 _START_ 到 _END_ /共 _TOTAL_ 条数据",
             "sInfoEmpty": "没有数据",
             "sInfoFiltered": "(从 _MAX_ 条数据中检索)",
@@ -104,8 +115,8 @@ function setTable() {
                 "sNext": "后一页",
                 "sLast": "尾页"
             },
+            "sProcessing": "正在加载数据...",
             "sZeroRecords": "没有检索到数据"
-            /*"sProcessing": "<img src='./loading.gif' />"*/
         }
     });
 }
@@ -114,13 +125,11 @@ setTable();
 
 function fetch_model_page(ajaxURL) {
     $('#myModal').modal("show");
-
     $("#model-content").html('<center style="margin-top:20px"><h4>努力地加载中...</h4><div class="progress progress-striped active" style="width: 50%"><div class="progress-bar"  role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div></div></center>');
-
     $.ajax({
-        type: "get",
+        type: "GET",
         url: ajaxURL,
-        dataType: "json",
+        dataType: "JSON",
         success: function(data) {
             $("#model-content").html(data);
         },
@@ -131,6 +140,5 @@ function fetch_model_page(ajaxURL) {
             console.log("textStatus:" + textStatus);
         }
     });
-
 }
 </script>
