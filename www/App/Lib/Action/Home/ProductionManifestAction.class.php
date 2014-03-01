@@ -26,6 +26,11 @@ class ProductionManifestAction extends CommonAction{
 		$record = M( 'record' )->where( array( 'record_id' =>$record_id ) )->find();
 		$record_json = json_encode($record);
 
+		$package_method = M( 'package_method' )->where('package_method_id>0')->select();
+		$package_method_json = json_encode($package_method);
+		$waste_disposal_method = M( 'waste_disposal_method' )->where('waste_disposal_method_id>0')->select();
+		$waste_disposal_method_json = json_encode($waste_disposal_method);
+
 		$production_unit = M( 'production_unit' )->where( array( 'production_unit_id' => session('production_unit_id' ) ) )->find();
 		//$this->ajaxReturn("<script>record_data=$record_json.reception_unit_name;</script>");
 		$t_id = M( 'record' )->where( array( 'record_id' =>$record_id ) )->getField('transport_unit_id');
@@ -40,7 +45,7 @@ class ProductionManifestAction extends CommonAction{
 
 
 		$tmp_content=$this->fetch( './Public/html/Content/Production/manifest/transfer_manifest_request_page.html' );
-		$tmp_content = "<script>record_json = $record_json; </script> $tmp_content";
+		$tmp_content = "<script>record_json = $record_json;package_method = $package_method_json;waste_disposal_method = $waste_disposal_method_json; </script> $tmp_content";
 		$this->ajaxReturn( $tmp_content );
 	}
 
@@ -121,6 +126,11 @@ class ProductionManifestAction extends CommonAction{
 		$this->manifest = $manifest;
 		$this->production_unit = $production_unit;
 
+		$package_method = M( 'package_method' )->where('package_method_id>0')->select();
+		$package_method_json = json_encode($package_method);
+		$waste_disposal_method = M( 'waste_disposal_method' )->where('waste_disposal_method_id>0')->select();
+		$waste_disposal_method_json = json_encode($waste_disposal_method);
+
 		$manifest_id_json = json_encode( $manifest_id );
 		$manifest_status_json = json_encode( $manifest['manifest_status'] );
 
@@ -132,7 +142,7 @@ class ProductionManifestAction extends CommonAction{
 		$this->r_name = $r_name;
 
 		$tmp_content=$this->fetch( './Public/html/Content/Production/manifest/transfer_manifest_query_modify.html' );
-		$tmp_content = "<script>manifest_id_json = $manifest_id_json; manifest_status_json = $manifest_status_json; </script> $tmp_content";
+		$tmp_content = "<script>manifest_id_json = $manifest_id_json; manifest_status_json = $manifest_status_json;package_method = $package_method_json;waste_disposal_method = $waste_disposal_method_json;  </script> $tmp_content";
 		$this->ajaxReturn( $tmp_content );
 	}
 
