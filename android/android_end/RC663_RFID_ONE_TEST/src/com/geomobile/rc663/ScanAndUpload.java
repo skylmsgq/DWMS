@@ -51,11 +51,11 @@ public class ScanAndUpload extends ScanActivity implements OnClickListener {
 	private Spinner spinner2;
 	private ListView listView;
 	
-
+	private String myURL_check="";
 	private String imei = "";
 	private ArrayAdapter adapter;
 	private List<String> items = new ArrayList<String>();
-	private IOCallback optionFetch, submitController = null;
+	private IOCallback optionFetch, submitController, checkController = null;
 	private HashMap<String, String> wasteOptionsMap = new HashMap<String, String>();
 	private HashMap<String, String> wasteItemTypeMap = new HashMap<String, String>();
 	private HashMap<String, String> wasteItemSNMap = new HashMap<String, String>();
@@ -67,7 +67,7 @@ public class ScanAndUpload extends ScanActivity implements OnClickListener {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.scanandupload);
-        
+        this.myURL_check=getString(R.string.url_prefix) + "checkOut";
         TelephonyManager telephonyManager = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
         this.imei = telephonyManager.getDeviceId();
         
@@ -205,6 +205,71 @@ public class ScanAndUpload extends ScanActivity implements OnClickListener {
 		adapter.notifyDataSetChanged();
     }
     
+    public class CheckCallbackController implements IOCallback {
+    	ScanAndUpload activity;
+    	ProgressDialog progDialog;
+    	LongRunningGetIO running;
+    	JSONObject postJson;
+    	List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+    	public CheckCallbackController(final ScanAndUpload activity, JSONObject postJson) {
+    		this.activity = activity;
+    		this.postJson=postJson;
+    		NameValuePair postContent = new BasicNameValuePair("txt_json", postJson.toString());
+    		nameValuePairs.add(postContent);
+    		running=new LongRunningGetIO(activity.myURL_check, nameValuePairs, this);
+    		running.execute();
+    		progDialog = ProgressDialog.show(activity, "正在扫描",
+    	            "请稍候...", true, true, new OnCancelListener(){
+    			public void onCancel(DialogInterface pd)
+    			{
+    				running.handleOnBackButton();
+    				activity.checkController = null;
+    			}
+    		});
+    	}
+    	private void parseJSON(String value)
+    	{
+    		Log.d(TAG, value);
+    		JSONObject jObject;
+    		// add parse later
+    		try{
+    			jObject = new JSONObject(value);
+    			String errcode = ((JSONObject)(jObject.get("error"))).getString("code");
+    			if (errcode.equals("8"))
+    			{
+    				activity.addNewItemToList(postJson.getString("rfid"), Integer.parseInt(postJson.getString("item")));
+    			}
+    			else
+    			{
+    				String errmsg = ((JSONObject)(jObject.get("error"))).getString("des");
+        			activity.alertMessage(errmsg);
+    			}
+    		}
+    		catch(Exception e)
+    		{
+    			try {
+					jObject = new JSONObject(value);
+					if (jObject.has("rfid"))
+	    				activity.alertMessage(postJson.getString("rfid")+ "已绑定");
+					else
+						activity.alertMessage("未知错误");
+				} catch (JSONException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+    		}
+    		
+    	}
+    	
+    	public void httpRequestDidFinish(int success, String value) {
+    		progDialog.dismiss();
+    		
+    		this.parseJSON(value);
+	        
+	        activity.checkController = null;
+    	}
+    }
+
     //弹出选择框，选择桶装or袋装
     public void popupSelect(final String sn)
     {
@@ -224,7 +289,19 @@ public class ScanAndUpload extends ScanActivity implements OnClickListener {
     	                    if(myself.wasteItemSNMap.containsValue(sn)) {
     	                    	myself.alertMessage("已经添加过该废弃物");
     	                    } else {
-    	                    	myself.addNewItemToList(sn, item);
+    	                    	
+    	                    	//myself.addNewItemToList(sn, item);
+    	                    	JSONObject myupload= new JSONObject();
+    	            	        try {
+    	            				myupload.put("rfid", sn);
+    	            				myupload.put("item", item);
+    	            			} catch (JSONException e) {
+    	            				// TODO Auto-generated catch block
+    	            				Log.d(TAG, "parse error");
+    	            				e.printStackTrace();
+    	            			}
+    	            	        if(checkController == null) checkController = new CheckCallbackController(myself, myupload);
+    	            	        adapter.notifyDataSetChanged();
     	                    }
     	                        
     	                    }
@@ -245,6 +322,9 @@ public class ScanAndUpload extends ScanActivity implements OnClickListener {
     		
     	}
     }
+    
+  
+    
     //为自动向后台发起请求，获取废物类型描述
     public class OptionsCallbackController implements IOCallback {
     	ScanAndUpload activity;

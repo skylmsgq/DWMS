@@ -18,6 +18,7 @@
             android:layout_height="match_parent"
             android:scrollbarStyle="insideInset"
             android:scrollbars="vertical"
+            android:textSize="15dp"
             android:text="修改重量" />
 
         <AbsoluteLayout
