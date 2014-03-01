@@ -2,7 +2,7 @@
 /**
  *
  */
-class DistrictMapAction extends CommonAction{
+class DistrictMapAction extends DistrictCommonAction{
 	// -------- 转移地图 侧边栏 --------
 	public function map_sidebar() {
 		layout( './Common/frame' );
@@ -11,11 +11,11 @@ class DistrictMapAction extends CommonAction{
 
 	// 转移地图->地图展示->转移地图展示
 	public function transfer_map_display() {
-		$condition['transport_date'] = date( 'Y-m-d', strtotime('2014-01-13') );
+		$condition['transport_date'] = date( 'Y-m-d', strtotime( '2014-01-13' ) );
 		//$condition['transport_date'] = date( 'Y-m-d', time() );
 		$condition['jurisdiction_id'] = array( 'EQ', session( 'jurisdiction_id' ) );
-		$condition['route_status'] = array( 'EQ', 0 );	// 0:路线可用
-		$condition['vehicle_status'] = array( 'EQ', 1 );	// 车辆添加并已绑定设备
+		$condition['route_status'] = array( 'EQ', 0 ); // 0:路线可用
+		$condition['vehicle_status'] = array( 'EQ', 1 ); // 车辆添加并已绑定设备
 		$route_vehicle_join = M( 'route_vehicle' )->join( 'route ON route_vehicle.route_id = route.route_id' )->join( 'vehicle ON route_vehicle.vehicle_id = vehicle.vehicle_id' )->where( $condition )->select();
 
 		for ( $idx = 0; $idx < count( $route_vehicle_join ); ++$idx ) {
@@ -40,12 +40,12 @@ class DistrictMapAction extends CommonAction{
 
 	// 转移地图->地图展示->转移地图展示：获取实时GPS数据
 	public function ajax_get_gps_data() {
-		$ajax_send_data = I( 'post.ajaxSendData');
-		$ajax_send_data = htmlspecialchars_decode($ajax_send_data);
-		$ajax_send_data = json_decode($ajax_send_data);
+		$ajax_send_data = I( 'post.ajaxSendData' );
+		$ajax_send_data = htmlspecialchars_decode( $ajax_send_data );
+		$ajax_send_data = json_decode( $ajax_send_data );
 
-		$device_condition['device_type_id'] = array( 'EQ', 0); 	//0：DTU设备
-		$device_condition['device_status'] = array( 'EQ', 1);	//1：表示设备已绑定车辆，运行正常
+		$device_condition['device_type_id'] = array( 'EQ', 0 );  //0：DTU设备
+		$device_condition['device_status'] = array( 'EQ', 1 ); //1：表示设备已绑定车辆，运行正常
 		for ( $idx = 0; $idx < count( $ajax_send_data ); ++$idx ) {
 			$device_condition['device_id'] = array( 'EQ', $ajax_send_data[$idx]->device_id );
 			$device_serial_num = M( 'device' )->where( $device_condition )->getField( 'device_serial_num' );
@@ -60,7 +60,7 @@ class DistrictMapAction extends CommonAction{
 	}
 
 	// 转移地图->地图展示->转移地图展示：设置告警距离
-	public function ajax_setting_alarm_distance(){
+	public function ajax_setting_alarm_distance() {
 		$data['id'] = I( 'post.id' );
 		$data['warning_distance'] = I( 'post.warning_distance' );
 		$data['alarm_distance'] = I( 'post.alarm_distance' );
@@ -76,10 +76,14 @@ class DistrictMapAction extends CommonAction{
 	public function designate_vehicle_playback() {
 		$condition['jurisdiction_id'] = array( 'EQ', session( 'jurisdiction_id' ) );
 		$transport_unit = M( 'transport_unit' )->where( $condition )->select();
-		if ( $transport_unit ) {
+
+		$alarm_distance = M( 'alarm_distance' )->where( array( 'jurisdiction_id' => session( 'jurisdiction_id' ) ) )->find();
+
+		if ( $transport_unit && $alarm_distance ) {
 			$transport_unit_json = json_encode( $transport_unit );
+			$alarm_distance_json = json_encode( $alarm_distance );
 			$tmp_content = $this->fetch( './Public/html/Content/District/map/designate_vehicle_playback.html' );
-			$tmp_content = "<script> transport_unit_json = $transport_unit_json; </script> $tmp_content";
+			$tmp_content = "<script> transport_unit_json = $transport_unit_json; alarm_distance_json = $alarm_distance_json; </script> $tmp_content";
 			$this->ajaxReturn( $tmp_content );
 		} else {
 			$this->ajaxReturn( "加载页面失败，请重新点击侧边栏加载页面。" );
@@ -115,8 +119,16 @@ class DistrictMapAction extends CommonAction{
 
 	// 转移地图->地图展示->转移地图历史回放
 	public function transfer_map_playback() {
-		$tmp_content = $this->fetch( './Public/html/Content/District/map/transfer_map_playback.html' );
-		$this->ajaxReturn( $tmp_content );
+		$alarm_distance = M( 'alarm_distance' )->where( array( 'jurisdiction_id' => session( 'jurisdiction_id' ) ) )->find();
+
+		if ( $alarm_distance ) {
+			$alarm_distance_json = json_encode( $alarm_distance );
+			$tmp_content = $this->fetch( './Public/html/Content/District/map/transfer_map_playback.html' );
+			$tmp_content = "<script> alarm_distance_json = $alarm_distance_json; </script> $tmp_content";
+			$this->ajaxReturn( $tmp_content );
+		} else {
+			$this->ajaxReturn( "加载页面失败，请重新点击侧边栏加载页面。" );
+		}
 	}
 
 	// 转移地图->地图展示->转移地图历史回放：获取所有车辆历史GPS路线
@@ -135,7 +147,7 @@ class DistrictMapAction extends CommonAction{
 	}
 
 	// 转移地图->地图展示：左击覆盖物获取车辆和运输单位信息
-	public function ajax_get_vehicle_transport_unit(){
+	public function ajax_get_vehicle_transport_unit() {
 		$vehicle_transport_unit = M( 'vehicle' )->join( 'transport_unit ON vehicle.transport_unit_id = transport_unit.transport_unit_id' )->where( array( 'vehicle_id' => I( 'post.vehicle_id' ) ) )->find();
 		if ( $vehicle_transport_unit ) {
 			$this->ajaxReturn( $vehicle_transport_unit );
@@ -145,7 +157,7 @@ class DistrictMapAction extends CommonAction{
 	}
 
 	// 转移地图->地图展示：右击覆盖物获取车辆指定路线信息
-	public function ajax_get_vehicle_route(){
+	public function ajax_get_vehicle_route() {
 		$condition['vehicle_id'] = array( 'EQ', I( 'post.vehicle_id' ) );
 		$datetime = date( 'Y-m-d', strtotime( I( 'post.datetime' ) ) );
 		$condition['transport_date'] = array( 'EQ', $datetime );
@@ -263,8 +275,8 @@ class DistrictMapAction extends CommonAction{
 	}
 
 	// GPS数据模拟器
-	public function gps_data_simulator(){
-		$condition['device_type_id'] = array('EQ', 0);
+	public function gps_data_simulator() {
+		$condition['device_type_id'] = array( 'EQ', 0 );
 		$device = M( 'device' )->where( $condition )->select();
 		if ( $device ) {
 			$device_json = json_encode( $device );
@@ -277,7 +289,7 @@ class DistrictMapAction extends CommonAction{
 	}
 
 	// GPS数据模拟器：GPS数据接受
-	public function ajax_gps_data_receiver(){
+	public function ajax_gps_data_receiver() {
 		$device_serial_num = I( 'post.device_serial_num' );
 		$gps_data_array = I( 'post.route_lng_lat' );
 		$gps_data_array =  htmlspecialchars_decode( $gps_data_array );
@@ -288,7 +300,7 @@ class DistrictMapAction extends CommonAction{
 		//$time = date( 'Y-m-d H:i:s', time() );
 		$time = date( 'Y-m-d H:i:s', strtotime( '2014-02-20 09:00:00' ) );
 		for ( $idx = 0; $idx < count( $gps_data_array ); $idx += 2 ) {
-			$time = date( 'Y-m-d H:i:s', strtotime($time) + 10 );
+			$time = date( 'Y-m-d H:i:s', strtotime( $time ) + 10 );
 			$data['datetime'] = $time;
 			$data['bmap_longitude'] = $gps_data_array[$idx]->lng;
 			$data['bmap_latitude'] = $gps_data_array[$idx]->lat;
@@ -301,8 +313,6 @@ class DistrictMapAction extends CommonAction{
 		} else {
 			$this->ajaxReturn( 'fail' );
 		}
-
 	}
-
 }
 ?>

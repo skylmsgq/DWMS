@@ -2,7 +2,7 @@
 /**
  *
  */
-class TransportManifestAction extends CommonAction{
+class TransportManifestAction extends TransportCommonAction{
 // -------- 转移联单->侧边栏 --------
 	public function manifest_sidebar() {
 		layout( './Common/frame' );

@@ -2,7 +2,7 @@
 /**
  *
  */
-class ProductionWarehouseAction extends CommonAction{
+class ProductionWarehouseAction extends ProductionCommonAction{
 	// -------- 危废库存->侧边栏 --------
 	public function warehouse_sidebar() {
 		layout( './Common/frame' );

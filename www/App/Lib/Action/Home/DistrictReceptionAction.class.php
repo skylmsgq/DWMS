@@ -2,7 +2,7 @@
 /**
  *
  */
-class DistrictReceptionAction extends CommonAction{
+class DistrictReceptionAction extends DistrictCommonAction{
 	// -------- 危废处置单位->侧边栏 --------
 	public function reception_sidebar(){
 		layout( './Common/frame' );
