@@ -2,7 +2,7 @@
 /**
  *
  */
-class DistrictProductionAction extends CommonAction{
+class DistrictProductionAction extends DistrictCommonAction{
 	// -------- 危废产生单位->侧边栏 --------
 	public function production_sidebar(){
 		layout( './Common/frame' );

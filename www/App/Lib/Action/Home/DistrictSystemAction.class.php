@@ -2,7 +2,7 @@
 /**
  *
  */
-class DistrictSystemAction extends CommonAction{
+class DistrictSystemAction extends DistrictCommonAction{
 	// -------- 系统管理->侧边栏 --------
 	public function system_sidebar(){
 		layout( './Common/frame' );
@@ -11,10 +11,9 @@ class DistrictSystemAction extends CommonAction{
 
 	// 系统管理->系统信息设置->废物代码
 	public function waste_code(){
-
 		$waste = M( 'waste' )->order( 'waste_id DESC' )->select();
 		$waste_json = json_encode( $waste );
-		
+
 		$tmp_content=$this->fetch( './Public/html/Content/District/system/waste_code.html' );
 		$tmp_content="<script> record_json=$waste_json;</script> $tmp_content";
 		$this->ajaxReturn( $tmp_content );
@@ -24,7 +23,7 @@ class DistrictSystemAction extends CommonAction{
 	public function record_delete($record_id=""){
 		$waste = M("waste"); // 实例化waste对象
 		$waste->where( array('waste_id' => $record_id ) )->delete(); // 删除waste_id=id的用户数据
-		
+
 		if ($waste) {
 			$this->ajaxReturn( "删除成功" );
 		} else {
@@ -41,7 +40,7 @@ class DistrictSystemAction extends CommonAction{
 
 		$waste = M("waste")->where( array('waste_id' => $record_id ) )->find(); // 删除waste_id=id的用户数据
 		$waste_id_json = json_encode($record_id);
-		
+
 		$this->waste = $waste;
 		$this->waste_form = $waste_form;
 
@@ -55,7 +54,7 @@ class DistrictSystemAction extends CommonAction{
 		$waste = M( 'waste' ); // 实例化record对象
 
 		$data = I( 'post.' );
-		
+
 		$waste->where( array( 'waste_id' =>$waste_id ) )->save( $data );
 	}
 
@@ -73,7 +72,7 @@ class DistrictSystemAction extends CommonAction{
 	public function county_code_delete($record_id=""){
 		$county_code = M("county_code"); // 实例化waste对象
 		$county_code->where( array('county_id' => $record_id ) )->delete(); // 删除waste_id=id的用户数据
-		
+
 		if ($county_code) {
 			$this->ajaxReturn( "删除成功" );
 		} else {
@@ -85,7 +84,7 @@ class DistrictSystemAction extends CommonAction{
 	public function county_code_modify($record_id=""){
 		$county_code = M("county_code")->where( array('county_id' => $record_id ) )->find(); // 删除waste_id=id的用户数据
 		$county_id_json = json_encode($record_id);
-		
+
 		$this->county_code = $county_code;
 
 		$tmp_content = $this->fetch( './Public/html/Content/District/system/county_code_modify.html' );
@@ -98,7 +97,7 @@ class DistrictSystemAction extends CommonAction{
 		$county_code = M( 'county_code' ); // 实例化record对象
 
 		$data = I( 'post.' );
-		
+
 		$county_code->where( array( 'county_id' =>$county_id ) )->save( $data );
 	}
 
@@ -116,19 +115,19 @@ class DistrictSystemAction extends CommonAction{
 	public function trade_code_delete($record_id=""){
 		$trade_code = M("trade_code"); // 实例化waste对象
 		$trade_code->where( array('trade_id' => $record_id ) )->delete(); // 删除waste_id=id的用户数据
-		
+
 		if ($trade_code) {
 			$this->ajaxReturn( "删除成功" );
 		} else {
 			$this->ajaxReturn( "代码未找到" );
 		}
 	}
-	
+
 	// 系统管理->系统信息设置->行业代码->修改记录
 	public function trade_code_modify($record_id=""){
 		$trade_code = M("trade_code")->where( array('trade_id' => $record_id ) )->find(); // 删除waste_id=id的用户数据
 		$trade_id_json = json_encode($record_id);
-		
+
 		$this->trade_code = $trade_code;
 
 		$tmp_content = $this->fetch( './Public/html/Content/District/system/trade_code_modify.html' );
@@ -141,7 +140,7 @@ class DistrictSystemAction extends CommonAction{
 		$trade_code = M( 'trade_code' ); // 实例化record对象
 
 		$data = I( 'post.' );
-		
+
 		$trade_code->where( array( 'trade_id' =>$trade_id ) )->save( $data );
 	}
 
@@ -159,7 +158,7 @@ class DistrictSystemAction extends CommonAction{
 	public function enterprise_scale_delete($record_id=""){
 		$enterprise_scale = M("enterprise_scale"); // 实例化waste对象
 		$enterprise_scale->where( array('enterprise_scale_id' => $record_id ) )->delete(); // 删除waste_id=id的用户数据
-		
+
 		if ($enterprise_scale) {
 			$this->ajaxReturn( "删除成功" );
 		} else {
@@ -171,7 +170,7 @@ class DistrictSystemAction extends CommonAction{
 	public function enterprise_scale_modify($record_id=""){
 		$enterprise_scale = M("enterprise_scale")->where( array('enterprise_scale_id' => $record_id ) )->find(); // 删除waste_id=id的用户数据
 		$enterprise_scale_id_json = json_encode($record_id);
-		
+
 		$this->enterprise_scale = $enterprise_scale;
 
 		$tmp_content = $this->fetch( './Public/html/Content/District/system/enterprise_scale_modify.html' );
@@ -184,7 +183,7 @@ class DistrictSystemAction extends CommonAction{
 		$enterprise_scale = M( 'enterprise_scale' ); // 实例化record对象
 
 		$data = I( 'post.' );
-		
+
 		$enterprise_scale->where( array( 'enterprise_scale_id' =>$enterprise_scale_id ) )->save( $data );
 	}
 
@@ -202,7 +201,7 @@ class DistrictSystemAction extends CommonAction{
 	public function enterprise_register_type_delete($record_id=""){
 		$enterprise_register_type = M("enterprise_register_type"); // 实例化waste对象
 		$enterprise_register_type->where( array('enterprise_register_type_id' => $record_id ) )->delete(); // 删除waste_id=id的用户数据
-		
+
 		if ($enterprise_register_type) {
 			$this->ajaxReturn( "删除成功" );
 		} else {
@@ -226,7 +225,7 @@ class DistrictSystemAction extends CommonAction{
 		$enterprise_register_type = M( 'enterprise_register_type' ); // 实例化record对象
 
 		$data = I( 'post.' );
-		
+
 		$enterprise_register_type->where( array( 'enterprise_register_type_id' =>$enterprise_register_type_id ) )->save( $data );
 	}
 
@@ -244,7 +243,7 @@ class DistrictSystemAction extends CommonAction{
 	public function jurisdiction_delete($record_id=""){
 		$jurisdiction = M("jurisdiction"); // 实例化waste对象
 		$jurisdiction->where( array('jurisdiction_id' => $record_id ) )->delete(); // 删除waste_id=id的用户数据
-		
+
 		if ($jurisdiction) {
 			$this->ajaxReturn( "删除成功" );
 		} else {
@@ -268,7 +267,7 @@ class DistrictSystemAction extends CommonAction{
 		$jurisdiction = M( 'jurisdiction' ); // 实例化record对象
 
 		$data = I( 'post.' );
-		
+
 		$jurisdiction->where( array( 'jurisdiction_id' =>$jurisdiction_id ) )->save( $data );
 	}
 
@@ -286,7 +285,7 @@ class DistrictSystemAction extends CommonAction{
 	public function waste_category_delete($record_id=""){
 		$waste_category = M("waste_category"); // 实例化waste对象
 		$waste_category->where( array('waste_category_id' => $record_id ) )->delete(); // 删除waste_id=id的用户数据
-		
+
 		if ($waste_category) {
 			$this->ajaxReturn( "删除成功" );
 		} else {
@@ -307,10 +306,10 @@ class DistrictSystemAction extends CommonAction{
 
 	// 系统管理->系统信息设置->废物类别->保存修改
 	public function waste_category_modified($waste_category_id="") {
-		$waste_category = M( "waste_category"); 
+		$waste_category = M( "waste_category");
 
 		$data = I( 'post.' );
-		
+
 		$waste_category->where( array( 'waste_category_id' =>$waste_category_id ) )->save( $data );
 	}
 
@@ -329,7 +328,7 @@ class DistrictSystemAction extends CommonAction{
 	public function waste_form_delete($record_id=""){
 		$waste_form = M("waste_form"); // 实例化waste对象
 		$waste_form->where( array('waste_form' => $record_id ) )->delete(); // 删除waste_id=id的用户数据
-		
+
 		if ($waste_form) {
 			$this->ajaxReturn( "删除成功" );
 		} else {
@@ -350,10 +349,10 @@ class DistrictSystemAction extends CommonAction{
 
 	// 系统管理->系统信息设置->废物形态->保存修改
 	public function waste_form_modified($waste_form_id="") {
-		$waste_form = M( "waste_form"); 
+		$waste_form = M( "waste_form");
 
 		$data = I( 'post.' );
-		
+
 		$waste_form->where( array( 'waste_form_id' =>$waste_form_id ) )->save( $data );
 	}
 
@@ -371,7 +370,7 @@ class DistrictSystemAction extends CommonAction{
 	public function package_method_delete($record_id=""){
 		$package_method = M("package_method"); // 实例化waste对象
 		$package_method->where( array('package_method' => $record_id ) )->delete(); // 删除waste_id=id的用户数据
-		
+
 		if ($package_method) {
 			$this->ajaxReturn( "删除成功" );
 		} else {
@@ -392,12 +391,12 @@ class DistrictSystemAction extends CommonAction{
 
 	// 系统管理->系统信息设置->包装方式->保存修改
 	public function package_method_modified($package_method_id="") {
-		$package_method = M( "package_method"); 
+		$package_method = M( "package_method");
 
 		$data = I( 'post.' );
-		
+
 		$package_method->where( array( 'package_method_id' =>$package_method_id ) )->save( $data );
-	}	
+	}
 
 	// 系统管理->系统信息设置->废物处理方式
 	public function waste_disposal_method(){
@@ -413,7 +412,7 @@ class DistrictSystemAction extends CommonAction{
 	public function waste_disposal_method_delete($record_id=""){
 		$waste_disposal_method = M("waste_disposal_method"); // 实例化waste对象
 		$waste_disposal_method->where( array('waste_disposal_method' => $record_id ) )->delete(); // 删除waste_id=id的用户数据
-		
+
 		if ($waste_disposal_method) {
 			$this->ajaxReturn( "删除成功" );
 		} else {
@@ -434,12 +433,12 @@ class DistrictSystemAction extends CommonAction{
 
 	// 系统管理->系统信息设置->废物处理方式->保存修改
 	public function waste_disposal_method_modified($waste_disposal_method_id="") {
-		$waste_disposal_method = M( "waste_disposal_method"); 
+		$waste_disposal_method = M( "waste_disposal_method");
 
 		$data = I( 'post.' );
-		
+
 		$waste_disposal_method->where( array( 'waste_disposal_method_id' =>$waste_disposal_method_id ) )->save( $data );
-	}	
+	}
 
 	// 系统管理->系统信息设置->废物去向
 	public function waste_direction(){
@@ -455,7 +454,7 @@ class DistrictSystemAction extends CommonAction{
 	public function waste_direction_delete($record_id=""){
 		$waste_direction = M("waste_direction"); // 实例化waste对象
 		$waste_direction->where( array('waste_direction' => $record_id ) )->delete(); // 删除waste_id=id的用户数据
-		
+
 		if ($waste_direction) {
 			$this->ajaxReturn( "删除成功" );
 		} else {
@@ -476,12 +475,12 @@ class DistrictSystemAction extends CommonAction{
 
 	// 系统管理->系统信息设置->废物去向->保存修改
 	public function waste_direction_modified($waste_direction_id="") {
-		$waste_direction = M( "waste_direction"); 
+		$waste_direction = M( "waste_direction");
 
 		$data = I( 'post.' );
-		
+
 		$waste_direction->where( array( 'waste_direction_id' =>$waste_direction_id ) )->save( $data );
-	}	
+	}
 
 	// 系统管理->系统信息设置->运输方式
 	public function transport_method(){
@@ -497,7 +496,7 @@ class DistrictSystemAction extends CommonAction{
 	public function transport_method_delete($record_id=""){
 		$transport_method = M("transport_method"); // 实例化waste对象
 		$transport_method->where( array('transport_method' => $record_id ) )->delete(); // 删除waste_id=id的用户数据
-		
+
 		if ($transport_method) {
 			$this->ajaxReturn( "删除成功" );
 		} else {
@@ -518,12 +517,12 @@ class DistrictSystemAction extends CommonAction{
 
 	// 系统管理->系统信息设置->运输方式->保存修改
 	public function transport_method_modified($transport_method_id="") {
-		$transport_method = M( "transport_method"); 
+		$transport_method = M( "transport_method");
 
 		$data = I( 'post.' );
-		
+
 		$transport_method->where( array( 'transport_method_id' =>$transport_method_id ) )->save( $data );
-	}	
+	}
 
 	// 系统管理->设备管理->添加设备
 	public function device_add(){

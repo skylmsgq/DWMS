@@ -2,7 +2,7 @@
 /**
  *
  */
-class DistrictTransportAction extends CommonAction{
+class DistrictTransportAction extends DistrictCommonAction{
 	// -------- 危废运输单位->侧边栏 --------
 	public function transport_sidebar(){
 		layout( './Common/frame' );

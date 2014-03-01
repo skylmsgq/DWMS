@@ -2,7 +2,7 @@
 /**
  *
  */
-class ReceptionWarehouseAction extends CommonAction{
+class ReceptionWarehouseAction extends ReceptionCommonAction{
 // -------- 危废库存->侧边栏 --------
 	public function warehouse_sidebar() {
 		layout( './Common/frame' );

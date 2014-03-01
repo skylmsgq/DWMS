@@ -2,7 +2,7 @@
 /**
  *
  */
-class TransportBasicAction extends CommonAction{
+class TransportBasicAction extends TransportCommonAction{
 // -------- 企业基本信息->侧边栏 --------
 	public function basic_sidebar(){
 		layout( './Common/frame' );
@@ -17,7 +17,7 @@ class TransportBasicAction extends CommonAction{
 
 		$this->unit = $transport_unit;
 		$transport_unit = json_encode(session( 'transport_unit_id' ));
-	
+
 		$tmp_content=$this->fetch( './Public/html/Content/Transport/basic/transport_basic_information.html' );
 		$tmp_content = "<script>transport_unit_json = $transport_unit;console.log(transport_unit_json)</script> $tmp_content";
 		$this->ajaxReturn( $tmp_content );

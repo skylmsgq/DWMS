@@ -2,7 +2,7 @@
 /**
  *
  */
-class ProductionRecordAction extends CommonAction{
+class ProductionRecordAction extends ProductionCommonAction{
 	// -------- 转移备案->侧边栏 --------
 	public function record_sidebar() {
 		layout( './Common/frame' );
@@ -17,7 +17,7 @@ class ProductionRecordAction extends CommonAction{
 		$waste_code_json = json_encode( $waste );
 
 		$unit = M( 'production_unit' )->where( array('production_unit_id' => session( 'production_unit_id' ) ) )->find();
-		
+
 		$reception_unit_json = json_encode($reception_unit);
 		$transport_unit_json = json_encode($transport_unit);
 		$this->unit = $unit;
@@ -74,10 +74,10 @@ class ProductionRecordAction extends CommonAction{
 		$production_unit = M( 'production_unit' )->where( array( 'production_unit_id' => session( 'production_unit_id' ) ) )->find();
 		$reception_unit_id=$record['reception_unit_id'];
 		$transport_unit_id=$record['transport_unit_id'];
-		
+
 		$reception_unit = M( 'reception_unit' )->where( array( 'reception_unit_id' => $reception_unit_id ) )->find();
 		$transport_unit = M( 'transport_unit' )->where( array( 'transport_unit_id' => $transport_unit_id ) )->find();
-		
+
 		$this->reception_unit=$reception_unit;
 		$this->transport_unit=$transport_unit;
 		$this->record = $record;
@@ -94,7 +94,7 @@ class ProductionRecordAction extends CommonAction{
 		$this->unit = $production_unit;
 		$reception_unit_id=$record['reception_unit_id'];
 		$transport_unit_id=$record['transport_unit_id'];
-		
+
 		$reception_unit = M( 'reception_unit' )->where( array( 'reception_unit_id' => $reception_unit_id ) )->find();
 		$transport_unit = M( 'transport_unit' )->where( array( 'transport_unit_id' => $transport_unit_id ) )->find();
 		$reception_unit_list_t = M( 'reception_unit' )->select();
@@ -121,7 +121,7 @@ class ProductionRecordAction extends CommonAction{
 		$record_status_old = I( 'post.record_status_old' );
 		switch ( $record_status_old ) {
 		case '0':
-			$record_status = 0;                                                    
+			$record_status = 0;
 			break;
 		case '3':
 			$record_status = 4;
@@ -151,10 +151,10 @@ class ProductionRecordAction extends CommonAction{
 		$this->unit = $production_unit;
 		$reception_unit_id=$record['reception_unit_id'];
 		$transport_unit_id=$record['transport_unit_id'];
-		
+
 		$reception_unit = M( 'reception_unit' )->where( array( 'reception_unit_id' => $reception_unit_id ) )->find();
 		$transport_unit = M( 'transport_unit' )->where( array( 'transport_unit_id' => $transport_unit_id ) )->find();
-		
+
 		$this->reception_unit=$reception_unit;
 		$this->transport_unit=$transport_unit;
 		$record_id_json = json_encode( $record_id );

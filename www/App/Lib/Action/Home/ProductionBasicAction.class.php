@@ -2,7 +2,7 @@
 /**
  *
  */
-class ProductionBasicAction extends CommonAction{
+class ProductionBasicAction extends ProductionCommonAction{
 	// -------- 企业基本信息->侧边栏 --------
 	public function basic_sidebar(){
 		layout( './Common/frame' );
