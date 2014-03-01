@@ -317,8 +317,8 @@ $("#record_request").validate();
 </script>
 <script type="text/javascript">
 var rfid_table_id = "";
-var weight = 0;
-var num = 0; 
+var weight = 0.0;
+var num = 0.0; 
 var t_length=transport_unit.length;
 var r_length=reception_unit.length;
 $('#waste_code').html('<option>请选择主要危废代码</option>')
@@ -348,7 +348,7 @@ for (var idx in reception_unit) {
 $('#reception_unit_id').append('<option value="' + reception_unit[idx].reception_unit_id + '">' + reception_unit[idx].reception_unit_name + '</option>');
     }   
 function transport_select(transport_unit_id){
-    console.log(transport_unit_id);
+    // console.log(transport_unit_id);
     var index=transport_unit_id;
     for (var i=0;i<t_length;i++)
     {
@@ -381,18 +381,6 @@ function reception_select(reception_unit_id){
 }
 
 function ajaxAction(actionID) {
-    // switch (actionID) {
-    //     case 0:
-    //         $('#button_save').button('loading');
-    //         $('#button_submit').addClass('disabled');
-    //         break;
-    //     case 1:
-    //         $('#button_save').addClass('disabled');
-    //         $('#button_submit').button('loading');
-    //         break;
-    //     default:
-    //         break;
-    // }
     if(!$('#record_request').valid()){
         return;
     }
@@ -403,26 +391,23 @@ function ajaxAction(actionID) {
         data: $('#record_request').serialize() + '&' + $('#record_request_1').serialize() + '&record_status=' + actionID + '&rfid_table_id=' + rfid_table_id + '&predict_output_quantity=' + num + '&predict_output_weight=' + weight,
 
         success: function(data) {
+            console.log(data.data);
             switch (actionID) {
                 case 0:
-                    if(data=='保存成功！'){
+                    if(data.data == 1){
                     myAlertSucc("保存成功！稍后自动刷新。。");
+                    setTimeout(function(){refresh_page();},3000);
                     } else{
                         myAlertFail("保存失败！");
                     }
-                    // $('#button_save').button('complete');
-                    // $('#button_submit').removeClass('disabled');
-                    // setTimeout("$('#button_save').button('reset')", 3000);
                     break;
                 case 1:
-                    if(data=='保存成功！'){
+                    if(data.data == 1){
                     myAlertSucc("提交成功！稍后自动刷新。。");
+                    setTimeout(function(){refresh_page();},3000);
                     } else{
                         myAlertFail("提交失败！");
                     }
-                    // $('#button_save').removeClass('disabled');
-                    // $('#button_submit').button('complete');
-                    // setTimeout("$('#button_submit').button('reset')", 3000);
                     break;
                 default:
                     break;
@@ -445,9 +430,9 @@ function ajaxAction(actionID) {
 $('#rfid_form').html('<tr><td>请选择 RFID 标签</td><td>包装方式</td><td>重量/数量</td></tr>');
 for (var idx in rfid) {
     if(rfid[idx].add_method == "0"){
-        $('#rfid_form').append('<tr><td><input type="checkbox" id="' + idx + '" name="' + rfid[idx].add_method + '" value="' + rfid[idx].waste_total + '">' + rfid[idx].rfid_id + '</td><td>袋装</td><td>' + rfid[idx].waste_total + '</td></tr>');
-    } else{
         $('#rfid_form').append('<tr><td><input type="checkbox" id="' + idx + '" name="' + rfid[idx].add_method + '" value="' + rfid[idx].waste_total + '">' + rfid[idx].rfid_id + '</td><td>桶装</td><td>' + rfid[idx].waste_total + '</td></tr>');
+    } else{
+        $('#rfid_form').append('<tr><td><input type="checkbox" id="' + idx + '" name="' + rfid[idx].add_method + '" value="' + rfid[idx].waste_total + '">' + rfid[idx].rfid_id + '</td><td>袋装</td><td>' + rfid[idx].waste_total + '</td></tr>');
     }
 }
 
@@ -455,19 +440,19 @@ function ajaxAction_1() {
     $('#button_save_1').button('loading');
 
     var selected_1=document.getElementsByName("0"); 
-    weight = 0;
+    weight = 0.0;
     for(var i=0;i <selected_1.length;i++){ 
       if(selected_1[i].checked==true){ 
-          weight = parseInt(selected_1[i].value) + weight;  
+          weight = parseFloat(selected_1[i].value) + weight;  
           rfid_table_id=rfid_table_id+rfid[selected_1[i].id].rfid_id + ",";    
         } 
     }
     
     var selected_2=document.getElementsByName("1"); 
-    num = 0;
+    num = 0.0;
     for(var i=0;i <selected_2.length;i++){ 
       if(selected_2[i].checked==true){ 
-          num = parseInt(selected_2[i].value) + num;
+          num = parseFloat(selected_2[i].value) + num;
           rfid_table_id=rfid_table_id+rfid[selected_2[i].id].rfid_id + ",";     
         } 
     }
