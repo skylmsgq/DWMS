@@ -1,0 +1,1 @@
+<?php if (!defined('THINK_PATH')) exit();?><h1>企业基本信息->自行处置设备信息</h1>

@@ -1,0 +1,22 @@
+<?php if (!defined('THINK_PATH')) exit();?><form role="form" id="gps_detail">
+ <div class="panel panel-primary">
+        <div class="panel-heading">运输车辆基本信息</div>
+        <div class="panel-body">
+            <div class="table-responsive">
+                <table class="table table-striped table-bordered table-hover table-condensed">
+                <tr>
+                    <td>已绑定 GPS 序列号</td>
+                    <td>
+                        <?php echo ($device_num); ?>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+</form>
+
+<center>
+    <button class="btn btn-info btn-lg" onclick="$('#myModal').modal('hide');">关闭页面</button>
+</center>

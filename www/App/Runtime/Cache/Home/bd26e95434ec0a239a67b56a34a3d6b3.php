@@ -1,4 +1,4 @@
-<form role="form" id="manifest_request">
+<?php if (!defined('THINK_PATH')) exit();?><form role="form" id="manifest_request">
     <div class="panel panel-primary">
         <div class="panel-heading">运输单位信息</div>
         <div class="panel-body">
@@ -7,47 +7,47 @@
                 <tr>
                     <td>单位名称</td>
                     <td>
-                        {$transport_unit.transport_unit_name}
+                        <?php echo ($transport_unit["transport_unit_name"]); ?>
                     </td>
                     <td>单位用户名称</td>
                     <td>
-                        {$transport_unit.transport_unit_username}
+                        <?php echo ($transport_unit["transport_unit_username"]); ?>
                     </td>
                 </tr>
                 <tr>
                     <td>法人代码</td>
                     <td>
-                        {$transport_unit.transport_unit_legal_person_code}
+                        <?php echo ($transport_unit["transport_unit_legal_person_code"]); ?>
                     </td>
                     <td>单位地址</td>
                     <td>
-                        {$transport_unit.transport_unit_address}
+                        <?php echo ($transport_unit["transport_unit_address"]); ?>
                     </td>
                 </tr>
                 <tr>
                     <td>邮政编码</td>
                     <td>
-                        {$transport_unit.transport_unit_postcode}
+                        <?php echo ($transport_unit["transport_unit_postcode"]); ?>
                     </td>
                     <td>所在区县</td>
                     <td>
-                        {$transport_unit.transport_unit_county}
+                        <?php echo ($transport_unit["transport_unit_county"]); ?>
                     </td>
                 </tr>
                 <tr>
                     <td>联系人姓名</td>
                     <td>
-                        {$transport_unit.transport_unit_contacts_name}
+                        <?php echo ($transport_unit["transport_unit_contacts_name"]); ?>
                     </td>
                     <td>联系电话</td>
                     <td>
-                        {$transport_unit.transport_unit_contacts_phone}
+                        <?php echo ($transport_unit["transport_unit_contacts_phone"]); ?>
                     </td>
                 </tr>
                 <tr>
                     <td>单位传真</td>
                     <td>
-                        {$transport_unit.transport_unit_fax}
+                        <?php echo ($transport_unit["transport_unit_fax"]); ?>
                     </td>
                     <td></td>
                     <td></td>
@@ -65,51 +65,51 @@
                 <tr>
                     <td>生产单位</td>
                     <td>
-                        {$p_name}
+                        <?php echo ($p_name); ?>
                     </td>
                     <td>接受单位</td>
                     <td>
-                        {$r_name}
+                        <?php echo ($r_name); ?>
                     </td>
                 </tr>                
                  <tr>
                     <td>危废数量（袋/个）</td>
                     <td>
-                        {$manifest.waste_num}
+                        <?php echo ($manifest["waste_num"]); ?>
                     </td>
                     <td>危废重量（桶/公斤）</td>
                     <td>
-                        {$manifest.waste_weight}
+                        <?php echo ($manifest["waste_weight"]); ?>
                     </td>
                 </tr>
                  <tr>
                     <td>危废包装方式</td>
                     <td>
-                        {$manifest.waste_package}
+                        <?php echo ($manifest["waste_package"]); ?>
                     </td>
                     <td>危废外运目的</td>
                     <td>
-                        {$manifest.waste_transport_goal}
+                        <?php echo ($manifest["waste_transport_goal"]); ?>
                     </td>
                 </tr>
                 <tr>
                     <td>应急措施</td>
                     <td>
-                        {$manifest.emergency_measure}
+                        <?php echo ($manifest["emergency_measure"]); ?>
                     </td>
                     <td>危废发运人</td>
                     <td>
-                        {$manifest.waste_shipper}
+                        <?php echo ($manifest["waste_shipper"]); ?>
                     </td>
                 </tr>
                 <tr>
                     <td>危废运达地</td>
                     <td>
-                        {$manifest.waste_destination}
+                        <?php echo ($manifest["waste_destination"]); ?>
                     </td>
                     <td>危废转移时间</td>
                     <td>
-                        {$manifest.waste_transport_time}
+                        <?php echo ($manifest["waste_transport_time"]); ?>
                     </td>
                 </tr>
             </table>
@@ -269,5 +269,3 @@ function ajaxAction() {
 
 }
 </script>
-
-
