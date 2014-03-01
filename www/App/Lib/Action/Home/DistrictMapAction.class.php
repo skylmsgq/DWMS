@@ -76,10 +76,14 @@ class DistrictMapAction extends CommonAction{
 	public function designate_vehicle_playback() {
 		$condition['jurisdiction_id'] = array( 'EQ', session( 'jurisdiction_id' ) );
 		$transport_unit = M( 'transport_unit' )->where( $condition )->select();
-		if ( $transport_unit ) {
+
+		$alarm_distance = M( 'alarm_distance' )->where( array( 'jurisdiction_id' => session( 'jurisdiction_id' ) ) )->find();
+
+		if ( $transport_unit && $alarm_distance ) {
 			$transport_unit_json = json_encode( $transport_unit );
+			$alarm_distance_json = json_encode( $alarm_distance );
 			$tmp_content = $this->fetch( './Public/html/Content/District/map/designate_vehicle_playback.html' );
-			$tmp_content = "<script> transport_unit_json = $transport_unit_json; </script> $tmp_content";
+			$tmp_content = "<script> transport_unit_json = $transport_unit_json; alarm_distance_json = $alarm_distance_json; </script> $tmp_content";
 			$this->ajaxReturn( $tmp_content );
 		} else {
 			$this->ajaxReturn( "加载页面失败，请重新点击侧边栏加载页面。" );
@@ -115,8 +119,16 @@ class DistrictMapAction extends CommonAction{
 
 	// 转移地图->地图展示->转移地图历史回放
 	public function transfer_map_playback() {
-		$tmp_content = $this->fetch( './Public/html/Content/District/map/transfer_map_playback.html' );
-		$this->ajaxReturn( $tmp_content );
+		$alarm_distance = M( 'alarm_distance' )->where( array( 'jurisdiction_id' => session( 'jurisdiction_id' ) ) )->find();
+
+		if ( $alarm_distance ) {
+			$alarm_distance_json = json_encode( $alarm_distance );
+			$tmp_content = $this->fetch( './Public/html/Content/District/map/transfer_map_playback.html' );
+			$tmp_content = "<script> alarm_distance_json = $alarm_distance_json; </script> $tmp_content";
+			$this->ajaxReturn( $tmp_content );
+		} else {
+			$this->ajaxReturn( "加载页面失败，请重新点击侧边栏加载页面。" );
+		}
 	}
 
 	// 转移地图->地图展示->转移地图历史回放：获取所有车辆历史GPS路线

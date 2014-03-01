@@ -424,11 +424,11 @@ function getVehicleRoute() {
                     }
                     var newPoint = new BMap.Point(gpsRouteTime[dataIdx].bmap_longitude, gpsRouteTime[dataIdx].bmap_latitude);
                     vehicleMarker.setPosition(newPoint);
-                    offsetDistance = gpsRouteTime[dataIdx].offset_distance;
+                    var offsetDistance = gpsRouteTime[dataIdx].offset_distance;
                     offsetDistance = Math.round(offsetDistance * 1000) / 1000;
-                    if (offsetDistance < 0.5) {
+                    if (offsetDistance < alarm_distance_json.warning_distance) {
                         vehicleMarker.setIcon(lorryIconGreen);
-                    } else if ((offsetDistance >= 0.5) && (offsetDistance < 1)) {
+                    } else if ((offsetDistance >= alarm_distance_json.warning_distance) && (offsetDistance < alarm_distance_json.alarm_distance)) {
                         vehicleMarker.setIcon(lorryIconYellow);
                     } else {
                         vehicleMarker.setIcon(lorryIconRed);

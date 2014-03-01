@@ -449,11 +449,11 @@ function getVehicleRoutes() {
 
                     var newPoint = new BMap.Point(gpsRouteTimeArray[gpsIdx][dataIdx].bmap_longitude, gpsRouteTimeArray[gpsIdx][dataIdx].bmap_latitude);
                     vehicleMarkerList[gpsIdx].setPosition(newPoint);
-                    offsetDistance = gpsRouteTimeArray[gpsIdx][dataIdx].offset_distance;
+                    var offsetDistance = gpsRouteTimeArray[gpsIdx][dataIdx].offset_distance;
                     offsetDistance = Math.round(offsetDistance * 1000) / 1000;
-                    if (offsetDistance < 0.5) {
+                    if (offsetDistance < alarm_distance_json.warning_distance) {
                         vehicleMarkerList[gpsIdx].setIcon(lorryIconGreen);
-                    } else if ((offsetDistance >= 0.5) && (offsetDistance < 1)) {
+                    } else if ((offsetDistance >= alarm_distance_json.warning_distance) && (offsetDistance < alarm_distance_json.alarm_distance)) {
                         vehicleMarkerList[gpsIdx].setIcon(lorryIconYellow);
                     } else {
                         vehicleMarkerList[gpsIdx].setIcon(lorryIconRed);
