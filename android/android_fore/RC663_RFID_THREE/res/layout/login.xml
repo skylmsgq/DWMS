@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    >
+    
+ <LinearLayout android:id="@+id/LinearLayout02"
+  android:layout_width="fill_parent"
+  android:layout_weight="0.2"
+  android:orientation="vertical"
+  android:layout_height="fill_parent">
+      <ImageView
+        android:id="@+id/imageView1"
+        android:src="@drawable/header_logo" 
+        android:layout_width="fill_parent"
+       android:gravity="center"
+       android:layout_height="wrap_content"> 
+         </ImageView>>
+  </LinearLayout>
+    
+ <LinearLayout android:id="@+id/LinearLayout01"
+  android:layout_width="fill_parent"
+  android:layout_weight="0.2"
+  android:orientation="vertical"
+  
+  android:layout_height="fill_parent"> 
+     <TextView android:textSize="12pt" 
+       android:id="@+id/welcome"
+       android:text="废物管理系统\n欢迎登陆"
+       android:layout_width="fill_parent"
+       android:gravity="center_vertical|center_horizontal" 
+       android:layout_height="wrap_content"> 
+     </TextView>   
+  </LinearLayout>
+ 
+ <LinearLayout android:layout_width="fill_parent"
+  android:id="@+id/LinearLayout02"
+  android:layout_weight="0.12"
+  android:orientation="vertical"
+  android:layout_height="fill_parent">
+<LinearLayout
+    android:layout_marginLeft="10px"
+    android:layout_marginRight="11px"
+    android:gravity="center"
+    android:layout_width="fill_parent"
+    
+    android:orientation="horizontal"
+    android:layout_height="wrap_content"
+    android:id="@+id/LinearLayout_account"
+    >
+      <TextView android:textSize="9pt" 
+       android:id="@+id/textView_name"
+       android:text="用户"
+       android:layout_weight="0.9"
+     
+       android:layout_width="fill_parent"
+       android:layout_height="wrap_content">
+       
+      </TextView>   
+      <EditText
+           android:id="@+id/editText_name"
+        
+  	   android:layout_weight="0.25" 
+       android:layout_width="fill_parent"
+       android:layout_height="wrap_content"></EditText>
+    </LinearLayout>
+
+<LinearLayout
+    android:layout_marginLeft="10px"
+    android:layout_marginRight="11px"
+    android:gravity="center"
+    android:layout_width="fill_parent"
+    android:orientation="horizontal"
+    android:layout_height="wrap_content">
+      <TextView android:textSize="9pt" 
+          android:id="@+id/textView_pass"
+       android:text="密码  "
+       android:layout_weight="0.9"
+      
+       android:layout_width="fill_parent"
+       android:layout_height="wrap_content"></TextView> 
+      <EditText
+      android:layout_weight="0.25"
+       android:id="@+id/editText_pass"
+       android:layout_width="fill_parent"
+       android:password="true"
+     android:layout_height="wrap_content"></EditText> 
+    </LinearLayout>
+ 
+    <LinearLayout
+    android:layout_marginLeft="10px"
+    android:layout_marginRight="8px"
+    android:gravity="center"
+    android:layout_width="fill_parent"
+    android:orientation="horizontal"
+    android:layout_height="wrap_content">
+        <CheckBox  
+        android:id="@+id/rmb"      
+        android:layout_width="wrap_content"  
+        android:layout_height="wrap_content"       
+        android:text="记住密码"  
+        /> 
+   <Button android:text="登录"
+   android:textSize="9pt"
+   android:id="@+id/button_in" 
+   android:layout_width="fill_parent"
+   android:layout_height="wrap_content"></Button>
+    </LinearLayout>
+    
+</LinearLayout>
+
+</LinearLayout>
