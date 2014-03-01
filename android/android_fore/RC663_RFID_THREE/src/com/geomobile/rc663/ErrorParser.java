@@ -26,16 +26,34 @@ public class ErrorParser {
 			} else {
 				try{
 				jObject = new JSONObject(value);
-				
+				activity.short_sn=activity.sn;
 				if (jObject.has("addway"))
 					{activity.sn+="包装类型: "+jObject.getString("addway")+"\n";
+					activity.short_sn+="包装类型: "+jObject.getString("addway")+"\n";
 					if (jObject.getString("addway").equals("桶装"))
-						activity.sn+="重量: "+jObject.getString("total")+"公斤\n";
-						else if (jObject.getString("addway").equals("袋装"))
-						activity.sn+="数量: "+jObject.getString("total")+"个\n";
+						{activity.sn+="重量: "+jObject.getString("total")+"公斤\n";
+						activity.short_sn+="重量: "+jObject.getString("total")+"公斤\n";
+						}
+					else if (jObject.getString("addway").equals("袋装"))
+						{
+							activity.short_sn+="数量: "+jObject.getString("total")+"个\n";
+							activity.sn+="数量: "+jObject.getString("total")+"个\n";
+						}
 					if (jObject.has("wname"))
-						activity.sn+="废物类型: "+jObject.getString("wname")+"\n";	
+						{activity.sn+="废物类型: "+jObject.getString("wname")+"\n";
+						activity.short_sn+="废物类型: "+jObject.getString("wname")+"\n";}	
 					}
+				activity.short_sn+="运输许可: ";
+				if (jObject.has("manifest_status"))
+				{
+					if (jObject.getString("manifest_status").equals("11"))
+						activity.short_sn+="可以运输\n ";
+					else
+						activity.short_sn+="不可运输\n ";
+				}
+				else
+					activity.short_sn+="不可运输\n ";
+//				}
 				if (jObject.getString("hasrecord").equals("0"))
 					activity.sn+="无备案信息\n";
 				else

@@ -251,8 +251,10 @@ function check($json_string)
 		$driver=$result8['carrier_1_name'];
 		$driver_id=$result8['carrier_1_num'];
 		$carid=$result8['vehicle_id_1'];
+		$manifest_status=$result8['manifest_status'];
 		$resultData->driver=$driver;		
-		$resultData->driver_id=$driver_id;		
+		$resultData->driver_id=$driver_id;	
+		$resultData->manifest_status=$manifest_status;		
 		$vtable=M('vehicle');
 		$result9=$vtable->where(" vehicle_id='$carid'")->find();
 		if(!$result9)
