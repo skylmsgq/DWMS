@@ -21,7 +21,10 @@ class LoginAction extends CommonAction{
 
 		session_unset();
 		session_destroy();
-		$this->redirect( 'Home/Index/index' );
+		// $this->redirect( 'Home/Index/index' );
+		// $this->redirect( './../../../' );
+		header("Location: ./../../../");   
+    	exit; 
 	}
 	public function changepwd() {
 		$old_pass=I('post.old_pass');

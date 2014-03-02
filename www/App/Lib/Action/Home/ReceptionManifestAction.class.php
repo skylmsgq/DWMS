@@ -33,6 +33,9 @@ class ReceptionManifestAction extends ReceptionCommonAction{
 		$manifest_id_json = json_encode($manifest_id);
 		$manifest_status_json = json_encode($manifest['manifest_status']);
 
+		$waste_disposal_method = M( 'waste_disposal_method' )->where('waste_disposal_method_id>0')->getField('waste_disposal_method',true);
+		$waste_disposal_method_json = json_encode($waste_disposal_method);
+
 		$vehicle_num_1 = M( 'vehicle' )->where( array( 'vehicle_id' => $manifest['vehicle_id_1'] ) )->getField('vehicle_num');
 		$this->vehicle_num_1 = $vehicle_num_1;
 
@@ -51,7 +54,7 @@ class ReceptionManifestAction extends ReceptionCommonAction{
 		$this->p_name=$p_name;
 		$this->t_name=$t_name;
 		$tmp_content=$this->fetch( './Public/html/Content/Reception/manifest/transfer_manifest_handle_request.html' );
-		$tmp_content = "<script>reception_unit_license_num = $reception_unit_license_num;manifest_id_json = $manifest_id_json; manifest_status_json = $manifest_status_json;</script> $tmp_content";
+		$tmp_content = "<script>waste_disposal_method = $waste_disposal_method_json; reception_unit_license_num = $reception_unit_license_num;manifest_id_json = $manifest_id_json; manifest_status_json = $manifest_status_json;</script> $tmp_content";
 		$this->ajaxReturn( $tmp_content );
 	}
 
@@ -85,6 +88,9 @@ class ReceptionManifestAction extends ReceptionCommonAction{
 		$manifest_id_json = json_encode($manifest_id);
 		$manifest_status_json = json_encode($manifest['manifest_status']);
 
+		$waste_disposal_method = M( 'waste_disposal_method' )->where('waste_disposal_method_id>0')->getField('waste_disposal_method',true);
+		$waste_disposal_method_json = json_encode($waste_disposal_method);
+
 		$vehicle_num_1 = M( 'vehicle' )->where( array( 'vehicle_id' => $manifest['vehicle_id_1'] ) )->getField('vehicle_num');
 		$this->vehicle_num_1 = $vehicle_num_1;
 
@@ -102,7 +108,7 @@ class ReceptionManifestAction extends ReceptionCommonAction{
 		$this->p_name=$p_name;
 		$this->t_name=$t_name;
 		$tmp_content=$this->fetch( './Public/html/Content/Reception/manifest/transfer_manifest_handle_modify.html' );
-		$tmp_content = "<script>manifest_id_json = $manifest_id_json; manifest_status_json = $manifest_status_json;</script> $tmp_content";
+		$tmp_content = "<script>waste_disposal_method = $waste_disposal_method_json; manifest_id_json = $manifest_id_json; manifest_status_json = $manifest_status_json;</script> $tmp_content";
 		$this->ajaxReturn( $tmp_content );
 	}
 
