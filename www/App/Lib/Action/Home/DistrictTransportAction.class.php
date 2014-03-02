@@ -2,7 +2,7 @@
 /**
  *
  */
-class DistrictTransportAction extends CommonAction{
+class DistrictTransportAction extends DistrictCommonAction{
 	// -------- 危废运输单位->侧边栏 --------
 	public function transport_sidebar(){
 		layout( './Common/frame' );
@@ -30,11 +30,22 @@ class DistrictTransportAction extends CommonAction{
 	public function transport_vehicle_management(){
 		$vehicle = M( 'vehicle' );
 		$condition['jurisdiction_id'] = array('EQ', session( 'jurisdiction_id' ) );
+		$condition['_string'] = 'vehicle_status!=2';
 		$join = $vehicle->join( 'transport_unit ON vehicle.transport_unit_id = transport_unit.transport_unit_id' )->where( $condition )->select();
 		$vehicle_json = json_encode( $join );
 
 		$tmp_content=$this->fetch( './Public/html/Content/District/transport/transport_vehicle_management.html' );
 		$tmp_content="<script>vehicle = $vehicle_json;</script> $tmp_content";
+		$this->ajaxReturn( $tmp_content );
+	}
+
+	// 危废运输单位->运输车辆管理->运输车辆管理->gps
+	public function transport_vehicle_management_gps_detail($vehicle_id=""){
+		$vehicle = M( 'vehicle' )->where( array( 'vehicle_id' => $vehicle_id ) )->find();
+		$device_num = M( 'device' )->where( array( 'device_id' => $vehicle['device_id'] ) )->getField('device_serial_num');
+		$this->device_num = $device_num;
+
+		$tmp_content=$this->fetch( './Public/html/Content/District/transport/transport_vehicle_management_gps_detail.html' );
 		$this->ajaxReturn( $tmp_content );
 	}
 

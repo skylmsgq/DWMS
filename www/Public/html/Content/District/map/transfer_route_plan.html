@@ -20,69 +20,83 @@
                 <div class="col-md-1">
                 </div>
                 <div class="col-md-10">
-                    <div class="input-group input-group-sm">
-                        <span class="input-group-addon"></span>
-                        <select class="form-control input-sm" id="selectProductionUnit" onchange="showProductionUnit();">
-                            <option value="-1">请选择生产单位</option>
-                        </select>
-                        <span class="input-group-addon"></span>
-                        <select class="form-control input-sm" id="selectReceptionUnit" onchange="showReceptionUnit();">
-                            <option value="-1">请选择接受单位</option>
-                        </select>
-                        <span class="input-group-addon"></span>
-                        <select class="form-control input-sm" id="selectStrategy">
-                            <option value="0">最小时间</option>
-                            <option value="1">最短距离</option>
-                            <option value="2">避开高速</option>
-                        </select>
-                        <span class="input-group-addon"></span>
-                        <div class="btn-group">
-                            <button type="button" class="btn btn-info btn-sm" onclick="search();">查询</button>
-                            <button type="button" class="btn btn-warning btn-sm" onclick="clearScreen();">清除</button>
-                            <button type="button" class="btn btn-success btn-sm" onclick="submit();">提交</button>
-                        </div>
-                    </div>
+                    <table style="background-color:#FFFFFF; border-radius:5px;">
+                        <tr>
+                            <td>
+                                <select class="form-control input-sm" id="selectProductionUnit" onchange="showProductionUnit();">
+                                    <option value="-1">请选择生产单位</option>
+                                </select>
+                            </td>
+                            <td>
+                                <select class="form-control input-sm" id="selectReceptionUnit" onchange="showReceptionUnit();">
+                                    <option value="-1">请选择接受单位</option>
+                                </select>
+                            </td>
+                            <td>
+                                <select class="form-control input-sm" id="selectStrategy">
+                                    <option value="0">最小时间</option>
+                                    <option value="1">最短距离</option>
+                                    <option value="2">避开高速</option>
+                                </select>
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-info btn-sm" onclick="search();">查询</button>
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-warning btn-sm" onclick="clearScreen();">清除</button>
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-success btn-sm" onclick="submit();">提交</button>
+                            </td>
+                        </tr>
+                    </table>
                 </div>
                 <div class="col-md-1">
                 </div>
             </div>
         </div>
 
-        <div id="map_panel" style="display:none; width:20%; float:right; position:absolute; right:0px; z-index:1; ">
+        <div id="map_panel" style="display:none; width:350px; float:right; position:absolute; right:0px; z-index:1; ">
             <div id="myAlertFull"></div>
-            <select class="form-control input-sm" id="selectProductionUnitFull" onchange="showProductionUnit();">
-                <option value="-1">请选择生产单位</option>
-            </select>
-            <div class="blank_div"></div>
-            <select class="form-control input-sm" id="selectReceptionUnitFull" onchange="showReceptionUnit();">
-                <option value="-1">请选择接受单位</option>
-            </select>
-            <div class="blank_div"></div>
-            <select class="form-control input-sm" id="selectStrategyFull">
-                <option value="0">最小时间</option>
-                <option value="1">最短距离</option>
-                <option value="2">避开高速</option>
-            </select>
-            <div class="blank_div"></div>
-            <div class="row">
-                <div class="col-md-4">
-                    <center>
+            <table class="table table-bordered table-hover table-condensed table-responsive" style="margin-bottom:0px; background-color:#FFFFFF;">
+                <tr>
+                    <td colspan="3">
+                        <select class="form-control input-sm" id="selectProductionUnitFull" onchange="showProductionUnit();">
+                            <option value="-1">请选择生产单位</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <select class="form-control input-sm" id="selectReceptionUnitFull" onchange="showReceptionUnit();">
+                            <option value="-1">请选择接受单位</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <select class="form-control input-sm" id="selectStrategyFull">
+                            <option value="0">最小时间</option>
+                            <option value="1">最短距离</option>
+                            <option value="2">避开高速</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="text-align:center;">
                         <button type="button" class="btn btn-info btn-sm" onclick="search();">查询</button>
-                    </center>
-                </div>
-                <div class="col-md-4">
-                    <center>
+                    </td>
+                    <td style="text-align:center;">
+
                         <button type="button" class="btn btn-warning btn-sm" onclick="clearScreen();">清除</button>
-                    </center>
-                </div>
-                <div class="col-md-4">
-                    <center>
+                    </td>
+                    <td style="text-align:center;">
                         <button type="button" class="btn btn-success btn-sm" onclick="submit();">提交</button>
-                    </center>
-                </div>
-            </div>
+                    </td>
+                </tr>
+            </table>
             <div class="blank_div"></div>
-            <div id="route_panel"></div>
+            <div id="route_panel" style="border-radius:5px;"></div>
         </div>
 
         <div id="map_container" style="width:100%;float:left;"></div>
@@ -283,12 +297,13 @@ var searchComplete = function(results) {
                 steps.push('<tr style="cursor:pointer"><td style="border-bottom:1px solid #ccc;width:20px;vertical-align:top;text-align:right;padding:4px 3px">' + (routeIdx + 1) + '.' + (stepIdx + 1) + '</td><td style="border-bottom:1px solid #ccc;padding:2px;line-height:18px">' + step.getDescription() + '</td></tr>');
             }
         }
-        steps.push('</tbody></table><div style="border-bottom:1px solid #ccc;margin-bottom:10px;color:#7777cc;background:#e5ecf9;overflow:hidden;padding:2px;text-align:right"><span style="float:left;padding-left:6px">路线总距离：' + plan.getDistance() + ' / 预计总时间：' + plan.getDuration() + '</span></div>');
+        steps.push('</tbody></table><div style="border-bottom:1px solid #ccc;margin-bottom:10px;color:#7777cc;background:#e5ecf9;overflow:hidden;padding:2px;text-align:right"><span style="float:left;padding-left:6px">路线总距离：' + plan.getDistance() + '<br/>预计总时间：' + plan.getDuration() + '</span></div>');
         route_detail = steps.join('');
         /*setTimeout(function(){
             BaiduMap.setViewport([p1,p2]);   //调整到最佳视野
         },1000);*/
-
+        var windowHeight = $(window).height();
+        $('#route_panel').css("width", "100%").css("height", windowHeight * 0.5 + "px").css("overflow", "auto");
     } else if (transit.getStatus() == BMAP_STATUS_UNKNOWN_ROUTE) { //导航结果未知。对应数值“3”。
         return;
     } else {

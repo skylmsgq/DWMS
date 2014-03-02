@@ -26,12 +26,15 @@ for (var idx in rfid_json) {
     switch (rfid_json[idx].add_method) {
             case '0':
                 itemData[3] = "<span class='label label-primary'>重量</span>";
+                itemData[5] = "公斤";
                 break;
             case '1':
                 itemData[3] = "<span class='label label-info'>数量</span>";
+                itemData[5] = "个";
                 break;
             default:
                 itemData[3] = "<span class='label label-danger'>状态错误</span>";
+                itemData[5] = "状态错误";
                 break;
         }
     itemData[4] = "" + rfid_json[idx].waste_total;
@@ -50,6 +53,8 @@ $('#waste-table-container').dataTable({
             "sTitle": "增加类型"
         },{
             "sTitle": "废物总量"
+        },{
+            "sTitle": "单位"
         }],
     "bPaginate": true,
     "bLengthChange": true,

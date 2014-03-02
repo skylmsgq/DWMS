@@ -2,7 +2,7 @@
 /**
  *
  */
-class TransportVehicleAction extends CommonAction{
+class TransportVehicleAction extends TransportCommonAction{
 	// -------- 运输车辆->侧边栏 --------
 	public function vehicle_sidebar() {
 		layout( './Common/frame' );
@@ -11,7 +11,10 @@ class TransportVehicleAction extends CommonAction{
 
 	//运输车辆->运输车辆管理
 	public function vehicle_management(){
-		$vehicle = M( 'vehicle' )->where( array( 'transport_unit_id' => session( 'transport_unit_id' ) ) )->select();
+		$condition['transport_unit_id'] = session('transport_unit_id');
+		$condition['_string'] = 'vehicle_status!=2';
+
+		$vehicle = M( 'vehicle' )->where($condition)->select();
 		$vehicle_json = json_encode($vehicle);
 
 		$transport_unit = M( 'transport_unit' )->where( array( 'transport_unit_id' => session( 'transport_unit_id' ) ) )->getField('transport_unit_name');
@@ -61,8 +64,9 @@ class TransportVehicleAction extends CommonAction{
 	//运输车辆->运输车辆管理->删除
 	public function vehicle_management_delete($vehicle_id=""){
 		$vehicle = M( 'vehicle' ); // 实例化waste对象
-		$vehicle->where( array('vehicle_id' => $vehicle_id ) )->delete(); // 删除waste_id=id的用户数据
-		
+		$data['vehicle_status'] = 2;
+		$vehicle->where( array('vehicle_id' => $vehicle_id ) )->save( $data ); // 删除waste_id=id的用户数据
+
 		if ($vehicle) {
 			$this->ajaxReturn( "删除成功" );
 		} else {
@@ -95,6 +99,16 @@ class TransportVehicleAction extends CommonAction{
 		}
 	}
 
+	//运输车辆->GPS绑定详情
+	public function vehicle_gps_binding_detail($vehicle_id=""){
+		$vehicle = M( 'vehicle' )->where( array( 'vehicle_id' => $vehicle_id ) )->find();
+		$device_num = M( 'device' )->where( array( 'device_id' => $vehicle['device_id'] ) )->getField('device_serial_num');
+		$this->device_num = $device_num;
+
+		$tmp_content=$this->fetch( './Public/html/Content/Transport/vehicle/vehicle_gps_binding_detail.html' );
+		$this->ajaxReturn( $tmp_content );
+	}
+
 	//运输车辆->GPS 绑定
 	public function vehicle_gps_binding(){
 		$transport_unit_id = session('transport_unit_id');
@@ -109,6 +123,7 @@ class TransportVehicleAction extends CommonAction{
 		$tmp_content = "<script>vehicle = $vehicle_json;transport_unit_name = $transport_unit_name_json;</script> $tmp_content";
 		$this->ajaxReturn( $tmp_content );
 	}
+
 
 	//运输车辆->GPS 绑定->绑定页面
 	public function vehicle_gps_binding_request($vehicle_id=""){
@@ -133,8 +148,8 @@ class TransportVehicleAction extends CommonAction{
 		$time = date( 'Y-m-d H:i:s', time() );
 		$data['vehicle_modify_time'] = $time;
 		$data['vehicle_status'] = 1;
-		
-		
+
+
 		$vehicle->where( array( 'vehicle_id' => I('post.vehicle_id') ) )->save($data);
 	}
 }

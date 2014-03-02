@@ -2,7 +2,7 @@
 /**
  *
  */
-class TransportManifestAction extends CommonAction{
+class TransportManifestAction extends TransportCommonAction{
 // -------- 转移联单->侧边栏 --------
 	public function manifest_sidebar() {
 		layout( './Common/frame' );
@@ -92,6 +92,17 @@ class TransportManifestAction extends CommonAction{
 		$vehicle = M('vehicle')->where( array( 'transport_unit_id' => session('transport_unit_id') ) )->select();
 		$vehicle_json = json_encode($vehicle);
 
+		$vehicle_num_1 = M('vehicle')->where( array('vehicle_id' => $manifest['vehicle_id_1'] ) )->find();
+		$this->vehicle_num_1 = $vehicle_num_1['vehicle_num'];
+
+		$vehicle_num_2 = M('vehicle')->where( array('vehicle_id' => $manifest['vehicle_id_2'] ) )->find();
+		$this->vehicle_num_2 = $vehicle_num_2['vehicle_num'];
+		// if($manifest['vehicle_id_2']){
+		// 	$vehicle_num_2 = M('vehicle')->where( array('vehicle_id') => $manifest['vehicle_2'] )
+		// 	$vehicle = M('vehicle')->where( array( 'transport_unit_id' => session('transport_unit_id') ) )->select();
+		// 	$vehicle_json = json_encode($vehicle);
+		// }
+		
 		$p_id=M('manifest')->where("manifest_id='$manifest_id'")->getField('production_unit_id');
 		$r_id=M('manifest')->where("manifest_id='$manifest_id'")->getField('reception_unit_id');
 		$p_name=M('production_unit')->where("production_unit_id='$p_id'")->getField('production_unit_name');
@@ -142,6 +153,14 @@ class TransportManifestAction extends CommonAction{
 		$manifest_id_json = json_encode($manifest_id);
 		$manifest_status_json = json_encode($manifest['manifest_status']);
 
+		$vehicle_num_1 = M( 'vehicle' )->where( array( 'vehicle_id' => $manifest['vehicle_id_1'] ) )->getField('vehicle_num');
+		$this->vehicle_num_1 = $vehicle_num_1;
+
+		if($manifest['vehicle_id_2']){
+			$vehicle_num_2 = M( 'vehicle' )->where( array( 'vehicle_id' => $manifest['vehicle_id_2'] ) )->getField('vehicle_num');
+			$this->vehicle_num_2 = $vehicle_num_2;
+		}
+
 		$this->manifest = $manifest;
 		$this->transport_unit = $transport_unit;
 		$p_id=M('manifest')->where("manifest_id='$manifest_id'")->getField('production_unit_id');
@@ -190,6 +209,15 @@ class TransportManifestAction extends CommonAction{
 		$transport_unit = M( 'transport_unit' )->where( array( 'transport_unit_id' => session( 'transport_unit_id' ) ) )->find();
 		$this->manifest = $manifest;
 		$this->unit = $transport_unit;
+		
+		$vehicle_num_1 = M( 'vehicle' )->where( array( 'vehicle_id' => $manifest['vehicle_id_1'] ) )->getField('vehicle_num');
+		$this->vehicle_num_1 = $vehicle_num_1;
+
+		if($manifest['vehicle_id_2']){
+			$vehicle_num_2 = M( 'vehicle' )->where( array( 'vehicle_id' => $manifest['vehicle_id_2'] ) )->getField('vehicle_num');
+			$this->vehicle_num_2 = $vehicle_num_2;
+		}
+
 		$p_id=M('manifest')->where("manifest_id='$manifest_id'")->getField('production_unit_id');
 		$r_id=M('manifest')->where("manifest_id='$manifest_id'")->getField('reception_unit_id');
 		$p_name=M('production_unit')->where("production_unit_id='$p_id'")->getField('production_unit_name');

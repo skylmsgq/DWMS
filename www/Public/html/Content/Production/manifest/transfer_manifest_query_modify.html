@@ -87,11 +87,14 @@
                 <tr>
                     <td>危废包装方式</td>
                     <td>
-                        <input type="text" name="waste_package" class="form-control input-sm required-cn" placeholder="{$manifest.waste_package}" value="{$manifest.waste_package}">
+                        <select type="text" name="waste_package" id="waste_package" class="form-control input-sm required-cn" placeholder="{$manifest.waste_package}" value="{$manifest.waste_package}">
+                            
+                        </select>
                     </td>
                     <td>危废外运目的</td>
                     <td>
-                        <input type="text" name="waste_transport_goal" class="form-control input-sm required-cn" placeholder="{$manifest.waste_transport_goal}" value="{$manifest.waste_transport_goal}">
+                        <select type="text" name="waste_transport_goal" id="waste_transport_goal" class="form-control input-sm required-cn" placeholder="{$manifest.waste_transport_goal}" value="{$manifest.waste_transport_goal}">
+                        </select>
                     </td>
                 </tr>
                 <tr>
@@ -112,7 +115,7 @@
                     </td>
                     <td>危废转移时间</td>
                     <td>
-                        <input type="date" name="waste_transport_time" class="form-control input-sm required-cn" placeholder="$manifest.waste_transport_time" value="{$manifest.waste_transport_time}">
+                        {$manifest.waste_transport_time}
                     </td>
                 </tr>
             </table>
@@ -132,6 +135,16 @@
 $("#manifest_modify").validate();
 </script>
 <script type="text/javascript">
+$("#waste_package").html('<option>' + '{$manifest.waste_package}' + '</option>');
+for(var idx in package_method){   
+    $("#waste_package").append('<option value="' + package_method[idx].package_method + '">' + package_method[idx].package_method + '</option>');
+}
+
+$("#waste_transport_goal").html('<option>' + '{$manifest.waste_transport_goal}' + '</option>');
+for(var idx in waste_disposal_method){   
+    $("#waste_transport_goal").append('<option value="' + waste_disposal_method[idx].waste_disposal_method + '">' + waste_disposal_method[idx].waste_disposal_method + '</option>');
+}
+
 function ajaxAction() {
     if(!$('#manifest_modify').valid()){
         return;

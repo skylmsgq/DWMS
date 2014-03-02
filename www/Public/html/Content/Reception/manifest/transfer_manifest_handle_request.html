@@ -128,9 +128,9 @@
                     <td>
                         {$manifest.transport_date_1}
                     </td>
-                    <td>车辆1 ID</td>
+                    <td>车辆1 牌照</td>
                     <td>
-                        {$manifest.vehicle_id_1}
+                        {$vehicle_num_1}
                     </td>
                 </tr>
                 <tr>
@@ -154,11 +154,11 @@
                     </td>
                 </tr>
                     <tr>
-                    <td>第一承运人姓名</td>
+                    <td>第二承运人姓名</td>
                     <td>
                         {$manifest.carrier_2_name} 
                     </td>
-                    <td>第一承运人工号</td>
+                    <td>第二承运人工号</td>
                     <td>
                        {$manifest.carrier_2_num}
                     </td>
@@ -168,9 +168,9 @@
                     <td>
                        {$manifest.transport_date_2}  
                     </td>
-                    <td>车辆1 ID</td>
+                    <td>车辆2 牌照</td>
                     <td>
-                        {$manifest.vehicle_id_2} 
+                        {$vehicle_num_2} 
                     </td>
                 </tr>
                 <tr>
@@ -205,7 +205,8 @@
                 <tr>
                     <td>接受单位经营许可证号</td>
                     <td>
-                        <input type="text" name="reception_unit_license_num" class="form-control input-sm required-cn" placeholder="接受单位经营许可证号">  
+<!--                         <input type="text" name="reception_unit_license_num" class="form-control input-sm required-cn" placeholder="接受单位经营许可证号"> -->
+                        {$reception_unit.reception_unit_license_num}  
                     </td>
                     <td>接收人姓名</td>
                     <td>
@@ -225,7 +226,8 @@
                 <tr>
                     <td>废物处置方式</td>
                     <td>
-                        <input type="text" name="waste_disposal_method" class="form-control input-sm" placeholder="废物处置方式">  
+                        <select type="text" name="waste_disposal_method" id="waste_disposal_method" class="form-control input-sm" placeholder="废物处置方式"> 
+                        </select> 
                     </td>
                     <td>接受单位负责人姓名</td>
                     <td>
@@ -258,13 +260,15 @@
 $("#manifest_request").validate();
 </script>
 <script type="text/javascript">
-
+for(var idx in waste_disposal_method){   
+    $("#waste_disposal_method").append('<option value="' + waste_disposal_method[idx] + '">' + waste_disposal_method[idx] + '</option>');
+}
 
 function ajaxAction() {
     if(!$('#manifest_request').valid()){
         return;
     }
-    var form_serialize = "" + $('#manifest_request').serialize();
+    var form_serialize = "" + $('#manifest_request').serialize() + "&reception_unit_license_num=" + reception_unit_license_num;
 
     $("#model-content").html('<center style="margin:50px"><h4>提交中...</h4><div class="progress progress-striped active" style="width: 50%"><div class="progress-bar"  role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div></div></center>');
 

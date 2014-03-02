@@ -2,7 +2,7 @@
 /**
  *
  */
-class ReceptionManifestAction extends CommonAction{
+class ReceptionManifestAction extends ReceptionCommonAction{
 // -------- 转移联单->侧边栏 --------
 	public function manifest_sidebar() {
 		layout( './Common/frame' );
@@ -15,11 +15,11 @@ class ReceptionManifestAction extends CommonAction{
 		$condition['_string'] = 'manifest_status=4 OR manifest_status=9 OR manifest_status=10 OR manifest_status=12 OR manifest_status=13 OR manifest_status=11';
 		$manifest_data = $manifest->where($condition)->getField( 'manifest_id,manifest_num,manifest_modify_time,manifest_status' );
 
-		$manifest_json = json_encode( $manifest_data ); 
+		$manifest_json = json_encode( $manifest_data );
 
 		$unit_name = M( 'reception_unit' )->where( array( 'reception_unit_id' => session( 'reception_unit_id' ) ) )->getField( 'reception_unit_name' );
 		$unit_json = json_encode( $unit_name );
-		
+
 		$tmp_content=$this->fetch( './Public/html/Content/Reception/manifest/transfer_manifest_handle.html' );
 		$tmp_content = "<script>manifest_json = $manifest_json;  unit_json = $unit_json;</script> $tmp_content";
 		$this->ajaxReturn( $tmp_content );
@@ -29,12 +29,24 @@ class ReceptionManifestAction extends CommonAction{
 	public function transfer_manifest_handle_request($manifest_id=""){
 		$manifest = M( 'manifest' )->where( array( 'manifest_id' =>$manifest_id ) )->find();
 		$reception_unit = M( 'reception_unit' )->where( array( 'reception_unit_id' => session('reception_unit_id' ) ) )->find();
-		
+
 		$manifest_id_json = json_encode($manifest_id);
 		$manifest_status_json = json_encode($manifest['manifest_status']);
 
+		$waste_disposal_method = M( 'waste_disposal_method' )->where('waste_disposal_method_id>0')->getField('waste_disposal_method',true);
+		$waste_disposal_method_json = json_encode($waste_disposal_method);
+
+		$vehicle_num_1 = M( 'vehicle' )->where( array( 'vehicle_id' => $manifest['vehicle_id_1'] ) )->getField('vehicle_num');
+		$this->vehicle_num_1 = $vehicle_num_1;
+
+		if($manifest['vehicle_id_2']){
+			$vehicle_num_2 = M( 'vehicle' )->where( array( 'vehicle_id' => $manifest['vehicle_id_2'] ) )->getField('vehicle_num');
+			$this->vehicle_num_2 = $vehicle_num_2;
+		}
+
 		$this->manifest = $manifest;
 		$this->reception_unit = $reception_unit;
+		$reception_unit_license_num = json_encode($reception_unit['reception_unit_license_num']);
 		$p_id=M('manifest')->where("manifest_id='$manifest_id'")->getField('production_unit_id');
 		$t_id=M('manifest')->where("manifest_id='$manifest_id'")->getField('transport_unit_id');
 		$p_name=M('production_unit')->where("production_unit_id='$p_id'")->getField('production_unit_name');
@@ -42,7 +54,7 @@ class ReceptionManifestAction extends CommonAction{
 		$this->p_name=$p_name;
 		$this->t_name=$t_name;
 		$tmp_content=$this->fetch( './Public/html/Content/Reception/manifest/transfer_manifest_handle_request.html' );
-		$tmp_content = "<script>manifest_id_json = $manifest_id_json; manifest_status_json = $manifest_status_json;</script> $tmp_content";
+		$tmp_content = "<script>waste_disposal_method = $waste_disposal_method_json; reception_unit_license_num = $reception_unit_license_num;manifest_id_json = $manifest_id_json; manifest_status_json = $manifest_status_json;</script> $tmp_content";
 		$this->ajaxReturn( $tmp_content );
 	}
 
@@ -52,7 +64,7 @@ class ReceptionManifestAction extends CommonAction{
 		$data = I( 'post.' );
 		$time = date( 'Y-m-d H:i:s', time() );
 		$data['manifest_modify_time'] = $time;
-		
+
 		$manifest_status_old = I( 'post.manifest_status_old' );
 		switch ( $manifest_status_old ) {
 		case '4':
@@ -72,9 +84,20 @@ class ReceptionManifestAction extends CommonAction{
 	public function transfer_manifest_handle_modify($manifest_id=""){
 		$manifest = M( 'manifest' )->where( array( 'manifest_id' =>$manifest_id ) )->find();
 		$reception_unit = M( 'reception_unit' )->where( array( 'reception_unit_id' => session('reception_unit_id' ) ) )->find();
-		
+
 		$manifest_id_json = json_encode($manifest_id);
 		$manifest_status_json = json_encode($manifest['manifest_status']);
+
+		$waste_disposal_method = M( 'waste_disposal_method' )->where('waste_disposal_method_id>0')->getField('waste_disposal_method',true);
+		$waste_disposal_method_json = json_encode($waste_disposal_method);
+
+		$vehicle_num_1 = M( 'vehicle' )->where( array( 'vehicle_id' => $manifest['vehicle_id_1'] ) )->getField('vehicle_num');
+		$this->vehicle_num_1 = $vehicle_num_1;
+
+		if($manifest['vehicle_id_2']){
+			$vehicle_num_2 = M( 'vehicle' )->where( array( 'vehicle_id' => $manifest['vehicle_id_2'] ) )->getField('vehicle_num');
+			$this->vehicle_num_2 = $vehicle_num_2;
+		}
 
 		$this->manifest = $manifest;
 		$this->reception_unit = $reception_unit;
@@ -85,17 +108,17 @@ class ReceptionManifestAction extends CommonAction{
 		$this->p_name=$p_name;
 		$this->t_name=$t_name;
 		$tmp_content=$this->fetch( './Public/html/Content/Reception/manifest/transfer_manifest_handle_modify.html' );
-		$tmp_content = "<script>manifest_id_json = $manifest_id_json; manifest_status_json = $manifest_status_json;</script> $tmp_content";
+		$tmp_content = "<script>waste_disposal_method = $waste_disposal_method_json; manifest_id_json = $manifest_id_json; manifest_status_json = $manifest_status_json;</script> $tmp_content";
 		$this->ajaxReturn( $tmp_content );
 	}
 
-// 转移联单->转移联单处理->修改页->保存	
+// 转移联单->转移联单处理->修改页->保存
 	public function transfer_manifest_handle_modified($manifest_id="") {
 		$manifest = M( 'manifest' ); // 实例化record对象
 		$data = I( 'post.' );
 		$time = date( 'Y-m-d H:i:s', time() );
 		$data['manifest_modify_time'] = $time;
-		
+
 		$manifest_status_old = I( 'post.manifest_status_old' );
 		switch ( $manifest_status_old ) {
 		case '9':
@@ -106,7 +129,7 @@ class ReceptionManifestAction extends CommonAction{
 			break;
 		case '13':
 			$manifest_status = 13;
-			break;	
+			break;
 		default:
 			$manifest_status = -1;
 			break;
@@ -119,9 +142,17 @@ class ReceptionManifestAction extends CommonAction{
 	public function transfer_manifest_handle_submit($manifest_id="") {
 		$manifest = M( 'manifest' )->where( array( 'manifest_id' =>$manifest_id ) )->find();
 		$reception_unit = M( 'reception_unit' )->where( array( 'reception_unit_id' => session('reception_unit_id' ) ) )->find();
-		
+
 		$manifest_id_json = json_encode($manifest_id);
 		$manifest_status_json = json_encode($manifest['manifest_status']);
+
+		$vehicle_num_1 = M( 'vehicle' )->where( array( 'vehicle_id' => $manifest['vehicle_id_1'] ) )->getField('vehicle_num');
+		$this->vehicle_num_1 = $vehicle_num_1;
+
+		if($manifest['vehicle_id_2']){
+			$vehicle_num_2 = M( 'vehicle' )->where( array( 'vehicle_id' => $manifest['vehicle_id_2'] ) )->getField('vehicle_num');
+			$this->vehicle_num_2 = $vehicle_num_2;
+		}
 
 		$this->manifest = $manifest;
 		$this->reception_unit = $reception_unit;
@@ -138,7 +169,7 @@ class ReceptionManifestAction extends CommonAction{
 
 // 转移联单->转移联单处理->提交页->提交联单
 	public function transfer_manifest_handle_submited($manifest_id="") {
-		$manifest = M( 'manifest' ); 
+		$manifest = M( 'manifest' );
 		$time = date( 'Y-m-d H:i:s', time() );
 		$data['manifest_modify_time'] = $time;
 		$data['manifest_id'] = $manifest_id;
@@ -153,11 +184,11 @@ class ReceptionManifestAction extends CommonAction{
 		$condition['_string'] = 'manifest_status=9 OR manifest_status=13 OR manifest_status=10 OR manifest_status=12 OR manifest_status=11';
 		$manifest_data = $manifest->where($condition)->getField( 'manifest_id,manifest_num,manifest_add_time,manifest_status' );
 
-		$manifest_json = json_encode( $manifest_data ); 
+		$manifest_json = json_encode( $manifest_data );
 
 		$unit_name = M( 'reception_unit' )->where( array( 'reception_unit_id' => session( 'reception_unit_id' ) ) )->getField( 'reception_unit_name' );
 		$unit_json = json_encode( $unit_name );
-		
+
 		$tmp_content=$this->fetch( './Public/html/Content/Reception/manifest/transfer_manifest_query.html' );
 		$tmp_content = "<script>manifest_json = $manifest_json;  unit_json = $unit_json;</script> $tmp_content";
 		$this->ajaxReturn( $tmp_content );
@@ -169,6 +200,15 @@ class ReceptionManifestAction extends CommonAction{
 		$reception_unit = M( 'reception_unit' )->where( array( 'reception_unit_id' => session( 'reception_unit_id' ) ) )->find();
 		$this->manifest = $manifest;
 		$this->unit = $transport_unit;
+		
+		$vehicle_num_1 = M( 'vehicle' )->where( array( 'vehicle_id' => $manifest['vehicle_id_1'] ) )->getField('vehicle_num');
+		$this->vehicle_num_1 = $vehicle_num_1;
+
+		if($manifest['vehicle_id_2']){
+			$vehicle_num_2 = M( 'vehicle' )->where( array( 'vehicle_id' => $manifest['vehicle_id_2'] ) )->getField('vehicle_num');
+			$this->vehicle_num_2 = $vehicle_num_2;
+		}
+
 		$p_id=M('manifest')->where("manifest_id='$manifest_id'")->getField('production_unit_id');
 		$t_id=M('manifest')->where("manifest_id='$manifest_id'")->getField('transport_unit_id');
 		$p_name=M('production_unit')->where("production_unit_id='$p_id'")->getField('production_unit_name');

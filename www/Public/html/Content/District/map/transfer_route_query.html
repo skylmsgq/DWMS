@@ -17,56 +17,65 @@
         <div id="div_input-group">
             <div id="myAlert"></div>
             <div class="row" style="position:absolute; z-index:1;">
-                <div class="col-md-1">
+                <div class="col-md-2">
                 </div>
-                <div class="col-md-10">
-                    <div class="input-group input-group-sm">
-                        <span class="input-group-addon"></span>
-                        <select class="form-control input-sm" id="selectProductionUnit" onchange="showProductionUnit();">
-                            <option value="-1">请选择生产单位</option>
-                        </select>
-                        <span class="input-group-addon"></span>
-                        <select class="form-control input-sm" id="selectReceptionUnit" onchange="showReceptionUnit();">
-                            <option value="-1">请选择接受单位</option>
-                        </select>
-                        <span class="input-group-addon"></span>
-                        <div class="btn-group">
-                            <button class="btn btn-info btn-sm" onclick="searchRoute();">查询</button>
-                            <button class="btn btn-danger btn-sm" onclick="deleteRoute();">删除</button>
-                        </div>
-                    </div>
+                <div class="col-md-8">
+                    <table style="background-color:#FFFFFF; border-radius:5px;">
+                        <tr>
+                            <td>
+                                <select class="form-control input-sm" id="selectProductionUnit" onchange="showProductionUnit();">
+                                    <option value="-1">请选择生产单位</option>
+                                </select>
+                            </td>
+                            <td>
+                                <select class="form-control input-sm" id="selectReceptionUnit" onchange="showReceptionUnit();">
+                                    <option value="-1">请选择接受单位</option>
+                                </select>
+                            </td>
+                            <td>
+                                <button class="btn btn-info btn-sm" onclick="searchRoute();">查询</button>
+                            </td>
+                            <td>
+                                <button class="btn btn-danger btn-sm" onclick="deleteRoute();">删除</button>
+                            </td>
+                        </tr>
+                    </table>
                 </div>
-                <div class="col-md-1">
+                <div class="col-md-2">
                 </div>
             </div>
         </div>
 
-        <div id="map_panel" style="display:none; width:20%; float:right; position:absolute; right:0px; z-index:1; ">
+        <div id="map_panel" style="display:none; width:350px; float:right; position:absolute; right:0px; z-index:1; ">
             <div id="myAlertFull"></div>
-            <label class="sr-only" for="selectProductionUnitFull">产生单位：</label>
-            <select class="form-control input-sm" id="selectProductionUnitFull" onchange="showProductionUnit();">
-                <option value="-1">请选择生产单位</option>
-            </select>
-            <div class="blank_div"></div>
-            <label class="sr-only" for="selectReceptionUnitFull">接受单位：</label>
-            <select class="form-control input-sm" id="selectReceptionUnitFull" onchange="showReceptionUnit();">
-                <option value="-1">请选择接受单位</option>
-            </select>
-            <div class="blank_div"></div>
-            <div class="row">
-                <div class="col-md-6">
-                    <center>
+            <table class="table table-bordered table-hover table-condensed table-responsive" style="margin-bottom:0px; background-color:#FFFFFF;">
+                <tr>
+                    <td colspan="2">
+                        <select class="form-control input-sm" id="selectProductionUnitFull" onchange="showProductionUnit();">
+                            <option value="-1">请选择生产单位</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+
+                        <select class="form-control input-sm" id="selectReceptionUnitFull" onchange="showReceptionUnit();">
+                            <option value="-1">请选择接受单位</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="text-align:center;">
+
                         <button class="btn btn-info btn-sm" onclick="searchRoute();">查询</button>
-                    </center>
-                </div>
-                <div class="col-md-6">
-                    <center>
+                    </td>
+                    <td style="text-align:center;">
                         <button class="btn btn-danger btn-sm" onclick="deleteRoute();">删除</button>
-                    </center>
-                </div>
-            </div>
+                    </td>
+                </tr>
+            </table>
             <div class="blank_div"></div>
-            <div id="route_panel"></div>
+            <div id="route_panel" style="border-radius:5px;"></div>
         </div>
 
         <div id="map_container" style="width:100%;float:left;">地图加载中...</div>
@@ -273,7 +282,8 @@ function searchRoute() {
             route_id = routeObj.route_id;
             var routeDecodeObj = JSON.parse(routeObj.route_lng_lat.replace(/&quot;/g, '"'));
             var routeDetailDecodeObj = routeObj.route_detail.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"');
-            $('#route_panel').css("background-color", "#FFFFFF").html("<h2 style='margin:0px;border-top:2px solid #ccc;padding:10px 0 5px 0px;font:bold 16px arial,sans-serif'>运输路线详情：</h2>" + routeDetailDecodeObj);
+            var windowHeight = $(window).height();
+            $('#route_panel').css("width", "100%").css("height", windowHeight * 0.5 + "px").css("overflow", "auto").css("background-color", "#FFFFFF").html("<h2 style='margin:0px;border-top:2px solid #ccc;padding:10px 0 5px 0px;font:bold 16px arial,sans-serif'>运输路线详情：</h2>" + routeDetailDecodeObj);
             var pointArray = new Array();
             for (var pointIdx in routeDecodeObj) {
                 var lng = routeDecodeObj[pointIdx].lng;
@@ -317,7 +327,7 @@ function deleteRoute() {
             if (data == "success") {
                 myAlertSucc("路线删除成功");
                 BaiduMap.clearOverlays();
-                $('#route_panel').html("").css("background-color","");
+                $('#route_panel').html("").css("background-color", "");
             } else {
                 myAlertFail("路线删除失败");
             }
