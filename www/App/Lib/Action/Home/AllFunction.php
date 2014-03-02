@@ -595,7 +595,7 @@ function getWasteName($imei){
 	$result1 = $pdutable->where(" production_unit_id='$userId'")->find();
 	if(!$result1){
 		$error->code = 1;
-		$error->des = urlencode('企业没有注册危险固废');
+		$error->des = urlencode('企业没有注册');
 		$resdata->error = $error;
 		return $resdata;
 	}
@@ -605,6 +605,8 @@ function getWasteName($imei){
 		if ($value=="")
 			continue;
 		$result2 = $wastable->where(" waste_code='$value'")->find();
+		if (!$result2)
+			continue;
 		$wasteName = urlencode($result2['waste_name']);
 		$waste_id=$result2['waste_id'];
 		$newDate[$key]['name'] =  $wasteName;
