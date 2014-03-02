@@ -103,6 +103,14 @@ class DistrictBusinessAction extends DistrictCommonAction{
 		$manifest = M( 'manifest' )->where( array( 'manifest_id' =>$manifest_id ) )->find();
 		$this->manifest = $manifest;
 
+		$vehicle_num_1 = M( 'vehicle' )->where( array( 'vehicle_id' => $manifest['vehicle_id_1'] ) )->getField('vehicle_num');
+		$this->vehicle_num_1 = $vehicle_num_1;
+
+		if($manifest['vehicle_id_2']){
+			$vehicle_num_2 = M( 'vehicle' )->where( array( 'vehicle_id' => $manifest['vehicle_id_2'] ) )->getField('vehicle_num');
+			$this->vehicle_num_2 = $vehicle_num_2;
+		}
+		
 		$manifest_id_json = json_encode( $manifest_id );
 		$manifest_status_json = json_encode( $manifest['manifest_status'] );
 		$production_unit_id_json = json_encode( $manifest['production_unit_id'] );
