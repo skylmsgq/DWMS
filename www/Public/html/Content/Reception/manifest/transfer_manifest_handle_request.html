@@ -154,11 +154,11 @@
                     </td>
                 </tr>
                     <tr>
-                    <td>第一承运人姓名</td>
+                    <td>第二承运人姓名</td>
                     <td>
                         {$manifest.carrier_2_name} 
                     </td>
-                    <td>第一承运人工号</td>
+                    <td>第二承运人工号</td>
                     <td>
                        {$manifest.carrier_2_num}
                     </td>
@@ -226,7 +226,8 @@
                 <tr>
                     <td>废物处置方式</td>
                     <td>
-                        <input type="text" name="waste_disposal_method" class="form-control input-sm" placeholder="废物处置方式">  
+                        <select type="text" name="waste_disposal_method" id="waste_disposal_method" class="form-control input-sm" placeholder="废物处置方式"> 
+                        </select> 
                     </td>
                     <td>接受单位负责人姓名</td>
                     <td>
@@ -259,7 +260,9 @@
 $("#manifest_request").validate();
 </script>
 <script type="text/javascript">
-
+for(var idx in waste_disposal_method){   
+    $("#waste_disposal_method").append('<option value="' + waste_disposal_method[idx] + '">' + waste_disposal_method[idx] + '</option>');
+}
 
 function ajaxAction() {
     if(!$('#manifest_request').valid()){

@@ -3,7 +3,7 @@ function myAlertSucc(msg) {
 }
 
 function myAlertFail(msg) {
-	$("#myAlert").html('<div class="alert alert-warning alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>错误: </strong> ' + msg + ' </div>');
+	$("#myAlert").html('<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>错误: </strong> ' + msg + ' </div>');
 }
 
 function myAlertInfo(msg){

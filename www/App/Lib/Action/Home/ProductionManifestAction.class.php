@@ -28,8 +28,8 @@ class ProductionManifestAction extends ProductionCommonAction{
 
 		$package_method = M( 'package_method' )->where('package_method_id>0')->select();
 		$package_method_json = json_encode($package_method);
-		$waste_disposal_method = M( 'waste_disposal_method' )->where('waste_disposal_method_id>0')->select();
-		$waste_disposal_method_json = json_encode($waste_disposal_method);
+		$waste_transport_goal = M( 'waste_transport_goal' )->where('waste_transport_goal_id>0')->select();
+		$waste_transport_goal_json = json_encode($waste_transport_goal);
 
 		$production_unit = M( 'production_unit' )->where( array( 'production_unit_id' => session('production_unit_id' ) ) )->find();
 		//$this->ajaxReturn("<script>record_data=$record_json.reception_unit_name;</script>");
@@ -45,7 +45,7 @@ class ProductionManifestAction extends ProductionCommonAction{
 
 
 		$tmp_content=$this->fetch( './Public/html/Content/Production/manifest/transfer_manifest_request_page.html' );
-		$tmp_content = "<script>record_json = $record_json;package_method = $package_method_json;waste_disposal_method = $waste_disposal_method_json; </script> $tmp_content";
+		$tmp_content = "<script>record_json = $record_json;package_method = $package_method_json;waste_transport_goal = $waste_transport_goal_json; </script> $tmp_content";
 		$this->ajaxReturn( $tmp_content );
 	}
 
@@ -128,8 +128,8 @@ class ProductionManifestAction extends ProductionCommonAction{
 
 		$package_method = M( 'package_method' )->where('package_method_id>0')->select();
 		$package_method_json = json_encode($package_method);
-		$waste_disposal_method = M( 'waste_disposal_method' )->where('waste_disposal_method_id>0')->select();
-		$waste_disposal_method_json = json_encode($waste_disposal_method);
+		$waste_transport_goal = M( 'waste_transport_goal' )->where('waste_transport_goal_id>0')->select();
+		$waste_transport_goal_json = json_encode($waste_transport_goal);
 
 		$manifest_id_json = json_encode( $manifest_id );
 		$manifest_status_json = json_encode( $manifest['manifest_status'] );
@@ -142,7 +142,7 @@ class ProductionManifestAction extends ProductionCommonAction{
 		$this->r_name = $r_name;
 
 		$tmp_content=$this->fetch( './Public/html/Content/Production/manifest/transfer_manifest_query_modify.html' );
-		$tmp_content = "<script>manifest_id_json = $manifest_id_json; manifest_status_json = $manifest_status_json;package_method = $package_method_json;waste_disposal_method = $waste_disposal_method_json;  </script> $tmp_content";
+		$tmp_content = "<script>manifest_id_json = $manifest_id_json; manifest_status_json = $manifest_status_json;package_method = $package_method_json;waste_transport_goal = $waste_transport_goal;  </script> $tmp_content";
 		$this->ajaxReturn( $tmp_content );
 	}
 

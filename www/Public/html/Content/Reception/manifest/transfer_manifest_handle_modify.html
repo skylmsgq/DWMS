@@ -225,7 +225,8 @@
                 <tr>
                     <td>废物处置方式</td>
                     <td>
-                        <input type="text" name="waste_disposal_method" class="form-control input-sm" placeholder="{$manifest.waste_disposal_method}" value="{$manifest.waste_disposal_method}">  
+                        <select type="text" id="waste_disposal_method" name="waste_disposal_method" class="form-control input-sm" placeholder="{$manifest.waste_disposal_method}" value="{$manifest.waste_disposal_method}">  
+                        </select>
                     </td>
                     <td>接受单位负责人姓名</td>
                     <td>
@@ -257,6 +258,11 @@
 $("#manifest_modify").validate();
 </script>
 <script type="text/javascript">
+$("#waste_disposal_method").html('<option>' + '{$manifest.waste_disposal_method}' + '</option>');
+for(var idx in waste_disposal_method){   
+    $("#waste_disposal_method").append('<option value="' + waste_disposal_method[idx] + '">' + waste_disposal_method[idx] + '</option>');
+}
+
 function ajaxAction() {
     if(!$('#manifest_modify').valid()){
         return;

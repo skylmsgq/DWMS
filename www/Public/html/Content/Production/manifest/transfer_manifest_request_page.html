@@ -139,10 +139,10 @@ $("#manifest_request").validate();
 <script type="text/javascript">
 
 for(var idx in package_method){   
-    $("#waste_package").append('<option value="' + package_method[idx].package_method + '">' + package_method[idx].package_method + '</option>')
+    $("#waste_package").append('<option value="' + package_method[idx].package_method + '">' + package_method[idx].package_method + '</option>');
 }
-for(var idx in waste_disposal_method){   
-    $("#waste_transport_goal").append('<option value="' + waste_disposal_method[idx].waste_disposal_method + '">' + waste_disposal_method[idx].waste_disposal_method + '</option>')
+for(var idx in waste_transport_goal){   
+    $("#waste_transport_goal").append('<option value="' + waste_transport_goal[idx].waste_transport_goal + '">' + waste_transport_goal[idx].waste_transport_goal + '</option>');
 }
 
 function ajaxAction(actionID,transport_unit_name) {

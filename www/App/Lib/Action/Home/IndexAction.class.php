@@ -12,7 +12,7 @@ class IndexAction extends Action{
 		if ( !IS_POST ) halt( "页面不存在" );
 		//判断验证码是否错误
 		if ( I( 'code', '', 'md5' ) != session( 'verify' ) ) {
-			$this->error( '验证码错误' );
+			$this->ajaxReturn( 8 );
 		}
 
 		$username = I( 'username' );
@@ -21,15 +21,15 @@ class IndexAction extends Action{
 		$user = M( 'user' )->where( array( 'username' => $username ) )->find();
 		//判断用户名或密码是否错误
 		if ( !$user || ( $user['password'] != $password ) ) {
-			$this->error( '用户名或密码错误' );
+			$this->ajaxReturn( 9 );//用户名或密码错误
 		}
 		//判断该用户是否审核通过
 		if ( !$user['is_verify'] ) {
-			$this->error( '您的审核还未通过，请耐心等待。' );
+			$this->ajaxReturn( 10 );//您的审核还未通过，请耐心等待。
 		}
 		//判断该用户是否被锁定
 		if ( $user['lock'] ) {
-			$this->error( '用户被锁定' );
+			$this->ajaxReturn( 11 );//用户被锁定
 		}
 		//更新数据库中的本次登录时间和登录IP
 		$current_login_time = date( 'Y-m-d H:i:s', time() );
@@ -48,42 +48,45 @@ class IndexAction extends Action{
 		//session( 'last_login_ip', $user['last_login_ip'] );
 		session( 'current_login_ip', $current_login['current_login_ip'] );
 
+		$this->ajaxReturn( session('user_type') );
 		//重定向页面
-		switch ( session( 'user_type' ) ) {
-		case 0:
-			$this->redirect( 'Home/Login/index' );
-			break;
-		case 1:
-			$this->redirect( 'Home/LoginCountry/country' );
-			break;
-		case 2:
-			$this->redirect( 'Home/LoginProvince/province' );
-			break;
-		case 3:
-			$this->redirect( 'Home/LoginCity/city' );
-			break;
-		case 4:
-			$this->redirect( 'Home/LoginDistrict/homepage' );
-			break;
-		case 5:
-			$this->redirect( 'Home/LoginProduction/homepage' );
-			break;
-		case 6:
-			// $unit = M('transport_unit')->where( array( 'user_id' => session( 'user_id' ) ) )->find();
-			// session('transport_unit_id', $unit['transport_unit_id']);
+		// switch ( session( 'user_type' ) ) {
+		// case 0:
+		// 	$this->redirect( 'Home/Login/index' );
+		// 	break;
+		// case 1:
+		// 	$this->redirect( 'Home/LoginCountry/country' );
+		// 	break;
+		// case 2:
+		// 	$this->redirect( 'Home/LoginProvince/province' );
+		// 	break;
+		// case 3:
+		// 	$this->redirect( 'Home/LoginCity/city' );
+		// 	break;
+		// case 4:
+		// 	$this->redirect( 'Home/LoginDistrict/homepage' );
+		// 	break;
+		// case 5:
+		// 	$this->redirect( 'Home/LoginProduction/homepage' );
+		// 	break;
+		// case 6:
+		// 	// $unit = M('transport_unit')->where( array( 'user_id' => session( 'user_id' ) ) )->find();
+		// 	// session('transport_unit_id', $unit['transport_unit_id']);
 
-			$this->redirect( 'Home/LoginTransport/homepage' );
-			break;
-		case 7:
-			// $unit = M('reception_unit')->where( array( 'user_id' => session( 'user_id' ) ) )->find();
-			// session('reception_unit_id', $unit['reception_unit_id']);
+		// 	$this->redirect( 'Home/LoginTransport/homepage' );
+		// 	break;
+		// case 7:
+		// 	// $unit = M('reception_unit')->where( array( 'user_id' => session( 'user_id' ) ) )->find();
+		// 	// session('reception_unit_id', $unit['reception_unit_id']);
 
-			$this->redirect( 'Home/LoginReception/homepage' );
-			break;
-		default:
-			$this->redirect( 'Home/Index/index' );
-			break;
-		}
+		// 	$this->redirect( 'Home/LoginReception/homepage' );
+		// 	break;
+		// default:
+		// 	$this->redirect( 'Home/Index/index' );
+		// 	break;
+		// }
+		
+		
 	}
 
 	public function verify() {
