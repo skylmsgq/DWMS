@@ -605,7 +605,7 @@ function getWasteName($imei){
 	  $key=0;
 		for ($i=0;$i<$length;$i++) {
 		$value=$wasteArray[$i];
-		if (!preg_match("/\w{3}-\w{3}-\w{2}/", $value))
+		if (!preg_match("/\w{3}-\w{3}-\w{2,}/", $value))
 			continue;
 		$result2 = $wastable->where(" waste_code='$value'")->find();
 		
