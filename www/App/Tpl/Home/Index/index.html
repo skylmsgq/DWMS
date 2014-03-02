@@ -135,7 +135,7 @@
     function do_reg() {
         // var regList = ["/index.php/Home/Register/index?id=production", "/index.php/Home/Register/index?id=transport", "/index.php/Home/Register/index?id=reception"];
         var regList = ["{:U('Home/Register/index?id=production')}", "{:U('Home/Register/index?id=transport')}", "{:U('Home/Register/index?id=reception')}"];
-        if (regOpt < 0) {     
+        if (regOpt < 0) {
             throw_exception('未选择角色');
             alert("请选择角色");
         }
