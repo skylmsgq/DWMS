@@ -92,6 +92,15 @@ class DistrictTransferAction extends DistrictCommonAction{
 	public function transport_transfer_manifest_page($manifest_id=""){
 		$manifest = M( 'manifest' )->where( array( 'manifest_id' =>$manifest_id ) )->find();
 		$transport_unit = M( 'transport_unit' )->where( array( 'transport_unit_id' => $manifest['transport_unit_id'] ) )->find();
+		
+		$vehicle_num_1 = M( 'vehicle' )->where( array( 'vehicle_id' => $manifest['vehicle_id_1'] ) )->getField('vehicle_num');
+		$this->vehicle_num_1 = $vehicle_num_1;
+
+		if($manifest['vehicle_id_2']){
+			$vehicle_num_2 = M( 'vehicle' )->where( array( 'vehicle_id' => $manifest['vehicle_id_2'] ) )->getField('vehicle_num');
+			$this->vehicle_num_2 = $vehicle_num_2;
+		}
+		
 		$this->manifest = $manifest;
 		$this->unit = $transport_unit;
 		$reception_unit = M( 'reception_unit' )->where( array( 'reception_unit_id' => $manifest['reception_unit_id'] ) )->find();
