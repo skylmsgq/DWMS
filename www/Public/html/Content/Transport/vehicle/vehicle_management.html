@@ -33,11 +33,20 @@ function setTable() {
         var itemModify = ' <a href="#" onclick="fetch_model_page(\'./vehicle_management_modify?vehicle_id=' + vehicle[idx].vehicle_id + '\')"><span class="label label-success"><span class="glyphicon glyphicon-paperclip"></span> 修改</span><a>';
         var itemDelete = ' <a href="#" onclick="vehicle_delete(\'./vehicle_management_delete?vehicle_id=' + vehicle[idx].vehicle_id + '\')"><span class="label label-danger"><span class="glyphicon glyphicon-paperclip"></span> 删除</span><a>';
         var itemData = new Array();
-        itemData[0] = "" + vehicle[idx].vehicle_id;
-        itemData[1] = "" + transport_unit_name;
-        itemData[2] = "" + vehicle[idx].vehicle_num;
-        itemData[3] = "" + vehicle[idx].vehicle_type;
-        itemData[4] = "" + itemDetail + itemModify + itemDelete;
+        // itemData[0] = "" + vehicle[idx].vehicle_id;
+        if(vehicle[idx].vehicle_status == 0){
+            itemStatus = '<a href="#" onclick="fetch_model_page(\'./vehicle_gps_binding_request?vehicle_id=' + vehicle[idx].vehicle_id + '\')"><span class="label label-info"> 未绑定GPS</span><a>';
+        } else if(vehicle[idx].vehicle_status == 1){
+            itemStatus = '<a href="#" onclick="fetch_model_page(\'./vehicle_gps_binding_detail?vehicle_id=' + vehicle[idx].vehicle_id + '\')"><span class="label label-primary"> 已绑定GPS</span><a>';  
+        } else{
+            itemStatus = '<a href="#"><span class="label label-danger">状态错误</span><a>';
+        }
+
+        
+        itemData[0] = "" + vehicle[idx].vehicle_num;
+        itemData[1] = "" + vehicle[idx].vehicle_type;
+        itemData[2] = "" + itemStatus;
+        itemData[3] = "" + itemDetail + itemModify + itemDelete;
         tableData.push(itemData);
     }
 
@@ -46,13 +55,11 @@ function setTable() {
         //"bServerSide": true,    //在服务器端整理数据
         "aaData": tableData,
         "aoColumns": [{
-            "sTitle": "管理编号"
-        }, {
-            "sTitle": "所属公司"
-        }, {
             "sTitle": "车辆牌照"
         }, {
             "sTitle": "车辆类型"
+        }, {
+            "sTitle": "车辆状态"
         }, {
             "sTitle": "操作"
         }],
@@ -122,4 +129,5 @@ function vehicle_delete(ajaxURL){
 
     })
 }
+
 </script>

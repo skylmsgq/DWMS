@@ -2,7 +2,7 @@
 /**
  *
  */
-class LoginDistrictAction extends CommonAction{
+class LoginDistrictAction extends DistrictCommonAction{
 	public function homepage() {
 		if ( session( 'user_type' ) == 4 ) {
 

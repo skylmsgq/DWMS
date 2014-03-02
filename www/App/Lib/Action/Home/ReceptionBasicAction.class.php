@@ -2,7 +2,7 @@
 /**
  *
  */
-class ReceptionBasicAction extends CommonAction{
+class ReceptionBasicAction extends ReceptionCommonAction{
 // -------- 企业基本信息->侧边栏 --------
 	public function basic_sidebar(){
 		layout( './Common/frame' );

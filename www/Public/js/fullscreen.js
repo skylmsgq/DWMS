@@ -16,9 +16,7 @@ function toFullScreen() {
     var windowHeight = $(window).height();
     var windowWidth = $(window).width();
 
-    var div_container = $('#div_container');
-    div_container.css("height", windowHeight + "px");
-    div_container.css("width", windowWidth + "px");
+    $('#div_container').css("height", windowHeight + "px").css("width", windowWidth + "px");
 
     $('#map_container').css("height", windowHeight - 40 - 6 + "px");
 
@@ -47,9 +45,7 @@ function exitFullScreen() {
     $('#div_content').addClass('col-md-9');
     $('#content-container-panel').addClass('panel-body');
 
-    var div_container = $('#div_container');
-    div_container.css("height", containerHeight);
-    div_container.css("width", containerWidth);
+    $('#div_container').css("height", containerHeight).css("width", containerWidth);
 
     var windowHeight = $(window).height();
     $("#map_container").css("height", "" + windowHeight - 350 + "px");

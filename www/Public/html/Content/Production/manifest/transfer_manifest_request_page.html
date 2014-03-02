@@ -85,13 +85,17 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>危废包装方式</td>
+                    <td>危废主要包装方式</td>
                     <td>
-                        <input type="text" name="waste_package" class="form-control input-sm required-cn" placeholder="危废包装方式">
+                        <select type="text" name="waste_package" id="waste_package" class="form-control input-sm required-cn" placeholder="危废包装方式">
+
+                        </select>
                     </td>
                     <td>危废外运目的</td>
                     <td>
-                        <input type="text" name="waste_transport_goal" class="form-control input-sm required-cn" placeholder="危废外运目的">
+                        <select type="text" name="waste_transport_goal" id="waste_transport_goal" class="form-control input-sm required-cn" placeholder="危废外运目的">
+
+                        </select>
                     </td>
                 </tr>
                 <tr>
@@ -132,6 +136,14 @@
 $("#manifest_request").validate();
 </script>
 <script type="text/javascript">
+
+for(var idx in package_method){   
+    $("#waste_package").append('<option value="' + package_method[idx].package_method + '">' + package_method[idx].package_method + '</option>')
+}
+for(var idx in waste_disposal_method){   
+    $("#waste_transport_goal").append('<option value="' + waste_disposal_method[idx].waste_disposal_method + '">' + waste_disposal_method[idx].waste_disposal_method + '</option>')
+}
+
 function ajaxAction(actionID,transport_unit_name) {
     if(!$('#manifest_request').valid()){
         return;

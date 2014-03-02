@@ -1,9 +1,16 @@
 <form role="form" id="pass_list">
     <div class="panel panel-primary">
-        <div class="panel-heading">{$Think.session.username}</div>
+        <div class="panel-heading">{$unit_name}</div>
         <div class="panel-body">
             <div class="table-responsive">
                 <table class="table table-bordered table-condensed">
+                    <tr>
+                        <td id="old_prompt" class="col-md-6">用户名     </td>
+                        <td class="col-md-6">
+                            {$Think.session.username}
+                        </td>       
+                    </tr>
+                    
                     <tr>
                         <td id="old_prompt" class="col-md-6">输入旧密码     </td>
                         <td class="col-md-6">

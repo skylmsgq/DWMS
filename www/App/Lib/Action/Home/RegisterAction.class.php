@@ -9,29 +9,36 @@ class RegisterAction extends Action{
 		$county_code = M( 'county_code' )->where('county_id < 34')->select();
 		$enterprise_register_type = M( 'enterprise_register_type' )->select();
 		$waste = M( 'waste' )->select();
-		$tradecode=M('trade_code')->select();
-		$this->tradecode=$tradecode;
+		// $tradecode=M('trade_code')->select();
+		
+		// $this->tradecode=$tradecode;
 		$this->enterprise_scale = $enterprise_scale;
 		$this->county_code = $county_code;
-		$this->enterprise_register_type = $enterprise_register_type;
+		// $this->enterprise_register_type = $enterprise_register_type;
 		$this->waste = $waste;
 		$username_json = json_encode($username);
+		// $county_code_json = json_encode($county_code);
+		// $tradecode_json = json_encode($tradecode);
+		$enterprise_scale_json = json_encode($enterprise_scale);
+		$enterprise_register_type_json = json_encode($enterprise_register_type);
 		switch ( $id ) {
 
 		case 'production':
 			
 			$tmp_content = $this->fetch( "./App/Tpl/Home/Register/register_production.html" );
-			$tmp_content = "<script>username = $username_json;</script> $tmp_content";
+			$tmp_content = "<script>username = $username_json; enterprise_scale = $enterprise_scale_json;enterprise_register_type = $enterprise_register_type_json;</script> $tmp_content";
 			$this->show( $tmp_content );
 			break;
 
 		case 'transport':
 			$tmp_content = $this->fetch( "./App/Tpl/Home/Register/register_transport.html" );
+			$tmp_content = "<script>username = $username_json;</script> $tmp_content";
 			$this->show( $tmp_content );
 			break;
 
 		case 'reception':
 			$tmp_content = $this->fetch( "./App/Tpl/Home/Register/register_reception.html" );
+			$tmp_content = "<script>username = $username_json;</script> $tmp_content";
 			$this->show( $tmp_content );
 			break;
 
@@ -108,6 +115,7 @@ class RegisterAction extends Action{
 				$county_code = M( 'county_code' )->where( array('county_name'=> I('post.name') ) )->select();
 				if ( $unit->add() ) {
 					$this->success( '生产企业注册成功! ', "../../../../../", 5 );
+					// $this->ajaxReturn(1);
 					//  $mx=$unit->max('production_unit_id');
 					//  $name="production_unit_".$mx;
 					//  $sql='create table '. $name.
@@ -141,10 +149,12 @@ class RegisterAction extends Action{
 				else {
 					$user->where( "user_id='$user_id'" )->delete();
 					$this->error( '账户创建失败:企业信息写入失败', "../../../../../", 5 );
+					// $this->ajaxReturn(0);
 				}
 			}
 			else {
 				$this->error( '账户创建失败:账户信息写入失败', "../../../../../", 5 );
+				// $this->ajaxReturn(0);
 			}
 			break;
 

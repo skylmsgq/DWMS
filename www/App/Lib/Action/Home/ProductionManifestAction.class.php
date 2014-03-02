@@ -2,7 +2,7 @@
 /**
  *
  */
-class ProductionManifestAction extends CommonAction{
+class ProductionManifestAction extends ProductionCommonAction{
 	// -------- 转移联单->侧边栏 --------
 	public function manifest_sidebar() {
 		layout( './Common/frame' );
@@ -12,7 +12,7 @@ class ProductionManifestAction extends CommonAction{
 	// 转移联单->转移联单申请
 	public function transfer_manifest_request() {
 		$record = M( 'record' )->where( array('record_status'=>2,'production_unit_id' => session( 'production_unit_id' ) ) )->getField( 'record_id,record_code,record_date,record_status' );
-		$record_json = json_encode( $record );	
+		$record_json = json_encode( $record );
 
 		$unit_name = M( 'production_unit' )->where( array( 'production_unit_id' => session( 'production_unit_id' ) ) )->getField( 'production_unit_name' );
 		$unit_json = json_encode( $unit_name );
@@ -26,6 +26,11 @@ class ProductionManifestAction extends CommonAction{
 		$record = M( 'record' )->where( array( 'record_id' =>$record_id ) )->find();
 		$record_json = json_encode($record);
 
+		$package_method = M( 'package_method' )->where('package_method_id>0')->select();
+		$package_method_json = json_encode($package_method);
+		$waste_disposal_method = M( 'waste_disposal_method' )->where('waste_disposal_method_id>0')->select();
+		$waste_disposal_method_json = json_encode($waste_disposal_method);
+
 		$production_unit = M( 'production_unit' )->where( array( 'production_unit_id' => session('production_unit_id' ) ) )->find();
 		//$this->ajaxReturn("<script>record_data=$record_json.reception_unit_name;</script>");
 		$t_id = M( 'record' )->where( array( 'record_id' =>$record_id ) )->getField('transport_unit_id');
@@ -33,14 +38,14 @@ class ProductionManifestAction extends CommonAction{
 		$t_name = M( 'transport_unit' )->where( array( 'transport_unit_id' => $t_id ) )->getField('transport_unit_name');
 		$r_name = M( 'reception_unit' )->where( array( 'reception_unit_id' => $r_id ) )->getField('reception_unit_name');
 		$this->t_name = $t_name;
-		$this->r_name = $r_name; 
+		$this->r_name = $r_name;
 
 		$this->record = $record;
 		$this->production_unit = $production_unit;
 
 
 		$tmp_content=$this->fetch( './Public/html/Content/Production/manifest/transfer_manifest_request_page.html' );
-		$tmp_content = "<script>record_json = $record_json; </script> $tmp_content";
+		$tmp_content = "<script>record_json = $record_json;package_method = $package_method_json;waste_disposal_method = $waste_disposal_method_json; </script> $tmp_content";
 		$this->ajaxReturn( $tmp_content );
 	}
 
@@ -57,7 +62,7 @@ class ProductionManifestAction extends CommonAction{
 		$time = date( 'Y-m-d H:i:s', time() );
 		$manifest->manifest_add_time = $time;
 		$manifest->manifest_modify_time = $time;
-		
+
 		$manifest->rfid_table_id = I( 'post.rfid_table_id' );
 		$manifest->manifest_record_id = $record_id;
 
@@ -66,7 +71,7 @@ class ProductionManifestAction extends CommonAction{
 		// $manifest->waste_id = I( 'post.waste_id' );
 		$manifest->waste_weight = I( 'post.waste_weight' );
 		$manifest->waste_num = I( 'post.waste_num' );
-		
+
 
 		$manifest->production_unit_id = session( 'production_unit_id' );
 		$manifest->manifest_num = session( 'production_unit_id' ) . '-' . date( 'Y-m' ) . '-' . ( M( 'manifest' )->max( 'manifest_id' )+1 );
@@ -89,11 +94,11 @@ class ProductionManifestAction extends CommonAction{
 		$condition['_string'] = 'manifest_status >= 0';
 		$manifest_data = $manifest->where($condition)->getField( 'manifest_id,manifest_num,manifest_add_time,manifest_status' );
 
-		$manifest_json = json_encode( $manifest_data ); 
+		$manifest_json = json_encode( $manifest_data );
 
 		$unit_name = M( 'production_unit' )->where( array( 'production_unit_id' => session( 'production_unit_id' ) ) )->getField( 'production_unit_name' );
 		$unit_json = json_encode( $unit_name );
-		
+
 		$tmp_content=$this->fetch( './Public/html/Content/Production/manifest/transfer_manifest_query.html' );
 		$tmp_content = "<script>manifest_json = $manifest_json;  unit_json = $unit_json;</script> $tmp_content";
 		$this->ajaxReturn( $tmp_content );
@@ -121,6 +126,11 @@ class ProductionManifestAction extends CommonAction{
 		$this->manifest = $manifest;
 		$this->production_unit = $production_unit;
 
+		$package_method = M( 'package_method' )->where('package_method_id>0')->select();
+		$package_method_json = json_encode($package_method);
+		$waste_disposal_method = M( 'waste_disposal_method' )->where('waste_disposal_method_id>0')->select();
+		$waste_disposal_method_json = json_encode($waste_disposal_method);
+
 		$manifest_id_json = json_encode( $manifest_id );
 		$manifest_status_json = json_encode( $manifest['manifest_status'] );
 
@@ -132,7 +142,7 @@ class ProductionManifestAction extends CommonAction{
 		$this->r_name = $r_name;
 
 		$tmp_content=$this->fetch( './Public/html/Content/Production/manifest/transfer_manifest_query_modify.html' );
-		$tmp_content = "<script>manifest_id_json = $manifest_id_json; manifest_status_json = $manifest_status_json; </script> $tmp_content";
+		$tmp_content = "<script>manifest_id_json = $manifest_id_json; manifest_status_json = $manifest_status_json;package_method = $package_method_json;waste_disposal_method = $waste_disposal_method_json;  </script> $tmp_content";
 		$this->ajaxReturn( $tmp_content );
 	}
 
@@ -175,7 +185,7 @@ class ProductionManifestAction extends CommonAction{
 		$production_unit = M( 'production_unit' )->where( array( 'production_unit_id' => session( 'production_unit_id' ) ) )->find();
 		$this->manifest = $manifest;
 		$this->production_unit = $production_unit;
-		
+
 		$t_id = M( 'manifest' )->where( array( 'manifest_id' =>$manifest_id ) )->getField('transport_unit_id');
 		$r_id = M( 'manifest' )->where( array( 'manifest_id' =>$manifest_id ) )->getField('reception_unit_id');
 		$t_name = M( 'transport_unit' )->where( array( 'transport_unit_id' => $t_id ) )->getField('transport_unit_name');
@@ -205,7 +215,7 @@ class ProductionManifestAction extends CommonAction{
 			$manifest_status = -1;
 			break;
 		}
-		$manifest = M( 'manifest' ); 
+		$manifest = M( 'manifest' );
 		$time = date( 'Y-m-d H:i:s', time() );
 		$data['manifest_modify_time'] = $time;
 		$data['manifest_id'] = $manifest_id;
@@ -214,7 +224,7 @@ class ProductionManifestAction extends CommonAction{
 	}
 }
 
-	
-	
+
+
 
 ?>

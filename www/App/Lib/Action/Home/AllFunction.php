@@ -463,7 +463,14 @@ function addWaste($json_string){
 		$resdata->error = $error;
 		return $resdata;
 	}
-	  
+	 if ($result2['record_id']!=null)
+	 {
+	 	$error->code = 26;
+		$error->des = urlencode('已备案，不能再修改');
+		$error->rfid=$rfid;
+		$resdata->error = $error;
+		return $resdata;
+	 }
 	//echo $wasteTotal;
 	$wasteTotal = $wasteTotal + $addnum;
 	$Model = new Model() ;// 实例化一个model对象 没有对应任何数据表
@@ -711,7 +718,6 @@ function wasteIn($json_string){
 						$key++;
 					}
 				}
-				
 			}
 		}
 	}

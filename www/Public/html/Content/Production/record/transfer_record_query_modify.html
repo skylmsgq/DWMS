@@ -119,11 +119,11 @@
                         </td>
                     </tr>
                     <tr>
-                        <td>预计危废重量（吨）</td>
+                        <td>预计危废重量（公斤）</td>
                         <td>
                             {$record.predict_output_weight}
                         </td>
-                        <td>预计危废数量（桶）</td>
+                        <td>预计危废数量（个）</td>
                         <td>
                             {$record.predict_output_quantity}
                         </td>
@@ -262,43 +262,59 @@
 <script type="text/javascript" src="__PUBLIC__/js/jquery-myvalidate.js"></script>
 <script type="text/javascript">
 $('#record_modify').validate();
+ var r_length=reception_unit_list.length;
+ var t_length=transport_unit_list.length;
 // console.log(reception_unit_list);
 // $('#transport_unit_id').html('<option>haha</option>');
 for (var idx in transport_unit_list) {
+    if (transport_unit_list[idx].transport_unit_id=="{$transport_unit.transport_unit_id}")
+        continue;
 $('#transport_unit_id').append('<option value="' + transport_unit_list[idx].transport_unit_id + '">' + transport_unit_list[idx].transport_unit_name + '</option>');
     }
 
 // $('#reception_unit_id').html('<option>hehe</option>');
 for (var idx in reception_unit_list) {
+    if (reception_unit_list[idx].reception_unit_id=="{$reception_unit.reception_unit_id}")
+        continue;
 $('#reception_unit_id').append('<option value="' + reception_unit_list[idx].reception_unit_id + '">' + reception_unit_list[idx].reception_unit_name + '</option>');
     }   
 
 function transport_select(transport_unit_id){
-    console.log(transport_unit_id);
-    $('#transport_unit_county').html(transport_unit[transport_unit_id-1].transport_unit_county);
-    $('#transport_unit_address').html(transport_unit[transport_unit_id-1].transport_unit_address);
-    $('#transport_unit_postcode').html(transport_unit[transport_unit_id-1].transport_unit_postcode);
-    $('#transport_unit_contacts_name').html(transport_unit[transport_unit_id-1].transport_unit_contacts_name);
-    $('#transport_unit_contacts_phone').html(transport_unit[transport_unit_id-1].transport_unit_contacts_phone);
+    // console.log(transport_unit_id);
+     var index=transport_unit_id;
+    for (var i=0;i<t_length;i++)
+    {
+        if (transport_unit[i].transport_unit_id==transport_unit_id)
+            {index=i;break;}
+    }
+    $('#transport_unit_county').html(transport_unit[index].transport_unit_county);
+    $('#transport_unit_address').html(transport_unit[index].transport_unit_address);
+    $('#transport_unit_postcode').html(transport_unit[index].transport_unit_postcode);
+    $('#transport_unit_contacts_name').html(transport_unit[index].transport_unit_contacts_name);
+    $('#transport_unit_contacts_phone').html(transport_unit[index].transport_unit_contacts_phone);
     
 }
 
 function reception_select(reception_unit_id){
-    console.log(reception_unit_id);
-    $('#reception_unit_county').html(reception_unit[reception_unit_id-1].reception_unit_county);
-    $('#reception_unit_address').html(reception_unit[reception_unit_id-1].reception_unit_address);
-    $('#reception_unit_postcode').html(reception_unit[reception_unit_id-1].reception_unit_postcode);
-    $('#reception_unit_contacts_name').html(reception_unit[reception_unit_id-1].reception_unit_contacts_name);
-    $('#reception_unit_contacts_phone').html(reception_unit[reception_unit_id-1].reception_unit_contacts_phone);
+    // console.log(reception_unit_id);
+    var index=reception_unit_id;
+    for (var i=0;i<r_length;i++)
+    {
+        if (reception_unit[i].reception_unit_id==reception_unit_id)
+            {index=i;break;}
+    }
+    $('#reception_unit_county').html(reception_unit[index].reception_unit_county);
+    $('#reception_unit_address').html(reception_unit[index].reception_unit_address);
+    $('#reception_unit_postcode').html(reception_unit[index].reception_unit_postcode);
+    $('#reception_unit_contacts_name').html(reception_unit[index].reception_unit_contacts_name);
+    $('#reception_unit_contacts_phone').html(reception_unit[index].reception_unit_contacts_phone);
     
 }
 
 function ajaxAction() {
-    if(!$('#record_request').valid()){
+    if(!$('#record_modify').valid()){
         return;}
-    if(!$('#record_request_1').valid()){
-        return;
-        }
+    
 
     var form_serialize = "" + $('#record_modify').serialize();
     console.log(form_serialize);

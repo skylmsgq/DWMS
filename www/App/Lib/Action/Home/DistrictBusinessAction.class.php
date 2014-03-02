@@ -2,7 +2,7 @@
 /**
  *
  */
-class DistrictBusinessAction extends CommonAction{
+class DistrictBusinessAction extends DistrictCommonAction{
 	// -------- 业务办理->侧边栏 --------
 	public function business_sidebar() {
 		layout( './Common/frame' );
@@ -49,7 +49,7 @@ class DistrictBusinessAction extends CommonAction{
 			'record_status' => $record_status,
 		);
 		$reception_unit_id=M('record')->where("record_id='$record_id'")->getField('reception_unit_id');
-		$rfid_table=M('record')->where("record_id='$record_id'")->getField('rfid_table_id');		
+		$rfid_table=M('record')->where("record_id='$record_id'")->getField('rfid_table_id');
 		$rfid_list=explode(",",$rfid_table);
 		foreach ($rfid_list as  $value) {
 			# code...
@@ -62,7 +62,7 @@ class DistrictBusinessAction extends CommonAction{
 				{
 				$data['transfer_status']=1;
 				$data['record_id']=$record_id;
-				$data['reception_unit_id']=$reception_unit_id;	
+				$data['reception_unit_id']=$reception_unit_id;
 				$resultrfid=$rfid->where("rfid_id='$value' ")->save($data);
 				if (!$resultrfid)
 					$this->ajaxReturn( 0, '修改数据库失败！', 0 );
@@ -93,9 +93,9 @@ class DistrictBusinessAction extends CommonAction{
 		$tmp_content=$this->fetch( './Public/html/Content/District/business/transfer_manifest_management.html' );
 		$tmp_content = "<script>production_manifest_json = $production_manifest_json;reception_manifest_json = $reception_manifest_json </script> $tmp_content";
 		$this->ajaxReturn( $tmp_content );
-		
+
 	}
-		
+
 	// 业务办理->待办业务->转移联单管理：详细信息页
 	public function transfer_manifest_management_page($manifest_id="") {
 		$manifest = M( 'manifest' )->where( array( 'manifest_id' =>$manifest_id ) )->find();
@@ -154,7 +154,7 @@ class DistrictBusinessAction extends CommonAction{
 		$manifest_status = I( 'post.manifest_status' );
 		if ($manifest_status==11)
 		{
-		$rfid_table=M('manifest')->where("manifest_id='$manifest_id'")->getField('rfid_table_id');		
+		$rfid_table=M('manifest')->where("manifest_id='$manifest_id'")->getField('rfid_table_id');
 		$rfid_list=explode(",",$rfid_table);
 		foreach ($rfid_list as  $value) {
 			# code...
@@ -165,7 +165,7 @@ class DistrictBusinessAction extends CommonAction{
 
 				if (!$old_rfidstatus)
 				{
-				$data['manifest_id']=$manifest_id;	
+				$data['manifest_id']=$manifest_id;
 				$resultrfid=$rfid->where("rfid_id='$value' ")->save($data);
 				if (!$resultrfid)
 					$this->ajaxReturn( 0, '修改数据库失败！', 0 );
@@ -189,20 +189,6 @@ class DistrictBusinessAction extends CommonAction{
 
 	// 业务办理->待办业务->企业用户管理
 	public function enterprise_user_management() {
-
-		/*$productionModel = new Model();
-		$transportModel = new Model();
-		$receptionModel = new Model();
-
-		$production_user = $productionModel->query("SELECT `user`.`user_id`, `username`, `user_type`, `production_unit_name` AS `unit_name`, `production_unit_code` AS `unit_code`, `production_unit_username` AS `unit_username`, `waste_location_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN production_unit ON user.user_id = production_unit.user_id");
-
-		$transport_user = $transportModel->query("SELECT `user`.`user_id`, `username`, `user_type`, `transport_unit_name` AS `unit_name`, `transport_unit_code` AS `unit_code`, `transport_unit_username` AS `unit_username`, `transport_unit_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN transport_unit ON user.user_id = transport_unit.user_id");
-
-		$reception_user = $receptionModel->query("SELECT `user`.`user_id`, `username`, `user_type`, `reception_unit_name` AS `unit_name`, `reception_unit_code` AS `unit_code`, `reception_unit_username` AS `unit_username`, `reception_unit_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN reception_unit ON user.user_id = reception_unit.user_id");*/
-
-		/*$userModel = new Model();
-		$all_user = $userModel->union("SELECT `user`.`user_id`, `username`, `user_type`, `production_unit_name` AS `unit_name`, `production_unit_code` AS `unit_code`, `production_unit_username` AS `unit_username`, `waste_location_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN production_unit ON user.user_id = production_unit.user_id")->union("SELECT `user`.`user_id`, `username`, `user_type`, `transport_unit_name` AS `unit_name`, `transport_unit_code` AS `unit_code`, `transport_unit_username` AS `unit_username`, `transport_unit_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN transport_unit ON user.user_id = transport_unit.user_id")->union("SELECT `user`.`user_id`, `username`, `user_type`, `reception_unit_name` AS `unit_name`, `reception_unit_code` AS `unit_code`, `reception_unit_username` AS `unit_username`, `reception_unit_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN reception_unit ON user.user_id = reception_unit.user_id")->select();*/
-
 		$userModel = new Model();
 		$all_user = $userModel->query("
 			(SELECT `user`.`user_id`, `username`, `user_type`, `production_unit_name` AS `unit_name`, `production_unit_id` AS `unit_code`, `production_unit_username` AS `unit_username`, `waste_location_county` AS `location_county`, `jurisdiction_id`, `is_verify`, `lock` FROM user INNER JOIN production_unit ON user.user_id = production_unit.user_id)
@@ -223,6 +209,8 @@ class DistrictBusinessAction extends CommonAction{
 	public function enterprise_user_management_page_production($record_id="") {
 		$production_unit = M( 'production_unit' )->where( array( 'user_id' => $record_id ) )->find();
 		$this->formData = $production_unit;
+		$jurisdiction = M( 'jurisdiction' )->where( array( 'jurisdiction_id' => $production_unit['jurisdiction_id'] ) )->getField('jurisdiction_name');
+		$this->jurisdiction = $jurisdiction;
 		$tmp_content=$this->fetch( './Public/html/Content/District/business/enterprise_user_management_page_production.html' );
 		$this->ajaxReturn( $tmp_content );
 	}
@@ -231,6 +219,8 @@ class DistrictBusinessAction extends CommonAction{
 	public function enterprise_user_management_page_transport($record_id="") {
 		$transport_unit = M( 'transport_unit' )->where( array( 'user_id' => $record_id ) )->find();
 		$this->formData = $transport_unit;
+		$jurisdiction = M( 'jurisdiction' )->where( array( 'jurisdiction_id' => $transport_unit['jurisdiction_id'] ) )->getField('jurisdiction_name');
+		$this->jurisdiction = $jurisdiction;
 		$tmp_content=$this->fetch( './Public/html/Content/District/business/enterprise_user_management_page_transport.html' );
 		$this->ajaxReturn( $tmp_content );
 	}
@@ -239,6 +229,8 @@ class DistrictBusinessAction extends CommonAction{
 	public function enterprise_user_management_page_reception($record_id="") {
 		$reception_unit = M( 'reception_unit' )->where( array( 'user_id' => $record_id ) )->find();
 		$this->formData = $reception_unit;
+		$jurisdiction = M( 'jurisdiction' )->where( array( 'jurisdiction_id' => $reception_unit['jurisdiction_id'] ) )->getField('jurisdiction_name');
+		$this->jurisdiction = $jurisdiction;
 		$tmp_content=$this->fetch( './Public/html/Content/District/business/enterprise_user_management_page_reception.html' );
 		$this->ajaxReturn( $tmp_content );
 	}
@@ -277,10 +269,11 @@ class DistrictBusinessAction extends CommonAction{
 					else
 					{
 						$ans=json_encode("成功");
-						$this->ajaxReturn( $ans ,'JSON');				
+						$this->ajaxReturn( $ans ,'JSON');
 					}
 					$mx=M($prefix)->where("user_id='$userid'")->getField($prefix.'_id');
 					$tablename=$prefix."_".$mx;
+					if ($prefix=="production_unit")
 					$sql='create table '. $tablename.
 					' (
  					id int(11) NOT NULL AUTO_INCREMENT,
@@ -294,25 +287,39 @@ class DistrictBusinessAction extends CommonAction{
   					KEY fk_waste_id_'.$tablename.' (waste_id) USING BTREE,
   					CONSTRAINT fk_waste_id_'.$tablename.' FOREIGN KEY (waste_id) REFERENCES waste (waste_id)
 					)';
+					else
+						$sql='create table '. $tablename.
+					' (
+ 					id int(11) NOT NULL AUTO_INCREMENT,
+ 					rfid_id varchar(255) DEFAULT NULL,
+  					waste_id int(11) DEFAULT NULL,
+  					total_weight double DEFAULT NULL,
+  					receive_date_time datetime DEFAULT NULL,
+  					total_num int(11) DEFAULT NULL,
+  					android_num varchar(255) DEFAULT NULL,
+  					PRIMARY KEY (id),
+  					KEY fk_waste_id_'.$tablename.' (waste_id) USING BTREE,
+  					CONSTRAINT fk_waste_id_'.$tablename.' FOREIGN KEY (waste_id) REFERENCES waste (waste_id)
+					)';
 					$model=new Model();
 					$model->execute($sql);
-					$num=M('information_schema.tables')->where("table_schema = 'dwms' 
+					$num=M('information_schema.tables')->where("table_schema = 'dwms'
 							AND table_name = '$tablename'")->count();
 					if ($num>0)
 					{
 						$ans=json_encode("成功");
-						$this->ajaxReturn( $ans ,'JSON');	
+						$this->ajaxReturn( $ans ,'JSON');
 					}
 					else
 					{
 						$ans=json_encode("创建数据库出现错误");
-						$this->ajaxReturn( $ans ,'JSON');	
-					}		
+						$this->ajaxReturn( $ans ,'JSON');
+					}
 				}
 				else
 				{
 					$ans=json_encode("未知错误");
-					$this->ajaxReturn( $ans ,'JSON');			
+					$this->ajaxReturn( $ans ,'JSON');
 				}
 			//	$this->show( "verify_ok".I( 'post.user_id' ) );
 			}
@@ -320,7 +327,7 @@ class DistrictBusinessAction extends CommonAction{
 		else {
 			$this->error( "action_error" );
 		}
-		
+
 	}
 
 	// 业务办理->待办业务->企业信息管理
@@ -384,7 +391,7 @@ class DistrictBusinessAction extends CommonAction{
 		$result->tong_num=$tong_num;
 		$result->dai_num=$dai_num;
 		$result=json_encode($result);
-		$this->ajaxReturn( $result);	
+		$this->ajaxReturn( $result);
 	}
 
 }
