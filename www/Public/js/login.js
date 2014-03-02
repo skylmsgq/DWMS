@@ -6,3 +6,4 @@ function change_code() {
     $("#code").attr("src", verifyURL + '/' + myTime);
     return false;
 }
+

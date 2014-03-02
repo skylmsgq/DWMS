@@ -5,19 +5,19 @@
 class RegisterAction extends Action{
 	public function index( $id="" ) {
 		$username = M( 'user' )->getField('username',true);
-		$enterprise_scale = M( 'enterprise_scale' )->select();
-		$county_code = M( 'county_code' )->where('county_id < 34')->select();
-		$enterprise_register_type = M( 'enterprise_register_type' )->select();
+		$enterprise_scale = M( 'enterprise_scale' )->getField('enterprise_scale_name',true);
+		$county_code = M( 'county_code' )->where('county_id < 34')->getfield('county_name',true);
+		$enterprise_register_type = M( 'enterprise_register_type' )->getField('enterprise_register_type_name',true);
 		$waste = M( 'waste' )->select();
 		// $tradecode=M('trade_code')->select();
 		
 		// $this->tradecode=$tradecode;
-		$this->enterprise_scale = $enterprise_scale;
-		$this->county_code = $county_code;
+		// $this->enterprise_scale = $enterprise_scale;
+		// $this->county_code = $county_code;
 		// $this->enterprise_register_type = $enterprise_register_type;
 		$this->waste = $waste;
 		$username_json = json_encode($username);
-		// $county_code_json = json_encode($county_code);
+		$county_code_json = json_encode($county_code);
 		// $tradecode_json = json_encode($tradecode);
 		$enterprise_scale_json = json_encode($enterprise_scale);
 		$enterprise_register_type_json = json_encode($enterprise_register_type);
@@ -26,19 +26,19 @@ class RegisterAction extends Action{
 		case 'production':
 			
 			$tmp_content = $this->fetch( "./App/Tpl/Home/Register/register_production.html" );
-			$tmp_content = "<script>username = $username_json; enterprise_scale = $enterprise_scale_json;enterprise_register_type = $enterprise_register_type_json;</script> $tmp_content";
+			$tmp_content = "<script>county_name = $county_code_json;username = $username_json; enterprise_scale = $enterprise_scale_json;enterprise_register_type = $enterprise_register_type_json;</script> $tmp_content";
 			$this->show( $tmp_content );
 			break;
 
 		case 'transport':
 			$tmp_content = $this->fetch( "./App/Tpl/Home/Register/register_transport.html" );
-			$tmp_content = "<script>username = $username_json;</script> $tmp_content";
+			$tmp_content = "<script>username = $username_json;enterprise_scale = $enterprise_scale_json;enterprise_register_type = $enterprise_register_type_json;county_name = $county_code_json;</script> $tmp_content";
 			$this->show( $tmp_content );
 			break;
 
 		case 'reception':
 			$tmp_content = $this->fetch( "./App/Tpl/Home/Register/register_reception.html" );
-			$tmp_content = "<script>username = $username_json;</script> $tmp_content";
+			$tmp_content = "<script>enterprise_scale = $enterprise_scale_json;enterprise_register_type = $enterprise_register_type_json;county_name = $county_code_json;username = $username_json;</script> $tmp_content";
 			$this->show( $tmp_content );
 			break;
 

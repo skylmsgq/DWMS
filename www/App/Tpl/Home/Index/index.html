@@ -36,9 +36,10 @@
         <div class="panel panel-primary" id="login-panel">
             <div class="panel-heading"></div>
             <div class="panel-body" style="border-radius:500px">
-                <form class="form-signin" role="form" action="{:U('Home/Index/login/')}" method="post" id="login">
+                <form style="width:37%;" role="form" id="login">
                     <div class="blank-div"></div>
                     <h2 class="form-signin-heading txt-shadow">危险废物管理信息系统</h2>
+                    
                     <div class="blank-div"></div>
                     <div class="blank-div"></div>
                     <input id="username" type="username" name="username" class="form-control" placeholder="用户名" required="" autofocus="" />
@@ -59,13 +60,20 @@
                     <!-- <label class="checkbox">
                 <input type="checkbox" value="remember-me">记住密码
             </label> -->
-                    <div id="myAlert"></div>
+                    
                     <div class="blank-div"></div>
-                    <button class="btn btn-lg btn-primary btn-block" type="submit" id="login">登 录</button>
-
-                    <button type="button" class="btn btn-default btn-lg btn-block" id="register" data-toggle="modal" data-target="#myModal">注 册</button>
-
+                    <div id="myAlert"></div>
+               <!--       <button class="btn btn-lg btn-primary btn-block" onclick="login()">登 录</button>
+                    <button type="button" class="btn btn-success btn-lg btn-block" id="register" data-toggle="modal" data-target="#myModal">注 册</button>
+ -->
                 </form>
+                <div class="container" style="width:41%;">
+                <center>
+                    <button class="btn btn-lg btn-primary btn-block" onclick="login()">登 录</button>
+                    <button type="button" class="btn btn-success btn-lg btn-block" id="register" data-toggle="modal" data-target="#myModal">注 册</button>
+                </center>
+                </div>
+            
                 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="padding-top:15%">
                     <div class="modal-dialog">
                         <div class="modal-content">
@@ -143,6 +151,39 @@
         location.href = regList[regOpt];
 
     }
+
+    function login(){
+    var form_serialize = "" + $('#login').serialize();
+   
+    $.ajax({
+        type: "post",
+        url: "{:U('Home/Index/login/')}",
+        data: form_serialize,
+        success: function(data) {
+            // $("#model-content").html(data);
+             console.log(data.data);
+            switch(data.data){
+                case 0:
+                    myAlertFail("用户名或密码错误！");
+                    break;
+                case 1:
+                    myAlertFail("您的审核还未通过，请耐心等待。。");
+                    break;
+                case 2:
+                    myAlertFail("用户被锁定，请联系当地环保部门。。");
+                    break;
+                default :
+                    myAlertFail("登录失败");
+            }
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+            console.log("Error:Ajax_Content_Load" + errorThrown);
+            console.log("XMLHttpRequest.status:" + XMLHttpRequest.status);
+            console.log("XMLHttpRequest.readyState:" + XMLHttpRequest.readyState);
+            console.log("textStatus:" + textStatus);
+        }
+    });
+}
     </script>
 </body>
 

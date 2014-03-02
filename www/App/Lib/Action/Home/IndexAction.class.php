@@ -21,15 +21,15 @@ class IndexAction extends Action{
 		$user = M( 'user' )->where( array( 'username' => $username ) )->find();
 		//判断用户名或密码是否错误
 		if ( !$user || ( $user['password'] != $password ) ) {
-			$this->error( '用户名或密码错误' );
+			$this->ajaxReturn( 0,"用户名或密码错误",0 );//用户名或密码错误
 		}
 		//判断该用户是否审核通过
 		if ( !$user['is_verify'] ) {
-			$this->error( '您的审核还未通过，请耐心等待。' );
+			$this->ajaxReturn( 1,"您的审核还未通过，请耐心等待",0 );//您的审核还未通过，请耐心等待。
 		}
 		//判断该用户是否被锁定
 		if ( $user['lock'] ) {
-			$this->error( '用户被锁定' );
+			$this->ajaxReturn( 2,"用户被锁定",0 );//用户被锁定
 		}
 		//更新数据库中的本次登录时间和登录IP
 		$current_login_time = date( 'Y-m-d H:i:s', time() );
