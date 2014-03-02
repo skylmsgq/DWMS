@@ -66,7 +66,7 @@ function setTable() {
         "aoColumns": [{
             "sTitle": "备案编号"
         }, {
-            "sTitle": "备案日期"
+            "sTitle": "转移日期"
         }, {
             "sTitle": "生产单位名称"
         }, {

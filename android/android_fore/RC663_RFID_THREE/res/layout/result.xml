@@ -3,6 +3,30 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
- 
+ <LinearLayout android:id="@+id/LinearLayout02"
+  android:layout_width="fill_parent"
+  android:layout_weight="0.15"
+  android:orientation="vertical"
+  android:layout_height="fill_parent">
+      <TextView android:textSize="7pt" 
+       android:id="@+id/result"
+       android:layout_width="fill_parent"
+       android:layout_height="wrap_content"> 
+     </TextView> 
+  </LinearLayout>
+    
+ <LinearLayout android:id="@+id/LinearLayout02"
+  android:layout_width="fill_parent"
+  android:layout_weight="0.85"
+  android:orientation="vertical"
+  android:gravity="bottom|end"
+  android:layout_height="fill_parent">
+   <Button android:text="更多详情"
+   android:textSize="9pt"
+   android:id="@+id/button_detail" 
+   android:layout_width="fill_parent"
+   android:layout_height="wrap_content"></Button>
+  </LinearLayout>
+    
 
 </LinearLayout>

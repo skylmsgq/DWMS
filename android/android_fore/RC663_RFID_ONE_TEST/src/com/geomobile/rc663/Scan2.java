@@ -230,19 +230,6 @@ public class Scan2 extends ScanActivity implements OnClickListener {
     	
     	public void httpRequestDidFinish(int success, String value) {
     		progDialog.dismiss();
-    		
-    		// nameValuePairs.add(new BasicNameValuePair("id", "12345"));
-    		/*AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-	        builder.setTitle("NVPUpload")
-	        .setMessage(value)
-	        .setCancelable(false)
-	        .setNegativeButton("确定",new DialogInterface.OnClickListener() {
-	            public void onClick(DialogInterface dialog, int id) {
-	                dialog.cancel();
-	            }
-	        });
-	        AlertDialog alert = builder.create();
-	        alert.show();*/
     		this.parseJSON(value);
 	        
 	        activity.submitController = null;

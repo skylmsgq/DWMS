@@ -38,6 +38,7 @@ public class Scan4 extends ScanActivity implements OnClickListener {
 	private String imei = "";
 	private Activity activity_this=this;
 	public String sn;
+	public String short_sn;
 	public boolean swh;
 	private IOCallback submitController = null;
     @Override
@@ -51,7 +52,7 @@ public class Scan4 extends ScanActivity implements OnClickListener {
         get_info = (Button)findViewById(R.id.button_15693_search);
         get_info.setOnClickListener(this);
         get_info.setEnabled(true);
-        
+        short_sn="";
         power = new DeviceControl();
         if(power.DeviceOpen(PW_DEV) < 0)
         {
@@ -138,7 +139,8 @@ public class Scan4 extends ScanActivity implements OnClickListener {
     		this.parseJSON(value);
     		if (swh)
     		{Intent intent = new Intent(activity, show.class);
-    		intent.putExtra("result", sn);
+    		intent.putExtra("result", short_sn);
+    		intent.putExtra("detail", sn);
     		startActivity(intent);}
     		activity.submitController = null;
     	}

@@ -28,6 +28,10 @@
         <activity
             android:name="com.geomobile.rc663.show"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
-        </activity>              
+        </activity>        
+          <activity
+            android:name="com.geomobile.rc663.detail"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
+        </activity>        
     </application>
 </manifest>
