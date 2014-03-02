@@ -1,4 +1,4 @@
-<?php
+ï»¿<?php
 date_default_timezone_set("PRC");
 class test{
 
@@ -151,19 +151,19 @@ class test{
 						// $sql2 = "INSERT INTO alarm (alarm_date_time, alarm_longitude, alarm_latitude, vehicle_offset_distance, vehicle_id, alarm_add_time, alarm_status, agency_id) VALUES ('$time', '$long', '$lat', '$wanderR', '$vehicleId', '$time', '0', '$agencyId')";
 						// if(mysql_query($sql2,$con)){
 							
-							// echo "²åÈëÊı¾İ³É¹¦£¡";
+							// echo "æ’å…¥æ•°æ®æˆåŠŸï¼";
 							
 						// } else {
-							// echo "²åÈëÊı¾İÊ§°Ü£º".mysql_error();
+							// echo "æ’å…¥æ•°æ®å¤±è´¥ï¼š".mysql_error();
 						// }
 					// }
 					$sql1 = "UPDATE $tableGPS SET offset_distance = $wanderR, vehicle_id = $vehicleId WHERE id = '".$id."'";
 					if(mysql_query($sql1,$con)){
-						echo "¸üĞÂÊı¾İ³É¹¦£¡";
-						$msg = "¸üĞÂ".$id."³É¹¦£¡";
+						echo "æ›´æ–°æ•°æ®æˆåŠŸï¼";
+						$msg = "æ›´æ–°".$id."æˆåŠŸï¼";
 						$this->writeLog($msg);
 					} else {
-						echo "¸üĞÂÊı¾İÊ§°Ü£º".mysql_error();
+						echo "æ›´æ–°æ•°æ®å¤±è´¥ï¼š".mysql_error();
 					}
 					echo $wanderR."\r\n";
 				}
