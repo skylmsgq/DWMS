@@ -22,8 +22,7 @@ function login($json_string)
 	{
 		$user_id=$query1['user_id'];
 		$user_type=$query1['user_type'];
-		if ($user_type==0)
-			return $code;
+		
 		if ($user_type<=4)
 			$table="agency";
 		else if ($user_type==5)
