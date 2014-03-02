@@ -135,7 +135,6 @@ public class ScanAndUpload extends ScanActivity implements OnClickListener {
         spinner2 = (Spinner) findViewById(R.id.spinner2);
         //this.addItemsOnSpinner2();
         optionFetch = new OptionsCallbackController(this);
-        
     }
     
     public void addItemsOnSpinner2(List<String> list) {
@@ -355,6 +354,7 @@ public class ScanAndUpload extends ScanActivity implements OnClickListener {
     	}
     	
     	public void httpRequestDidFinish(int success, String value) {
+//    		activity.alertMessage(value);
     		if(success == 0) {
     			AlertDialog.Builder builder = new AlertDialog.Builder(activity);
 		        builder.setTitle("不能连接到服务器")
@@ -375,6 +375,8 @@ public class ScanAndUpload extends ScanActivity implements OnClickListener {
 				activity.addItemsOnSpinner2(list);
 				
 			} catch (JSONException e) {
+//				activity.alertMessage(value);
+				if (!value.equals(""))
 				ErrorParser.parse(activity, value);
 				e.printStackTrace();
 			}
@@ -453,7 +455,8 @@ public class ScanAndUpload extends ScanActivity implements OnClickListener {
 			
 			this.popupSelect(sn);
 		
-		} else if(arg0 == submit) {
+		} 
+		else if(arg0 == submit) {
 			if(wasteItemSNMap.size() == 0) {
 				this.alertMessage("列表为空");
 				return;
