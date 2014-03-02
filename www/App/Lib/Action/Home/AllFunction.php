@@ -602,10 +602,13 @@ function getWasteName($imei){
 	  $wasteArray = split(",",$result1['production_unit_waste']);
 	  $wastable=M('waste');
 	foreach ($wasteArray as $key => $value) {
-		$result2 = $wastable->where(" waste_id='$value'")->find();
+		if ($value=="")
+			continue;
+		$result2 = $wastable->where(" waste_code='$value'")->find();
 		$wasteName = urlencode($result2['waste_name']);
+		$waste_id=$result2['waste_id'];
 		$newDate[$key]['name'] =  $wasteName;
-		$newDate[$key]['id'] = $value;
+		$newDate[$key]['id'] = $waste_id;
 	}
 	$resultData['code'] = 200;
 	$resultData['wasteOptions'] = $newDate;
