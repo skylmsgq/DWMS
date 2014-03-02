@@ -40,6 +40,7 @@ public class ErrorParser {
 			if(value.contains("error")) {
 				activity.alertMessage("未知错误" + value);
 			} else {
+				if (!value.contains("wasteOptions"))
 				activity.alertMessage("上传成功" );
 			}
 		}
