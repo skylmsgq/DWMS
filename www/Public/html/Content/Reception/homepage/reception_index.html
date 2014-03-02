@@ -2,50 +2,39 @@
 <div id="index_menu_container"></div>
 <script type="text/javascript">
 DWMS_page_config.pageid = 0;
-DWMS_index_menu_config={
- "menu": [
-    {
-       "id":0,
-       "name":"企业基本信息",
-       "url":"{:U('Home/ReceptionBasic/basic_sidebar')}",
-       "icon":"1.png" 
-    },
-      
-       {
-       "id":1,
-       "name":"危废入库记录",
-       "url":"{:U('Home/ReceptionWarehouse/warehouse_sidebar')}",
-       "icon":"3.png" 
-    },
-
-       {
-       "id":2,
-       "name":"转移联单处理",
-       "url":"{:U('Home/ReceptionManifest/manifest_sidebar')}",
-       "icon":"5.png" 
-    },
-     {
-       "id":3,
-       "name":"企业基本信息修改",
-       "url":"{:U('Home/ReceptionBasic/basic_sidebar')}",
-       "icon":"2.png" 
-    },
-    
-      {
-       "id":4,
-       "name":"危废在库查询",
-       "url":"{:U('Home/ReceptionWarehouse/warehouse_sidebar')}",
-       "icon":"4.png" 
-    },
-
-       {
-       "id":5,
-       "name":"转移联单查询",
-       "url":"{:U('Home/ReceptionManifest/manifest_sidebar')}",
-       "icon":"7.png" 
-    },         
-]};
-
+DWMS_index_menu_config = {
+    "menu": [{
+        "id": 0,
+        "name": "企业基本信息",
+        "url": "{:U('Home/ReceptionBasic/basic_sidebar')}",
+        "icon": "basic_information_128.png"
+    }, {
+        "id": 1,
+        "name": "企业基本信息修改",
+        "url": "{:U('Home/ReceptionBasic/basic_sidebar')}",
+        "icon": "basic_information_modify_128.png"
+    }, {
+        "id": 2,
+        "name": "危废入库记录 ",
+        "url": "{:U('Home/ReceptionWarehouse/warehouse_sidebar')}",
+        "icon": "storage_input_record_128.png"
+    }, {
+        "id": 3,
+        "name": "危废在库查询",
+        "url": "{:U('Home/ReceptionWarehouse/warehouse_sidebar')}",
+        "icon": "storage_query_128.png"
+    }, {
+        "id": 4,
+        "name": "转移联单处理",
+        "url": "{:U('Home/ReceptionManifest/manifest_sidebar')}",
+        "icon": "manifest_handle_128.png"
+    }, {
+        "id": 5,
+        "name": "转移联单查询",
+        "url": "{:U('Home/ReceptionManifest/manifest_sidebar')}",
+        "icon": "manifest_query_128.png"
+    }, ]
+};
 </script>
 
 <include file="Common/homepage_generator" />

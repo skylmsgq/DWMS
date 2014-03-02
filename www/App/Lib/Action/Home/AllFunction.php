@@ -251,8 +251,10 @@ function check($json_string)
 		$driver=$result8['carrier_1_name'];
 		$driver_id=$result8['carrier_1_num'];
 		$carid=$result8['vehicle_id_1'];
+		$manifest_status=$result8['manifest_status'];
 		$resultData->driver=$driver;		
-		$resultData->driver_id=$driver_id;		
+		$resultData->driver_id=$driver_id;	
+		$resultData->manifest_status=$manifest_status;		
 		$vtable=M('vehicle');
 		$result9=$vtable->where(" vehicle_id='$carid'")->find();
 		if(!$result9)
@@ -593,17 +595,24 @@ function getWasteName($imei){
 	$result1 = $pdutable->where(" production_unit_id='$userId'")->find();
 	if(!$result1){
 		$error->code = 1;
-		$error->des = urlencode('企业没有注册危险固废');
+		$error->des = urlencode('企业没有注册');
 		$resdata->error = $error;
 		return $resdata;
 	}
 	  $wasteArray = split(",",$result1['production_unit_waste']);
 	  $wastable=M('waste');
 	foreach ($wasteArray as $key => $value) {
-		$result2 = $wastable->where(" waste_id='$value'")->find();
+		if (!preg_match("/\w{3}-\w{3}-\w{2}/", $value))
+			continue;
+		// $result2 = $wastable->where(" waste_code='$value'")->find();
+		
+		$result2 = $wastable->where(array( 'waste_code' => $value))->find();
+		if (!$result2)
+			continue;
 		$wasteName = urlencode($result2['waste_name']);
+		$waste_id=$result2['waste_id'];
 		$newDate[$key]['name'] =  $wasteName;
-		$newDate[$key]['id'] = $value;
+		$newDate[$key]['id'] = $waste_id;
 	}
 	$resultData['code'] = 200;
 	$resultData['wasteOptions'] = $newDate;

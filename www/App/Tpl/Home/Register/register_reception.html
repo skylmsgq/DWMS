@@ -21,10 +21,9 @@
     <script type="text/javascript" src="__PUBLIC__/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="__PUBLIC__/js/jquery-validate.min.js"></script>
     <script type="text/javascript">
-  
-    function sel_city(province_id){
+    function sel_city(province_id) {
         console.log(province_id);
-          $.ajax({
+        $.ajax({
             type: "post",
             url: "{:U('Home/Register/select_city_name')}",
             dataType: "json",
@@ -35,8 +34,8 @@
                 city_name = JSON.parse(city_name_json);
                 $('#city_name').html('<option>请选择所在市</option>');
                 for (var idx in city_name) {
-                $('#city_name').append('<option value="' + city_name[idx].county_id + '">' + city_name[idx].county_name + '</option>');
-                }   
+                    $('#city_name').append('<option value="' + city_name[idx].county_id + '">' + city_name[idx].county_name + '</option>');
+                }
             },
             error: function(XMLHttpRequest, textStatus, errorThrown) {
                 console.log("Error:Ajax_Content_Load" + errorThrown);
@@ -44,24 +43,24 @@
                 console.log("XMLHttpRequest.readyState:" + XMLHttpRequest.readyState);
                 console.log("textStatus:" + textStatus);
             }
-         });
+        });
     }
 
-     function sel_county(city_id){
+    function sel_county(city_id) {
         console.log(city_id);
-          $.ajax({
+        $.ajax({
             type: "post",
             url: "{:U('Home/Register/select_county_name')}",
             dataType: "json",
-            data:{
+            data: {
                 'id': city_id
             },
             success: function(county_name_json) {
                 county_name = JSON.parse(county_name_json);
                 $('#county_name').html('<option>请选择所在区县</option>');
                 for (var idx in county_name) {
-                $('#county_name').append('<option value="' + county_name[idx].county_name + '">' + county_name[idx].county_name + '</option>');
-                } 
+                    $('#county_name').append('<option value="' + county_name[idx].county_name + '">' + county_name[idx].county_name + '</option>');
+                }
             },
             error: function(XMLHttpRequest, textStatus, errorThrown) {
                 console.log("Error:Ajax_Content_Load" + errorThrown);
@@ -69,16 +68,16 @@
                 console.log("XMLHttpRequest.readyState:" + XMLHttpRequest.readyState);
                 console.log("textStatus:" + textStatus);
             }
-         });
+        });
     }
 
-    function county_code_jurisdiction(county_name){
+    function county_code_jurisdiction(county_name) {
         console.log(county_name);
         $.ajax({
             type: "post",
             url: "{:U('Home/Register/select_code_jurisdiction')}",
             dataType: "json",
-            data:{
+            data: {
                 'name': county_name
             },
             success: function(jurisdiction_json) {
@@ -87,7 +86,7 @@
                 // for (var idx in county_code) {
                 // $('#waste_location_county_code').append('<option value="' + county_code[idx].county_id + '">' + county_name[idx].county_code + '</option>');
                 // }
-                jurisdiction = JSON.parse(jurisdiction_json);  
+                jurisdiction = JSON.parse(jurisdiction_json);
                 $('#jurisdiction_id').html('<option value="' + jurisdiction[0].jurisdiction_id + '">' + jurisdiction[0].jurisdiction_name + '</option>');
             },
             error: function(XMLHttpRequest, textStatus, errorThrown) {
@@ -97,11 +96,11 @@
                 console.log("textStatus:" + textStatus);
             }
         });
-    $.ajax({
+        $.ajax({
             type: "post",
             url: "{:U('Home/Register/select_code')}",
             dataType: "json",
-            data:{
+            data: {
                 'name': county_name
             },
             success: function(code_json) {
@@ -110,8 +109,8 @@
                 // for (var idx in county_code) {
                 // $('#waste_location_county_code').append('<option value="' + county_code[idx].county_id + '">' + county_name[idx].county_code + '</option>');
                 // }
-                code = JSON.parse(code_json);  
-                $('#reception_unit_county_code').html("<option>"+code[0]['county_code']+"</option>");
+                code = JSON.parse(code_json);
+                $('#reception_unit_county_code').html("<option>" + code[0]['county_code'] + "</option>");
 
             },
             error: function(XMLHttpRequest, textStatus, errorThrown) {
@@ -254,6 +253,7 @@
                                     </td>
                                     <td>接受单位注册类型</td>
                                     <td>
+
                                         <select type="text" class="form-control input-md" name="reception_unit_registration_type" id="reception_unit_registration_type">                                        
                                         </select>   
                                     </td>

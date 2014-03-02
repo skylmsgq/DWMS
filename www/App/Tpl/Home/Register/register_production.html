@@ -21,9 +21,6 @@
     <script type="text/javascript" src="__PUBLIC__/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="__PUBLIC__/js/jquery-validate.min.js"></script>
     <script type="text/javascript">
-
-
-
     function sel_city(province_id){
           $.ajax({
             type: "post",
@@ -36,8 +33,8 @@
                 city_name = JSON.parse(city_name_json);
                 $('#city_name').html('<option>请选择所在市</option>');
                 for (var idx in city_name) {
-                $('#city_name').append('<option value="' + city_name[idx].county_id + '">' + city_name[idx].county_name + '</option>');
-                }   
+                    $('#city_name').append('<option value="' + city_name[idx].county_id + '">' + city_name[idx].county_name + '</option>');
+                }
             },
             error: function(XMLHttpRequest, textStatus, errorThrown) {
                 console.log("Error:Ajax_Content_Load" + errorThrown);
@@ -45,25 +42,25 @@
                 console.log("XMLHttpRequest.readyState:" + XMLHttpRequest.readyState);
                 console.log("textStatus:" + textStatus);
             }
-         });
+        });
     }
 
-     function sel_county(city_id){
+    function sel_county(city_id) {
         // console.log(city_id);
-          $.ajax({
+        $.ajax({
             type: "post",
             url: "{:U('Home/Register/select_county_name')}",
             dataType: "json",
-            data:{
+            data: {
                 'id': city_id
             },
             success: function(county_name_json) {
                 county_name = JSON.parse(county_name_json);
                 $('#county_name').html('<option>请选择所在区县</option>');
                 for (var idx in county_name) {
-                $('#county_name').append('<option value="' + county_name[idx].county_name + '">' + county_name[idx].county_name + '</option>');
+                    $('#county_name').append('<option value="' + county_name[idx].county_name + '">' + county_name[idx].county_name + '</option>');
                 }
-                
+
             },
             error: function(XMLHttpRequest, textStatus, errorThrown) {
                 console.log("Error:Ajax_Content_Load" + errorThrown);
@@ -71,16 +68,16 @@
                 console.log("XMLHttpRequest.readyState:" + XMLHttpRequest.readyState);
                 console.log("textStatus:" + textStatus);
             }
-         });
+        });
     }
 
-    function county_code_jurisdiction(county_name){
+    function county_code_jurisdiction(county_name) {
         // console.log(county_name);
         $.ajax({
             type: "post",
             url: "{:U('Home/Register/select_code_jurisdiction')}",
             dataType: "json",
-            data:{
+            data: {
                 'name': county_name
             },
             success: function(jurisdiction_json) {
@@ -89,7 +86,7 @@
                 // for (var idx in county_code) {
                 // $('#waste_location_county_code').append('<option value="' + county_code[idx].county_id + '">' + county_name[idx].county_code + '</option>');
                 // }
-                jurisdiction = JSON.parse(jurisdiction_json);  
+                jurisdiction = JSON.parse(jurisdiction_json);
                 $('#jurisdiction_id').html('<option value="' + jurisdiction[0].jurisdiction_id + '">' + jurisdiction[0].jurisdiction_name + '</option>');
                 // for (var idx in jurisdiction) {
                 // $('#jurisdiction_id').append('<option value="' + jurisdiction[idx].jurisdiction_id + '">' + jurisdiction[idx].jurisdiction_name + '</option>');
@@ -104,11 +101,11 @@
             }
         });
 
-    $.ajax({
+        $.ajax({
             type: "post",
             url: "{:U('Home/Register/select_code')}",
             dataType: "json",
-            data:{
+            data: {
                 'name': county_name
             },
             success: function(code_json) {
@@ -117,12 +114,12 @@
                 // for (var idx in county_code) {
                 // $('#waste_location_county_code').append('<option value="' + county_code[idx].county_id + '">' + county_name[idx].county_code + '</option>');
                 // }
-                var code = JSON.parse(code_json);  
-               // $('#waste_location_county_code').html('<option>code[0]['county_code']</option>');
+                var code = JSON.parse(code_json);
+                // $('#waste_location_county_code').html('<option>code[0]['county_code']</option>');
                 console.log(code);
-               // for (var idx in county_name) {
-                $('#waste_location_county_code').html("<option>"+code[0]['county_code']+"</option>");
-              //  }   
+                // for (var idx in county_name) {
+                $('#waste_location_county_code').html("<option>" + code[0]['county_code'] + "</option>");
+                //  }
 
             },
             error: function(XMLHttpRequest, textStatus, errorThrown) {
@@ -218,6 +215,7 @@
                                 <tr>
                                     <td>产废设施所属省</td>
                                     <td>
+
                                          <select type="text" class="form-control input-md required-cn" id="province_name" name="production_unit_province" onchange="sel_city(this.options[this.options.selectedIndex].value)">
                                         </select>
                                     </td>
@@ -243,23 +241,23 @@
                                 </tr>
                                 <tr>
                                     <td>产废设施所在区县代码</td>
-                                    <td>                  
-                                    <select type="text" class="form-control input-md required-cn" name="waste_location_county_code" id="waste_location_county_code">
+                                    <td>
+                                        <select type="text" class="form-control input-md required-cn" name="waste_location_county_code" id="waste_location_county_code">
                                             <!-- <option>区县代码</option> -->
-                                        </select>                                    
+                                        </select>
                                     </td>
                                     <td>产生单位管辖权属</td>
                                     <td>
                                         <select type="text" class="form-control input-md required-cn" name="jurisdiction_id" id="jurisdiction_id">
                                             <option>管辖权属</option>
                                         </select>
-                                        
+
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>产生单位所属行业</td>
                                     <td>
-                                        <input type="text" class="form-control input-md" name="production_unit_trade" id="production_unit_trade">  
+                                        <input type="text" class="form-control input-md" name="production_unit_trade" id="production_unit_trade">
                                     </td>
                                     <td>产生单位乡镇街道</td>
                                     <td>
@@ -269,13 +267,13 @@
                                 <tr>
                                     <td>产生单位注册类型</td>
                                     <td>
-                                        <select type="text" class="form-control input-md" name="production_unit_registration_type" id="production_unit_registration_type">          
-                                        </select>   
+                                        <select type="text" class="form-control input-md" name="production_unit_registration_type" id="production_unit_registration_type">
+                                        </select>
                                     </td>
                                     <td>产生单位企业规模</td>
                                     <td>
                                         <select type="text" class="form-control input-md required-cn" name="production_unit_enterprise_scale" id="production_unit_enterprise_scale">
-                                        </select>  
+                                        </select>
                                     </td>
                                 </tr>
                                 <tr>
@@ -323,7 +321,7 @@
                                     <td>
                                         <input type="text" class="form-control input-md number-cn" name="production_unit_latitude" id="production_unit_latitude">
                                     </td>
-                                     <td>产生单位主要危废物代码</td>
+                                    <td>产生单位主要危废物代码</td>
                                     <td>
                                         <input type="text" class="form-control input-md" name="production_unit_waste" id="production_unit_waste">
                                     </td>

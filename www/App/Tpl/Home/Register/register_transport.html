@@ -74,6 +74,7 @@ newHtml+="<tr><td>"
 }
 console.log(newHtml);
 */
+
 function sel_city(province_id){
         // console.log(province_id);
           $.ajax({
@@ -88,94 +89,97 @@ function sel_city(province_id){
                 $('#city_name').html('<option>请选择所在市</option>');
                 for (var idx in city_name) {
                 $('#city_name').append('<option value="' + city_name[idx].county_id + '">' + city_name[idx].county_name + '</option>');
-                }   
-            },
-            error: function(XMLHttpRequest, textStatus, errorThrown) {
-                console.log("Error:Ajax_Content_Load" + errorThrown);
-                console.log("XMLHttpRequest.status:" + XMLHttpRequest.status);
-                console.log("XMLHttpRequest.readyState:" + XMLHttpRequest.readyState);
-                console.log("textStatus:" + textStatus);
             }
-         });
-    }
-    function sel_county(city_id){
-        // console.log(city_id);
-          $.ajax({
-            type: "post",
-            url: "{:U('Home/Register/select_county_name')}",
-            dataType: "json",
-            data:{
-                'id': city_id
-            },
-            success: function(county_name_json) {
-                county_name = JSON.parse(county_name_json);
-                $('#county_name').html('<option>请选择所在区县</option>');
-                for (var idx in county_name) {
-                $('#county_name').append('<option value="' + county_name[idx].county_name + '">' + county_name[idx].county_name + '</option>');
-                }
-            },
-            error: function(XMLHttpRequest, textStatus, errorThrown) {
-                console.log("Error:Ajax_Content_Load" + errorThrown);
-                console.log("XMLHttpRequest.status:" + XMLHttpRequest.status);
-                console.log("XMLHttpRequest.readyState:" + XMLHttpRequest.readyState);
-                console.log("textStatus:" + textStatus);
-            }
-         });
-    }
 
-    function county_code_jurisdiction(county_name){
-        // console.log(county_name);
-        $.ajax({
-            type: "post",
-            url: "{:U('Home/Register/select_code_jurisdiction')}",
-            dataType: "json",
-            data:{
-                'name': county_name
-            },
-            success: function(jurisdiction_json) {
-                // county_code = JSON.parse(county_code_json);
-                // $('#waste_location_county_code').html('<option>区县代码</option>');
-                // for (var idx in county_code) {
-                // $('#waste_location_county_code').append('<option value="' + county_code[idx].county_id + '">' + county_name[idx].county_code + '</option>');
-                // }
-                jurisdiction = JSON.parse(jurisdiction_json);  
-                $('#jurisdiction_id').html('<option value="' + jurisdiction[0].jurisdiction_id + '">' + jurisdiction[0].jurisdiction_name + '</option>');
-              
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+            console.log("Error:Ajax_Content_Load" + errorThrown);
+            console.log("XMLHttpRequest.status:" + XMLHttpRequest.status);
+            console.log("XMLHttpRequest.readyState:" + XMLHttpRequest.readyState);
+            console.log("textStatus:" + textStatus);
+        }
+    });
+}
 
-            },
-            error: function(XMLHttpRequest, textStatus, errorThrown) {
-                console.log("Error:Ajax_Content_Load" + errorThrown);
-                console.log("XMLHttpRequest.status:" + XMLHttpRequest.status);
-                console.log("XMLHttpRequest.readyState:" + XMLHttpRequest.readyState);
-                console.log("textStatus:" + textStatus);
-            }
-        });
+function sel_county(city_id) {
+    console.log(city_id);
     $.ajax({
-            type: "post",
-            url: "{:U('Home/Register/select_code')}",
-            dataType: "json",
-            data:{
-                'name': county_name
-            },
-            success: function(code_json) {
-                // county_code = JSON.parse(county_code_json);
-                // $('#waste_location_county_code').html('<option>区县代码</option>');
-                // for (var idx in county_code) {
-                // $('#waste_location_county_code').append('<option value="' + county_code[idx].county_id + '">' + county_name[idx].county_code + '</option>');
-                // }
-                code = JSON.parse(code_json);  
-                $('#transport_unit_county_code').html('<option value="' + code[0].county_code + '">' + code[0].county_code + '</option>');
-                 
+        type: "post",
+        url: "{:U('Home/Register/select_county_name')}",
+        dataType: "json",
+        data: {
+            'id': city_id
+        },
+        success: function(county_name_json) {
+            county_name = JSON.parse(county_name_json);
+            $('#county_name').html('<option>请选择所在区县</option>');
+            for (var idx in county_name) {
+                $('#county_name').append('<option value="' + county_name[idx].county_name + '">' + county_name[idx].county_name + '</option>');
 
-            },
-            error: function(XMLHttpRequest, textStatus, errorThrown) {
-                console.log("Error:Ajax_Content_Load" + errorThrown);
-                console.log("XMLHttpRequest.status:" + XMLHttpRequest.status);
-                console.log("XMLHttpRequest.readyState:" + XMLHttpRequest.readyState);
-                console.log("textStatus:" + textStatus);
             }
-        });
-    }
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+            console.log("Error:Ajax_Content_Load" + errorThrown);
+            console.log("XMLHttpRequest.status:" + XMLHttpRequest.status);
+            console.log("XMLHttpRequest.readyState:" + XMLHttpRequest.readyState);
+            console.log("textStatus:" + textStatus);
+        }
+    });
+}
+
+function county_code_jurisdiction(county_name) {
+    console.log(county_name);
+    $.ajax({
+        type: "post",
+        url: "{:U('Home/Register/select_code_jurisdiction')}",
+        dataType: "json",
+        data: {
+            'name': county_name
+        },
+        success: function(jurisdiction_json) {
+            // county_code = JSON.parse(county_code_json);
+            // $('#waste_location_county_code').html('<option>区县代码</option>');
+            // for (var idx in county_code) {
+            // $('#waste_location_county_code').append('<option value="' + county_code[idx].county_id + '">' + county_name[idx].county_code + '</option>');
+            // }
+            jurisdiction = JSON.parse(jurisdiction_json);
+            $('#jurisdiction_id').html('<option value="' + jurisdiction[0].jurisdiction_id + '">' + jurisdiction[0].jurisdiction_name + '</option>');
+
+
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+            console.log("Error:Ajax_Content_Load" + errorThrown);
+            console.log("XMLHttpRequest.status:" + XMLHttpRequest.status);
+            console.log("XMLHttpRequest.readyState:" + XMLHttpRequest.readyState);
+            console.log("textStatus:" + textStatus);
+        }
+    });
+    $.ajax({
+        type: "post",
+        url: "{:U('Home/Register/select_code')}",
+        dataType: "json",
+        data: {
+            'name': county_name
+        },
+        success: function(code_json) {
+            // county_code = JSON.parse(county_code_json);
+            // $('#waste_location_county_code').html('<option>区县代码</option>');
+            // for (var idx in county_code) {
+            // $('#waste_location_county_code').append('<option value="' + county_code[idx].county_id + '">' + county_name[idx].county_code + '</option>');
+            // }
+            code = JSON.parse(code_json);
+            $('#transport_unit_county_code').html('<option value="' + code[0].county_code + '">' + code[0].county_code + '</option>');
+
+
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+            console.log("Error:Ajax_Content_Load" + errorThrown);
+            console.log("XMLHttpRequest.status:" + XMLHttpRequest.status);
+            console.log("XMLHttpRequest.readyState:" + XMLHttpRequest.readyState);
+            console.log("textStatus:" + textStatus);
+        }
+    });
+}
 </script>
 
 <body style="background:url(__PUBLIC__/image/bg_3.jpg) no-repeat;  background-color:#3D80AD;">
@@ -261,7 +265,7 @@ function sel_city(province_id){
                                     <td>运输单位所在省</td>
                                     <td>
                                         <select type="text" class="form-control input-md required-cn" name="transport_unit_province" id="province_name" onchange="sel_city(this.options[this.options.selectedIndex].value)">
-                                          
+
                                         </select>
                                     </td>
                                     <td>运输单位所在市</td>
@@ -272,11 +276,11 @@ function sel_city(province_id){
                                         </select>
                                     </td>
                                 </tr>
-                                <tr>    
+                                <tr>
                                     <td>运输单位所在区县</td>
                                     <td>
                                         <label class="sr-only" for="county_name">所在县：</label>
-                                        <select type="text" class="form-control input-md required-cn" name="transport_unit_county" id="county_name" onchange="county_code_jurisdiction(this.options[this.options.selectedIndex].value)">     
+                                        <select type="text" class="form-control input-md required-cn" name="transport_unit_county" id="county_name" onchange="county_code_jurisdiction(this.options[this.options.selectedIndex].value)">
                                             <option>请选择所在区县</option>
                                         </select>
                                     </td>
@@ -293,11 +297,13 @@ function sel_city(province_id){
                                     <td>
                                         <label class="sr-only" for="jurisdiction_id">管辖权属：</label>
                                         <select type="text" class="form-control input-md required-cn" name="jurisdiction_id" id="jurisdiction_id">
-                                        <option>管辖权属</option>
+                                            <option>管辖权属</option>
                                     </td>
                                     <td>运输单位所属行业</td>
                                     <td>
+
                                         <input type="text" class="form-control input-md" name="transport_unit_trade" id="transport_unit_trade">   
+
                                     </td>
                                 </tr>
                                 <tr>
@@ -308,6 +314,7 @@ function sel_city(province_id){
                                     <td>运输单位注册类型</td>
                                     <td>
                                         <select type="text" class="form-control input-md" name="transport_unit_registration_type" id="transport_unit_registration_type">
+
                                             
                                         </select>  
                                     </td>
@@ -316,8 +323,10 @@ function sel_city(province_id){
                                     <td>运输单位企业规模</td>
                                     <td>
                                         <select type="text" class="form-control input-md" name="transport_unit_enterprise_scale" id="transport_unit_enterprise_scale">
+
                                             
                                         </select>  
+
                                     </td>
                                     <td>运输单位许可证编号</td>
                                     <td>

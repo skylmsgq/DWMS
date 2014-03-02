@@ -18,7 +18,7 @@
             android:layout_height="match_parent"
             android:scrollbarStyle="insideInset"
             android:scrollbars="vertical"
-            android:text="添加新标签" />
+            android:textSize="15dp" />
 
         <LinearLayout
             android:id="@+id/linearLayout2"

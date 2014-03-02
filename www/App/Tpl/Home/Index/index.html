@@ -63,11 +63,11 @@
                     
                     <div class="blank-div"></div>
                     <div id="myAlert"></div>
-               <!--       <button class="btn btn-lg btn-primary btn-block" onclick="login()">登 录</button>
-                    <button type="button" class="btn btn-success btn-lg btn-block" id="register" data-toggle="modal" data-target="#myModal">注 册</button>
- -->
+                    
                 </form>
-                <div class="container" style="width:41%;">
+               <!--  <button class="btn btn-lg btn-primary btn-block" onclick="login()">登 录</button>
+                    <button type="button" class="btn btn-success btn-lg btn-block" id="register" data-toggle="modal" data-target="#myModal">注 册</button> -->
+                <div class="container" style="width:40%;">
                 <center>
                     <button class="btn btn-lg btn-primary btn-block" onclick="login()">登 录</button>
                     <button type="button" class="btn btn-success btn-lg btn-block" id="register" data-toggle="modal" data-target="#myModal">注 册</button>
@@ -132,6 +132,8 @@
     <!-- jQuery core JavaScript -->
 
     <!-- My JavaScript-->
+
+
     <script type="text/javascript">
     var verifyURL = "{:U('Home/Index/verify/', '', '')}";
     </script>
@@ -143,7 +145,7 @@
     function do_reg() {
         // var regList = ["/index.php/Home/Register/index?id=production", "/index.php/Home/Register/index?id=transport", "/index.php/Home/Register/index?id=reception"];
         var regList = ["{:U('Home/Register/index?id=production')}", "{:U('Home/Register/index?id=transport')}", "{:U('Home/Register/index?id=reception')}"];
-        if (regOpt < 0) {     
+        if (regOpt < 0) {
             throw_exception('未选择角色');
             alert("请选择角色");
         }
@@ -154,24 +156,53 @@
 
     function login(){
     var form_serialize = "" + $('#login').serialize();
-   
+    console.log(form_serialize);
     $.ajax({
         type: "post",
         url: "{:U('Home/Index/login/')}",
         data: form_serialize,
         success: function(data) {
             // $("#model-content").html(data);
-             console.log(data.data);
-            switch(data.data){
+            console.log(data);
+            data = parseInt(data);
+            switch(data){
                 case 0:
+                    window.location.assign("./index.php/Home/LoginAdmin/homepage.html");
+                    break; 
+                case 1:
+                    window.location.assign("./index.php/Home/LoginCountry/homepage.html");
+                    break; 
+                case 2:
+                    window.location.assign("./index.php/Home/LoginProvince/homepage.html");
+                    break; 
+                case 3:
+                    window.location.assign("./index.php/Home/LoginCity/homepage.html");
+                    break; 
+                case 4:
+                    window.location.assign("./index.php/Home/LoginDistrict/homepage.html");
+                    break;  
+                case 5:
+                    window.location.assign("./index.php/Home/LoginProduction/homepage.html");
+                    break;  
+                case 6:
+                    window.location.assign("./index.php/Home/LoginTransport/homepage.html");
+                    break;  
+                case 7:
+                    window.location.assign("./index.php/Home/LoginReception/homepage.html");
+                    break;
+                case 8:
+                    myAlertFail("验证码错误");
+                    break; 
+                case 9:
                     myAlertFail("用户名或密码错误！");
                     break;
-                case 1:
+                case 10:
                     myAlertFail("您的审核还未通过，请耐心等待。。");
                     break;
-                case 2:
+                case 11:
                     myAlertFail("用户被锁定，请联系当地环保部门。。");
                     break;
+                
                 default :
                     myAlertFail("登录失败");
             }
