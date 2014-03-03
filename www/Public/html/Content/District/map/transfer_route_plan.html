@@ -133,7 +133,7 @@ function setBMap() {
     $("#map_container").css("height", "" + windowHeight - 350 + "px");
 
     BaiduMap = new BMap.Map("map_container"); // 创建Map实例
-    BaiduMap.centerAndZoom("上海", 11); // 初始化地图,设置中心点坐标和地图级别
+    BaiduMap.centerAndZoom("安庆", 14); // 初始化地图,设置中心点坐标和地图级别
     BaiduMap.addControl(new BMap.NavigationControl()); // 添加默认缩放平移控件
     BaiduMap.addControl(new BMap.ScaleControl()); // 添加默认比例尺控件
     BaiduMap.addControl(new BMap.OverviewMapControl()); //添加默认缩略地图控件
@@ -297,7 +297,7 @@ var searchComplete = function(results) {
                 steps.push('<tr style="cursor:pointer"><td style="border-bottom:1px solid #ccc;width:20px;vertical-align:top;text-align:right;padding:4px 3px">' + (routeIdx + 1) + '.' + (stepIdx + 1) + '</td><td style="border-bottom:1px solid #ccc;padding:2px;line-height:18px">' + step.getDescription() + '</td></tr>');
             }
         }
-        steps.push('</tbody></table><div style="border-bottom:1px solid #ccc;margin-bottom:10px;color:#7777cc;background:#e5ecf9;overflow:hidden;padding:2px;text-align:right"><span style="float:left;padding-left:6px">路线总距离：' + plan.getDistance() + '<br/>预计总时间：' + plan.getDuration() + '</span></div>');
+        steps.push('</tbody></table><div style="border-bottom:1px solid #ccc;margin-bottom:10px;color:#7777cc;background:#e5ecf9;overflow:hidden;padding:2px;text-align:right"><span style="float:left;padding-left:6px">全程：' + plan.getDistance() + ' / 预计：' + plan.getDuration() + '</span></div>');
         route_detail = steps.join('');
         /*setTimeout(function(){
             BaiduMap.setViewport([p1,p2]);   //调整到最佳视野
@@ -335,7 +335,7 @@ function search() {
         renderOptions: {
             map: BaiduMap,
             panel: "route_panel",
-            autoViewport: false, //启用自动调整地图层级，当指定了搜索结果所展现的地图时有效。
+            autoViewport: true, //启用自动调整地图层级，当指定了搜索结果所展现的地图时有效。
             enableDragging: true, //起终点可进行拖拽
             highlightMode: BMAP_HIGHLIGHT_ROUTE, // 驾车结果展现中点击列表后的展现策略。
         },

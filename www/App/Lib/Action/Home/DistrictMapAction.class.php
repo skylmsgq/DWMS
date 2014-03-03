@@ -11,7 +11,7 @@ class DistrictMapAction extends DistrictCommonAction{
 
 	// 转移地图->地图展示->转移地图展示
 	public function transfer_map_display() {
-		$condition['transport_date'] = date( 'Y-m-d', strtotime( '2014-01-13' ) );
+		$condition['transport_date'] = date( 'Y-m-d', strtotime( '2014-02-28' ) );
 		//$condition['transport_date'] = date( 'Y-m-d', time() );
 		$condition['jurisdiction_id'] = array( 'EQ', session( 'jurisdiction_id' ) );
 		$condition['route_status'] = array( 'EQ', 0 ); // 0:路线可用
@@ -26,7 +26,7 @@ class DistrictMapAction extends DistrictCommonAction{
 
 		$alarm_distance = M( 'alarm_distance' )->where( array( 'jurisdiction_id' => session( 'jurisdiction_id' ) ) )->find();
 
-		if ( ( $route_vehicle_join ) && ( $alarm_distance ) ) {
+		if ( $route_vehicle_join && $alarm_distance ) {
 			$route_vehicle_join_json = json_encode( $route_vehicle_join );
 			$alarm_distance_json = json_encode( $alarm_distance );
 			$transport_unit_json = json_encode( $transport_unit_array );
@@ -52,7 +52,7 @@ class DistrictMapAction extends DistrictCommonAction{
 			$gps_table_name = 'gps_' . $device_serial_num;
 			$gps = M( $gps_table_name );
 			$gps_max_id = $gps->where( array( 'status' => 0 ) )->max( 'id' );
-			$gps_lng_lat = $gps->where( array( 'id' => $gps_max_id ) )->field( 'bmap_longitude, bmap_latitude, speed, offset_distance' )->find();
+			$gps_lng_lat = $gps->where( array( 'id' => $gps_max_id ) )->find();
 			$gps_data = array( 'vehicle_id' => $ajax_send_data[$idx]->vehicle_id, 'lng' => $gps_lng_lat['bmap_longitude'], 'lat' => $gps_lng_lat['bmap_latitude'], 'speed' => $gps_lng_lat['speed'], 'offset_distance' => $gps_lng_lat['offset_distance'] );
 			$gps_data_array[$idx] = $gps_data;
 		}
@@ -64,6 +64,8 @@ class DistrictMapAction extends DistrictCommonAction{
 		$data['id'] = I( 'post.id' );
 		$data['warning_distance'] = I( 'post.warning_distance' );
 		$data['alarm_distance'] = I( 'post.alarm_distance' );
+		$time = date( 'Y-m-d H:i:s', time() );
+		$data['modify_date_time'] = $time;
 		$result = M( 'alarm_distance' )->save( $data );
 		if ( $result ) {
 			$this->ajaxReturn( 'success' );
@@ -106,10 +108,11 @@ class DistrictMapAction extends DistrictCommonAction{
 		$condition['vehicle_id'] = array( 'EQ', I( 'post.vehicle_id' ) );
 		$device_id = M( 'vehicle' )->where( $condition )->getField( 'device_id' );
 		$device_serial_num = M( 'device' )->where( array( 'device_id' => $device_id ) )->getField( 'device_serial_num' );
-
-		$where['datetime'] = array( array( 'EGT', I( 'post.beginDate' ) ), array( 'ELT', I( 'post.endDate' ) ) );
+		$beginDate = I( 'post.beginDate' );
+		$endDate = I( 'post.endDate' );
+		$where['datetime'] = array( array( 'EGT', $beginDate ), array( 'ELT', $endDate ) );
 		$where['status'] = 0;
-		$gps_data = M( 'gps_' . $device_serial_num )->where( $where )->field( 'vehicle_id, datetime, bmap_longitude, bmap_latitude, speed, offset_distance' )->select();
+		$gps_data = M( 'gps_' . $device_serial_num )->where( $where )->select();
 		if ( $gps_data ) {
 			$this->ajaxReturn( $gps_data );
 		} else {
@@ -134,13 +137,13 @@ class DistrictMapAction extends DistrictCommonAction{
 	// 转移地图->地图展示->转移地图历史回放：获取所有车辆历史GPS路线
 	public function ajax_get_vehicles_gps_data() {
 		$condition['jurisdiction_id'] = array( 'EQ', session( 'jurisdiction_id' ) );
-		$vehicle_device = M( 'vehicle' )->join( 'device ON vehicle.device_id = device.device_id' )->where( $condition )->field( 'vehicle_id, device_serial_num' )->select();
+		$vehicle_device = M( 'vehicle' )->join( 'device ON vehicle.device_id = device.device_id' )->where( $condition )->select();
 		for ( $idx = 0; $idx < count( $vehicle_device ); ++$idx ) {
 			$gps_table_name = 'gps_' . $vehicle_device[$idx]['device_serial_num'];
 			$gps = M( $gps_table_name );
 			$where['datetime'] = array( array( 'EGT', I( 'post.beginDate' ) ), array( 'ELT', I( 'post.endDate' ) ) );
 			$where['status'] = 0;
-			$gps_route = $gps->where( $where )->field( 'vehicle_id, datetime, bmap_longitude, bmap_latitude, speed, offset_distance' )->select();
+			$gps_route = $gps->where( $where )->select();
 			$gps_route_array[$idx] = $gps_route;
 		}
 		$this->ajaxReturn( $gps_route_array );
@@ -298,17 +301,18 @@ class DistrictMapAction extends DistrictCommonAction{
 		$gps_table_name = "gps_" . $device_serial_num;
 		$gps = M( $gps_table_name );
 		//$time = date( 'Y-m-d H:i:s', time() );
-		$time = date( 'Y-m-d H:i:s', strtotime( '2014-02-20 09:00:00' ) );
-		for ( $idx = 0; $idx < count( $gps_data_array ); $idx += 2 ) {
+		$time = date( 'Y-m-d H:i:s', strtotime( '2014-02-28 09:00:00' ) );
+		for ( $idx = 0; $idx < count( $gps_data_array ); ++$idx ) {
 			$time = date( 'Y-m-d H:i:s', strtotime( $time ) + 10 );
 			$data['datetime'] = $time;
 			$data['bmap_longitude'] = $gps_data_array[$idx]->lng;
 			$data['bmap_latitude'] = $gps_data_array[$idx]->lat;
+			$data['height'] = rand(-10, 30);
+			$data['speed'] = rand(0, 100);
 			$data['status'] = 0;
-
 			$gps->add( $data );
 		}
-		if ( $idx == count( $gps_data_array ) ) {
+		if ( $idx >= count( $gps_data_array ) ) {
 			$this->ajaxReturn( 'success' );
 		} else {
 			$this->ajaxReturn( 'fail' );
