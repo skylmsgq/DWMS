@@ -10,7 +10,10 @@ class LoginAction extends CommonAction{
 			$this->redirect( 'Home/Index/index' );
 		}
 	}
-
+public function homepage() {
+		
+			$this->redirect( 'Home/Index/index' );
+	}
 	public function logout() {
 		$last_login = array(
 			'user_id' => session( 'user_id' ),

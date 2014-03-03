@@ -384,7 +384,7 @@ function getVehicleRoute() {
                 var lat = gpsRoute[dataIdx].bmap_latitude;
                 pointArray.push(new BMap.Point(lng, lat));
             }
-            var polylineGPS = new BMap.Polyline(pointArray, {
+            polylineGPS = new BMap.Polyline(pointArray, {
                 strokeColor: "#8c510a",
                 strokeWeight: 5, // 折线的宽度，以像素为单位。
                 strokeOpacity: 0.8, // 折线的透明度，取值范围0 - 1。

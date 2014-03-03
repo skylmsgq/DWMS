@@ -114,47 +114,21 @@ class RegisterAction extends Action{
 				$unit->user_id=$user_id;
 				$county_code = M( 'county_code' )->where( array('county_name'=> I('post.name') ) )->select();
 				if ( $unit->add() ) {
-					$this->success( '生产企业注册成功! ', "../../../../../", 5 );
-					// $this->ajaxReturn(1);
-					//  $mx=$unit->max('production_unit_id');
-					//  $name="production_unit_".$mx;
-					//  $sql='create table '. $name.
-					// ' (
- 				// 	id int(11) NOT NULL AUTO_INCREMENT,
- 				// 	rfid_id varchar(255) DEFAULT NULL,
-  			// 		waste_id int(11) DEFAULT NULL,
-  			// 		add_weight double DEFAULT NULL,
-  			// 		add_date_time datetime DEFAULT NULL,
-  			// 		add_num int(11) DEFAULT NULL,
-  			// 		android_num varchar(255) DEFAULT NULL,
-  			// 		PRIMARY KEY (id),
-  			// 		KEY fk_waste_id_'.$name.' (waste_id) USING BTREE,
-  			// 		CONSTRAINT fk_waste_id_'.$name.' FOREIGN KEY (waste_id) REFERENCES waste (waste_id)
-					// )';
-					// $model=new Model();
-					// $model->execute($sql);
-					// $num=M('information_schema.tables')->where("table_schema = 'dwms' 
-					// 		AND table_name = '$name'")->count();
-					// if ($num>0)
-					// {
-					// 	$this->success( '生产企业注册成功! ', "../../../../../", 5 );
-					// }
-					// else
-					// {
-					// $user->where( "user_id='$user_id'" )->delete();
-					// $unit->where("user_id='$user_id'")->delete();
-					// $this->error( '账户创建失败:创建该企业数据表失败 ', "../../../../../", 5 );	
-					// }
+					$this->display('./Public/html/Content/do_reg/success.html');
 				}
 				else {
 					$user->where( "user_id='$user_id'" )->delete();
-					$this->error( '账户创建失败:企业信息写入失败', "../../../../../", 5 );
+					// $this->ajaxReturn( 1 );
 					// $this->ajaxReturn(0);
+					// $this->error( '账户创建失败:企业信息写入失败', "../../../../../", 5 );
+					$this->display('./Public/html/Content/do_reg/fail.html');
 				}
 			}
 			else {
-				$this->error( '账户创建失败:账户信息写入失败', "../../../../../", 5 );
+				// $this->ajaxReturn( 1 );
 				// $this->ajaxReturn(0);
+				// $this->error( '账户创建失败:账户信息写入失败', "../../../../../", 5 );
+				$this->display('./Public/html/Content/do_reg/fail.html');
 			}
 			break;
 
@@ -181,16 +155,18 @@ class RegisterAction extends Action{
 
 				if ( $unit->add() ) {
 					
-					$this->success( '运输企业注册成功!', "../../../../../", 5 );
+					$this->display('./Public/html/Content/do_reg/success.html');
 				}
 				else {
 					$user->where( "user_id='$user_id'" )->delete();
-					$this->error( '账户创建失败:企业信息写入失败', "../../../../../", 5 );
+					// $this->error( '账户创建失败:企业信息写入失败', "../../../../../", 5 );
+					$this->display('./Public/html/Content/do_reg/fail.html');
 				}
 			}
 
 			else {
-				$this->error( '账户创建失败:账户信息写入失败', "../../../../../", 5 );
+					// $this->error( '账户创建失败:账户信息写入失败', "../../../../../", 5 );
+				$this->display('./Public/html/Content/do_reg/fail.html');
 			}
 
 			break;
@@ -215,52 +191,25 @@ class RegisterAction extends Action{
 			if ( $user_id=$user->add( $AccountData ) ) {
 				$unit->create();
 				$unit->user_id=$user_id;
-
 				if ( $unit->add() ) {
-					$this->success( '接受企业注册成功! ', "../../../../../", 5 );
-					// $mx=$unit->max('reception_unit_id');
-					//  $name="reception_unit_".$mx;
-					//  $sql='create table '. $name.
-					// ' (
- 				// 	id int(11) NOT NULL AUTO_INCREMENT,
- 				// 	rfid_id varchar(255) DEFAULT NULL,
-  			// 		waste_id int(11) DEFAULT NULL,
-  			// 		total_weight double DEFAULT NULL,
-  			// 		receive_date_time datetime DEFAULT NULL,
-  			// 		total_num int(11) DEFAULT NULL,
-  			// 		android_num varchar(255) DEFAULT NULL,
-  			// 		PRIMARY KEY (id),
-  			// 		KEY fk_waste_id_'.$name.' (waste_id) USING BTREE,
-  			// 		CONSTRAINT fk_waste_id_'.$name.' FOREIGN KEY (waste_id) REFERENCES waste (waste_id)
-					// )';
-					// $model=new Model();
-					// $model->execute($sql);
-					// $num=M('information_schema.tables')->where("table_schema = 'dwms' 
-					// 		AND table_name = '$name'")->count();
-					// if ($num>0)
-					// {
-					// 	$this->success( '接受企业注册成功! ', "../../../../../", 5 );
-					// }
-					// else
-					// {
-					// $user->where( "user_id='$user_id'" )->delete();
-					// $unit->where("user_id='$user_id'")->delete();
-					// $this->error( '账户创建失败:创建该企业数据表失败 ', "../../../../../", 5 );	
-					// }
+					$this->display('./Public/html/Content/do_reg/success.html');
 				}
 				else {
 					$user->where( "user_id='$user_id'" )->delete();
-					$this->error( '账户创建失败:企业信息写入失败', "../../../../../", 5 );
+					// $this->error( '账户创建失败:企业信息写入失败', "../../../../../", 5 );
+					$this->display('./Public/html/Content/do_reg/fail.html');
 				}
 			}
 
 			else {
-				$this->error( '账户创建失败:账户信息写入失败', "../../../../../", 5 );
+				// $this->error( '账户创建失败:账户信息写入失败', "../../../../../", 5 );
+				$this->display('./Public/html/Content/do_reg/fail.html');
 			}
 			break;
 
 		default:
-			$this->error( '页面不存在' );
+			// $this->error( '页面不存在' );
+		$this->display('./Public/html/Content/do_reg/fail.html');
 			break;
 		}
 	}

@@ -310,6 +310,7 @@ class DistrictMapAction extends DistrictCommonAction{
 			$data['height'] = rand(-10, 30);
 			$data['speed'] = rand(0, 100);
 			$data['status'] = 0;
+			$data['vehicle_id'] = 0;
 			$gps->add( $data );
 		}
 		if ( $idx >= count( $gps_data_array ) ) {

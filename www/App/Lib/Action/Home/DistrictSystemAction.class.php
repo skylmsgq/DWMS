@@ -556,6 +556,27 @@ class DistrictSystemAction extends DistrictCommonAction{
 			$device_name = '全球定位仪';
 			$device_type = 'GPS';
 			$device_status = 0;
+
+			$gps_table_name = 'gps_' . $device_serial_num;
+			$create_table = 'CREATE TABLE `' . $gps_table_name . '` (
+				`id` int(11) NOT NULL AUTO_INCREMENT,
+				`datetime` datetime DEFAULT NULL,
+				`longitude` double DEFAULT NULL,
+				`latitude` double DEFAULT NULL,
+				`bmap_longitude` double DEFAULT NULL,
+				`bmap_latitude` double DEFAULT NULL,
+				`height` double DEFAULT NULL,
+				`speed` double DEFAULT NULL,
+				`status` tinyint(4) DEFAULT NULL,
+				`vehicle_id` int(11) DEFAULT NULL,
+				`offset_distance` double DEFAULT NULL,
+				PRIMARY KEY (`id`),
+				KEY `fk_vehicle_id_' . $gps_table_name .'` (`vehicle_id`),
+				CONSTRAINT `fk_vehicle_id_' . $gps_table_name . '` FOREIGN KEY (`vehicle_id`) REFERENCES `vehicle` (`vehicle_id`)
+				) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;';
+			$model = new Model();
+			$model->execute($create_table);
+
 			break;
 		case '1':
 			$device_name = '手持读写器';
@@ -666,6 +687,34 @@ class DistrictSystemAction extends DistrictCommonAction{
 		if ( $result ) {
 			$this->ajaxReturn( 'exist' );
 		}
+
+		$device_old = M( 'device' )->where( array( 'device_id' => $record_id ) )->find();
+		if ($device_old['device_type_id'] == '0') {
+			$gps_table_name_old = 'gps_' . $device_old['device_serial_num'];
+			$drop_table = 'DROP TABLE IF EXISTS `' . $gps_table_name_old . '`;';
+			$model = new Model();
+			$model->execute($drop_table);
+
+			$gps_table_name = 'gps_' . $device_serial_num;
+			$create_table = 'CREATE TABLE `' . $gps_table_name . '` (
+				`id` int(11) NOT NULL AUTO_INCREMENT,
+				`datetime` datetime DEFAULT NULL,
+				`longitude` double DEFAULT NULL,
+				`latitude` double DEFAULT NULL,
+				`bmap_longitude` double DEFAULT NULL,
+				`bmap_latitude` double DEFAULT NULL,
+				`height` double DEFAULT NULL,
+				`speed` double DEFAULT NULL,
+				`status` tinyint(4) DEFAULT NULL,
+				`vehicle_id` int(11) DEFAULT NULL,
+				`offset_distance` double DEFAULT NULL,
+				PRIMARY KEY (`id`),
+				KEY `fk_vehicle_id_' . $gps_table_name .'` (`vehicle_id`),
+				CONSTRAINT `fk_vehicle_id_' . $gps_table_name . '` FOREIGN KEY (`vehicle_id`) REFERENCES `vehicle` (`vehicle_id`)
+				) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;';
+			$model->execute($create_table);
+		}
+
 		$data['device_id'] = $record_id;
 		$data['device_serial_num'] = $device_serial_num;
 		$data['ownership_type'] = I( 'post.ownership_type' );
