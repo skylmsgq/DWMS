@@ -382,7 +382,9 @@ function addWaste($json_string){
 	$wasteid = $json_data->wasteid;
 	$imei = $json_data->imei;
 	$addway = $json_data->addway;
-	$addnum = $json_data->addnum;	
+	$addnum = $json_data->addnum;
+	$addnum=floatval($addnum);
+	// $addnum=	s
 	$column = null;
 		try {
 			$devtable=M("device");	
