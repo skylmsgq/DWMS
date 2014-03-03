@@ -124,7 +124,7 @@ function setBMap() {
     $("#map_container").css("height", "" + windowHeight - 350 + "px");
 
     BaiduMap = new BMap.Map("map_container"); // 创建Map实例
-    BaiduMap.centerAndZoom("上海", 11); // 初始化地图,设置中心点坐标和地图级别
+    BaiduMap.centerAndZoom("安庆", 14); // 初始化地图,设置中心点坐标和地图级别
     BaiduMap.addControl(new BMap.NavigationControl()); // 添加默认缩放平移控件
     BaiduMap.addControl(new BMap.ScaleControl()); // 添加默认比例尺控件
     BaiduMap.addControl(new BMap.OverviewMapControl()); //添加默认缩略地图控件
@@ -260,9 +260,8 @@ function getVehicleRoutes() {
             var endTime = "0000-00-00 00:00:00";
             var gpsRouteTimeArray = new Array();
             for (var gpsIdx in gpsRouteArray) {
-
                 gpsRouteTimeArray[gpsIdx] = new Array();
-                if (!gpsRouteArray[gpsIdx]) {
+                if ((!gpsRouteArray[gpsIdx]) || (gpsRouteArray[gpsIdx] == null) || (typeof(gpsRouteArray[gpsIdx]) == 'undefined')) {
                     continue;
                 }
 
@@ -362,8 +361,23 @@ function getVehicleRoutes() {
 
                 var pointArray = new Array();
                 for (var dataIdx in gpsRouteArray[gpsIdx]) {
-                    if (!gpsRouteArray[gpsIdx][dataIdx]) {
+                    if ((!gpsRouteArray[gpsIdx][dataIdx]) || (gpsRouteArray[gpsIdx][dataIdx] == null) || (typeof(gpsRouteArray[gpsIdx][dataIdx]) == 'undefined')) {
                         continue;
+                    }
+                    if ((gpsRouteArray[gpsIdx][dataIdx].datetime == '0000-00-00') || (!gpsRouteArray[gpsIdx][dataIdx].datetime) || (gpsRouteArray[gpsIdx][dataIdx].datetime == null) || (typeof(gpsRouteArray[gpsIdx][dataIdx].datetime) == 'undefined')) {
+                        continue;
+                    }
+                    if ((!gpsRouteArray[gpsIdx][dataIdx].bmap_longitude) || (gpsRouteArray[gpsIdx][dataIdx].bmap_longitude == null) || (typeof(gpsRouteArray[gpsIdx][dataIdx].bmap_longitude) == 'undefined') || (!gpsRouteArray[gpsIdx][dataIdx].bmap_latitude) || (gpsRouteArray[gpsIdx][dataIdx].bmap_latitude == null) || (gpsRouteArray[gpsIdx][dataIdx].bmap_latitude == 'undefined')) {
+                        continue;
+                    }
+                    if ((!gpsRouteArray[gpsIdx][dataIdx].height) || (gpsRouteArray[gpsIdx][dataIdx].height == null) || (typeof(gpsRouteArray[gpsIdx][dataIdx].height) == 'undefined')) {
+                        gpsRouteArray[gpsIdx][dataIdx].height = 0;
+                    }
+                    if ((!gpsRouteArray[gpsIdx][dataIdx].speed) || (gpsRouteArray[gpsIdx][dataIdx].speed == null) || (typeof(gpsRouteArray[gpsIdx][dataIdx].speed) == 'undefined')) {
+                        gpsRouteArray[gpsIdx][dataIdx].speed = 0;
+                    }
+                    if ((!gpsRouteArray[gpsIdx][dataIdx].offset_distance) || (gpsRouteArray[gpsIdx][dataIdx].offset_distance == null) || (typeof(gpsRouteArray[gpsIdx][dataIdx].offset_distance) == 'undefined')) {
+                        gpsRouteArray[gpsIdx][dataIdx].offset_distance = 0;
                     }
                     var dateTime = gpsRouteArray[gpsIdx][dataIdx].datetime;
                     var dateTimeObj = new Date(dateTime);

@@ -11,7 +11,7 @@
     <meta name="author" content="">
     <link rel="shortcut icon" href="__PUBLIC__/image/favicon.png">
 
-    <title>危险废物管理信息系统</title>
+    <title>危险废物管理信息系统 beta</title>
 
     <!-- Bootstrap core CSS -->
     <link href="__PUBLIC__/css/bootstrap.min.css" rel="stylesheet">
@@ -38,13 +38,16 @@
             <div class="panel-body" style="border-radius:500px">
                 <form style="width:37%;" role="form" id="login">
                     <div class="blank-div"></div>
-                    <h2 class="form-signin-heading txt-shadow">危险废物管理信息系统</h2>
-                    
-                    <div class="blank-div"></div>
-                    <div class="blank-div"></div>
-                    <input id="username" type="username" name="username" class="form-control" placeholder="用户名" required="" autofocus="" />
+                    <h2 class="form-signin-heading txt-shadow">危险废物管理信息系统 beta</h2>
 
+                    <div class="blank-div"></div>
+                    <div class="blank-div"></div>
+                    <div style="margin:0px 0px 10px 0px;">
+                    <input id="username" type="username" name="username" class="form-control" placeholder="用户名" required="" autofocus="" />
+                    </div>
+                    <div style="margin:0px 0px 10px 0px;">
                     <input type="password" name="password" class="form-control" placeholder="密码" required="" />
+                    </div>
                     <div class="row">
                         <div class="col-xs-7">
                             <input type="code" name="code" class="form-control" placeholder="验证码" required="" />
@@ -60,10 +63,10 @@
                     <!-- <label class="checkbox">
                 <input type="checkbox" value="remember-me">记住密码
             </label> -->
-                    
+
                     <div class="blank-div"></div>
                     <div id="myAlert"></div>
-                    
+
                 </form>
                <!--  <button class="btn btn-lg btn-primary btn-block" onclick="login()">登 录</button>
                     <button type="button" class="btn btn-success btn-lg btn-block" id="register" data-toggle="modal" data-target="#myModal">注 册</button> -->
@@ -73,7 +76,7 @@
                     <button type="button" class="btn btn-success btn-lg btn-block" id="register" data-toggle="modal" data-target="#myModal">注 册</button>
                 </center>
                 </div>
-            
+
                 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="padding-top:15%">
                     <div class="modal-dialog">
                         <div class="modal-content">
@@ -156,7 +159,7 @@
 
     function login(){
     var form_serialize = "" + $('#login').serialize();
-    console.log(form_serialize);
+    // console.log(form_serialize);
     $.ajax({
         type: "post",
         url: "{:U('Home/Index/login/')}",
@@ -168,31 +171,31 @@
             switch(data){
                 case 0:
                     window.location.assign("./index.php/Home/LoginAdmin/homepage.html");
-                    break; 
+                    break;
                 case 1:
                     window.location.assign("./index.php/Home/LoginCountry/homepage.html");
-                    break; 
+                    break;
                 case 2:
                     window.location.assign("./index.php/Home/LoginProvince/homepage.html");
-                    break; 
+                    break;
                 case 3:
                     window.location.assign("./index.php/Home/LoginCity/homepage.html");
-                    break; 
+                    break;
                 case 4:
                     window.location.assign("./index.php/Home/LoginDistrict/homepage.html");
-                    break;  
+                    break;
                 case 5:
                     window.location.assign("./index.php/Home/LoginProduction/homepage.html");
-                    break;  
+                    break;
                 case 6:
                     window.location.assign("./index.php/Home/LoginTransport/homepage.html");
-                    break;  
+                    break;
                 case 7:
                     window.location.assign("./index.php/Home/LoginReception/homepage.html");
                     break;
                 case 8:
                     myAlertFail("验证码错误");
-                    break; 
+                    break;
                 case 9:
                     myAlertFail("用户名或密码错误！");
                     break;
@@ -202,7 +205,7 @@
                 case 11:
                     myAlertFail("用户被锁定，请联系当地环保部门。。");
                     break;
-                
+
                 default :
                     myAlertFail("登录失败");
             }

@@ -33,5 +33,11 @@ class TransportBasicAction extends TransportCommonAction{
 		$tmp_content=$this->fetch( './Public/html/Content/Transport/basic/transport_change_information.html' );
 		$this->ajaxReturn( $tmp_content );
 	}
+
+	//扩展功能->扩展功能
+	public function expandfunction(){
+		$tmp_content=$this->fetch( './Public/html/Content/Expand/expandfunction.html' );
+		$this->ajaxReturn( $tmp_content );
+	}
 }
 ?>

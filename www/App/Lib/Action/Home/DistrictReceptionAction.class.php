@@ -39,6 +39,7 @@ class DistrictReceptionAction extends DistrictCommonAction{
 	public function waste_reception_account_monthly_statistics_page($reception_unit_id=""){
 		$rfid = M('rfid');
 		$condition['reception_unit_id'] = array('EQ',$reception_unit_id);
+		$condition['rfid_status'] = array('EQ',2);
 		$join = $rfid->join('waste ON rfid.waste_id = waste.waste_id')->where($condition)->select();
 		$rfid_json = json_encode($join);
 		$tmp_content = $this->fetch( './Public/html/Content/District/reception/waste_reception_ccount_monthly_statistics_page.html' );

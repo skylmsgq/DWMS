@@ -112,7 +112,7 @@ function setBMap() {
     $("#map_container").css("height", "" + windowHeight - 350 + "px");
 
     BaiduMap = new BMap.Map("map_container"); // 创建Map实例
-    BaiduMap.centerAndZoom("上海", 11); // 初始化地图,设置中心点坐标和地图级别
+    BaiduMap.centerAndZoom("安庆", 14); // 初始化地图,设置中心点坐标和地图级别
     BaiduMap.addControl(new BMap.NavigationControl()); // 添加默认缩放平移控件
     BaiduMap.addControl(new BMap.ScaleControl()); // 添加默认比例尺控件
     BaiduMap.addControl(new BMap.OverviewMapControl()); //添加默认缩略地图控件

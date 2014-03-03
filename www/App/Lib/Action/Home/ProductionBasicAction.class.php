@@ -40,5 +40,11 @@ class ProductionBasicAction extends ProductionCommonAction{
 		$tmp_content=$this->fetch( './Public/html/Content/Production/basic/storage_place.html' );
 		$this->ajaxReturn( $tmp_content );
 	}
+
+	//扩展功能->扩展功能
+	public function expandfunction(){
+		$tmp_content=$this->fetch( './Public/html/Content/Expand/expandfunction.html' );
+		$this->ajaxReturn( $tmp_content );
+	}
 }
 ?>
