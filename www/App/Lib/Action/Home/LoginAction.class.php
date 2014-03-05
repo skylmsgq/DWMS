@@ -10,7 +10,7 @@ class LoginAction extends CommonAction{
 			$this->redirect( 'Home/Index/index' );
 		}
 	}
-public function homepage() {
+	public function homepage() {
 		
 			$this->redirect( 'Home/Index/index' );
 	}
