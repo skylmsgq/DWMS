@@ -25,8 +25,8 @@ DWMS_page_config.pageid = 0;
 </div>
     </div>
 </div>
-<!-- <div class="row">
-    <div class="col-md-6">
+<div class="row">
+    <div class="col-md-12">
          <div class="panel panel-primary">
           <div class="panel-heading">
             <h3 class="panel-title">（转移联单及其危废重量）危废统计图</h3>
@@ -36,7 +36,7 @@ DWMS_page_config.pageid = 0;
           </div>
 </div>
     </div>
-    <div class="col-md-6">
+   <!--  <div class="col-md-6">
         <div class="panel panel-primary">
     <div class="panel-heading">
         <h3 class="panel-title">（转移联单及其危废重量）危废统计表</h3>
@@ -46,17 +46,31 @@ DWMS_page_config.pageid = 0;
         </table>
     </div>
 </div>
+    </div> -->
+</div>
+<div class="row">
+    <div class="col-md-12">
+         <div class="panel panel-primary">
+          <div class="panel-heading">
+            <h3 class="panel-title">（转移联单及其危废重量）危废统计图</h3>
+          </div>
+          <div class="panel-body">   
+            <div id="statistics_graph_waste_container_2"></div>
+          </div>
+</div>
     </div>
-</div> -->
+</div>
 
 
 <script type="text/javascript">
-var p_number, r_number, t_number, sum, tong_num, dai_num, count_waste,manifestnum;
+var p_number, r_number, t_number, sum, tong_num, dai_num, count_waste, manifestnum, recordnum, devicenum, vehiclenum;
 function decimal(num,v)
 {
     var vv = Math.pow(10,v);
     return Math.round(num*vv)/vv;
 }
+
+
 $.ajax({
         type: "get",
         url: "{:U('Home/DistrictBusiness/get_chart')}",
@@ -68,6 +82,9 @@ $.ajax({
             r_number=parseInt(result.rnum);
             t_number=parseInt(result.tnum);
             manifestnum=parseInt(result.manifestnum);
+            recordnum=parseInt(result.recordnum);
+            devicenum=parseInt(result.devicenum);
+            vehiclenum=parseInt(result.vehiclenum);
             count_waste=parseInt(result.count_waste);
             tong_num=parseFloat(result.tong_num);
             dai_num=parseInt(result.dai_num);
@@ -75,85 +92,407 @@ $.ajax({
             p_ptg=parseFloat(decimal(100*p_number/sum,1));
             r_ptg=parseFloat(decimal(100*r_number/sum,1));
             t_ptg=parseFloat(decimal(100*t_number/sum,1));
-            $('#statistics_graph_enterprise_container').highcharts({
-    chart: {
-        plotBackgroundColor: null,
-        plotBorderWidth: null,
-        plotShadow: false
-    },
-    title: {
-        text: '企业统计图'
-    },
-    tooltip: {
-        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-    },
-    plotOptions: {
-        pie: {
-            allowPointSelect: true,
-            cursor: 'pointer',
-            dataLabels: {
-                enabled: true,
-                color: '#000000',
-                connectorColor: '#000000',
-                format: '<b>{point.name}</b>: {point.percentage:.1f} %'
-            }
-        }
-    },
-    series: [{
-        type: 'pie',
-        name: 'company numbers',
-         data: [
-                    
-                    {
-                        name: '生产企业',
-                        y: p_ptg,
-                        sliced: true,
-                        selected: true
-                    },
-                    ['运输企业',    t_ptg],
-                    ['接受企业',     (100-p_ptg-t_ptg) ],
-                  
-        ]
-    }]
-
-});
-
-
-$('#statistics_table_enterprise_container').dataTable({
-    "aaData": [
-        /* Reduced data set */
-        ["生产企业数量",p_number ],
-        ["运输企业数量", t_number],
-        ["接受企业数量", r_number],
-        ["联单总数", manifestnum],
-        ["废物类型总数", count_waste],
-        ["桶装废物总量", tong_num+" 公斤"],
-        ["袋装废物总量", dai_num+" 个"],
-    ],
-    "aoColumns": [{
-        "sTitle": "统计类型"
-    }, {
-        "sTitle": "统计总数"
-    }],
-    "iDisplayLength": 7,
-    "sPaginationType": "full_numbers",
-    "bLengthChange": false,
-    "bInfo": false,
-    "bFilter": false,
-    "bSort": false,
-    "oLanguage": {
-            "oPaginate": {
-                "sFirst": "首页",
-                "sPrevious": "前一页",
-                "sNext": "后一页",
-                "sLast": "尾页"
-            },
-            // "sZeroRecords": "没有检索到数据"
-            /*"sProcessing": "<img src='./loading.gif' />"*/
-        }
-
-});
+    $('#statistics_graph_enterprise_container').highcharts({
+        chart: {
+            plotBackgroundColor: null,
+            plotBorderWidth: null,
+            plotShadow: false
         },
+        title: {
+            text: '企业统计图'
+        },
+        tooltip: {
+            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                dataLabels: {
+                    enabled: true,
+                    color: '#000000',
+                    connectorColor: '#000000',
+                    format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+                }
+            }
+        },
+        series: [{
+            type: 'pie',
+            name: 'company numbers',
+            data: [
+                        
+                        {
+                            name: '生产企业',
+                            y: p_ptg,
+                            sliced: true,
+                            selected: true
+                        },
+                        ['运输企业',    t_ptg],
+                        ['接受企业',     (100-p_ptg-t_ptg) ],
+                      
+            ]
+        }]
+
+    });
+
+    var colors = Highcharts.getOptions().colors,
+        categories = ['HW01', 'HW02', 'HW03', 'HW04', 'HW05', 'HW06',/* 'HW07', 'HW08', */'HW09', /*'HW10', 'HW11', 'HW12', 'HW13', 'HW14', 'HW15', */'HW16', 'HW17', 'HW18', 'HW19', 'HW20', /*'HW21', 'HW22', 'HW23', 'HW24', 'HW25', 'HW26', 'HW27', 'HW28', 'HW29', 'HW30',*/ 'HW31',/* 'HW32', 'HW33', 'HW34', 'HW35', 'HW36', 'HW37', 'HW38', */'HW39', 'HW40', 'HW41', 'HW42', /*'HW43', 'HW44', 'HW45', 'HW46', 'HW47', */'HW48', 'HW49'],
+        name = 'Waste_Code',
+        data = [/*{
+                    y: 55.11,
+                    color: colors[0],
+                    drilldown: {
+                        name: 'MSIE versions',
+                        categories: ['MSIE 6.0', 'MSIE 7.0', 'MSIE 8.0', 'MSIE 9.0'],
+                        data: [10.85, 7.35, 33.06, 2.81],
+                        color: colors[0]
+                    }
+                }, */{
+                    y: 21.63,
+                    color: colors[1],
+                    drilldown: {
+                        name: 'Firefox versions',
+                        categories: ['Firefox 2.0', 'Firefox 3.0', 'Firefox 3.5', 'Firefox 3.6', 'Firefox 4.0'],
+                        data: [0.20, 0.83, 1.58, 13.12, 5.43],
+                        color: colors[1]
+                    }
+                }, {
+                    y: 11.94,
+                    color: colors[2],
+                    drilldown: {
+                        name: 'Chrome versions',
+                        categories: ['Chrome 5.0', 'Chrome 6.0', 'Chrome 7.0', 'Chrome 8.0', 'Chrome 9.0',
+                            'Chrome 10.0', 'Chrome 11.0', 'Chrome 12.0'],
+                        data: [0.12, 0.19, 0.12, 0.36, 0.32, 9.91, 0.50, 0.22],
+                        color: colors[2]
+                    }
+                }, {
+                    y: 7.15,
+                    color: colors[3],
+                    drilldown: {
+                        name: 'Safari versions',
+                        categories: ['Safari 5.0', 'Safari 4.0', 'Safari Win 5.0', 'Safari 4.1', 'Safari/Maxthon',
+                            'Safari 3.1', 'Safari 4.1'],
+                        data: [4.55, 1.42, 0.23, 0.21, 0.20, 0.19, 0.14],
+                        color: colors[3]
+                    }
+                }, {
+                    y: 2.14,
+                    color: colors[4],
+                    drilldown: {
+                        name: 'Opera versions',
+                        categories: ['Opera 9.x', 'Opera 10.x', 'Opera 11.x'],
+                        data: [ 0.12, 0.37, 1.65],
+                        color: colors[4]
+                    }
+                }, {
+                    y: 2.14,
+                    color: colors[4],
+                    drilldown: {
+                        name: 'Opera versions',
+                        categories: ['Opera 9.x', 'Opera 10.x', 'Opera 11.x'],
+                        data: [ 0.12, 0.37, 1.65],
+                        color: colors[4]
+                    }
+                }, {
+                    y: 25.11,
+                    color: colors[0],
+                    drilldown: {
+                        name: 'MSIE versions',
+                        categories: ['MSIE 6.0', 'MSIE 7.0', 'MSIE 8.0', 'MSIE 9.0'],
+                        data: [10.85, 7.35, 3.06, 2.81],
+                        color: colors[0]
+                    }
+                }, {
+                    y: 25.11,
+                    color: colors[0],
+                    drilldown: {
+                        name: 'MSIE versions',
+                        categories: ['MSIE 6.0', 'MSIE 7.0', 'MSIE 8.0', 'MSIE 9.0'],
+                        data: [10.85, 7.35, 3.06, 2.81],
+                        color: colors[0]
+                    }
+                }, {
+                    y: 21.63,
+                    color: colors[1],
+                    drilldown: {
+                        name: 'Firefox versions',
+                        categories: ['Firefox 2.0', 'Firefox 3.0', 'Firefox 3.5', 'Firefox 3.6', 'Firefox 4.0'],
+                        data: [0.20, 0.83, 1.58, 13.12, 5.43],
+                        color: colors[1]
+                    }
+                }, {
+                    y: 11.94,
+                    color: colors[2],
+                    drilldown: {
+                        name: 'Chrome versions',
+                        categories: ['Chrome 5.0', 'Chrome 6.0', 'Chrome 7.0', 'Chrome 8.0', 'Chrome 9.0',
+                            'Chrome 10.0', 'Chrome 11.0', 'Chrome 12.0'],
+                        data: [0.12, 0.19, 0.12, 0.36, 0.32, 9.91, 0.50, 0.22],
+                        color: colors[2]
+                    }
+                }, {
+                    y: 7.15,
+                    color: colors[3],
+                    drilldown: {
+                        name: 'Safari versions',
+                        categories: ['Safari 5.0', 'Safari 4.0', 'Safari Win 5.0', 'Safari 4.1', 'Safari/Maxthon',
+                            'Safari 3.1', 'Safari 4.1'],
+                        data: [4.55, 1.42, 0.23, 0.21, 0.20, 0.19, 0.14],
+                        color: colors[3]
+                    }
+                }, {
+                    y: 2.14,
+                    color: colors[4],
+                    drilldown: {
+                        name: 'Opera versions',
+                        categories: ['Opera 9.x', 'Opera 10.x', 'Opera 11.x'],
+                        data: [ 0.12, 0.37, 1.65],
+                        color: colors[4]
+                    }
+                }, {
+                    y: 7.15,
+                    color: colors[3],
+                    drilldown: {
+                        name: 'Safari versions',
+                        categories: ['Safari 5.0', 'Safari 4.0', 'Safari Win 5.0', 'Safari 4.1', 'Safari/Maxthon',
+                            'Safari 3.1', 'Safari 4.1'],
+                        data: [4.55, 1.42, 0.23, 0.21, 0.20, 0.19, 0.14],
+                        color: colors[3]
+                    }
+                }, {
+                    y: 2.14,
+                    color: colors[4],
+                    drilldown: {
+                        name: 'Opera versions',
+                        categories: ['Opera 9.x', 'Opera 10.x', 'Opera 11.x'],
+                        data: [ 0.12, 0.37, 1.65],
+                        color: colors[4]
+                    }
+                }, {
+                    y: 21.63,
+                    color: colors[1],
+                    drilldown: {
+                        name: 'Firefox versions',
+                        categories: ['Firefox 2.0', 'Firefox 3.0', 'Firefox 3.5', 'Firefox 3.6', 'Firefox 4.0'],
+                        data: [0.20, 0.83, 1.58, 13.12, 5.43],
+                        color: colors[1]
+                    }
+                }, {
+                    y: 21.63,
+                    color: colors[1],
+                    drilldown: {
+                        name: 'Firefox versions',
+                        categories: ['Firefox 2.0', 'Firefox 3.0', 'Firefox 3.5', 'Firefox 3.6', 'Firefox 4.0'],
+                        data: [0.20, 0.83, 1.58, 13.12, 5.43],
+                        color: colors[1]
+                    }
+                }, {
+                    y: 21.63,
+                    color: colors[1],
+                    drilldown: {
+                        name: 'Firefox versions',
+                        categories: ['Firefox 2.0', 'Firefox 3.0', 'Firefox 3.5', 'Firefox 3.6', 'Firefox 4.0'],
+                        data: [0.20, 0.83, 1.58, 13.12, 5.43],
+                        color: colors[1]
+                    }
+                }, {
+                    y: 11.94,
+                    color: colors[2],
+                    drilldown: {
+                        name: 'Chrome versions',
+                        categories: ['Chrome 5.0', 'Chrome 6.0', 'Chrome 7.0', 'Chrome 8.0', 'Chrome 9.0',
+                            'Chrome 10.0', 'Chrome 11.0', 'Chrome 12.0'],
+                        data: [0.12, 0.19, 0.12, 0.36, 0.32, 9.91, 0.50, 0.22],
+                        color: colors[2]
+                    }
+                }, {
+                    y: 7.15,
+                    color: colors[3],
+                    drilldown: {
+                        name: 'Safari versions',
+                        categories: ['Safari 5.0', 'Safari 4.0', 'Safari Win 5.0', 'Safari 4.1', 'Safari/Maxthon',
+                            'Safari 3.1', 'Safari 4.1'],
+                        data: [4.55, 1.42, 0.23, 0.21, 0.20, 0.19, 0.14],
+                        color: colors[3]
+                    }
+                }, {
+                    y: 2.14,
+                    color: colors[4],
+                    drilldown: {
+                        name: 'Opera versions',
+                        categories: ['Opera 9.x', 'Opera 10.x', 'Opera 11.x'],
+                        data: [ 0.12, 0.37, 1.65],
+                        color: colors[4]
+                    }
+                }];
+
+    function setChart(name, categories, data, color) {
+            chart.xAxis[0].setCategories(categories, false);
+            chart.series[0].remove(false);
+            chart.addSeries({
+                name: name,
+                data: data,
+                color: color || 'white'
+            }, false);
+            chart.redraw();
+        }
+
+    var chart = $('#statistics_graph_waste_container').highcharts({
+            chart: {
+                type: 'column'
+            },
+            title: {
+                text: 'waste_statistics, March, 2014'
+            },
+            subtitle: {
+                text: 'Click the columns to view details.'
+            },
+            xAxis: {
+                categories: categories
+            },
+            yAxis: {
+                title: {
+                    text: 'Percents'
+                }
+            },
+            plotOptions: {
+                column: {
+                    cursor: 'pointer',
+                    point: {
+                        events: {
+                            click: function() {
+                                var drilldown = this.drilldown;
+                                if (drilldown) { // drill down
+                                    setChart(drilldown.name, drilldown.categories, drilldown.data, drilldown.color);
+                                } else { // restore
+                                    setChart(name, categories, data);
+                                }
+                            }
+                        }
+                    },
+                    dataLabels: {
+                        enabled: true,
+                        color: colors[0],
+                        style: {
+                            fontWeight: 'bold'
+                        },
+                        formatter: function() {
+                            return this.y +'%';
+                        }
+                    }
+                }
+            },
+            tooltip: {
+                formatter: function() {
+                    var point = this.point,
+                        s = this.x +':<b>'+ this.y +'% market share</b><br/>';
+                    if (point.drilldown) {
+                        s += 'Click to view '+ point.category +' versions';
+                    } else {
+                        s += 'Click to return to browser brands';
+                    }
+                    return s;
+                }
+            },
+            series: [{
+                name: name,
+                data: data,
+                color: 'white'
+            }],
+            exporting: {
+                enabled: false
+            }
+        })
+        .highcharts(); // return chart
+
+    $('#statistics_graph_waste_container_2').highcharts({
+        chart: {
+            plotBackgroundColor: null,
+            plotBorderWidth: null,
+            plotShadow: false
+        },
+        title: {
+            text: 'waste_statistics, March, 2014'
+        },
+        tooltip: {
+            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                dataLabels: {
+                    enabled: true,
+                    color: '#000000',
+                    connectorColor: '#000000',
+                    format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+                }
+            }
+        },
+        series: [{
+            type: 'pie',
+            name: 'Waste_Code',
+            data: [
+                        
+                        {
+                            name: 'HW01',
+                            y: 0.1,
+                            sliced: true,
+                            selected: true
+                        },
+                        ['HW09',    0.3],
+                        ['HW13',     0.2 ],
+                        ['HW19',    0.1],
+                        ['HW23',     0.1 ],
+                        ['HW24',    0.05],
+                        ['HW27',     0.05 ],
+                        ['HW38',    0.05],
+                        ['HW30',     0.05],
+                      
+            ]
+        }]
+
+    });
+
+    $('#statistics_table_enterprise_container').dataTable({
+        "aaData": [
+            /* Reduced data set */
+            ["生产企业数量",p_number ],
+            ["运输企业数量", t_number],
+            ["接受企业数量", r_number],
+            ["备案总数", recordnum],
+            ["联单总数", manifestnum],
+            ["废物类型总数", count_waste],
+            ["桶装废物总量", tong_num+" 公斤"],
+            ["袋装废物总量", dai_num+" 个"],
+            ["硬件设备总数", devicenum],
+            ["运输车辆总数", vehiclenum],
+        ],
+        "aoColumns": [{
+            "sTitle": "统计类型"
+        }, {
+            "sTitle": "统计总数"
+        }],
+        "iDisplayLength": 10,
+        "sPaginationType": "full_numbers",
+        "bLengthChange": false,
+        "bInfo": false,
+        "bFilter": false,
+        "bSort": false,
+        "oLanguage": {
+                "oPaginate": {
+                    "sFirst": "首页",
+                    "sPrevious": "前一页",
+                    "sNext": "后一页",
+                    "sLast": "尾页"
+                },
+                // "sZeroRecords": "没有检索到数据"
+                /*"sProcessing": "<img src='./loading.gif' />"*/
+            }
+
+    });
+},
         error: function(XMLHttpRequest, textStatus, errorThrown) {
             console.log("Error:Ajax_Content_Load" + errorThrown);
             console.log("XMLHttpRequest.status:" + XMLHttpRequest.status);

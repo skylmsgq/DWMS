@@ -376,6 +376,9 @@ class DistrictBusinessAction extends DistrictCommonAction{
 		$tnum=M('transport_unit')->count();
 		$rnum=M('reception_unit')->count();
 		$manifestnum=M('manifest')->count();
+		$recordnum=M('record')->count();
+		$devicenum=M('device')->count();
+		$vehiclenum=M('vehicle')->count();
 		$tong_num=M('rfid')->where("add_method=0")->sum('waste_total');
 		$dai_num=M('rfid')->where("add_method=1")->sum('waste_total');
 		$dict=array();
@@ -398,6 +401,9 @@ class DistrictBusinessAction extends DistrictCommonAction{
 		$result->tnum=$tnum;
 		$result->rnum=$rnum;
 		$result->manifestnum=$manifestnum;
+		$result->recordnum=$recordnum;
+		$result->devicenum=$devicenum;
+		$result->vehiclenum=$vehiclenum;
 		$result->tong_num=$tong_num;
 		$result->dai_num=$dai_num;
 		$result=json_encode($result);
