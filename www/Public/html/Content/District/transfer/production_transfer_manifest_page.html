@@ -74,9 +74,29 @@
                     </td>
                 </tr>
                 <tr>
+                    <td>危废名称</td>
+                    <td>{$manifest.waste_name}</td>
+                    <td>危废类别编号</td>
+                    <td>{$manifest.waste_category_code}</td>
+                </tr>
+                <tr>
+                    <td>危废特性</td>
+                    <td>{$manifest.waste_property}</td>
+                    <td>危废形态</td>
+                    <td>{$manifest.waste_form}</td>
+                </tr>
+                <tr>
                     <td>危废包装方式</td>
                     <td>
                         {$manifest.waste_package}
+                    </td>
+                    <td>危废主要成分</td>
+                    <td>{$manifest.waste_ingredient}</td>
+                </tr>
+                <tr>
+                    <td>应急措施</td>
+                    <td>
+                        {$manifest.emergency_measure}
                     </td>
                     <td>危废外运目的</td>
                     <td>
@@ -84,9 +104,9 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>应急措施</td>
+                    <td>危废运达地</td>
                     <td>
-                        {$manifest.emergency_measure}
+                        {$manifest.waste_destination}
                     </td>
                     <td>危废发运人</td>
                     <td>
@@ -94,10 +114,6 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>危废运达地</td>
-                    <td>
-                        {$manifest.waste_destination}
-                    </td>
                     <td>危废转移时间</td>
                     <td>
                         {$manifest.waste_transport_time}

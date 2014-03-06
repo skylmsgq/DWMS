@@ -85,11 +85,45 @@
                     </td>
                 </tr>
                 <tr>
+                    <td>危废名称</td>
+                    <td>
+                        <input type="text" name="waste_name" id="waste_name" class="form-control input-sm required-cn" placeholder="危废名称">
+                    </td>
+                    <td>危废类别编号</td>
+                    <td>
+                        <select type="text" name="waste_category_code" id="waste_category_code" class="form-control input-sm required-cn" placeholder="危废类别编号">
+
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>危废特性</td>
+                    <td>
+                        <input type="text" name="waste_property" id="waste_property" class="form-control input-sm required-cn" placeholder="危废特性">
+                    </td>
+                    <td>危废形态</td>
+                    <td>
+                        <select type="text" name="waste_form" id="waste_form" class="form-control input-sm required-cn" placeholder="危废形态">
+
+                        </select>
+                    </td>
+                </tr>
+                <tr>
                     <td>危废主要包装方式</td>
                     <td>
                         <select type="text" name="waste_package" id="waste_package" class="form-control input-sm required-cn" placeholder="危废包装方式">
 
                         </select>
+                    </td>
+                    <td>危废主要成分</td>
+                    <td>
+                        <input type="text" name="waste_ingredient" class="form-control input-sm" placeholder="危废主要成分">
+                    </td>
+                </tr>
+                <tr>
+                    <td>应急措施</td>
+                    <td>
+                        <input type="text" name="emergency_measure" class="form-control input-sm" placeholder="应急措施">
                     </td>
                     <td>危废外运目的</td>
                     <td>
@@ -99,9 +133,10 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>应急措施</td>
+                    <td>危废运达地</td>
                     <td>
-                        <input type="text" name="emergency_measure" class="form-control input-sm" placeholder="应急措施">
+                        <input type="text" name="waste_destination" class="form-control input-sm required-cn" placeholder="危废运达地">
+                        <!-- {$reception_unit.reception_unit_address} -->
                     </td>
                     <td>危废发运人</td>
                     <td>
@@ -109,11 +144,6 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>危废运达地</td>
-                    <td>
-                        <input type="text" name="waste_destination" class="form-control input-sm required-cn" placeholder="危废运达地">
-                        <!-- {$reception_unit.reception_unit_address} -->
-                    </td>
                     <td>危废转移时间</td>
                     <td>
                         {$record.record_date}
@@ -138,6 +168,12 @@ $("#manifest_request").validate();
 </script>
 <script type="text/javascript">
 
+for(var idx in waste_category_code){   
+    $("#waste_category_code").append('<option value="' + waste_category_code[idx] + '">' + waste_category_code[idx] + '</option>');
+}
+for(var idx in waste_form){   
+    $("#waste_form").append('<option value="' + waste_form[idx] + '">' + waste_form[idx] + '</option>');
+}
 for(var idx in package_method){   
     $("#waste_package").append('<option value="' + package_method[idx].package_method + '">' + package_method[idx].package_method + '</option>');
 }

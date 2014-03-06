@@ -2,7 +2,7 @@
     <div class="panel-heading">
     </div>
     <div class="panel-body">
-        <table id="table-container" class="table table-condensed">
+        <table id="table-container">
         </table>
     </div>
 </div>
@@ -13,7 +13,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="myModalLabel">废物类别修改</h4>
+                <h4 class="modal-title" id="myModalLabel">联单编号绑定</h4>
             </div>
             <div class="modal-body" id="model-content">
             </div>
@@ -27,34 +27,47 @@
 
 <script type="text/javascript">
 function setTable() {
+    var tmp_page_name;
     var tableData = new Array();
-    for (var idx in record_json) {
-        var itemDelete = '<a href="#" onclick="record_delete(\'./waste_category_delete?record_id=' + record_json[idx].waste_category_id + '\')"><span class="label label-danger"><span class="glyphicon glyphicon-paperclip"></span> 删除</span><a>';
-        var itemModify = ' <a href="#" onclick="fetch_model_page(\'./waste_category_modify?record_id=' + record_json[idx].waste_category_id + '\')"><span class="label label-primary"><span class="glyphicon glyphicon-paperclip"></span> 修改</span><a>';
+    for (var idx in manifest) {
         var itemData = new Array();
-        itemData[0] = "" + record_json[idx].waste_category_code;
-        itemData[1] = "" + record_json[idx].waste_category;
-        // itemData[2] = "" + itemDelete + itemModify;
+        itemData[0] = manifest[idx].manifest_num;    
+        itemData[1] = manifest[idx].manifest_add_time;
+        itemData[2] = manifest[idx].production_unit_name;
+        if (manifest[idx].manifest_status = 11) {
+            itemData[3] = '<span class="label label-success">已审核</span>';
+            itemData[4] = '<a href="#" onclick="fetch_model_page(\'./manifest_serial_num_binding_page?manifest_id=' + manifest[idx].manifest_id + '\')"><span class="label label-primary"><span class="glyphicon glyphicon-wrench"></span> 联单编号绑定</span><a>';
+        } else {
+            itemData[3] = '<span class="label label-danger">状态错误</span>';
+            itemData[4] = '<span class="label label-danger">状态错误</span>';
+        }
+        
+
         tableData.push(itemData);
     }
- 
+
     $('#table-container').dataTable({
         "aaData": tableData,
         "aoColumns": [{
-            "sTitle": "危废类别编号"
-        }, {
-            "sTitle": "危废类别"
-        }/*, {
-            "sTitle": "操作"
-        }*/],
-        "bPaginate": true, 
-        "bLengthChange": true, 
-        "bFilter": true, 
-        "bSort": false, 
-        "bInfo": true, 
-        "bAutoWidth": true, 
-        "bStateSave": true, 
-        "sPaginationType": "full_numbers",
+                "sTitle": "联单电子编号"
+            },{
+                "sTitle": "提交日期"
+            }, {
+                "sTitle": "产生单位名称"
+            }, {
+                "sTitle": "联单状态"
+            }, {
+                "sTitle": "操作"
+            }
+        ],
+        "bPaginate": true, //翻页功能
+        "bLengthChange": true, //改变每页显示数据数量
+        "bFilter": true, //过滤功能
+        "bSort": false, //排序功能
+        "bInfo": true, //页脚信息
+        "bAutoWidth": true, //自动宽度
+        "bStateSave": true, //状态保存，使用了翻页或者改变了每页显示数据数量，会保存在cookie中，下回访问时会显示上一次关闭页面时的内容。
+        "sPaginationType": "full_numbers", //显示数字的翻页样式
 
         "oLanguage": {
             "sLengthMenu": "每页显示 _MENU_ 条记录",
@@ -69,36 +82,19 @@ function setTable() {
                 "sLast": "尾页"
             },
             "sZeroRecords": "没有检索到数据"
+
         }
     });
 }
 setTable();
 
-function record_delete(ajaxURL){
-    $.ajax({
-        type: "post",
-        url: ajaxURL,
-        dataType: "json",
-        success:function(data){
-            // console.log(111);
-            refresh_page();
-        },
-        error: function(XMLHttpRequest, textStatus, errorThrown) {
-            console.log("Error: Ajax_Content_Load " + errorThrown);
-            console.log("XMLHttpRequest.status: " + XMLHttpRequest.status);
-            console.log("XMLHttpRequest.readyState: " + XMLHttpRequest.readyState);
-            console.log("textStatus: " + textStatus);
-        }
-
-    })
-}
-
 function fetch_model_page(ajaxURL) {
-    $('#myModal').modal('show');
+
+    $('#myModal').modal("show");
     $("#model-content").html('<center style="margin-top:20px"><h4>努力地加载中...</h4><div class="progress progress-striped active" style="width: 50%"><div class="progress-bar"  role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div></div></center>');
 
     $.ajax({
-        type: "get",
+        type: "post",
         url: ajaxURL,
         dataType: "json",
         success: function(data) {
