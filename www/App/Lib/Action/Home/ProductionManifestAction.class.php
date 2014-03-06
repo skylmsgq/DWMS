@@ -23,7 +23,7 @@ class ProductionManifestAction extends ProductionCommonAction{
 	}
 	// 转移联单->转移联单申请: 申请联单
 	public function transfer_manifest_request_page($record_id="") {
-		$record = M( 'record' )->where( array( 'record_id' =>$record_id ) )->find();
+		$record = M( 'record' )->where( array( 'record_id' => $record_id ) )->find();
 		$record_json = json_encode($record);
 
 		$waste_category_code = M('waste_category')->where('waste_category_id>0')->getField('waste_category_code',true);
@@ -47,9 +47,10 @@ class ProductionManifestAction extends ProductionCommonAction{
 		$this->record = $record;
 		$this->production_unit = $production_unit;
 
-
 		$tmp_content=$this->fetch( './Public/html/Content/Production/manifest/transfer_manifest_request_page.html' );
+
 		$tmp_content = "<script>record_json = $record_json;waste_category_code = $waste_category_code_json;waste_form = $waste_form_json;package_method = $package_method_json;waste_transport_goal = $waste_transport_goal_json; </script> $tmp_content";
+
 		$this->ajaxReturn( $tmp_content );
 	}
 
@@ -75,7 +76,6 @@ class ProductionManifestAction extends ProductionCommonAction{
 		// $manifest->waste_id = I( 'post.waste_id' );
 		$manifest->waste_weight = I( 'post.waste_weight' );
 		$manifest->waste_num = I( 'post.waste_num' );
-
 
 		$manifest->production_unit_id = session( 'production_unit_id' );
 		$manifest->manifest_num = session( 'production_unit_id' ) . '-' . date( 'Y-m' ) . '-' . ( M( 'manifest' )->max( 'manifest_id' )+1 );
