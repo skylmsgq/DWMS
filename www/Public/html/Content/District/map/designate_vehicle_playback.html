@@ -220,6 +220,10 @@ function getVehicleList() {
                 myAlertFail("获取车辆列表失败");
                 return;
             }
+            if ((!vehicleList) || (vehicleList == null) || (typeof(vehicleList) == 'undefined')) {
+                myAlertFail("可能此运输公司没有车辆。")
+                return;
+            }
 
             vehicle_json = vehicleList;
 
@@ -307,6 +311,10 @@ function getVehicleRoute() {
             if (typeof(playbackTimeout) != 'undefined') {
                 clearTimeout(playbackTimeout);
             }
+            if ((!gpsRoute) || (gpsRoute == null) || (typeof(gpsRoute) == 'undefined')) {
+                myAlertFail("此时段该车辆历史数据为空。")
+                return;
+            }
             BaiduMap.clearOverlays();
 
             var iconPoint = new BMap.Point(gpsRoute[0].bmap_longitude, gpsRoute[0].bmap_latitude);
@@ -337,6 +345,18 @@ function getVehicleRoute() {
                         "datetime": playbackTimeObj.getFullYear() + "-" + (playbackTimeObj.getMonth() + 1) + "-" + playbackTimeObj.getDate(),
                     },
                     success: function(routeObj) {
+                        if ((!routeObj) || (routeObj == null) || (typeof(routeObj) == 'undefined')) {
+                            myAlertFail("此时该车辆还未绑定路线，请稍候再试。");
+                            return;
+                        }
+                        if ((!routeObj.route_lng_lat) || (routeObj.route_lng_lat == null) || (typeof(routeObj.route_lng_lat) == 'undefined')) {
+                            myAlertFail("此时该车辆绑定的路线经纬度为空。");
+                            return;
+                        }
+                        if ((!routeObj.route_detail) || (routeObj.route_detail == null) || (typeof(routeObj.route_detail) == 'undefined')) {
+                            myAlertFail("此时该车辆绑定的路线详情为空。");
+                            return;
+                        }
                         var routeDecodeObj = JSON.parse(routeObj.route_lng_lat.replace(/&quot;/g, '"'));
                         var routeDetailDecodeObj = routeObj.route_detail.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"');
                         var pointArray = new Array();
@@ -372,7 +392,7 @@ function getVehicleRoute() {
             var gpsRouteTime = new Array();
             var pointArray = new Array();
             for (var dataIdx in gpsRoute) {
-                if (!gpsRoute[dataIdx]) {
+                if ((!gpsRoute[dataIdx]) || (gpsRoute[dataIdx] == null) || (typeof(gpsRoute[dataIdx]) == 'undefined')) {
                     continue;
                 }
                 var dateTime = gpsRoute[dataIdx].datetime;
@@ -430,10 +450,19 @@ function getVehicleRoute() {
                     vehicleMarker.setPosition(newPoint);
                     var offsetDistance = gpsRouteTime[dataIdx].offset_distance;
                     offsetDistance = Math.round(offsetDistance * 1000) / 1000;
+                    var stay_status = gpsRouteTime[dataIdx].stay_status;
                     if (offsetDistance < alarm_distance_json.warning_distance) {
-                        vehicleMarker.setIcon(lorryIconGreen);
+                        if (!stay_status) {
+                            vehicleMarker.setIcon(lorryIconGreen);
+                        } else {
+                            vehicleMarker.setIcon(lorryIconRed);
+                        }
                     } else if ((offsetDistance >= alarm_distance_json.warning_distance) && (offsetDistance < alarm_distance_json.alarm_distance)) {
-                        vehicleMarker.setIcon(lorryIconYellow);
+                        if (!stay_status) {
+                            vehicleMarker.setIcon(lorryIconYellow);
+                        } else {
+                            vehicleMarker.setIcon(lorryIconRed);
+                        }
                     } else {
                         vehicleMarker.setIcon(lorryIconRed);
                     }

@@ -35,7 +35,7 @@
             </div>
         </div>
 
-        <div id="map_panel" style="display:none; width:300px; float:right; position:absolute; right:0px; z-index:1; ">
+        <div id="map_panel" style="display:none; width:400px; float:right; position:absolute; right:0px; z-index:1; ">
             <div id="myAlertFull"></div>
             <div style="background-color:#FFFFFF; padding:5px; border-radius:5px;">
                 <div class="input-group input-group-sm">
@@ -176,9 +176,11 @@ function setBMap() {
         "aoColumns": [{
             "sTitle": "车牌号"
         }, {
-            "sTitle": "时速"
+            "sTitle": "时速(千米/小时)"
         }, {
-            "sTitle": "偏移距离"
+            "sTitle": "偏移距离(千米)"
+        }, {
+            "sTitle": "状态"
         }],
         "bPaginate": true, //翻页功能
         "bLengthChange": true, //改变每页显示数据数量
@@ -242,27 +244,42 @@ function transferWarning() {
             while (vehicleMarker = vehicleMarkerList.pop()) {
                 BaiduMap.removeOverlay(vehicleMarker);
             }
+            $('#myAlert').html("");
+            $('#myAlertFull').html("");
+            if ((!gpsDataArray) || (gpsDataArray == null) || (typeof(gpsDataArray) == 'undefined')) {
+                myAlertFail("暂时没有车辆运行数据");
+                return;
+            }
             for (var gpsIdx in gpsDataArray) {
-                if (!gpsDataArray[gpsIdx]) {
+                if ((!gpsDataArray[gpsIdx]) || (gpsDataArray[gpsIdx] == null) || (typeof(gpsDataArray[gpsIdx]) == 'undefined')) {
                     continue;
                 }
-                if ((gpsDataArray[gpsIdx].lng == null) || (gpsDataArray[gpsIdx].lat == null)) {
+                if ((!gpsDataArray[gpsIdx].lng) || (gpsDataArray[gpsIdx].lng == null) || (typeof(gpsDataArray[gpsIdx].lng) == 'undefined') || (!gpsDataArray[gpsIdx].lat) || (gpsDataArray[gpsIdx].lat == null) || (typeof(gpsDataArray[gpsIdx].lat) == 'undefined')) {
                     continue;
                 }
-                if (gpsDataArray[gpsIdx].speed == null) {
-                    gpsDataArray[gpsIdx].speed = 0;
+                if ((!gpsDataArray[gpsIdx].speed) || (gpsDataArray[gpsIdx].speed == null) || (typeof(gpsDataArray[gpsIdx].speed) == 'undefined')) {
+                    gpsDataArray[gpsIdx].speed = -1;
                 }
-                if (gpsDataArray[gpsIdx].offset_distance == null) {
-                    gpsDataArray[gpsIdx].offset_distance = 0;
+                if ((!gpsDataArray[gpsIdx].offset_distance) || (gpsDataArray[gpsIdx].offset_distance == null) || (typeof(gpsDataArray[gpsIdx].offset_distance) == 'undefined')) {
+                    gpsDataArray[gpsIdx].offset_distance = -1;
+                }
+                if ((!gpsDataArray[gpsIdx].stay_status) || (gpsDataArray[gpsIdx].stay_status == null) || (typeof(gpsDataArray[gpsIdx].stay_status) == 'undefined')) {
+                    gpsDataArray[gpsIdx].stay_status = 0;
                 }
 
                 var offsetDistance = gpsDataArray[gpsIdx].offset_distance;
                 offsetDistance = Math.round(offsetDistance * 1000) / 1000;
+                var stay_status = gpsDataArray[gpsIdx].stay_status;
 
                 var itemData = new Array();
                 itemData[0] = route_json[gpsIdx].vehicle_num;
                 itemData[1] = gpsDataArray[gpsIdx].speed;
                 itemData[2] = offsetDistance;
+                if (!stay_status) {
+                    itemData[3] = "正常";
+                } else {
+                    itemData[3] = "<span style='color:red'>停留超时<span>";
+                }
                 tableData[gpsIdx] = itemData;
                 var dataTable = $('#vehicle_panel').dataTable();
                 dataTable.fnClearTable();
@@ -299,11 +316,21 @@ function transferWarning() {
 
                 vehicleMarker.setTitle(gpsIdx);
                 if (offsetDistance < warningDistance) {
-                    vehicleMarker.setIcon(lorryIconGreen);
-                    infoWindowList[gpsIdx].setTitle(warningTextGreen);
+                    if (!stay_status) {
+                        vehicleMarker.setIcon(lorryIconGreen);
+                        infoWindowList[gpsIdx].setTitle(warningTextGreen);
+                    } else {
+                        vehicleMarker.setIcon(lorryIconRed);
+                        infoWindowList[gpsIdx].setTitle(warningTextRed);
+                    }
                 } else if ((offsetDistance > warningDistance) && (offsetDistance < alarmDistance)) {
-                    vehicleMarker.setIcon(lorryIconYellow);
-                    infoWindowList[gpsIdx].setTitle(warningTextYellow);
+                    if (!stay_status) {
+                        vehicleMarker.setIcon(lorryIconYellow);
+                        infoWindowList[gpsIdx].setTitle(warningTextYellow);
+                    } else {
+                        vehicleMarker.setIcon(lorryIconRed);
+                        infoWindowList[gpsIdx].setTitle(warningTextRed);
+                    }
                 } else {
                     vehicleMarker.setIcon(lorryIconRed);
                     infoWindowList[gpsIdx].setTitle(warningTextRed);
