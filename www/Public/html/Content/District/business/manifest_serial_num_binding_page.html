@@ -1,0 +1,51 @@
+<form role="form" id="serial_num">
+    <div class="panel panel-primary">
+        <div class="panel-heading">请填写联单编号</div>
+        <div class="panel-body">
+            <div class="table-responsive">
+                <table class="table table-striped table-bordered table-hover table-condensed">
+                    <tr>
+                        <td>
+                            <input type="text" name="manifest_serial_num" class="form-control input-sm" placeholder="请填写联单编号">  
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</form>
+<center>
+    <button class="btn btn-warning btn-lg" id="button_submit" data-loading-text="正在提交..." data-complete-text="提交成功！" onclick="ajaxAction()">提交</button>
+    <button class="btn btn-info btn-lg" onclick="$('#myModal').modal('hide');">关闭页面</button>
+</center>
+
+<script type="text/javascript">
+
+function ajaxAction() {
+    $('#button_submit').button('loading');
+    $.ajax({
+        type: "post",
+        url: "manifest_serial_num_binding_form",
+        timeout: 2000,
+        data: $('#serial_num').serialize() + '&manifest_id=' + manifest_id,
+        success: function(data) {
+            if(data = 1){
+                $('#myModal').modal('hide');
+                $('#myModal').on('hidden.bs.modal', function(e) {
+                    refresh_page();
+                });
+            } else{
+                $('#button_submit').button('disable');
+            } 
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+            alert('保存失败，请重新保存。');
+            console.log("Error: Ajax_Content_Load " + errorThrown);
+            console.log("XMLHttpRequest.status: " + XMLHttpRequest.status);
+            console.log("XMLHttpRequest.readyState: " + XMLHttpRequest.readyState);
+            console.log("textStatus: " + textStatus);
+        }
+    });
+
+}
+</script>
