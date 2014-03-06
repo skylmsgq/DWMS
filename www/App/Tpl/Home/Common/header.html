@@ -1,4 +1,50 @@
+<!-- Modal -->
+<div class="modal fade" id="myModal_pass" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="width:70%">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">修改密码</h4>
+            </div>
+            <div class="modal-body" id="model-content_pass">
+
+            </div>
+            <div class="modal-footer"></div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+<div class="panel panel-default" id="div_header" style="margin-top:15px">
+    <div class="panel-body" style="padding-top:0px">
+        <img id="logo" src="__PUBLIC__/image/ZHB_200_half.png" alt="logo"/>
+        <div id="webpage_title">
+            <div id="datetime"></div>
+            <h2 id="title">危险废物管理信息系统(Beta)</h2>
+            <p id="welcome">
+                <span class="glyphicon glyphicon-user"></span> 欢迎您，{$Think.session.username|default="先生"}
+                <a id="password" href="#" onclick="show_page()"><span class="glyphicon glyphicon-edit"></span> 修改密码</a>
+                <a id="logout" href="{:U('Home/Login/logout')}"><span class="glyphicon glyphicon-log-out"></span> 退出登录</a>
+            </p>
+
+        </div>
+         <div id="header_button_container"></div>
+    </div>
+</div>
+
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=KDdzQZSRLv89h4yrti56L5Gy">
+</script>
+<script type="text/javascript" src="__PUBLIC__/js/jquery-2.0.3.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/bootstrap.min.js"></script>
+
+<script type="text/javascript" src="__PUBLIC__/js/highcharts.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/exporting.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/md5.js"></script>
 <script type="text/javascript" src="__PUBLIC__/js/yourAlert.js"></script>
+
 <script type="text/javascript">
 function hide_page()
 {
@@ -83,47 +129,4 @@ function ajaxAction(){
 
 }
 </script>
-<!-- Modal -->
-<div class="modal fade" id="myModal_pass" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog" style="width:70%">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="myModalLabel">修改密码</h4>
-            </div>
-            <div class="modal-body" id="model-content_pass">
 
-            </div>
-            <div class="modal-footer"></div>
-        </div>
-        <!-- /.modal-content -->
-    </div>
-    <!-- /.modal-dialog -->
-</div>
-<!-- /.modal -->
-
-<div class="panel panel-default" id="div_header" style="margin-top:15px">
-    <div class="panel-body" style="padding-top:0px">
-        <img id="logo" src="__PUBLIC__/image/header_logo.jpg" alt="logo"/>
-        <div id="webpage_title">
-            <div id="datetime"></div>
-            <h2 id="title">危险废物管理信息系统 beta</h2>
-            <p id="welcome">
-                <span class="glyphicon glyphicon-user"></span> 欢迎您，{$Think.session.username|default="先生"}
-                <a id="password" href="#" onclick="show_page()"><span class="glyphicon glyphicon-edit"></span> 修改密码</a>
-                <a id="logout" href="{:U('Home/Login/logout')}"><span class="glyphicon glyphicon-log-out"></span> 退出登录</a>
-            </p>
-
-        </div>
-         <div id="header_button_container"></div>
-    </div>
-</div>
-
-<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=KDdzQZSRLv89h4yrti56L5Gy">
-</script>
-<script type="text/javascript" src="__PUBLIC__/js/jquery-2.0.3.min.js"></script>
-<script type="text/javascript" src="__PUBLIC__/js/jquery.dataTables.min.js"></script>
-<script type="text/javascript" src="__PUBLIC__/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="__PUBLIC__/js/highcharts.js"></script>
-<script type="text/javascript" src="__PUBLIC__/js/exporting.js"></script>>
-<script type="text/javascript" src="__PUBLIC__/js/md5.js"></script>

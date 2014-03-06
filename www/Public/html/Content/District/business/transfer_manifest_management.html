@@ -2,6 +2,7 @@
     <div class="panel-heading">
     </div>
     <div class="panel-body">
+        <div id="myAlert"></div>
         <table id="table-container">
         </table>
     </div>
@@ -24,7 +25,7 @@
     <!-- /.modal-dialog -->
 </div>
 <!-- /.modal -->
-
+<script type="text/javascript" src="__PUBLIC__/js/yourAlert.js"></script>
 <script type="text/javascript">
 var c = new Array();
 if(production_manifest_json == null){
@@ -64,7 +65,9 @@ function setTable() {
                 break;
         }
 
-        itemData[4] = '<a href="#" onclick="fetch_model_page(\'./transfer_manifest_management_page?manifest_id=' + manifest_json[idx].manifest_id + '\')"><span class="label label-success"><span class="glyphicon glyphicon-wrench"></span> 操作</span><a>';
+        itemAudit = '<a href="#" onclick="fetch_model_page(\'./transfer_manifest_management_page?manifest_id=' + manifest_json[idx].manifest_id + '\')"><span class="label label-success"><span class="glyphicon glyphicon-wrench"></span> 审核</span><a>';
+        itemDelete = '<a href="#" onclick="manifest_delete(\'./manifest_delete?manifest_id=' + manifest_json[idx].manifest_id + '\')"><span class="label label-danger"><span class="glyphicon glyphicon-wrench"></span> 作废</span><a>'
+        itemData[4] = "" + itemAudit + itemDelete;
         
         tableData.push(itemData);
     }
@@ -129,5 +132,28 @@ function fetch_model_page(ajaxURL) {
             console.log("textStatus:" + textStatus);
         }
     });
-
 }
+
+function manifest_delete(ajaxURL){
+    $.ajax({
+        type: "post",
+        url: ajaxURL,
+        dataType: "json",
+        success:function(data){
+            if(data = 1){
+                myAlertSucc("删除成功！稍后自动刷新。。");
+                setTimeout(function(){refresh_page();},3000);
+            } else{
+                myAlertFail("删除失败！");
+            }
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+            console.log("Error: Ajax_Content_Load " + errorThrown);
+            console.log("XMLHttpRequest.status: " + XMLHttpRequest.status);
+            console.log("XMLHttpRequest.readyState: " + XMLHttpRequest.readyState);
+            console.log("textStatus: " + textStatus);
+        }
+
+    })
+}
+</script>
