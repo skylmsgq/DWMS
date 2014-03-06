@@ -1,7 +1,7 @@
 <?php
 return array(
 	//'配置项'=>'配置值'
-	'ERROR_PAGE' =>'/Public/error.html',
+
 	//开启应用分组
 	'APP_GROUP_LIST'	=>	'Home,Admin',
 	'DEFAULT_GROUP'		=>	'Home',  //默认分组
@@ -18,9 +18,14 @@ return array(
 */
 	// 添加数据库配置信息
 	'DB_TYPE'   => 'mysql',   // 数据库类型
-	'DB_HOST'   => '202.120.58.100', // 服务器地址
+
+
+	'DB_HOST'   => 'localhost', // 服务器地址
 	'DB_USER'   => 'root',    // 用户名
-	'DB_PWD'    => 'omnilab',  // 密码
+
+	'DB_PWD'    => 'omnilab',  // 本地密码
+	// 'DB_PWD'    => 'root1234',  // 本地密码
+
 	'DB_PORT'   => 3306,    // 端口
 	'DB_NAME'   => 'dwms',  // 数据库名
 	'DB_PREFIX' => '',  // 数据库表前缀
@@ -61,5 +66,10 @@ return array(
 	//'TMPL_FILE_DEPR' => '_',
 	//默认过滤函数
 	//'DEFAULT_FILTER' => '',
+
+	// 定制系统错误页面模板
+	'TMPL_EXCEPTION_FILE' => './404.html',
+	// 设置错误重定向页面
+	'ERROR_PAGE' => './404.html',
 );
 ?>

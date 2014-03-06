@@ -150,7 +150,7 @@ class DatabaseDo
 
 		if(strpos($line,"#")>3)
 		{
-			$con = mysql_connect('10.50.6.70', 'root', 'root1234');
+			$con = mysql_connect('localhost', 'root', 'omnilab');
 			if (!$con)
 			{
 				$msg = "Could not connect:".mysql_error();

@@ -38,20 +38,20 @@
         <div id="map_panel" style="display:none; width:300px; float:right; position:absolute; right:0px; z-index:1; ">
             <div id="myAlertFull"></div>
             <div style="background-color:#FFFFFF; padding:5px; border-radius:5px;">
-                    <div class="input-group input-group-sm">
-                        <span class="input-group-addon">当偏移距离大于</span>
-                        <input type="text" class="form-control" id="warningDistanceFull" value="0.5" placeholder="">
-                        <span class="input-group-addon">千米时提醒</span>
-                    </div>
-                    <div class="input-group input-group-sm">
-                        <span class="input-group-addon">当偏移距离大于</span>
-                        <input type="text" class="form-control" id="alarmDistanceFull" value="1.0" placeholder="">
-                        <span class="input-group-addon">千米时报警</span>
-                    </div>
-                    <div class="blank_div"></div>
-                    <center>
-                        <button type="button" class="btn btn-success btn-sm" onclick="settingFull();">设置</button>
-                    </center>
+                <div class="input-group input-group-sm">
+                    <span class="input-group-addon">当偏移距离大于</span>
+                    <input type="text" class="form-control" id="warningDistanceFull" value="0.5" placeholder="">
+                    <span class="input-group-addon">千米时提醒</span>
+                </div>
+                <div class="input-group input-group-sm">
+                    <span class="input-group-addon">当偏移距离大于</span>
+                    <input type="text" class="form-control" id="alarmDistanceFull" value="1.0" placeholder="">
+                    <span class="input-group-addon">千米时报警</span>
+                </div>
+                <div class="blank_div"></div>
+                <center>
+                    <button type="button" class="btn btn-success btn-sm" onclick="settingFull();">设置</button>
+                </center>
             </div>
             <div class="blank_div"></div>
             <div style="background-color:#FFFFFF; padding:5px; padding-bottom:50px; border-radius:5px;">
@@ -101,7 +101,7 @@ function setBMap() {
     $("#map_container").css("height", "" + windowHeight - 350 + "px");
 
     BaiduMap = new BMap.Map("map_container"); // 创建Map实例
-    BaiduMap.centerAndZoom("上海", 11); // 初始化地图,设置中心点坐标和地图级别
+    BaiduMap.centerAndZoom("安庆", 14); // 初始化地图,设置中心点坐标和地图级别
     BaiduMap.addControl(new BMap.NavigationControl()); // 添加默认缩放平移控件
     BaiduMap.addControl(new BMap.ScaleControl()); // 添加默认比例尺控件
     BaiduMap.addControl(new BMap.OverviewMapControl()); //添加默认缩略地图控件
@@ -122,11 +122,29 @@ function setBMap() {
     $('#alarmDistanceFull').val(alarmDistance);
 
     for (var idx in route_json) {
-        routeDecodeObj[idx] = JSON.parse(route_json[idx].route_lng_lat.replace(/&quot;/g, '"'));
-        routeDetailDecodeObj[idx] = route_json[idx].route_detail.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"');
-        ajaxSendData[idx] = {
-            "vehicle_id": route_json[idx].vehicle_id,
-            "device_id": route_json[idx].device_id,
+        if ((!route_json[idx]) || (route_json[idx] == null) || (typeof(route_json[idx]) == 'undefined')) {
+            routeDecodeObj[idx] = null;
+            routeDetailDecodeObj[idx] = null;
+            ajaxSendData[idx] = null;
+        } else {
+            if ((!route_json[idx].route_lng_lat) || (route_json[idx].route_lng_lat == null) || (typeof(route_json[idx].route_lng_lat) == 'undefined')) {
+                routeDecodeObj[idx] = null;
+            } else {
+                routeDecodeObj[idx] = JSON.parse(route_json[idx].route_lng_lat.replace(/&quot;/g, '"'));
+            }
+            if ((!route_json[idx].route_detail) || (route_json[idx].route_detail == null) || (typeof(route_json[idx].route_detail) == 'undefined')) {
+                routeDetailDecodeObj[idx] = null;
+            } else {
+                routeDetailDecodeObj[idx] = route_json[idx].route_detail.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"');
+            }
+            if ((!route_json[idx].vehicle_id) || (route_json[idx].vehicle_id == null) || (typeof(route_json[idx].vehicle_id) == 'undefined') || (route_json[idx].device_id == null) || (typeof(route_json[idx].device_id) == 'undefined')) {
+                ajaxSendData[idx] = null;
+            } else {
+                ajaxSendData[idx] = {
+                    "vehicle_id": route_json[idx].vehicle_id,
+                    "device_id": route_json[idx].device_id,
+                }
+            }
         }
     }
 
@@ -227,6 +245,15 @@ function transferWarning() {
             for (var gpsIdx in gpsDataArray) {
                 if (!gpsDataArray[gpsIdx]) {
                     continue;
+                }
+                if ((gpsDataArray[gpsIdx].lng == null) || (gpsDataArray[gpsIdx].lat == null)) {
+                    continue;
+                }
+                if (gpsDataArray[gpsIdx].speed == null) {
+                    gpsDataArray[gpsIdx].speed = 0;
+                }
+                if (gpsDataArray[gpsIdx].offset_distance == null) {
+                    gpsDataArray[gpsIdx].offset_distance = 0;
                 }
 
                 var offsetDistance = gpsDataArray[gpsIdx].offset_distance;

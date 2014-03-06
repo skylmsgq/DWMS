@@ -7,8 +7,8 @@ DWMS_sidebar_config = {
         "sidebar_group_title": "系统信息",
         "sidebar_group_content": [{
             "id": 0,
-            "name": "废物代码",
-            "url": "{:U('Home/DistrictSystem/waste_code')}"
+            "name": "管辖权限",
+            "url": "{:U('Home/DistrictSystem/jurisdiction')}"
         }, {
             "id": 1,
             "name": "区县代码",
@@ -25,37 +25,41 @@ DWMS_sidebar_config = {
             "id": 4,
             "name": "注册类型",
             "url": "{:U('Home/DistrictSystem/register_type')}"
-        }, {
-            "id": 5,
-            "name": "管辖权限",
-            "url": "{:U('Home/DistrictSystem/jurisdiction')}"
-        }, {
-            "id": 6,
-            "name": "废物类别",
-            "url": "{:U('Home/DistrictSystem/waste_category')}"
-        }, {
-            "id": 7,
-            "name": "废物形态",
-            "url": "{:U('Home/DistrictSystem/waste_form')}"
-        }, {
-            "id": 8,
-            "name": "包装方式",
-            "url": "{:U('Home/DistrictSystem/package_method')}"
-        }, {
-            "id": 9,
-            "name": "废物处理方式",
-            "url": "{:U('Home/DistrictSystem/waste_disposal_method')}"
-        }, {
-            "id": 10,
-            "name": "废物去向",
-            "url": "{:U('Home/DistrictSystem/waste_direction')}"
-        }, {
-            "id": 11,
-            "name": "运输方式",
-            "url": "{:U('Home/DistrictSystem/transport_method')}"
         }]
     }, {
         "sidebar_group_id": 1,
+        "sidebar_group_title": "危废信息",
+        "sidebar_group_content": [{
+            "id": 0,
+            "name": "危废代码",
+            "url": "{:U('Home/DistrictSystem/waste_code')}"
+        }, {
+            "id": 1,
+            "name": "危废类别",
+            "url": "{:U('Home/DistrictSystem/waste_category')}"
+        }, {
+            "id": 2,
+            "name": "危废形态",
+            "url": "{:U('Home/DistrictSystem/waste_form')}"
+        }, {
+            "id": 3,
+            "name": "危废包装方式",
+            "url": "{:U('Home/DistrictSystem/package_method')}"
+        }, {
+            "id": 4,
+            "name": "危废处理方式",
+            "url": "{:U('Home/DistrictSystem/waste_disposal_method')}"
+        }, {
+            "id": 5,
+            "name": "危废去向",
+            "url": "{:U('Home/DistrictSystem/waste_direction')}"
+        }, {
+            "id": 6,
+            "name": "危废运输方式",
+            "url": "{:U('Home/DistrictSystem/transport_method')}"
+        }]
+    }, {
+        "sidebar_group_id": 2,
         "sidebar_group_title": "设备管理",
         "sidebar_group_content": [{
             "id": 0,
@@ -65,6 +69,22 @@ DWMS_sidebar_config = {
             "id": 1,
             "name": "管理设备",
             "url": "{:U('Home/DistrictSystem/device_management')}"
+        }]
+    }, {
+        "sidebar_group_id": 3,
+        "sidebar_group_title": "文档管理",
+        "sidebar_group_content": [{
+            "id": 0,
+            "name": "上传法规政策",
+            "url": "{:U('Home/DistrictSystem/upload_law')}"
+        }, {
+            "id": 1,
+            "name": "上传用户手册",
+            "url": "{:U('Home/DistrictSystem/upload_manual')}"
+        }, {
+            "id": 2,
+            "name": "上传结果公告",
+            "url": "{:U('Home/DistrictSystem/upload_announcement')}"
         }]
     }]
 }

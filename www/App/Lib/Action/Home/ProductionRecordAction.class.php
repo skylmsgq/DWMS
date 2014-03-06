@@ -90,6 +90,8 @@ class ProductionRecordAction extends ProductionCommonAction{
 	public function transfer_record_query_modify($record_id="") {
 		$record = M( 'record' )->where( array( 'record_id' =>$record_id ) )->find();
 		$production_unit = M( 'production_unit' )->where( array( 'production_unit_id' => session( 'production_unit_id' ) ) )->find();
+		$weight_json = json_encode($record['predict_output_weight']);
+		$num_json = json_encode($record['predict_output_quantity']);
 		$this->record = $record;
 		$this->unit = $production_unit;
 		$reception_unit_id=$record['reception_unit_id'];
@@ -107,7 +109,7 @@ class ProductionRecordAction extends ProductionCommonAction{
 		$record_status_json = json_encode( $record['record_status'] );
 
 		$tmp_content=$this->fetch( './Public/html/Content/Production/record/transfer_record_query_modify.html' );
-		$tmp_content = "<script> reception_unit_list=$reception_unit_json; transport_unit_list=$transport_unit_json; record_id_json = $record_id_json; record_status_json = $record_status_json; </script> $tmp_content";
+		$tmp_content = "<script>weight_json = $weight_json;num_json = $num_json;reception_unit_list=$reception_unit_json; transport_unit_list=$transport_unit_json; record_id_json = $record_id_json; record_status_json = $record_status_json; </script> $tmp_content";
 		$this->ajaxReturn( $tmp_content );
 	}
 

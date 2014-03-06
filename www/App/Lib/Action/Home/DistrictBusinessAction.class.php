@@ -153,10 +153,6 @@ class DistrictBusinessAction extends DistrictCommonAction{
 			} else {
 				$this->ajaxReturn( 0, '保存失败！', 0 );
 			}
-
-
-
-
 		}
 	}
 
@@ -194,6 +190,18 @@ class DistrictBusinessAction extends DistrictCommonAction{
 			$this->ajaxReturn( 1, '审核成功！', 1 );
 		} else {
 			$this->ajaxReturn( 0, '审核失败！', 0 );
+		}
+	}
+
+	// 业务办理->待办业务->转移联单管理->作废
+	public function manifest_delete($manifest_id=""){
+		$manifest = M('manifest');  // 实例化waste对象
+		$data['manifest_status'] = -1;	
+		$result = $manifest->where( array( 'manifest_id' => $manifest_id ) )->save($data);
+		if ( $result ) {
+			$this->ajaxReturn( 1 );
+		} else {
+			$this->ajaxReturn( 0 );
 		}
 	}
 
@@ -245,7 +253,7 @@ class DistrictBusinessAction extends DistrictCommonAction{
 		$this->ajaxReturn( $tmp_content );
 	}
 
-	//
+	
 	public function enterprise_user_management_ajaxpost() {
 					// 		$A=1;
 					// 		$ans=json_encode($A);
@@ -340,6 +348,42 @@ class DistrictBusinessAction extends DistrictCommonAction{
 
 	}
 
+
+	// 业务办理->待办业务->联单编号绑定
+		public function manifest_serial_num_binding(){
+		$manifest = M( 'manifest' );
+		$condition['jurisdiction_id'] = array('EQ', session( 'jurisdiction_id' ) );
+		$condition['manifest_status'] = array('EQ', 11);
+		$condition['_string'] = 'manifest_serial_num is null';
+		$join = $manifest->join( 'production_unit ON manifest.production_unit_id = production_unit.production_unit_id' )->where( $condition )->select();
+		$manifest_json = json_encode( $join );
+
+		$tmp_content=$this->fetch( './Public/html/Content/District/business/manifest_serial_num_binding.html' );
+		$tmp_content="<script>manifest = $manifest_json;</script> $tmp_content";
+		$this->ajaxReturn( $tmp_content );
+	}
+
+	// 业务办理->待办业务->联单编号绑定->操作页
+	public function manifest_serial_num_binding_page($manifest_id=""){
+		$manifest_id_json = json_encode($manifest_id);
+
+		$tmp_content=$this->fetch( './Public/html/Content/District/business/manifest_serial_num_binding_page.html' );
+		$tmp_content="<script>manifest_id = $manifest_id_json; </script> $tmp_content";
+		$this->ajaxReturn( $tmp_content );
+	}
+
+	// 业务办理->待办业务->联单编号绑定->提交
+	public function manifest_serial_num_binding_form(){
+		$manifest = M( 'manifest' );
+		$data['manifest_serial_num'] = I( 'post.manifest_serial_num' );
+		$result = $manifest->where( array( 'manifest_id' => I('post.manifest_id') ) )->save($data);		
+		if($result){
+			$this->ajaxReturn(1);
+		} else{
+			$this->ajaxReturn(0);
+		}
+	}
+
 	// 业务办理->待办业务->企业信息管理
 	public function enterprise_information_management(){
 		$tmp_content=$this->fetch( './Public/html/Content/District/business/enterprise_information_management.html' );
@@ -369,6 +413,7 @@ class DistrictBusinessAction extends DistrictCommonAction{
 		$tmp_content=$this->fetch( './Public/html/Content/District/business/user_information_query.html' );
 		$this->ajaxReturn( $tmp_content );
 	}
+
 	public function get_chart()
 	{
 		$str="";
@@ -376,6 +421,9 @@ class DistrictBusinessAction extends DistrictCommonAction{
 		$tnum=M('transport_unit')->count();
 		$rnum=M('reception_unit')->count();
 		$manifestnum=M('manifest')->count();
+		$recordnum=M('record')->count();
+		$devicenum=M('device')->count();
+		$vehiclenum=M('vehicle')->count();
 		$tong_num=M('rfid')->where("add_method=0")->sum('waste_total');
 		$dai_num=M('rfid')->where("add_method=1")->sum('waste_total');
 		$dict=array();
@@ -398,6 +446,9 @@ class DistrictBusinessAction extends DistrictCommonAction{
 		$result->tnum=$tnum;
 		$result->rnum=$rnum;
 		$result->manifestnum=$manifestnum;
+		$result->recordnum=$recordnum;
+		$result->devicenum=$devicenum;
+		$result->vehiclenum=$vehiclenum;
 		$result->tong_num=$tong_num;
 		$result->dai_num=$dai_num;
 		$result=json_encode($result);

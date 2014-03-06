@@ -556,6 +556,28 @@ class DistrictSystemAction extends DistrictCommonAction{
 			$device_name = '全球定位仪';
 			$device_type = 'GPS';
 			$device_status = 0;
+
+			$gps_table_name = 'gps_' . $device_serial_num;
+			$create_table = 'CREATE TABLE `' . $gps_table_name . '` (
+				`id` int(11) NOT NULL AUTO_INCREMENT,
+				`datetime` datetime DEFAULT NULL,
+				`longitude` double DEFAULT NULL,
+				`latitude` double DEFAULT NULL,
+				`bmap_longitude` double DEFAULT NULL,
+				`bmap_latitude` double DEFAULT NULL,
+				`height` double DEFAULT NULL,
+				`speed` double DEFAULT NULL,
+				`status` tinyint(4) DEFAULT NULL,
+				`vehicle_id` int(11) DEFAULT NULL,
+				`offset_distance` double DEFAULT NULL,
+				`stay_status` int(11) DEFAULT NULL,
+				PRIMARY KEY (`id`),
+				KEY `fk_vehicle_id_' . $gps_table_name .'` (`vehicle_id`),
+				CONSTRAINT `fk_vehicle_id_' . $gps_table_name . '` FOREIGN KEY (`vehicle_id`) REFERENCES `vehicle` (`vehicle_id`)
+				) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;';
+			$model = new Model();
+			$model->execute($create_table);
+
 			break;
 		case '1':
 			$device_name = '手持读写器';
@@ -666,6 +688,35 @@ class DistrictSystemAction extends DistrictCommonAction{
 		if ( $result ) {
 			$this->ajaxReturn( 'exist' );
 		}
+
+		$device_old = M( 'device' )->where( array( 'device_id' => $record_id ) )->find();
+		if ($device_old['device_type_id'] == '0') {
+			$gps_table_name_old = 'gps_' . $device_old['device_serial_num'];
+			$drop_table = 'DROP TABLE IF EXISTS `' . $gps_table_name_old . '`;';
+			$model = new Model();
+			$model->execute($drop_table);
+
+			$gps_table_name = 'gps_' . $device_serial_num;
+			$create_table = 'CREATE TABLE `' . $gps_table_name . '` (
+				`id` int(11) NOT NULL AUTO_INCREMENT,
+				`datetime` datetime DEFAULT NULL,
+				`longitude` double DEFAULT NULL,
+				`latitude` double DEFAULT NULL,
+				`bmap_longitude` double DEFAULT NULL,
+				`bmap_latitude` double DEFAULT NULL,
+				`height` double DEFAULT NULL,
+				`speed` double DEFAULT NULL,
+				`status` tinyint(4) DEFAULT NULL,
+				`vehicle_id` int(11) DEFAULT NULL,
+				`offset_distance` double DEFAULT NULL,
+				`stay_status` int(11) DEFAULT NULL,
+				PRIMARY KEY (`id`),
+				KEY `fk_vehicle_id_' . $gps_table_name .'` (`vehicle_id`),
+				CONSTRAINT `fk_vehicle_id_' . $gps_table_name . '` FOREIGN KEY (`vehicle_id`) REFERENCES `vehicle` (`vehicle_id`)
+				) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;';
+			$model->execute($create_table);
+		}
+
 		$data['device_id'] = $record_id;
 		$data['device_serial_num'] = $device_serial_num;
 		$data['ownership_type'] = I( 'post.ownership_type' );
@@ -680,5 +731,255 @@ class DistrictSystemAction extends DistrictCommonAction{
 		}
 	}
 
+	// 系统管理->文档管理->上传法规政策
+	public function upload_law(){
+		$condition['document_type'] = 0;
+		$condition['document_status'] = 0;
+		$condition['jurisdiction_id'] = session( 'jurisdiction_id' );
+		$document = M( 'document' )->where( $condition )->select();
+		// if ( $document ) {
+			$document_json = json_encode( $document );
+			$tmp_content=$this->fetch( './Public/html/Content/District/system/upload_law.html' );
+			$tmp_content = "<script> document_json=$document_json; </script> $tmp_content";
+			$this->ajaxReturn( $tmp_content );
+		//} else {
+			$this->ajaxReturn( '加载页面失败，请重新点击侧边栏加载页面。' );
+		//}
+	}
+
+	// 系统管理->文档管理->上传法规政策：接收上传的法规政策
+	public function upload_law_form(){
+		import('ORG.Net.UploadFile');
+		$upload = new UploadFile(); // 实例化上传类
+    	$upload->maxSize = 10 * 1024 * 1024; // 设置附件上传大小，10M
+    	$upload->savePath =  './Uploads/'; // 设置附件上传目录
+    	// $upload->saveRule = 'time'; // 采用时间戳命名
+    	$upload->saveRule = ''; // 设置命名规范为空，保持上传的文件名不变，相同的文件名上传后被覆盖
+    	$upload->allowExts  = array('doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'pdf'); // 允许上传的文件后缀（留空为不限制）
+    	// $upload->allowTypes = array('doc', 'pdf', 'jpg'); // 允许上传的文件类型（留空为不限制）
+    	$upload->uploadReplace = true;
+
+    	if( $upload->upload() ) { // 上传成功
+        	$info = $upload->getUploadFileInfo(); // 取得成功上传的文件信息
+        	$document = M( 'document' );
+        	for ( $idx = 0; $idx < count( $info ); ++$idx ) {
+				$data['form_name'] = $info[$idx]['key'];
+        		$data['document_save_path'] = $info[$idx]['savepath'];
+        		$data['document_original_name'] = $info[$idx]['name'];
+        		$data['document_save_name'] = $info[$idx]['savename'];
+        		$data['document_size'] = $info[$idx]['size'];
+        		$data['document_mime_type'] = $info[$idx]['type'];
+        		$data['document_suffix_type'] = $info[$idx]['extension'];
+        		$data['document_hash_string'] = $info[$idx]['hash'];
+        		$time = date( 'Y-m-d H:i:s', time() );
+        		$data['document_upload_time'] = $time;
+        		$data['document_type'] = 0;
+        		$data['document_status'] = 0;
+        		$data['jurisdiction_id'] = session( 'jurisdiction_id' );
+        		$document->add( $data );
+        	}
+        	$this->success('上传成功！');
+    	}else{ // 上传错误提示错误信息
+        	$this->error($upload->getErrorMsg());
+    	}
+	}
+
+	// 系统管理->文档管理->上传法规政策：删除法规政策确认页
+	public function upload_law_delete($record_id=""){
+		$document = M( 'document' )->where( array( 'document_id' => $record_id ) )->find();
+
+		if ( $document ) {
+			$this->document = $document;
+			$document_json = json_encode( $document );
+			$tmp_content=$this->fetch( './Public/html/Content/District/system/upload_law_delete.html' );
+			$tmp_content = "<script> document_json=$document_json; </script> $tmp_content";
+			$this->ajaxReturn( $tmp_content );
+		} else {
+			$this->ajaxReturn( '删除该文档失败，请重新操作。' );
+		}
+	}
+
+	// 系统管理->文档管理->上传法规政策：删除法规政策
+	public function upload_law_deleted($record_id="") {
+		// $condition['document_id'] = array( 'EQ', I( 'post.document_id' ) );
+		$data['document_id'] = $record_id;
+		$time = date( 'Y-m-d H:i:s', time() );
+		$data['document_delete_time'] = $time;
+		$data['document_status'] = 1;
+		$result = M( 'document' )->save( $data );
+		if ( $result ) {
+			$this->ajaxReturn( 'success' );
+		} else {
+			$this->ajaxReturn( 'fail' );
+		}
+	}
+
+	// 系统管理->文档管理->上传用户手册
+	public function upload_manual(){
+		$condition['document_type'] = 1;
+		$condition['document_status'] = 0;
+		$condition['jurisdiction_id'] = session( 'jurisdiction_id' );
+		$document = M( 'document' )->where( $condition )->select();
+		// if ( $document ) {
+			$document_json = json_encode( $document );
+			$tmp_content=$this->fetch( './Public/html/Content/District/system/upload_manual.html' );
+			$tmp_content = "<script> document_json=$document_json; </script> $tmp_content";
+			$this->ajaxReturn( $tmp_content );
+		//} else {
+			$this->ajaxReturn( '加载页面失败，请重新点击侧边栏加载页面。' );
+		//}
+	}
+
+	// 系统管理->文档管理->上传用户手册：接收上传的用户手册
+	public function upload_manual_form(){
+		import('ORG.Net.UploadFile');
+		$upload = new UploadFile(); // 实例化上传类
+    	$upload->maxSize = 10 * 1024 * 1024; // 设置附件上传大小，10M
+    	$upload->savePath =  './Uploads/'; // 设置附件上传目录
+    	// $upload->saveRule = 'time'; // 采用时间戳命名
+    	$upload->saveRule = ''; // 设置命名规范为空，保持上传的文件名不变，相同的文件名上传后被覆盖
+    	$upload->allowExts  = array('doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'pdf'); // 允许上传的文件后缀（留空为不限制）
+    	// $upload->allowTypes = array('doc', 'pdf', 'jpg'); // 允许上传的文件类型（留空为不限制）
+    	$upload->uploadReplace = true;
+
+    	if( $upload->upload() ) { // 上传成功
+        	$info = $upload->getUploadFileInfo(); // 取得成功上传的文件信息
+        	$document = M( 'document' );
+        	for ( $idx = 0; $idx < count( $info ); ++$idx ) {
+				$data['form_name'] = $info[$idx]['key'];
+        		$data['document_save_path'] = $info[$idx]['savepath'];
+        		$data['document_original_name'] = $info[$idx]['name'];
+        		$data['document_save_name'] = $info[$idx]['savename'];
+        		$data['document_size'] = $info[$idx]['size'];
+        		$data['document_mime_type'] = $info[$idx]['type'];
+        		$data['document_suffix_type'] = $info[$idx]['extension'];
+        		$data['document_hash_string'] = $info[$idx]['hash'];
+        		$time = date( 'Y-m-d H:i:s', time() );
+        		$data['document_upload_time'] = $time;
+        		$data['document_type'] = 1;
+        		$data['document_status'] = 0;
+        		$data['jurisdiction_id'] = session( 'jurisdiction_id' );
+        		$document->add( $data );
+        	}
+        	$this->success('上传成功！');
+    	}else{ // 上传错误提示错误信息
+        	$this->error($upload->getErrorMsg());
+    	}
+	}
+
+	// 系统管理->文档管理->上传用户手册：删除用户手册确认页
+	public function upload_manual_delete($record_id=""){
+		$document = M( 'document' )->where( array( 'document_id' => $record_id ) )->find();
+
+		if ( $document ) {
+			$this->document = $document;
+			$document_json = json_encode( $document );
+			$tmp_content=$this->fetch( './Public/html/Content/District/system/upload_manual_delete.html' );
+			$tmp_content = "<script> document_json=$document_json; </script> $tmp_content";
+			$this->ajaxReturn( $tmp_content );
+		} else {
+			$this->ajaxReturn( '删除该文档失败，请重新操作。' );
+		}
+	}
+
+	// 系统管理->文档管理->上传用户手册：删除用户手册
+	public function upload_manual_deleted($record_id="") {
+		// $condition['document_id'] = array( 'EQ', I( 'post.document_id' ) );
+		$data['document_id'] = $record_id;
+		$time = date( 'Y-m-d H:i:s', time() );
+		$data['document_delete_time'] = $time;
+		$data['document_status'] = 1;
+		$result = M( 'document' )->save( $data );
+		if ( $result ) {
+			$this->ajaxReturn( 'success' );
+		} else {
+			$this->ajaxReturn( 'fail' );
+		}
+	}
+
+	// 系统管理->文档管理->上传结果公告
+	public function upload_announcement(){
+		$condition['document_type'] = 2;
+		$condition['document_status'] = 0;
+		$condition['jurisdiction_id'] = session( 'jurisdiction_id' );
+		$document = M( 'document' )->where( $condition )->select();
+		// if ( $document ) {
+			$document_json = json_encode( $document );
+			$tmp_content=$this->fetch( './Public/html/Content/District/system/upload_announcement.html' );
+			$tmp_content = "<script> document_json=$document_json; </script> $tmp_content";
+			$this->ajaxReturn( $tmp_content );
+		//} else {
+			$this->ajaxReturn( '加载页面失败，请重新点击侧边栏加载页面。' );
+		//}
+	}
+
+	// 系统管理->文档管理->上传结果公告：接收上传的结果公告
+	public function upload_announcement_form(){
+		import('ORG.Net.UploadFile');
+		$upload = new UploadFile(); // 实例化上传类
+    	$upload->maxSize = 10 * 1024 * 1024; // 设置附件上传大小，10M
+    	$upload->savePath =  './Uploads/'; // 设置附件上传目录
+    	// $upload->saveRule = 'time'; // 采用时间戳命名
+    	$upload->saveRule = ''; // 设置命名规范为空，保持上传的文件名不变，相同的文件名上传后被覆盖
+    	$upload->allowExts  = array('doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'pdf'); // 允许上传的文件后缀（留空为不限制）
+    	// $upload->allowTypes = array('doc', 'pdf', 'jpg'); // 允许上传的文件类型（留空为不限制）
+    	$upload->uploadReplace = true;
+
+    	if( $upload->upload() ) { // 上传成功
+        	$info = $upload->getUploadFileInfo(); // 取得成功上传的文件信息
+        	$document = M( 'document' );
+        	for ( $idx = 0; $idx < count( $info ); ++$idx ) {
+				$data['form_name'] = $info[$idx]['key'];
+        		$data['document_save_path'] = $info[$idx]['savepath'];
+        		$data['document_original_name'] = $info[$idx]['name'];
+        		$data['document_save_name'] = $info[$idx]['savename'];
+        		$data['document_size'] = $info[$idx]['size'];
+        		$data['document_mime_type'] = $info[$idx]['type'];
+        		$data['document_suffix_type'] = $info[$idx]['extension'];
+        		$data['document_hash_string'] = $info[$idx]['hash'];
+        		$time = date( 'Y-m-d H:i:s', time() );
+        		$data['document_upload_time'] = $time;
+        		$data['document_type'] = 2;
+        		$data['document_status'] = 0;
+        		$data['jurisdiction_id'] = session( 'jurisdiction_id' );
+        		$document->add( $data );
+        	}
+        	$this->success('上传成功！');
+    	}else{ // 上传错误提示错误信息
+        	$this->error($upload->getErrorMsg());
+    	}
+	}
+
+	// 系统管理->文档管理->上传结果公告：删除结果公告确认页
+	public function upload_announcement_delete($record_id=""){
+		$document = M( 'document' )->where( array( 'document_id' => $record_id ) )->find();
+
+		if ( $document ) {
+			$this->document = $document;
+			$document_json = json_encode( $document );
+			$tmp_content=$this->fetch( './Public/html/Content/District/system/upload_announcement_delete.html' );
+			$tmp_content = "<script> document_json=$document_json; </script> $tmp_content";
+			$this->ajaxReturn( $tmp_content );
+		} else {
+			$this->ajaxReturn( '删除该文档失败，请重新操作。' );
+		}
+	}
+
+	// 系统管理->文档管理->上传结果公告：删除结果公告
+	public function upload_announcement_deleted($record_id="") {
+		// $condition['document_id'] = array( 'EQ', I( 'post.document_id' ) );
+		$data['document_id'] = $record_id;
+		$time = date( 'Y-m-d H:i:s', time() );
+		$data['document_delete_time'] = $time;
+		$data['document_status'] = 1;
+		$result = M( 'document' )->save( $data );
+		if ( $result ) {
+			$this->ajaxReturn( 'success' );
+		} else {
+			$this->ajaxReturn( 'fail' );
+		}
+	}
+
 }
+
 ?>

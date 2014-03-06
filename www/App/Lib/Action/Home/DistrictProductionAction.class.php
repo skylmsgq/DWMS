@@ -51,6 +51,12 @@ class DistrictProductionAction extends DistrictCommonAction{
 		$tmp_content=$this->fetch( './Public/html/Content/District/production/production_rfid_hand_equipment.html' );
 		$this->ajaxReturn( $tmp_content );
 	}
+
+	//扩展功能->扩展功能
+	public function expandfunction(){
+		$tmp_content=$this->fetch( './Public/html/Content/Expand/expandfunction.html' );
+		$this->ajaxReturn( $tmp_content );
+	}
 }
 
 ?>

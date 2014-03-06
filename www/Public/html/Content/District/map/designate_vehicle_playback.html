@@ -131,7 +131,7 @@ function setBMap() {
     $("#map_container").css("height", "" + windowHeight - 350 + "px");
 
     BaiduMap = new BMap.Map("map_container"); // 创建Map实例
-    BaiduMap.centerAndZoom("上海", 11); // 初始化地图,设置中心点坐标和地图级别
+    BaiduMap.centerAndZoom("安庆", 14); // 初始化地图,设置中心点坐标和地图级别
     BaiduMap.addControl(new BMap.NavigationControl()); // 添加默认缩放平移控件
     BaiduMap.addControl(new BMap.ScaleControl()); // 添加默认比例尺控件
     BaiduMap.addControl(new BMap.OverviewMapControl()); //添加默认缩略地图控件
@@ -149,8 +149,12 @@ function setBMap() {
     var selectTransportUnit = $('#selectTransportUnit');
     var selectTransportUnitFull = $('#selectTransportUnitFull');
     for (var idx in transport_unit_json) {
-        selectTransportUnit.append('<option value="' + idx + '">' + transport_unit_json[idx].transport_unit_name + '</option>');
-        selectTransportUnitFull.append('<option value="' + idx + '">' + transport_unit_json[idx].transport_unit_name + '</option>');
+        if ((!transport_unit_json[idx]) || (transport_unit_json[idx] == null) || (typeof(transport_unit_json[idx]) == 'undefined')) {
+            continue;
+        } else {
+            selectTransportUnit.append('<option value="' + idx + '">' + transport_unit_json[idx].transport_unit_name + '</option>');
+            selectTransportUnitFull.append('<option value="' + idx + '">' + transport_unit_json[idx].transport_unit_name + '</option>');
+        }
     }
 
     lorryIconGreen = new BMap.Icon("__PUBLIC__/image/truck_green.png", new BMap.Size(32, 40), {
@@ -380,7 +384,7 @@ function getVehicleRoute() {
                 var lat = gpsRoute[dataIdx].bmap_latitude;
                 pointArray.push(new BMap.Point(lng, lat));
             }
-            var polylineGPS = new BMap.Polyline(pointArray, {
+            polylineGPS = new BMap.Polyline(pointArray, {
                 strokeColor: "#8c510a",
                 strokeWeight: 5, // 折线的宽度，以像素为单位。
                 strokeOpacity: 0.8, // 折线的透明度，取值范围0 - 1。

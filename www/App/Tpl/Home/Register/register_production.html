@@ -142,8 +142,8 @@
             </div>
             <div class="panel-body" style="">
 
-                <form role="form" method="post" id="productionForm" action="{:U('Home/Register/do_reg',array('id'=>'production'))}">
-
+                <form role="form" method="post" id="productionForm"
+                action="{:U('Home/Register/do_reg',array('id'=>'production'))}" >
                     <div class="table-responsive">
                         <big>
                             <div class="alert alert-info">账户信息</div>
@@ -331,7 +331,9 @@
                     </div>
 
                     <center>
-                        <button type="submit" class="btn btn-warning btn-lg">提交</button>
+                        <button type="submit" class="btn btn-primary btn-lg">提交</button>
+
+                        <button class="btn btn-danger btn-lg" onclick="$('input').val('');">重新填</button>
                     </center>
                 </form>
                 <script type="text/javascript" src="__PUBLIC__/js/jquery-myvalidate.js"></script>
@@ -375,7 +377,39 @@
 
     <!-- Placed at the end of the document so the pages load faster -->
     <!-- jQuery core JavaScript -->
+    <script type="text/javascript">
+//    function production_submit(){
+//     var form_serialize = "" + $('#productionForm').serialize();
+//     console.log(form_serialize);
+//     $.ajax({
+//         type: "post",
+//         url: "{:U('Home/Register/do_reg',array('id'=>'production'))}",
+//         data: form_serialize,
+//         success: function(data) {
+//             console.log(data);
+//             data = parseInt(data);
+//             switch(data){
+//                 case 0:
+//                     window.location.assign("./index.php/Home/LoginAdmin/homepage.html");
+//                     break;
+//                 case 1:
+//                     window.location.assign("./index.php/Home/LoginCountry/homepage.html");
+//                     break;
 
+//                 default :
+//                     myAlertFail("登录失败");
+//             }
+//         },
+//         error: function(XMLHttpRequest, textStatus, errorThrown) {
+//             console.log("Error:Ajax_Content_Load" + errorThrown);
+//             console.log("XMLHttpRequest.status:" + XMLHttpRequest.status);
+//             console.log("XMLHttpRequest.readyState:" + XMLHttpRequest.readyState);
+//             console.log("textStatus:" + textStatus);
+//         }
+//     });
+// }
+
+</script>
 </body>
 
 </html>
