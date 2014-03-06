@@ -32,9 +32,9 @@ function setTable() {
         var itemDetail = '<a href="#" onclick="fetch_model_page(\'./transport_vehicle_management_detail?vehicle_id=' + vehicle[idx].vehicle_id + '\')"><span class="label label-success"><span class="glyphicon glyphicon-paperclip"></span> 详情</span><a>';
         var itemStatus;
         if(vehicle[idx].vehicle_status == 0){
-        	itemStatus = '<a href=""><span class="label label-info"> 未绑定GPS</span><a>';
+        	itemStatus = '<a href="#"><span class="label label-info"> 未绑定GPS</span><a>';
         } else if(vehicle[idx].vehicle_status == 1){
-        	itemStatus = '<a href="" onclick="gps_detail_page(\'./transport_vehicle_management_gps_detail?vehicle_id=' + vehicle[idx].vehicle_id + '\')"><span class="label label-primary"> 已绑定GPS</span><a>';	
+        	itemStatus = '<a href="#" onclick="gps_detail_page(\'./transport_vehicle_management_gps_detail?vehicle_id=' + vehicle[idx].vehicle_id + '\')"><span class="label label-primary"> 已绑定GPS</span><a>';	
         } else{
         	itemStatus = '<a href=""><span class="label label-danger">状态错误</span><a>';
         }
