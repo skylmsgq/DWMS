@@ -426,6 +426,12 @@ class DistrictBusinessAction extends DistrictCommonAction{
 		$vehiclenum=M('vehicle')->count();
 		$tong_num=M('rfid')->where("add_method=0")->sum('waste_total');
 		$dai_num=M('rfid')->where("add_method=1")->sum('waste_total');
+
+		$rfid=M('rfid');
+		$join = $rfid->join( 'production_unit ON rfid.production_unit_id = production_unit.production_unit_id' )->select();
+		$statistics=M('rfid')->where('waste_id>0')->getField('waste_id,waste_total');
+		$categories=M('rfid')->group('waste_id')->where('waste_id>0')->getField('waste_id',true);
+		
 		$dict=array();
 		$count_waste=0;
 		$wastelist=M('production_unit')->select();
@@ -440,6 +446,9 @@ class DistrictBusinessAction extends DistrictCommonAction{
 				}
 			}
 		}
+		$result->rfid=$join;
+		$result->categories=$categories;
+		$result->statistics=$statistics;
 		$result->count_waste=$count_waste;
 		$result->str=$wastelist;
 		$result->pnum=$pnum;
