@@ -79,6 +79,7 @@ class ProductionManifestAction extends ProductionCommonAction{
 
 		$manifest->production_unit_id = session( 'production_unit_id' );
 		$manifest->manifest_num = session( 'production_unit_id' ) . '-' . date( 'Y-m' ) . '-' . ( M( 'manifest' )->max( 'manifest_id' )+1 );
+		// $manifest->manifest_num = '34' . '08' .
 
 		$manifest->manifest_status = I( 'post.manifest_status' );
 		$result = $manifest->add(); // 根据条件保存修改的数据
@@ -231,8 +232,5 @@ class ProductionManifestAction extends ProductionCommonAction{
 		$manifest->save( $data );
 	}
 }
-
-
-
 
 ?>
