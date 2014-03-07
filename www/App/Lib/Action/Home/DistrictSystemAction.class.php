@@ -680,8 +680,8 @@ class DistrictSystemAction extends DistrictCommonAction{
 		}
 	}
 
-	// 系统管理->系统信息设置->管理设备：修改提交
-	public function device_management_modified( $record_id="" ) {
+	// 系统管理->系统信息设置->管理设备：修改系列号提交
+	public function device_management_modified_serial_num( $record_id="" ) {
 		$device_serial_num = I( 'post.device_serial_num' );
 		$device = M( 'device' );
 		$result = $device->where( array( 'device_serial_num' => $device_serial_num ) )->find();
@@ -719,6 +719,22 @@ class DistrictSystemAction extends DistrictCommonAction{
 
 		$data['device_id'] = $record_id;
 		$data['device_serial_num'] = $device_serial_num;
+		$data['ownership_type'] = I( 'post.ownership_type' );
+		$data['ownership_id'] = I( 'post.ownership_id' );
+		$time = date( 'Y-m-d H:i:s', time() );
+		$data['device_modify_time'] = $time;
+		$result = $device->save( $data );
+		if ( $result ) {
+			$this->ajaxReturn( 'success' );
+		} else {
+			$this->ajaxReturn( 'fail' );
+		}
+	}
+
+	// 系统管理->系统信息设置->管理设备：修改归属提交
+	public function device_management_modified_ownership( $record_id="" ) {
+		$device = M( 'device' );
+		$data['device_id'] = $record_id;
 		$data['ownership_type'] = I( 'post.ownership_type' );
 		$data['ownership_id'] = I( 'post.ownership_id' );
 		$time = date( 'Y-m-d H:i:s', time() );
