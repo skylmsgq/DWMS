@@ -63,7 +63,7 @@ DWMS_page_config.pageid = 0;
 
 
 <script type="text/javascript">
-var p_number, r_number, t_number, sum, tong_num, dai_num, count_waste, manifestnum, recordnum, devicenum, vehiclenum, categories ,statistics ,rfid ;
+var p_number, r_number, t_number, sum, tong_num, dai_num, count_waste, manifestnum, recordnum, devicenum, vehiclenum, categories ,statistics ,rfid;
 function decimal(num,v)
 {
     var vv = Math.pow(10,v);
@@ -79,9 +79,15 @@ $.ajax({
             // console.log(data);
             var result=JSON.parse(data);
             // console.log(result.str);
+
             rfid=result.rfid;
             categories=result.categories;
-            statistics=result.statistics;
+            // statistics=result.statistics;
+            // hw_01=result.hw_01;
+            // hw_02=result.hw_02;
+            // hw_03=result.hw_03;
+            // hw_48=result.hw_48;
+            // hw_49=result.hw_49;
             p_number=parseInt(result.pnum);
             r_number=parseInt(result.rnum);
             t_number=parseInt(result.tnum);
@@ -142,32 +148,36 @@ $.ajax({
     
 
     var colors = Highcharts.getOptions().colors,
-        /*categories = ['HW01', 'HW02', 'HW03', 'HW04', 'HW05', 'HW06',*//* 'HW07', 'HW08', *//*'HW09',*/ /*'HW10', 'HW11', 'HW12', 'HW13', 'HW14', 'HW15', *//*'HW16', 'HW17', 'HW18', 'HW19', 'HW20', *//*'HW21', 'HW22', 'HW23', 'HW24', 'HW25', 'HW26', 'HW27', 'HW28', 'HW29', 'HW30',*//* 'HW31',*//* 'HW32', 'HW33', 'HW34', 'HW35', 'HW36', 'HW37', 'HW38', *//*'HW39', 'HW40', 'HW41', 'HW42', *//*'HW43', 'HW44', 'HW45', 'HW46', 'HW47', *//*'HW48', 'HW49'],*/
         name = 'Waste_Code';
     var data = new Array();
     for (var idx in categories){     
         var unit_name = new Array();
         var total_num = new Array();
-        var i = 0;
-        var z = 0;
-        for(var x in rfid){            
+        var waste_total = 0;
+        var i = 0; 
+        for(var x in rfid){
             if(rfid[x]['waste_id']==categories[idx]){
+                var z = true;
+                waste_total = waste_total + parseFloat(rfid[x]['waste_total']);
                 for(var a in unit_name){
                     if(rfid[x]['production_unit_name']==unit_name[a]){
-                        total_num[a] = (total_num[a] + rfid[x]['waste_total'])/1;
-                        z=1;
-                    }                  
-                }
-                if(z==0){
+                        total_num[a] = total_num[a] + parseFloat(rfid[x]['waste_total']);
+                        z = false;
+                        break;
+                    } 
+                }    
+                if(z == false){
+                    continue;
+                } else{
                     unit_name[i] = rfid[x]['production_unit_name'];
-                    total_num[i] = rfid[x]['waste_total']/1;
-                    i++;     
-                }
-            }
-        }    
+                    total_num[i] = parseFloat(rfid[x]['waste_total']);
+                    i++;  
+                }    
+            }   
+        }
 
         data[idx] = {
-            y: statistics[categories[idx]]/1,
+            y: waste_total,
             color: colors[idx],
             drilldown: {
                         name: categories[idx],
@@ -178,17 +188,6 @@ $.ajax({
         }
           
     };
-        
-        /*        }, {
-                    y: 2.14,
-                    color: colors[4],
-                    drilldown: {
-                        name: 'Opera versions',
-                        categories: ['Opera 9.x', 'Opera 10.x', 'Opera 11.x'],
-                        data: [ 0.12, 0.37, 1.65],
-                        color: colors[4]
-                    }
-                }];*/
 
     function setChart(name, categories, data, color) {
             chart.xAxis[0].setCategories(categories, false);

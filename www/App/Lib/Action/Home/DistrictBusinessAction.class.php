@@ -427,10 +427,19 @@ class DistrictBusinessAction extends DistrictCommonAction{
 		$tong_num=M('rfid')->where("add_method=0")->sum('waste_total');
 		$dai_num=M('rfid')->where("add_method=1")->sum('waste_total');
 
-		$rfid=M('rfid');
-		$join = $rfid->join( 'production_unit ON rfid.production_unit_id = production_unit.production_unit_id' )->select();
-		$statistics=M('rfid')->where('waste_id>0')->getField('waste_id,waste_total');
+		// $rfid=M('rfid');
+		// $join = $rfid->join( 'production_unit ON rfid.production_unit_id = production_unit.production_unit_id' )->select();
+		// $statistics=M('rfid')->where('waste_id>0')->getField('waste_id,waste_total');
 		$categories=M('rfid')->group('waste_id')->where('waste_id>0')->getField('waste_id',true);
+		$rfid = M('rfid');
+		$join = $rfid->join('production_unit ON rfid.production_unit_id = production_unit.production_unit_id' )->join('waste ON rfid.waste_id = waste.waste_id')->select();
+
+		// $hw_49 = $rfid->join('production_unit ON rfid.production_unit_id = production_unit.production_unit_id' )->join('waste ON rfid.waste_id = waste.waste_id')->select();
+		// $Model = M();
+		// $Model->query('SELECT production_unit_id,SUM(waste_total) FROM rfid GROUP BY production_unit_id');
+		
+		// $hw_49 = $rfid->join('production_unit ON rfid.production_unit_id = production_unit.production_unit_id' )->join('waste ON rfid.waste_id = waste.waste_id')->where( array( 'waste_category_code' => HW49 ) )->sum('waste_total');
+		// $hw_48 = $rfid->join('production_unit ON rfid.production_unit_id = production_unit.production_unit_id' )->join('waste ON rfid.waste_id = waste.waste_id')->where( array( 'waste_category_code' => HW48 ) )->sum('waste_total');
 		
 		$dict=array();
 		$count_waste=0;
@@ -447,6 +456,28 @@ class DistrictBusinessAction extends DistrictCommonAction{
 			}
 		}
 		$result->rfid=$join;
+		// $result->hw_01=$hw_01;
+		// $result->hw_01=$hw_01;
+		// $result->hw_01=$hw_01;
+		// $result->hw_01=$hw_01;
+		// $result->hw_01=$hw_01;
+		// $result->hw_01=$hw_01;
+		// $result->hw_01=$hw_01;
+		// $result->hw_01=$hw_01;
+		// $result->hw_01=$hw_01;
+		// $result->hw_01=$hw_01;
+		// $result->hw_01=$hw_01;
+		// $result->hw_01=$hw_01;
+		// $result->hw_01=$hw_01;
+		// $result->hw_01=$hw_01;
+		// $result->hw_01=$hw_01;
+		// $result->hw_01=$hw_01;
+		// $result->hw_01=$hw_01;
+		// $result->hw_01=$hw_01;
+		// $result->hw_01=$hw_01;
+		// $result->hw_48=$hw_48;
+		// $result->hw_49=$hw_49;
+		
 		$result->categories=$categories;
 		$result->statistics=$statistics;
 		$result->count_waste=$count_waste;
