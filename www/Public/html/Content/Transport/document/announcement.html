@@ -1,6 +1,6 @@
 <div class="panel panel-primary">
     <div class="panel-heading">
-        法规政策
+        结果公告
     </div>
     <div class="panel-body">
         <table id="table-container">
@@ -14,7 +14,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="myModalLabel">法规政策</h4>
+                <h4 class="modal-title" id="myModalLabel">结果公告</h4>
             </div>
             <div class="modal-body" id="model-content">
             </div>
@@ -25,30 +25,26 @@
     <!-- /.modal-dialog -->
 </div>
 <!-- /.modal -->
-
-<center>
-    <input type="file" class="form-control" name="document" id="fileToUpload">
-    <div id="myAlert"></div>
-    <button type="button" class="btn btn-primary" onclick="ajaxFileUpload();">上传法规政策</button>
-</center>
-
-<script type="text/javascript" src="__PUBLIC__/js/ajaxfileupload.js"></script>
-<script type="text/javascript" src="__PUBLIC__/js/yourAlert.js"></script>
+<!-- <center>
+    <form id="upload" method="POST" action="{:U('Home/DistrictSystem/upload_announcement_form')}" enctype="multipart/form-data">
+        <input type="file" class="form-control" name="document">
+        <button type="submit" class="btn btn-primary">上传结果公告</button>
+    </form>
+</center> -->
 
 <script type="text/javascript">
-
 function setTable() {
     var tableData = new Array();
     for (var idx in document_json) {
         // var itemDetail = '<a href="#" onclick="fetch_model_page(\'./upload_document_detail?record_id=' + document_json[idx].document_id + '\')"><span class="label label-info">详情</span><a>';
-        var itemDelete = ' <a href="#" onclick="fetch_model_page(\'./upload_law_delete?record_id=' + document_json[idx].document_id + '\')"><span class="label label-warning">删除</span><a>';
+        // var itemDelete = ' <a href="#" onclick="fetch_model_page(\'./upload_announcement_delete?record_id=' + document_json[idx].document_id + '\')"><span class="label label-warning">删除</span><a>';
         var itemData = new Array();
         itemData[0] = "" + document_json[idx].document_id;
         itemData[1] = "<a href='/Uploads/" + document_json[idx].document_save_name + "' target='_blank'>" + document_json[idx].document_original_name + "</a>";
         itemData[2] = "" + document_json[idx].document_suffix_type;
         itemData[3] = "" + Math.round(document_json[idx].document_size / 1024);
         // itemData[4] = itemDetail + itemModify;
-        itemData[4] = itemDelete;
+        // itemData[4] = itemDelete;
         tableData.push(itemData);
     }
 
@@ -62,9 +58,9 @@ function setTable() {
             "sTitle": "文档类型"
         }, {
             "sTitle": "文档大小(KB)"
-        }, {
+        }/*, {
             "sTitle": "操作"
-        }],
+        }*/],
         "bPaginate": true, //翻页功能
         "bLengthChange": true, //改变每页显示数据数量
         "bFilter": true, //过滤功能
@@ -94,7 +90,7 @@ function setTable() {
 
 setTable();
 
-function fetch_model_page(ajaxURL) {
+/*function fetch_model_page(ajaxURL) {
     $('#myModal').modal("show");
     $("#model-content").html('<center style="margin-top:20px"><h4>努力地加载中...</h4><div class="progress progress-striped active" style="width: 50%"><div class="progress-bar"  role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div></div></center>');
     $.ajax({
@@ -111,63 +107,5 @@ function fetch_model_page(ajaxURL) {
             console.log("textStatus:" + textStatus);
         }
     });
-}
-
-function ajaxFileUpload() {
-    /*$('#loading').ajaxStart(function() {
-        myAlertSucc("正在上传……");
-    }).ajaxComplete(function() {
-        myAlertSucc("上传完成！");
-    });*/
-    $.ajaxFileUpload({
-        url: "{:U('Home/DistrictSystem/upload_law_form')}", //需要链接到服务器地址
-        secureuri: false,
-        fileElementId: 'fileToUpload', //文件选择框的id属性
-        dataType: 'JSON', //服务器返回的格式，可以是json
-        success: function(data, info, status) { //相当于java中try语句块的用法
-            console.log(data);
-            console.log(info);
-            console.log(status);
-
-            switch (info) {
-                case 'success':
-                    myAlertSucc("上传文件成功！");
-                    fetch_page("{:U('Home/DistrictSystem/upload_law')}");
-                    /*var reg = /<pre.+?>(.+)<\/pre>/g;
-                    var result = data.match(reg);
-                    var document_json = RegExp.$1;
-                    var documentObj = eval(document_json);
-                    console.log(documentObj.data.document_original_name);*/
-                    /*myAlertSucc("上传文件成功！");
-                    var itemDelete = ' <a href="#" onclick="fetch_model_page(\'./upload_law_delete?record_id=' + document_json.document_id + '\')"><span class="label label-warning">删除</span><a>';
-                    var tableData = new Array();
-                    var itemData = new Array();
-                    itemData[0] = "" + document_json.document_id;
-                    itemData[1] = "<a href='/Uploads/" + document_json.document_save_name + "' target='_blank'>" + document_json.document_original_name + "</a>";
-                    itemData[2] = "" + document_json.document_suffix_type;
-                    itemData[3] = "" + Math.round(document_json.document_size / 1024);
-                    // itemData[4] = itemDetail + itemModify;
-                    itemData[4] = itemDelete;
-                    tableData.push(itemData);
-                    var dataTable = $('#table-container').dataTable();
-                    dataTable.fnAddData(tableData);*/
-
-                    break;
-                case 'fail':
-                    myAlertFail("上传文件失败！");
-                    break;
-                default:
-                    myAlertFail("未知错误！");
-                    break;
-            }
-        },
-        error: function(XMLHttpRequest, textStatus, errorThrown) {
-            myAlertFail("上传文件ajax请求失败");
-            console.log("Error: Ajax_Content_Load " + errorThrown);
-            console.log("XMLHttpRequest.status: " + XMLHttpRequest.status);
-            console.log("XMLHttpRequest.readyState: " + XMLHttpRequest.readyState);
-            console.log("textStatus: " + textStatus);
-        }
-    });
-}
+}*/
 </script>
