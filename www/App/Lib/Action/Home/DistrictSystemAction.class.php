@@ -794,9 +794,10 @@ class DistrictSystemAction extends DistrictCommonAction{
         		$data['jurisdiction_id'] = session( 'jurisdiction_id' );
         		$document->add( $data );
         	}
-        	$this->success('上传成功！');
+        	// $data = htmlspecialchars_decode( $data );
+        	$this->ajaxReturn( $data, 'success', 1 );
     	}else{ // 上传错误提示错误信息
-        	$this->error($upload->getErrorMsg());
+        	$this->ajaxReturn( $upload->getErrorMsg(), 'fail', 0 );
     	}
 	}
 
@@ -877,9 +878,9 @@ class DistrictSystemAction extends DistrictCommonAction{
         		$data['jurisdiction_id'] = session( 'jurisdiction_id' );
         		$document->add( $data );
         	}
-        	$this->success('上传成功！');
+        	$this->ajaxReturn( $data, 'success', 1 );
     	}else{ // 上传错误提示错误信息
-        	$this->error($upload->getErrorMsg());
+        	$this->ajaxReturn( $upload->getErrorMsg(), 'fail', 0 );
     	}
 	}
 
@@ -960,9 +961,9 @@ class DistrictSystemAction extends DistrictCommonAction{
         		$data['jurisdiction_id'] = session( 'jurisdiction_id' );
         		$document->add( $data );
         	}
-        	$this->success('上传成功！');
+        	$this->ajaxReturn( $data, 'success', 1 );
     	}else{ // 上传错误提示错误信息
-        	$this->error($upload->getErrorMsg());
+        	$this->ajaxReturn( $upload->getErrorMsg(), 'fail', 0 );
     	}
 	}
 

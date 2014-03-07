@@ -40,7 +40,7 @@ function setTable() {
         // var itemDelete = ' <a href="#" onclick="fetch_model_page(\'./upload_manual_delete?record_id=' + document_json[idx].document_id + '\')"><span class="label label-warning">删除</span><a>';
         var itemData = new Array();
         itemData[0] = "" + document_json[idx].document_id;
-        itemData[1] = "<a href='/Uploads/" + document_json[idx].document_save_name + "'>" + document_json[idx].document_original_name + "</a>";
+        itemData[1] = "<a href='/Uploads/" + document_json[idx].document_save_name + "' target='_blank'>" + document_json[idx].document_original_name + "</a>";
         itemData[2] = "" + document_json[idx].document_suffix_type;
         itemData[3] = "" + Math.round(document_json[idx].document_size / 1024);
         // itemData[4] = itemDetail + itemModify;
