@@ -27,8 +27,13 @@
 <!-- /.modal -->
 <center>
     <input type="file" class="form-control" name="document" id="fileToUpload">
+    <div class="alert alert-info">请选择小于10MB的pdf / doc / docx / xls / xlsx / ppt / pptx文件。</div>
+    <div id="myAlert"></div>
     <button type="submit" class="btn btn-primary" onclick="ajaxFileUpload();">上传结果公告</button>
 </center>
+
+<script type="text/javascript" src="__PUBLIC__/js/ajaxfileupload.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/yourAlert.js"></script>
 
 <script type="text/javascript">
 function setTable() {
@@ -119,9 +124,9 @@ function ajaxFileUpload() {
         fileElementId: 'fileToUpload', //文件选择框的id属性
         dataType: 'JSON', //服务器返回的格式，可以是json
         success: function(data, info, status) { //相当于java中try语句块的用法
-            console.log(data);
-            console.log(info);
-            console.log(status);
+            // console.log(data);
+            // console.log(info);
+            // console.log(status);
 
             switch (info) {
                 case 'success':

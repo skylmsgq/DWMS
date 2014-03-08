@@ -33,10 +33,10 @@
                                 </select>
                             </td>
                             <td>
-                                <input type="date" class="form-control input-sm" id="beginDate" value="2014-01-13">
+                                <input type="datetime-local" class="form-control input-sm" id="beginDate" value="">
                             </td>
                             <td>
-                                <input type="date" class="form-control input-sm" id="endDate" value="2014-01-14">
+                                <input type="datetime-local" class="form-control input-sm" id="endDate" value="">
                             </td>
                             <td>
                                 <select class="form-control input-sm" id="selectSpeed" style="width:60px;">
@@ -74,11 +74,11 @@
                 </tr>
                 <tr>
                     <td>
-                        <input type="date" class="form-control input-sm" id="beginDateFull" value="2014-01-13">
+                        <input type="datetime-local" class="form-control input-sm" id="beginDateFull" value="">
                     </td>
 
                     <td>
-                        <input type="date" class="form-control input-sm" id="endDateFull" value="2014-01-14">
+                        <input type="datetime-local" class="form-control input-sm" id="endDateFull" value="">
                     </td>
                 </tr>
                 <tr>
@@ -121,6 +121,16 @@ if (typeof(intervalWarning) != 'undefined') {
 if (typeof(playbackTimeout) != 'undefined') {
     clearTimeout(playbackTimeout);
 }
+
+var DateObj = new Date();
+var beginDateString = DateObj.toISOString().substring(0, 11) + "00:00";
+$('#beginDate').val(beginDateString);
+$('#beginDateFull').val(beginDateString);
+DateObj.setDate(DateObj.getDate() + 1);
+var endDateString = DateObj.toISOString().substring(0, 11) + "00:00";
+$('#endDate').val(endDateString);
+$('#endDateFull').val(endDateString);
+
 var fullScreen = 0;
 var vehicle_json;
 var polylineGPS;
@@ -234,7 +244,8 @@ function getVehicleList() {
             selectVehicleFull.html("<option value='-1'>请选择运输车辆</option>");
             for (var idx in vehicleList) {
                 selectVehicle.append('<option value="' + idx + '">车牌号为：' + vehicleList[idx].vehicle_num + '的' + vehicleList[idx].vehicle_type + '</option>');
-                selectVehicleFull.append('<option value="' + idx + '">车牌号为：' + vehicleList[idx].vehicle_num + '的' + vehicleList[idx].vehicle_type + '</option>');
+                // selectVehicleFull.append('<option value="' + idx + '">车牌号为：' + vehicleList[idx].vehicle_num + '的' + vehicleList[idx].vehicle_type + '</option>');
+                selectVehicleFull.append('<option value="' + idx + '">车牌：' + vehicleList[idx].vehicle_num + '</option>');
             }
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) {
@@ -287,11 +298,11 @@ function getVehicleRoute() {
         return;
     }
     if (beginDateVal == '' || endDateVal == '') {
-        myAlertFail('请先选择历史回放起始日期和终止日期');
+        myAlertFail('请先选择历史回放起始时间和终止时间');
         return;
     }
     if (beginDateVal >= endDateVal) {
-        myAlertFail('终止日期必须晚于起始日期');
+        myAlertFail('终止时间必须晚于起始时间');
         return;
     }
     $.ajax({
@@ -304,6 +315,10 @@ function getVehicleRoute() {
             "endDate": endDateVal,
         },
         success: function(gpsRoute) {
+            if (gpsRoute == 'empty') {
+                myAlertFail("此时段该车辆历史数据为空");
+                return;
+            }
             if (gpsRoute == 'fail') {
                 myAlertFail("获取车辆历史数据失败");
                 return;
