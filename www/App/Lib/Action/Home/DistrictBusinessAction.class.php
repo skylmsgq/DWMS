@@ -430,7 +430,7 @@ class DistrictBusinessAction extends DistrictCommonAction{
 		// $rfid=M('rfid');
 		// $join = $rfid->join( 'production_unit ON rfid.production_unit_id = production_unit.production_unit_id' )->select();
 		// $statistics=M('rfid')->where('waste_id>0')->getField('waste_id,waste_total');
-		$categories=M('rfid')->group('waste_id')->where('waste_id>0')->getField('waste_id',true);
+		$categories=M('rfid')->join('waste ON rfid.waste_id = waste.waste_id')->group('waste_category_code')->getField('waste_category_code',true);
 		$rfid = M('rfid');
 		$join = $rfid->join('production_unit ON rfid.production_unit_id = production_unit.production_unit_id' )->join('waste ON rfid.waste_id = waste.waste_id')->select();
 

@@ -96,7 +96,7 @@ $.ajax({
             devicenum=parseInt(result.devicenum);
             vehiclenum=parseInt(result.vehiclenum);
             count_waste=parseInt(result.count_waste);
-            tong_num=parseFloat(result.tong_num);
+            tong_num=(parseFloat(result.tong_num)).toFixed(2);
             dai_num=parseInt(result.dai_num);
             sum=p_number+r_number+t_number;
             p_ptg=parseFloat(decimal(100*p_number/sum,1));
@@ -156,7 +156,7 @@ $.ajax({
         var waste_total = 0;
         var i = 0; 
         for(var x in rfid){
-            if(rfid[x]['waste_id']==categories[idx]){
+            if(rfid[x]['waste_category_code']==categories[idx]){
                 var z = true;
                 waste_total = waste_total + parseFloat(rfid[x]['waste_total']);
                 for(var a in unit_name){
@@ -176,6 +176,7 @@ $.ajax({
             }   
         }
 
+        waste_total = parseInt(waste_total*100)/100;
         data[idx] = {
             y: waste_total,
             color: colors[idx],
@@ -248,7 +249,7 @@ $.ajax({
             tooltip: {
                 formatter: function() {
                     var point = this.point,
-                        s = this.x +':<b>'+ this.y +' 吨</b><br/>';
+                        s = this.x +':<b>'+ this.y +' 公斤</b><br/>';
                     if (point.drilldown) {
                         s += 'Click to view '+ point.category +' company details';
                     } else {
