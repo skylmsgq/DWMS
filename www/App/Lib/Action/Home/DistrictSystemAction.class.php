@@ -854,7 +854,7 @@ class DistrictSystemAction extends DistrictCommonAction{
     	$upload->maxSize = 10 * 1024 * 1024; // 设置附件上传大小，10M
     	$upload->savePath =  './Uploads/'; // 设置附件上传目录
     	// $upload->saveRule = 'time'; // 采用时间戳命名
-    	$upload->saveRule = ''; // 设置命名规范为空，保持上传的文件名不变，相同的文件名上传后被覆盖
+    	$upload->saveRule = 'time'; // 设置命名规范为空，保持上传的文件名不变，相同的文件名上传后被覆盖
     	$upload->allowExts  = array('doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'pdf'); // 允许上传的文件后缀（留空为不限制）
     	// $upload->allowTypes = array('doc', 'pdf', 'jpg'); // 允许上传的文件类型（留空为不限制）
     	$upload->uploadReplace = true;
@@ -937,7 +937,7 @@ class DistrictSystemAction extends DistrictCommonAction{
     	$upload->maxSize = 10 * 1024 * 1024; // 设置附件上传大小，10M
     	$upload->savePath =  './Uploads/'; // 设置附件上传目录
     	// $upload->saveRule = 'time'; // 采用时间戳命名
-    	$upload->saveRule = ''; // 设置命名规范为空，保持上传的文件名不变，相同的文件名上传后被覆盖
+    	$upload->saveRule = 'time'; // 设置命名规范为空，保持上传的文件名不变，相同的文件名上传后被覆盖
     	$upload->allowExts  = array('doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'pdf'); // 允许上传的文件后缀（留空为不限制）
     	// $upload->allowTypes = array('doc', 'pdf', 'jpg'); // 允许上传的文件类型（留空为不限制）
     	$upload->uploadReplace = true;
