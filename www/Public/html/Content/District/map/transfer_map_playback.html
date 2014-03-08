@@ -257,14 +257,15 @@ function getVehicleRoutes() {
                 myAlertFail("获取转移地图历史数据失败");
                 return;
             }
-            if ((!gpsRouteArray) || (gpsRouteArray == null) || (typeof(gpsRouteArray) == 'undefined')) {
-                myAlertFail("此时段历史数据为空。");
-                return;
-            }
-
             if (typeof(playbackTimeout) != 'undefined') {
                 clearTimeout(playbackTimeout);
             }
+            if ((!gpsRouteArray) || (gpsRouteArray == null) || (typeof(gpsRouteArray) == 'undefined')) {
+                myAlertFail("此时段所有车辆历史数据为空。");
+                return;
+            }
+            var emptyFlag = true;
+
             BaiduMap.clearOverlays();
             $('#transport_unit_panel').html("");
             $('#route_panel').html("");
@@ -279,6 +280,7 @@ function getVehicleRoutes() {
                 if ((!gpsRouteArray[gpsIdx]) || (gpsRouteArray[gpsIdx] == null) || (typeof(gpsRouteArray[gpsIdx]) == 'undefined')) {
                     continue;
                 }
+                emptyFlag = false;
 
                 gpsRouteTimeArray[gpsIdx] = new Array();
 
@@ -459,6 +461,10 @@ function getVehicleRoutes() {
                     BaiduMap.removeOverlay(startMarkerList[markerIdx]);
                     BaiduMap.removeOverlay(endMarkerList[markerIdx]);
                 });
+            }
+            if (emptyFlag) {
+                myAlertFail("此时段所有车辆历史数据为空。");
+                return;
             }
 
             var startTimeObj = new Date(startTime);
