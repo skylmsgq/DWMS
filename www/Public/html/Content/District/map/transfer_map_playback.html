@@ -23,13 +23,13 @@
                     <table style="border-radius:5px;">
                         <tr>
                             <td style="background-color:#FFFFFF;">
-                                <input type="date" class="form-control input-sm" id="beginDate" value="2014-01-13">
+                                <input type="datetime-local" class="form-control input-sm" id="beginDate" value="">
                             </td>
                             <td style="background-color:#FFFFFF;">
                                 至
                             </td>
                             <td style="background-color:#FFFFFF;">
-                                <input type="date" class="form-control  input-sm" id="endDate" value="2014-01-14">
+                                <input type="datetime-local" class="form-control  input-sm" id="endDate" value="">
                             </td>
                             <td style="background-color:#FFFFFF;">
                                 <select class="form-control  input-sm" id="selectSpeed" style="width:60px;">
@@ -57,10 +57,10 @@
             <table class="table table-bordered table-hover table-condensed table-responsive" style="margin-bottom:0px; background-color:#FFFFFF;">
                 <tr>
                     <td>
-                        <input type="date" class="form-control input-sm" id="beginDateFull" value="2014-01-13">
+                        <input type="datetime-local" class="form-control input-sm" id="beginDateFull" value="">
                     </td>
                     <td>
-                        <input type="date" class="form-control input-sm" id="endDateFull" value="2014-01-14">
+                        <input type="datetime-local" class="form-control input-sm" id="endDateFull" value="">
                     </td>
                 </tr>
                 <tr>
@@ -107,6 +107,16 @@ if (typeof(intervalWarning) != 'undefined') {
 if (typeof(playbackTimeout) != 'undefined') {
     clearTimeout(playbackTimeout);
 }
+
+var DateObj = new Date();
+var beginDateString = DateObj.toISOString().substring(0, 11) + "00:00";
+$('#beginDate').val(beginDateString);
+$('#beginDateFull').val(beginDateString);
+DateObj.setDate(DateObj.getDate() + 1);
+var endDateString = DateObj.toISOString().substring(0, 11) + "00:00";
+$('#endDate').val(endDateString);
+$('#endDateFull').val(endDateString);
+
 var fullScreen = 0;
 
 var vehicleMarkerList = new Array();
