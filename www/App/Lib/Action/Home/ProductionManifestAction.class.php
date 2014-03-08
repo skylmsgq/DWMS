@@ -11,7 +11,7 @@ class ProductionManifestAction extends ProductionCommonAction{
 
 	// 转移联单->转移联单申请
 	public function transfer_manifest_request() {
-		$record = M( 'record' )->where( array('record_status'=>2,'production_unit_id' => session( 'production_unit_id' ) ) )->getField( 'record_id,record_code,record_date,record_status' );
+		$record = M( 'record' )->where( array( 'record_status'=>2, 'production_unit_id' => session( 'production_unit_id' ) ) )->getField( 'record_id,record_code,record_date,record_status' );
 		$record_json = json_encode( $record );
 
 		$unit_name = M( 'production_unit' )->where( array( 'production_unit_id' => session( 'production_unit_id' ) ) )->getField( 'production_unit_name' );
@@ -22,43 +22,44 @@ class ProductionManifestAction extends ProductionCommonAction{
 		$this->ajaxReturn( $tmp_content );
 	}
 	// 转移联单->转移联单申请: 申请联单
-	public function transfer_manifest_request_page($record_id="") {
+	public function transfer_manifest_request_page( $record_id="" ) {
 		$record = M( 'record' )->where( array( 'record_id' => $record_id ) )->find();
-		$record_json = json_encode($record);
+		$record_json = json_encode( $record );
 
-		$waste_category_code = M('waste_category')->where('waste_category_id>0')->getField('waste_category_code',true);
-		$waste_category_code_json = json_encode($waste_category_code);
-		$waste_form = M('waste_form')->where('waste_form_id>0')->getField('waste_form',true);
-		$waste_form_json = json_encode($waste_form);
-		$package_method = M( 'package_method' )->where('package_method_id>0')->select();
-		$package_method_json = json_encode($package_method);
-		$waste_transport_goal = M( 'waste_transport_goal' )->where('waste_transport_goal_id>0')->select();
-		$waste_transport_goal_json = json_encode($waste_transport_goal);
+		$waste_category_code = M( 'waste_category' )->where( 'waste_category_id>0' )->getField( 'waste_category_code', true );
+		$waste_category_code_json = json_encode( $waste_category_code );
+		$waste_form = M( 'waste_form' )->where( 'waste_form_id>0' )->getField( 'waste_form', true );
+		$waste_form_json = json_encode( $waste_form );
+		$package_method = M( 'package_method' )->where( 'package_method_id>0' )->select();
+		$package_method_json = json_encode( $package_method );
+		$waste_transport_goal = M( 'waste_transport_goal' )->where( 'waste_transport_goal_id>0' )->select();
+		$waste_transport_goal_json = json_encode( $waste_transport_goal );
 
-		$production_unit = M( 'production_unit' )->where( array( 'production_unit_id' => session('production_unit_id' ) ) )->find();
+		$production_unit = M( 'production_unit' )->where( array( 'production_unit_id' => session( 'production_unit_id' ) ) )->find();
 		//$this->ajaxReturn("<script>record_data=$record_json.reception_unit_name;</script>");
-		$t_id = M( 'record' )->where( array( 'record_id' =>$record_id ) )->getField('transport_unit_id');
-		$r_id = M( 'record' )->where( array( 'record_id' =>$record_id ) )->getField('reception_unit_id');
-		$t_name = M( 'transport_unit' )->where( array( 'transport_unit_id' => $t_id ) )->getField('transport_unit_name');
-		$r_name = M( 'reception_unit' )->where( array( 'reception_unit_id' => $r_id ) )->getField('reception_unit_name');
+		$t_id = M( 'record' )->where( array( 'record_id' =>$record_id ) )->getField( 'transport_unit_id' );
+		$r_id = M( 'record' )->where( array( 'record_id' =>$record_id ) )->getField( 'reception_unit_id' );
+		$t_name = M( 'transport_unit' )->where( array( 'transport_unit_id' => $t_id ) )->getField( 'transport_unit_name' );
+		$r_name = M( 'reception_unit' )->where( array( 'reception_unit_id' => $r_id ) )->getField( 'reception_unit_name' );
 		$this->t_name = $t_name;
 		$this->r_name = $r_name;
 
 		$this->record = $record;
 		$this->production_unit = $production_unit;
+		$production_unit_json = json_encode( $production_unit );
 
 		$tmp_content=$this->fetch( './Public/html/Content/Production/manifest/transfer_manifest_request_page.html' );
 
-		$tmp_content = "<script>record_json = $record_json;waste_category_code = $waste_category_code_json;waste_form = $waste_form_json;package_method = $package_method_json;waste_transport_goal = $waste_transport_goal_json; </script> $tmp_content";
+		$tmp_content = "<script>record_json = $record_json; waste_category_code = $waste_category_code_json; waste_form = $waste_form_json;package_method = $package_method_json; waste_transport_goal = $waste_transport_goal_json; production_unit = $production_unit_json</script> $tmp_content";
 
 		$this->ajaxReturn( $tmp_content );
 	}
 
 	// 转移联单->转移联单申请->表单提交
-	public function transfer_manifest_request_form($record_id="") {
+	public function transfer_manifest_request_form( $record_id="" ) {
 		$record = M( 'record' );
 		$data['record_status'] = 5;
-		$record->where( array( 'record_id' =>$record_id ) )->save($data);
+		$record->where( array( 'record_id' =>$record_id ) )->save( $data );
 
 		// $table = M('record')->where( array( 'record_id' =>$record_id ) )->select();
 
@@ -95,9 +96,9 @@ class ProductionManifestAction extends ProductionCommonAction{
 	public function transfer_manifest_query() {
 		// $manifest = M( 'manifest' )->where( array('production_unit_id' => session( 'production_unit_id' ) ) );
 		$manifest = M( 'manifest' );
-		$condition['production_unit_id'] = session('production_unit_id');
+		$condition['production_unit_id'] = session( 'production_unit_id' );
 		$condition['_string'] = 'manifest_status >= 0';
-		$manifest_data = $manifest->where($condition)->getField( 'manifest_id,manifest_num,manifest_add_time,manifest_status' );
+		$manifest_data = $manifest->where( $condition )->getField( 'manifest_id,manifest_num,manifest_add_time,manifest_status' );
 
 		$manifest_json = json_encode( $manifest_data );
 
@@ -110,43 +111,43 @@ class ProductionManifestAction extends ProductionCommonAction{
 	}
 
 	// 转移联单->转移联单查询->详细信息页
-	public function transfer_manifest_query_detail($manifest_id="") {
+	public function transfer_manifest_query_detail( $manifest_id="" ) {
 		$manifest = M( 'manifest' )->where( array( 'manifest_id' =>$manifest_id ) )->find();
 		$production_unit = M( 'production_unit' )->where( array( 'production_unit_id' => session( 'production_unit_id' ) ) )->find();
 		$this->manifest = $manifest;
 		$this->unit = $production_unit;
-		$t_id = M( 'manifest' )->where( array( 'manifest_id' =>$manifest_id ) )->getField('transport_unit_id');
-		$r_id = M( 'manifest' )->where( array( 'manifest_id' =>$manifest_id ) )->getField('reception_unit_id');
-		$t_name = M( 'transport_unit' )->where( array( 'transport_unit_id' => $t_id ) )->getField('transport_unit_name');
-		$r_name = M( 'reception_unit' )->where( array( 'reception_unit_id' => $r_id ) )->getField('reception_unit_name');
+		$t_id = M( 'manifest' )->where( array( 'manifest_id' =>$manifest_id ) )->getField( 'transport_unit_id' );
+		$r_id = M( 'manifest' )->where( array( 'manifest_id' =>$manifest_id ) )->getField( 'reception_unit_id' );
+		$t_name = M( 'transport_unit' )->where( array( 'transport_unit_id' => $t_id ) )->getField( 'transport_unit_name' );
+		$r_name = M( 'reception_unit' )->where( array( 'reception_unit_id' => $r_id ) )->getField( 'reception_unit_name' );
 		$this->t_name = $t_name;
 		$this->r_name = $r_name;
 		$tmp_content=$this->fetch( './Public/html/Content/Production/manifest/transfer_manifest_query_detail.html' );
 		$this->ajaxReturn( $tmp_content );
 	}
 	// 转移联单->转移联单查询->修改信息页
-	public function transfer_manifest_query_modify($manifest_id="") {
+	public function transfer_manifest_query_modify( $manifest_id="" ) {
 		$manifest = M( 'manifest' )->where( array( 'manifest_id' =>$manifest_id ) )->find();
 		$production_unit = M( 'production_unit' )->where( array( 'production_unit_id' => session( 'production_unit_id' ) ) )->find();
 		$this->manifest = $manifest;
 		$this->production_unit = $production_unit;
 
-		$waste_category_code = M('waste_category')->where('waste_category_id>0')->getField('waste_category_code',true);
-		$waste_category_code_json = json_encode($waste_category_code);
-		$waste_form = M('waste_form')->where('waste_form_id>0')->getField('waste_form',true);
-		$waste_form_json = json_encode($waste_form);
-		$package_method = M( 'package_method' )->where('package_method_id>0')->select();
-		$package_method_json = json_encode($package_method);
-		$waste_transport_goal = M( 'waste_transport_goal' )->where('waste_transport_goal_id>0')->getField('waste_transport_goal',true);
-		$waste_transport_goal_json = json_encode($waste_transport_goal);
+		$waste_category_code = M( 'waste_category' )->where( 'waste_category_id>0' )->getField( 'waste_category_code', true );
+		$waste_category_code_json = json_encode( $waste_category_code );
+		$waste_form = M( 'waste_form' )->where( 'waste_form_id>0' )->getField( 'waste_form', true );
+		$waste_form_json = json_encode( $waste_form );
+		$package_method = M( 'package_method' )->where( 'package_method_id>0' )->select();
+		$package_method_json = json_encode( $package_method );
+		$waste_transport_goal = M( 'waste_transport_goal' )->where( 'waste_transport_goal_id>0' )->getField( 'waste_transport_goal', true );
+		$waste_transport_goal_json = json_encode( $waste_transport_goal );
 
 		$manifest_id_json = json_encode( $manifest_id );
 		$manifest_status_json = json_encode( $manifest['manifest_status'] );
 
-		$t_id = M( 'manifest' )->where( array( 'manifest_id' =>$manifest_id ) )->getField('transport_unit_id');
-		$r_id = M( 'manifest' )->where( array( 'manifest_id' =>$manifest_id ) )->getField('reception_unit_id');
-		$t_name = M( 'transport_unit' )->where( array( 'transport_unit_id' => $t_id ) )->getField('transport_unit_name');
-		$r_name = M( 'reception_unit' )->where( array( 'reception_unit_id' => $r_id ) )->getField('reception_unit_name');
+		$t_id = M( 'manifest' )->where( array( 'manifest_id' =>$manifest_id ) )->getField( 'transport_unit_id' );
+		$r_id = M( 'manifest' )->where( array( 'manifest_id' =>$manifest_id ) )->getField( 'reception_unit_id' );
+		$t_name = M( 'transport_unit' )->where( array( 'transport_unit_id' => $t_id ) )->getField( 'transport_unit_name' );
+		$r_name = M( 'reception_unit' )->where( array( 'reception_unit_id' => $r_id ) )->getField( 'reception_unit_name' );
 		$this->t_name = $t_name;
 		$this->r_name = $r_name;
 
@@ -156,7 +157,7 @@ class ProductionManifestAction extends ProductionCommonAction{
 	}
 
 	// 转移联单->转移联单查询->修改提交
-    public function transfer_manifest_query_modified($manifest_id="") {
+	public function transfer_manifest_query_modified( $manifest_id="" ) {
 		$manifest = M( 'manifest' ); // 实例化record对象
 		$manifest->create(); // 根据表单提交的POST数据创建数据对象
 		$manifest->manifest_id = $manifest_id;
@@ -189,16 +190,16 @@ class ProductionManifestAction extends ProductionCommonAction{
 
 
 	// 转移联单->转移联单查询->提交信息页
-	public function transfer_manifest_query_submit($manifest_id="") {
+	public function transfer_manifest_query_submit( $manifest_id="" ) {
 		$manifest = M( 'manifest' )->where( array( 'manifest_id' =>$manifest_id ) )->find();
 		$production_unit = M( 'production_unit' )->where( array( 'production_unit_id' => session( 'production_unit_id' ) ) )->find();
 		$this->manifest = $manifest;
 		$this->production_unit = $production_unit;
 
-		$t_id = M( 'manifest' )->where( array( 'manifest_id' =>$manifest_id ) )->getField('transport_unit_id');
-		$r_id = M( 'manifest' )->where( array( 'manifest_id' =>$manifest_id ) )->getField('reception_unit_id');
-		$t_name = M( 'transport_unit' )->where( array( 'transport_unit_id' => $t_id ) )->getField('transport_unit_name');
-		$r_name = M( 'reception_unit' )->where( array( 'reception_unit_id' => $r_id ) )->getField('reception_unit_name');
+		$t_id = M( 'manifest' )->where( array( 'manifest_id' =>$manifest_id ) )->getField( 'transport_unit_id' );
+		$r_id = M( 'manifest' )->where( array( 'manifest_id' =>$manifest_id ) )->getField( 'reception_unit_id' );
+		$t_name = M( 'transport_unit' )->where( array( 'transport_unit_id' => $t_id ) )->getField( 'transport_unit_name' );
+		$r_name = M( 'reception_unit' )->where( array( 'reception_unit_id' => $r_id ) )->getField( 'reception_unit_name' );
 		$this->t_name = $t_name;
 		$this->r_name = $r_name;
 
@@ -211,7 +212,7 @@ class ProductionManifestAction extends ProductionCommonAction{
 	}
 
 	// 转移联单->转移联单查询->提交联单
-	public function transfer_manifest_query_submited($manifest_id="") {
+	public function transfer_manifest_query_submited( $manifest_id="" ) {
 		$manifest_status_old = I( 'post.manifest_status_old' );
 		switch ( $manifest_status_old ) {
 		case '0':

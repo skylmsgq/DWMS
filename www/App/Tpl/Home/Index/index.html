@@ -35,7 +35,7 @@
     <div class="container" style="width:60%;">
         <div class="panel panel-primary" id="login-panel">
             <div class="panel-heading"></div>
-            <div class="panel-body" style="background-image:url(__PUBLIC__/image/ZHB_512_half_10.png); background-repeat:no-repeat; background-position:center; background-origin:content-box; background-clip: padding-box; opacity:1.0; filter:'alpha(opacity=100)'; -ms-filter:'alpha(opacity=100)';">
+            <div class="panel-body" style="background-image:url(__PUBLIC__/image/ZHB_512_half_10.png); background-repeat:no-repeat; background-position:center; background-origin:content-box; background-clip: padding-box;">
                 <form style="width:42%;" role="form" id="login">
                     <div class="blank-div"></div>
                     <h2 class="form-signin-heading txt-shadow">危险废物管理信息系统(Beta)</h2>
@@ -208,6 +208,7 @@
 
                 default :
                     myAlertFail("登录失败");
+                    break;
             }
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) {

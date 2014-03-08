@@ -11,7 +11,7 @@ class DistrictMapAction extends DistrictCommonAction{
 
 	// 转移地图->地图展示->转移地图展示
 	public function transfer_map_display() {
-		$condition['transport_date'] = date( 'Y-m-d', strtotime( '2014-02-28' ) );
+		$condition['transport_date'] = date( 'Y-m-d', strtotime( '2014-03-06' ) );
 		//$condition['transport_date'] = date( 'Y-m-d', time() );
 		$condition['jurisdiction_id'] = array( 'EQ', session( 'jurisdiction_id' ) );
 		$condition['route_status'] = array( 'EQ', 0 ); // 0:路线可用
@@ -53,7 +53,7 @@ class DistrictMapAction extends DistrictCommonAction{
 			$gps = M( $gps_table_name );
 			$gps_max_id = $gps->where( array( 'status' => 0 ) )->max( 'id' );
 			$gps_lng_lat = $gps->where( array( 'id' => $gps_max_id ) )->find();
-			$gps_data = array( 'vehicle_id' => $ajax_send_data[$idx]->vehicle_id, 'lng' => $gps_lng_lat['bmap_longitude'], 'lat' => $gps_lng_lat['bmap_latitude'], 'speed' => $gps_lng_lat['speed'], 'offset_distance' => $gps_lng_lat['offset_distance'] );
+			$gps_data = array( 'vehicle_id' => $ajax_send_data[$idx]->vehicle_id, 'lng' => $gps_lng_lat['bmap_longitude'], 'lat' => $gps_lng_lat['bmap_latitude'], 'speed' => $gps_lng_lat['speed'], 'offset_distance' => $gps_lng_lat['offset_distance'], 'stay_status' => $gps_lng_lat['stay_status'] );
 			$gps_data_array[$idx] = $gps_data;
 		}
 		$this->ajaxReturn( $gps_data_array );
@@ -115,6 +115,8 @@ class DistrictMapAction extends DistrictCommonAction{
 		$gps_data = M( 'gps_' . $device_serial_num )->where( $where )->select();
 		if ( $gps_data ) {
 			$this->ajaxReturn( $gps_data );
+		} else if ( $gps_data == null ){
+			$this->ajaxReturn( 'empty' );
 		} else {
 			$this->ajaxReturn( 'fail' );
 		}
@@ -301,7 +303,7 @@ class DistrictMapAction extends DistrictCommonAction{
 		$gps_table_name = "gps_" . $device_serial_num;
 		$gps = M( $gps_table_name );
 		//$time = date( 'Y-m-d H:i:s', time() );
-		$time = date( 'Y-m-d H:i:s', strtotime( '2014-02-28 09:00:00' ) );
+		$time = date( 'Y-m-d H:i:s', strtotime( '2014-03-07 17:00:00' ) );
 		for ( $idx = 0; $idx < count( $gps_data_array ); ++$idx ) {
 			$time = date( 'Y-m-d H:i:s', strtotime( $time ) + 10 );
 			$data['datetime'] = $time;
@@ -310,7 +312,8 @@ class DistrictMapAction extends DistrictCommonAction{
 			$data['height'] = rand(-10, 30);
 			$data['speed'] = rand(0, 100);
 			$data['status'] = 0;
-			$data['vehicle_id'] = 0;
+			$data['vehicle_id'] = 24;
+			$data['stay_status'] = 0;
 			$gps->add( $data );
 		}
 		if ( $idx >= count( $gps_data_array ) ) {

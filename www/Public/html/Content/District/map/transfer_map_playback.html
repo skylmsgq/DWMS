@@ -23,13 +23,13 @@
                     <table style="border-radius:5px;">
                         <tr>
                             <td style="background-color:#FFFFFF;">
-                                <input type="date" class="form-control input-sm" id="beginDate" value="2014-01-13">
+                                <input type="datetime-local" class="form-control input-sm" id="beginDate" value="">
                             </td>
                             <td style="background-color:#FFFFFF;">
                                 至
                             </td>
                             <td style="background-color:#FFFFFF;">
-                                <input type="date" class="form-control  input-sm" id="endDate" value="2014-01-14">
+                                <input type="datetime-local" class="form-control  input-sm" id="endDate" value="">
                             </td>
                             <td style="background-color:#FFFFFF;">
                                 <select class="form-control  input-sm" id="selectSpeed" style="width:60px;">
@@ -57,10 +57,10 @@
             <table class="table table-bordered table-hover table-condensed table-responsive" style="margin-bottom:0px; background-color:#FFFFFF;">
                 <tr>
                     <td>
-                        <input type="date" class="form-control input-sm" id="beginDateFull" value="2014-01-13">
+                        <input type="datetime-local" class="form-control input-sm" id="beginDateFull" value="">
                     </td>
                     <td>
-                        <input type="date" class="form-control input-sm" id="endDateFull" value="2014-01-14">
+                        <input type="datetime-local" class="form-control input-sm" id="endDateFull" value="">
                     </td>
                 </tr>
                 <tr>
@@ -107,6 +107,16 @@ if (typeof(intervalWarning) != 'undefined') {
 if (typeof(playbackTimeout) != 'undefined') {
     clearTimeout(playbackTimeout);
 }
+
+var DateObj = new Date();
+var beginDateString = DateObj.toISOString().substring(0, 11) + "00:00";
+$('#beginDate').val(beginDateString);
+$('#beginDateFull').val(beginDateString);
+DateObj.setDate(DateObj.getDate() + 1);
+var endDateString = DateObj.toISOString().substring(0, 11) + "00:00";
+$('#endDate').val(endDateString);
+$('#endDateFull').val(endDateString);
+
 var fullScreen = 0;
 
 var vehicleMarkerList = new Array();
@@ -147,6 +157,8 @@ function setBMap() {
             "sTitle": "时速(千米/小时)"
         }, {
             "sTitle": "偏移距离(千米)"
+        }, {
+            "sTitle": "状态"
         }],
         "bPaginate": true, //翻页功能
         "bLengthChange": true, //改变每页显示数据数量
@@ -245,10 +257,15 @@ function getVehicleRoutes() {
                 myAlertFail("获取转移地图历史数据失败");
                 return;
             }
-
             if (typeof(playbackTimeout) != 'undefined') {
                 clearTimeout(playbackTimeout);
             }
+            if ((!gpsRouteArray) || (gpsRouteArray == null) || (typeof(gpsRouteArray) == 'undefined')) {
+                myAlertFail("此时段所有车辆历史数据为空。");
+                return;
+            }
+            var emptyFlag = true;
+
             BaiduMap.clearOverlays();
             $('#transport_unit_panel').html("");
             $('#route_panel').html("");
@@ -263,6 +280,8 @@ function getVehicleRoutes() {
                 if ((!gpsRouteArray[gpsIdx]) || (gpsRouteArray[gpsIdx] == null) || (typeof(gpsRouteArray[gpsIdx]) == 'undefined')) {
                     continue;
                 }
+                emptyFlag = false;
+
                 gpsRouteTimeArray[gpsIdx] = new Array();
 
                 var idxLength = gpsRouteArray[gpsIdx].length;
@@ -294,6 +313,10 @@ function getVehicleRoutes() {
                         success: function(vehicleTransportUnit) {
                             if (vehicleTransportUnit == "fail") {
                                 myAlertFail("获取车辆和运输单位信息失败");
+                                return;
+                            }
+                            if ((!vehicleTransportUnit) || (vehicleTransportUnit == null) || (typeof(vehicleTransportUnit) == 'undefined')) {
+                                myAlertFail("该车辆信息为空。");
                                 return;
                             }
 
@@ -329,6 +352,18 @@ function getVehicleRoutes() {
                             "datetime": playbackTimeObj.getFullYear() + "-" + (playbackTimeObj.getMonth() + 1) + "-" + playbackTimeObj.getDate(),
                         },
                         success: function(routeObj) {
+                            if ((!routeObj) || (routeObj == null) || (typeof(routeObj) == 'undefined')) {
+                                myAlertFail("此时该车辆还未绑定路线，请稍候再试。");
+                                return;
+                            }
+                            if ((!routeObj.route_lng_lat) || (routeObj.route_lng_lat == null) || (typeof(routeObj.route_lng_lat) == 'undefined')) {
+                                myAlertFail("此时该车辆绑定的路线经纬度为空。");
+                                return;
+                            }
+                            if ((!routeObj.route_detail) || (routeObj.route_detail == null) || (typeof(routeObj.route_detail) == 'undefined')) {
+                                myAlertFail("此时该车辆绑定的路线详情为空。");
+                                return;
+                            }
                             var routeDecodeObj = JSON.parse(routeObj.route_lng_lat.replace(/&quot;/g, '"'));
                             var routeDetailDecodeObj = routeObj.route_detail.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"');
                             var pointArray = new Array();
@@ -379,6 +414,9 @@ function getVehicleRoutes() {
                     if ((!gpsRouteArray[gpsIdx][dataIdx].offset_distance) || (gpsRouteArray[gpsIdx][dataIdx].offset_distance == null) || (typeof(gpsRouteArray[gpsIdx][dataIdx].offset_distance) == 'undefined')) {
                         gpsRouteArray[gpsIdx][dataIdx].offset_distance = -1;
                     }
+                    if ((!gpsRouteArray[gpsIdx][dataIdx].stay_status) || (gpsRouteArray[gpsIdx][dataIdx].stay_status == null) || (typeof(gpsRouteArray[gpsIdx][dataIdx].stay_status) == 'undefined')) {
+                        gpsRouteArray[gpsIdx][dataIdx].stay_status = 0;
+                    }
                     var dateTime = gpsRouteArray[gpsIdx][dataIdx].datetime;
                     var dateTimeObj = new Date(dateTime);
                     var newIdx = Math.floor(dateTimeObj.getHours() * 360 + dateTimeObj.getMinutes() * 6 + dateTimeObj.getSeconds() / 10);
@@ -424,6 +462,10 @@ function getVehicleRoutes() {
                     BaiduMap.removeOverlay(endMarkerList[markerIdx]);
                 });
             }
+            if (emptyFlag) {
+                myAlertFail("此时段所有车辆历史数据为空。");
+                return;
+            }
 
             var startTimeObj = new Date(startTime);
             var endTimeObj = new Date(endTime);
@@ -452,17 +494,18 @@ function getVehicleRoutes() {
                     }
 
                     var itemData = new Array();
+                    var offsetDistance = gpsRouteTimeArray[gpsIdx][dataIdx].offset_distance;
+                    offsetDistance = Math.round(offsetDistance * 1000) / 1000;
+                    var stay_status = gpsRouteTimeArray[gpsIdx][dataIdx].stay_status;
+
                     // itemData[0] = gpsRouteTimeArray[gpsIdx][dataIdx].vehicle_id;
                     itemData[0] = gpsIdx;
-                    if (gpsRouteTimeArray[gpsIdx][dataIdx].speed == null) {
-                        itemData[1] = '0';
+                    itemData[1] = gpsRouteTimeArray[gpsIdx][dataIdx].speed;
+                    itemData[2] = offsetDistance;
+                    if (!stay_status) {
+                        itemData[3] = "正常";
                     } else {
-                        itemData[1] = gpsRouteTimeArray[gpsIdx][dataIdx].speed;
-                    }
-                    if (gpsRouteTimeArray[gpsIdx][dataIdx].offset_distance == null) {
-                        itemData[2] = '0';
-                    } else {
-                        itemData[2] = gpsRouteTimeArray[gpsIdx][dataIdx].offset_distance;
+                        itemData[3] = "<span style='color:red'>停留超时<span>";
                     }
                     tableData.push(itemData);
                     var dataTable = $('#vehicle_panel').dataTable();
@@ -471,12 +514,19 @@ function getVehicleRoutes() {
 
                     var newPoint = new BMap.Point(gpsRouteTimeArray[gpsIdx][dataIdx].bmap_longitude, gpsRouteTimeArray[gpsIdx][dataIdx].bmap_latitude);
                     vehicleMarkerList[gpsIdx].setPosition(newPoint);
-                    var offsetDistance = gpsRouteTimeArray[gpsIdx][dataIdx].offset_distance;
-                    offsetDistance = Math.round(offsetDistance * 1000) / 1000;
+
                     if (offsetDistance < alarm_distance_json.warning_distance) {
-                        vehicleMarkerList[gpsIdx].setIcon(lorryIconGreen);
+                        if (!stay_status) {
+                            vehicleMarkerList[gpsIdx].setIcon(lorryIconGreen);
+                        } else {
+                            vehicleMarkerList[gpsIdx].setIcon(lorryIconRed);
+                        }
                     } else if ((offsetDistance >= alarm_distance_json.warning_distance) && (offsetDistance < alarm_distance_json.alarm_distance)) {
-                        vehicleMarkerList[gpsIdx].setIcon(lorryIconYellow);
+                        if (!stay_status) {
+                            vehicleMarkerList[gpsIdx].setIcon(lorryIconYellow);
+                        } else {
+                            vehicleMarkerList[gpsIdx].setIcon(lorryIconRed);
+                        }
                     } else {
                         vehicleMarkerList[gpsIdx].setIcon(lorryIconRed);
                     }

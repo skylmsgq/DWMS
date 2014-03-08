@@ -1,30 +1,34 @@
-<include file="./Public/html/Content/Reception/reception_config.html" />
+<include file="./Public/html/Content/Transport/transport_config.html" />
 <script type="text/javascript">
-DWMS_page_config.pageid = 3;
+DWMS_page_config.pageid = 4;
 DWMS_sidebar_config = {
     "sidebar_groups": [{
         "sidebar_group_id": 0,
-        "sidebar_group_title": "转移联单",
+        "sidebar_group_title": "官方文档",
         "sidebar_group_content": [{
             "id": 0,
-            "name": "转移联单处理",
-            "url": "{:U('Home/ReceptionManifest/transfer_manifest_handle')}"
+            "name": "法规政策",
+            "url": "{:U('Home/TransportDocument/law')}"
         }, {
             "id": 1,
-            "name": "转移联单查询",
-            "url": "{:U('Home/ReceptionManifest/transfer_manifest_query')}"
+            "name": "用户手册",
+            "url": "{:U('Home/TransportDocument/manual')}"
+        }, {
+            "id": 2,
+            "name": "结果公告",
+            "url": "{:U('Home/TransportDocument/announcement')}"
         }]
     }, {
         "sidebar_group_id": 1,
-        "sidebar_group_title": "扩展功能",
+        "sidebar_group_title": "其他文档",
         "sidebar_group_content": [{
             "id": 0,
             "name": "扩展功能_1",
-            "url": "{:U('Home/ReceptionBasic/expandfunction')}"
+            "url": "{:U('Home/TransportDocument/other')}"
         }, {
             "id": 1,
             "name": "扩展功能_2",
-            "url": "{:U('Home/ReceptionBasic/expandfunction')}"
+            "url": "{:U('Home/TransportDocument/other')}"
         }]
     }]
 }

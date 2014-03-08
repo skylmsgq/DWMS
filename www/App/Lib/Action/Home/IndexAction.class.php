@@ -6,7 +6,7 @@ class IndexAction extends Action{
 	public function index() {
 		$this->display();
 	}
-	
+
 	public function login() {
 		//防止直接输入路径登录页面
 		if ( !IS_POST ) halt( "页面不存在" );
@@ -85,8 +85,8 @@ class IndexAction extends Action{
 		// 	$this->redirect( 'Home/Index/index' );
 		// 	break;
 		// }
-		
-		
+
+
 	}
 
 	public function verify() {

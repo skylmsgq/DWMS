@@ -69,3 +69,19 @@ $.validator.addMethod("cnPwdEqual_1", function (value, element) {
 		}, "<span class=\"label label-danger\">此用户名已被注册</span>");
 
 $.validator.addClassRules("pwdEqual_1", { cnPwdEqual_1: true });
+
+$.validator.addMethod("cnPwdEqual_2", function (value, element) {
+	   		var code = value.split(",");
+	   		console.log(code);
+			for (var idx in code){
+				for (var i in waste_code){
+					if(code[idx]==waste_code[i]){
+						break;
+					}
+					return false;
+				}
+			}
+			return true;
+			}, "<span class=\"label label-danger\">危废代码错误</span>");
+
+$.validator.addClassRules("pwdEqual_2", { cnPwdEqual_2: true });

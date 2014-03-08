@@ -26,11 +26,14 @@
 </div>
 <!-- /.modal -->
 <center>
-    <form id="upload" method="POST" action="{:U('Home/DistrictSystem/upload_announcement_form')}" enctype="multipart/form-data">
-        <input type="file" class="form-control" name="document">
-        <button type="submit" class="btn btn-primary">上传结果公告</button>
-    </form>
+    <input type="file" class="form-control" name="document" id="fileToUpload">
+    <div class="alert alert-info">请选择小于10MB的pdf / doc / docx / xls / xlsx / ppt / pptx文件。</div>
+    <div id="myAlert"></div>
+    <button type="submit" class="btn btn-primary" onclick="ajaxFileUpload();">上传结果公告</button>
 </center>
+
+<script type="text/javascript" src="__PUBLIC__/js/ajaxfileupload.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/yourAlert.js"></script>
 
 <script type="text/javascript">
 function setTable() {
@@ -40,7 +43,7 @@ function setTable() {
         var itemDelete = ' <a href="#" onclick="fetch_model_page(\'./upload_announcement_delete?record_id=' + document_json[idx].document_id + '\')"><span class="label label-warning">删除</span><a>';
         var itemData = new Array();
         itemData[0] = "" + document_json[idx].document_id;
-        itemData[1] = "<a href='/Uploads/" + document_json[idx].document_save_name + "'>" + document_json[idx].document_original_name + "</a>";
+        itemData[1] = "<a href='/Uploads/" + document_json[idx].document_save_name + "' target='_blank'>" + document_json[idx].document_original_name + "</a>";
         itemData[2] = "" + document_json[idx].document_suffix_type;
         itemData[3] = "" + Math.round(document_json[idx].document_size / 1024);
         // itemData[4] = itemDetail + itemModify;
@@ -105,6 +108,64 @@ function fetch_model_page(ajaxURL) {
             console.log("XMLHttpRequest.status:" + XMLHttpRequest.status);
             console.log("XMLHttpRequest.readyState:" + XMLHttpRequest.readyState);
             console.log("textStatus:" + textStatus);
+        }
+    });
+}
+
+function ajaxFileUpload() {
+    /*$('#loading').ajaxStart(function() {
+        myAlertSucc("正在上传……");
+    }).ajaxComplete(function() {
+        myAlertSucc("上传完成！");
+    });*/
+    $.ajaxFileUpload({
+        url: "{:U('Home/DistrictSystem/upload_announcement_form')}", //需要链接到服务器地址
+        secureuri: false,
+        fileElementId: 'fileToUpload', //文件选择框的id属性
+        dataType: 'JSON', //服务器返回的格式，可以是json
+        success: function(data, info, status) { //相当于java中try语句块的用法
+            // console.log(data);
+            // console.log(info);
+            // console.log(status);
+
+            switch (info) {
+                case 'success':
+                    myAlertSucc("上传文件成功！");
+                    fetch_page("{:U('Home/DistrictSystem/upload_announcement')}");
+                    /*var reg = /<pre.+?>(.+)<\/pre>/g;
+                    var result = data.match(reg);
+                    var document_json = RegExp.$1;
+                    var documentObj = eval(document_json);
+                    console.log(documentObj.data.document_original_name);*/
+                    /*myAlertSucc("上传文件成功！");
+                    var itemDelete = ' <a href="#" onclick="fetch_model_page(\'./upload_law_delete?record_id=' + document_json.document_id + '\')"><span class="label label-warning">删除</span><a>';
+                    var tableData = new Array();
+                    var itemData = new Array();
+                    itemData[0] = "" + document_json.document_id;
+                    itemData[1] = "<a href='/Uploads/" + document_json.document_save_name + "' target='_blank'>" + document_json.document_original_name + "</a>";
+                    itemData[2] = "" + document_json.document_suffix_type;
+                    itemData[3] = "" + Math.round(document_json.document_size / 1024);
+                    // itemData[4] = itemDetail + itemModify;
+                    itemData[4] = itemDelete;
+                    tableData.push(itemData);
+                    var dataTable = $('#table-container').dataTable();
+                    dataTable.fnAddData(tableData);*/
+
+                    break;
+                case 'fail':
+                    myAlertFail("上传文件失败！");
+                    break;
+                default:
+                    myAlertFail("未知错误！");
+                    break;
+            }
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+            myAlertFail("上传文件ajax请求失败");
+            console.log("Error: Ajax_Content_Load " + errorThrown);
+            console.log("XMLHttpRequest.status: " + XMLHttpRequest.status);
+            console.log("XMLHttpRequest.readyState: " + XMLHttpRequest.readyState);
+            console.log("textStatus: " + textStatus);
         }
     });
 }
