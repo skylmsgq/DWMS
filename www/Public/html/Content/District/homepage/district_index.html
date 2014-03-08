@@ -148,7 +148,7 @@ $.ajax({
     
 
     var colors = Highcharts.getOptions().colors,
-        name = 'Waste_Code';
+        name = '危废代码';
     var data = new Array();
     for (var idx in categories){     
         var unit_name = new Array();
@@ -184,7 +184,7 @@ $.ajax({
                         name: categories[idx],
                         categories: unit_name,
                         data: total_num,
-                        color: colors[2]
+                        color: colors[0]
                     }
         }
           
@@ -206,10 +206,10 @@ $.ajax({
                 type: 'column'
             },
             title: {
-                text: 'waste_statistics, March, 2014'
+                text: '危废数据统计，2014 年3 月'
             },
             subtitle: {
-                text: 'Click the columns to view details.'
+                text: '点击柱状查看生产单位产废详细信息'
             },
             xAxis: {
                 categories: categories
@@ -251,9 +251,9 @@ $.ajax({
                     var point = this.point,
                         s = this.x +':<b>'+ this.y +' 公斤</b><br/>';
                     if (point.drilldown) {
-                        s += 'Click to view '+ point.category +' company details';
+                        s += '点击查看'+ point.category +' 详细统计信息';
                     } else {
-                        s += 'Click to return to waste total statistics';
+                        s += '点击查看产废总体信息';
                     }
                     return s;
                 }
@@ -261,7 +261,7 @@ $.ajax({
             series: [{
                 name: name,
                 data: data,
-                color: 'white'
+                color: 'green'
             }],
             exporting: {
                 enabled: false
@@ -276,7 +276,7 @@ $.ajax({
             plotShadow: false
         },
         title: {
-            text: 'waste_statistics, March, 2014'
+            text: '危废数据统计，2014 年3 月'
         },
         tooltip: {
             pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
@@ -295,7 +295,7 @@ $.ajax({
         },
         series: [{
             type: 'pie',
-            name: 'Waste_Code',
+            name: '比例',
             data: [
                         
                         {
