@@ -23,7 +23,7 @@ return array(
 	'DB_USER'   => 'root',    // 用户名
 
 	// 'DB_PWD'    => 'omnilab',  // 服务器数据库密码
-	'DB_PWD'    => 'root1234',  // 本地密码
+	'DB_PWD'    => 'sky363738',  // 本地密码
 
 	'DB_PORT'   => 3306,    // 端口
 	'DB_NAME'   => 'dwms',  // 数据库名
