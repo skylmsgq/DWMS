@@ -44,9 +44,11 @@ class DistrictBusinessAction extends DistrictCommonAction{
 	// 业务办理->待办业务->转移备案管理：审核
 	public function transfer_record_management_audit($record_id="") {
 		$record_status = I( 'post.record_status' );
+		// $record_comment = I( 'post.record_comment' );
 		$current_record_status = array(
 			'record_id' => $record_id,
 			'record_status' => $record_status,
+			// 'record_production_unit_comment' => $record_comment,
 		);
 		if($record_status == 2 ){
 			$reception_unit_id=M('record')->where("record_id='$record_id'")->getField('reception_unit_id');
