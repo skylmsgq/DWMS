@@ -18,10 +18,10 @@
                 <input type="month" class="form-control" id="query_end_month">
             </div>
             <div class="form-group">
-                或按备案编号
+                或按申请编号
             </div>
             <div class="form-group">
-                <input type="search" class="form-control" placeholder="备案编号">
+                <input type="search" class="form-control" placeholder="申请编号">
             </div>
             <button type="submit" class="btn btn-default" id="">查询</button>
         </form>
@@ -43,7 +43,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="myModalLabel">转移备案管理</h4>
+                <h4 class="modal-title" id="myModalLabel">转移申请管理</h4>
             </div>
             <div class="modal-body" id="model-content">
             </div>
@@ -90,7 +90,7 @@ function setTable() {
                 itemData[3] = "<span class='label label-success'>已提交已审核</span>";
                 break;
             default:
-                itemData[3] = "<span class='label label-danger'>备案状态错误</span>";
+                itemData[3] = "<span class='label label-danger'>申请状态错误</span>";
                 break;
         }
 
@@ -102,13 +102,13 @@ function setTable() {
         //"bServerSide": true,    //在服务器端整理数据
         "aaData": tableData,
         "aoColumns": [{
-            "sTitle": "备案编号"
+            "sTitle": "申请编号"
         }, {
-            "sTitle": "备案日期"
+            "sTitle": "申请日期"
         }, {
             "sTitle": "单位名称"
         }, {
-            "sTitle": "备案状态"
+            "sTitle": "申请状态"
         }, {
             "sTitle": "操作"
         }],

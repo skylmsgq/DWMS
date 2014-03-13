@@ -74,12 +74,17 @@ $.validator.addMethod("cnPwdEqual_2", function (value, element) {
 	   		var code = value.split(",");
 	   		console.log(code);
 			for (var idx in code){
+				var tag = true;
 				for (var i in waste_code){
-					if(code[idx]==waste_code[i]){
+					if(code[idx]==waste_code[i]){		
+						tag = true;
 						break;
-					}
-					return false;
+					} 
+					tag = false;
 				}
+				if(tag == false){
+					return false;
+				}	
 			}
 			return true;
 			}, "<span class=\"label label-danger\">危废代码错误</span>");
