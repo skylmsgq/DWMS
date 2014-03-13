@@ -120,7 +120,7 @@
                     <tr>
                         <td>危废代码</td>
                         <td>
-                            <select id="waste_code" type="text" class="form-control input-sm" placeholder="危废代码">      
+                            <select id="waste_category_code" name="waste_category_code" type="text" class="form-control input-sm" placeholder="危废代码">      
                         </td>
                         <td>相关产品</td>
                         <td>
@@ -321,9 +321,9 @@ var weight = 0.0;
 var num = 0.0; 
 var t_length=transport_unit.length;
 var r_length=reception_unit.length;
-$('#waste_code').html('<option>请选择主要危废代码</option>')
+$('#waste_category_code').html('<option>请选择主要危废类别代码</option>')
 for (var idx in waste) {
-    $('#waste_code').append('<option value="' + waste[idx].waste_code + '">'+ waste[idx].waste_code + '</option>');
+    $('#waste_category_code').append('<option value="' + waste[idx].waste_category_code + '">'+ waste[idx].waste_category_code + '</option>');
 }
 
 // $('#transport_unit_id').html('<option>请选择运输单位</option>');

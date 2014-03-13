@@ -14,7 +14,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>备案类型</td>
+                    <td>申请类型</td>
                     <td>
                         {$record.record_type}
                     </td>
@@ -84,7 +84,10 @@
                     </td>
                 </tr>
                 <tr>
-                    
+                    <td>危废代码</td>
+                        <td>
+                            {$record.waste_category_code}
+                        </td>
                     <td>相关产品</td>
                     <td>
                         {$record.relational_production}
@@ -258,7 +261,7 @@
 
 <script type="text/javascript">
 if (record_status_json == '1') {
-    $('#button_close').before("<button class='btn btn-success btn-lg' id='button_pass' onclick='ajaxAction(2)'>通过备案</button>&nbsp;<button class='btn btn-danger btn-lg' id='button_reject' onclick='ajaxAction(3)'>退回备案</button>&nbsp;");
+    $('#button_close').before("<button class='btn btn-success btn-lg' id='button_pass' onclick='ajaxAction(2)'>通过申请</button>&nbsp;<button class='btn btn-danger btn-lg' id='button_reject' onclick='ajaxAction(3)'>退回申请</button>&nbsp;");
 }
 
 function ajaxAction(actionID) {

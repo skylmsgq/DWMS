@@ -26,8 +26,8 @@ class ProductionManifestAction extends ProductionCommonAction{
 		$record = M( 'record' )->where( array( 'record_id' => $record_id ) )->find();
 		$record_json = json_encode( $record );
 
-		$waste_category_code = M( 'waste_category' )->where( 'waste_category_id>0' )->getField( 'waste_category_code', true );
-		$waste_category_code_json = json_encode( $waste_category_code );
+		// $waste_category_code = M( 'waste_category' )->where( 'waste_category_id>0' )->getField( 'waste_category_code', true );
+		// $waste_category_code_json = json_encode( $waste_category_code );
 		$waste_form = M( 'waste_form' )->where( 'waste_form_id>0' )->getField( 'waste_form', true );
 		$waste_form_json = json_encode( $waste_form );
 		$package_method = M( 'package_method' )->where( 'package_method_id>0' )->select();
@@ -50,7 +50,7 @@ class ProductionManifestAction extends ProductionCommonAction{
 
 		$tmp_content=$this->fetch( './Public/html/Content/Production/manifest/transfer_manifest_request_page.html' );
 
-		$tmp_content = "<script>record_json = $record_json; waste_category_code = $waste_category_code_json; waste_form = $waste_form_json;package_method = $package_method_json; waste_transport_goal = $waste_transport_goal_json; production_unit = $production_unit_json</script> $tmp_content";
+		$tmp_content = "<script>record_json = $record_json; waste_form = $waste_form_json;package_method = $package_method_json; waste_transport_goal = $waste_transport_goal_json; production_unit = $production_unit_json</script> $tmp_content";
 
 		$this->ajaxReturn( $tmp_content );
 	}
@@ -78,6 +78,7 @@ class ProductionManifestAction extends ProductionCommonAction{
 		$manifest->waste_weight = I( 'post.waste_weight' );
 		$manifest->waste_num = I( 'post.waste_num' );
 
+		$manifest->waste_category_code = I( 'post.waste_category_code' );
 		$manifest->production_unit_id = session( 'production_unit_id' );
 		$manifest->manifest_num = session( 'production_unit_id' ) . '-' . date( 'Y-m' ) . '-' . ( M( 'manifest' )->max( 'manifest_id' )+1 );
 		// $manifest->manifest_num = '34' . '08' .
