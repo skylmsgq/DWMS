@@ -1,4 +1,4 @@
-ï»¿<?php
+<?php
 date_default_timezone_set("PRC");
 class test{
 
@@ -80,38 +80,40 @@ class test{
 	}
 	function test()
 	{
-		$con = mysql_connect('10.50.6.70', 'root', 'root1234');
+		$con = mysql_connect('localhost', 'root', 'omnilab');
 			if (!$con)
 			{
 			 die('Could not connect: ' . mysql_error());
 			}
 			mysql_select_db("dwms", $con);
-			$id = 308033501795;
+			$id = 308001150931;
 			
 			$result = mysql_query("SELECT device_id FROM device WHERE device_serial_num='".$id."'");
 				while($row = mysql_fetch_array($result))
 				{
 					$deviceId = $row['device_id'];
-					
+					echo $deviceId."\n";
 				}
 				$result1 = mysql_query("SELECT vehicle_id,transport_unit_id FROM vehicle WHERE device_id='".$deviceId."'");
 				while($row = mysql_fetch_array($result1))
 				{
 					$vehicleId = $row['vehicle_id'];
 					$transportId = $row['transport_unit_id'];
-					 
+					echo $vehicleId."\n";
+					echo $transportId."\n";
 				}		
-				$result2 = mysql_query("SELECT  Max(correlation_add_time),route_id FROM route_vehicle WHERE vehicle_id='".$vehicleId."' and correlation_status = '0'");
-				while($row = mysql_fetch_array($result2))
-				{
-					 $routeId = $row['route_id'];
-					
-				}
+				//$result2 = mysql_query("SELECT route_id FROM route_vehicle WHERE vehicle_id='".$vehicleId."' and correlation_status = '0' and ");
+				//while($row = mysql_fetch_array($result2))
+				//{
+				//	 $routeId = $row['route_id'];
+				//	echo $routeId."\n";
+				//}
+				$routeId = 74;
 				$result3 = mysql_query("SELECT route_lng_lat FROM route WHERE route_id='".$routeId."'");
 				while($row = mysql_fetch_array($result3))
 				{
 					$routeDetail = $row['route_lng_lat'];
-					
+					echo $routeDetail."\n";
 				}
 				$routeD = json_decode(html_entity_decode($routeDetail));
 				//$p_json->lng = 121;
@@ -121,19 +123,22 @@ class test{
 				$result5 = mysql_query("SELECT jurisdiction_id  FROM transport_unit WHERE transport_unit_id='".$transportId."'");
 				while($row = mysql_fetch_array($result5))
 				{
-					$jurisdictionId = $row['jurisdiction_id'];	
+					$jurisdictionId = $row['jurisdiction_id'];
+					echo $jurisdictionId."\n";
 				}
 				//echo $jurisdictionId ;
 				$result7 = mysql_query("SELECT agency_id  FROM agency WHERE jurisdiction_id='".$jurisdictionId."'");
 				while($row = mysql_fetch_array($result7))
 				{
-					$agencyId = $row['agency_id'];	
+					$agencyId = $row['agency_id'];
+					echo $agencyId."\n";
 				}
 				$result6 = mysql_query("SELECT warning_distance,alarm_distance  FROM alarm_distance WHERE jurisdiction_id='".$jurisdictionId."'");
 				while($row = mysql_fetch_array($result6))
 				{
 					$alarmDistance = $row['alarm_distance'];
 					//$warningDistance = $row['warning_distance'];
+					echo $alarmDistance."\n";
 				}
 				
 				
@@ -151,21 +156,22 @@ class test{
 						// $sql2 = "INSERT INTO alarm (alarm_date_time, alarm_longitude, alarm_latitude, vehicle_offset_distance, vehicle_id, alarm_add_time, alarm_status, agency_id) VALUES ('$time', '$long', '$lat', '$wanderR', '$vehicleId', '$time', '0', '$agencyId')";
 						// if(mysql_query($sql2,$con)){
 							
-							// echo "æ’å…¥æ•°æ®æˆåŠŸï¼";
+							// echo "²åÈëÊı¾İ³É¹¦£¡";
 							
 						// } else {
-							// echo "æ’å…¥æ•°æ®å¤±è´¥ï¼š".mysql_error();
+							// echo "²åÈëÊı¾İÊ§°Ü£º".mysql_error();
 						// }
 					// }
 					$sql1 = "UPDATE $tableGPS SET offset_distance = $wanderR, vehicle_id = $vehicleId WHERE id = '".$id."'";
 					if(mysql_query($sql1,$con)){
-						echo "æ›´æ–°æ•°æ®æˆåŠŸï¼";
-						$msg = "æ›´æ–°".$id."æˆåŠŸï¼";
+						echo "¸üĞÂÊı¾İ³É¹¦£¡";
+						$msg = "¸üĞÂ".$id."³É¹¦£¡";
 						$this->writeLog($msg);
 					} else {
-						echo "æ›´æ–°æ•°æ®å¤±è´¥ï¼š".mysql_error();
+						echo "¸üĞÂÊı¾İÊ§°Ü£º".mysql_error();
 					}
 					echo $wanderR."\r\n";
+					//break;
 				}
 	}
 }

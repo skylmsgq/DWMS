@@ -467,13 +467,13 @@ function getVehicleRoute() {
                     offsetDistance = Math.round(offsetDistance * 1000) / 1000;
                     var stay_status = gpsRouteTime[dataIdx].stay_status;
                     if (offsetDistance < alarm_distance_json.warning_distance) {
-                        if (!stay_status) {
+                        if (stay_status == '0') {
                             vehicleMarker.setIcon(lorryIconGreen);
                         } else {
                             vehicleMarker.setIcon(lorryIconRed);
                         }
                     } else if ((offsetDistance >= alarm_distance_json.warning_distance) && (offsetDistance < alarm_distance_json.alarm_distance)) {
-                        if (!stay_status) {
+                        if (stay_status == '0') {
                             vehicleMarker.setIcon(lorryIconYellow);
                         } else {
                             vehicleMarker.setIcon(lorryIconRed);

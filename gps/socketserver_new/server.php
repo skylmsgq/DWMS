@@ -33,19 +33,34 @@ function onConnect( $client ) {
 	printf( "[%s] Connected at port %d\n", $client->getAddress(), $client->getPort() );
 	
 	$flag = 0;
+	$con = mysql_connect('localhost', 'root', 'omnilab');
+	
+	if (!$con)
+	{
+		$msg = "Could not connect:".mysql_error();
+		//$db->writeLog($msg);
+		//die('Could not connect: ' . mysql_error());
+		echo $msg."\n";
+	}
+	mysql_select_db("dwms", $con);
 	while( true ) {
 		$read = $client->read();
 		if( $read != '' ) {
 			$client->send( '[' . date( DATE_RFC822 ) . '] ' . $read  );
 		}
 		else {
+			//echo "first one break!\n";
+			$msg = "read is null!";
+			$db->writeLog($msg);
 			break;
 		}
 		
 		if( preg_replace( '/[^a-z]/', '', $read ) == 'exit' ) {
+			//echo "will exit!\n";
 			break;
 		}
 		if( $read === null ) {
+			//echo "read is null\n";
 			printf( "[%s] Disconnected\n", $client->getAddress() );
 			return false;
 		}
@@ -56,14 +71,6 @@ function onConnect( $client ) {
 			//$db->InsertDB($line);
 			if(strpos($line,"#")>3)
 			{
-				$con = mysql_connect('localhost', 'root', 'omnilab');
-				if (!$con)
-				{
-					$msg = "Could not connect:".mysql_error();
-					$db->writeLog($msg);
-					//die('Could not connect: ' . mysql_error());
-				}
-				mysql_select_db("dwms", $con);
 				$status = 1;
 				$latitude = 0.0;
 				$longitude = 0.0; 
@@ -163,7 +170,7 @@ function onConnect( $client ) {
 																$db->writeLog($msg);
 															}
 														}
-														$flag = 1;
+														$flag = 0;
 													}
 													
 													

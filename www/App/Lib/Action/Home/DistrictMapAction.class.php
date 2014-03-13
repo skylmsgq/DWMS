@@ -11,7 +11,7 @@ class DistrictMapAction extends DistrictCommonAction{
 
 	// 转移地图->地图展示->转移地图展示
 	public function transfer_map_display() {
-		$condition['transport_date'] = date( 'Y-m-d', strtotime( '2014-03-06' ) );
+		$condition['transport_date'] = date( 'Y-m-d', strtotime( '2014-03-07' ) );
 		//$condition['transport_date'] = date( 'Y-m-d', time() );
 		$condition['jurisdiction_id'] = array( 'EQ', session( 'jurisdiction_id' ) );
 		$condition['route_status'] = array( 'EQ', 0 ); // 0:路线可用
