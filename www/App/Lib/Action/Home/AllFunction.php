@@ -144,7 +144,7 @@ function check($json_string)
 		}	
 		$rfid_stat = $result2['rfid_status'];
 		$transfer_stat = $result2['transfer_status'];
-		$wasteId = $result2['waste_id'];
+		$wasteId = $result2['waste_category_id'];
 		$addWay = $result2['add_method'];
 		$total = $result2['waste_total'];
 		$record_id=$result2['record_id'];
@@ -325,7 +325,7 @@ function bindRfid($json_string){
 			$time = date("Y-m-d H:i:s");
 			if(!$rfidtable->where("rfid_id='$rfid'")->find()){
 				$data['rfid_id']=$rfid;
-				$data['waste_id']=$wasteId;
+				$data['waste_category_id']=$wasteId;
 				$data['add_date_time']=$time;
 				$data['rfid_status']=0;
 				$data['add_method']=$addWay;
@@ -342,7 +342,7 @@ function bindRfid($json_string){
 				  }
 				else{
 				$data['rfid_id']=$rfid;
-				$data['waste_id']=$wasteId;
+				$data['waste_category_id']=$wasteId;
 				$data['add_date_time']=$time;
 				$data['android_num']=$imei;
 				$pdut=M($productionUnit);
@@ -478,7 +478,7 @@ function addWaste($json_string){
 	//echo $wasteTotal;
 	$wasteTotal = $wasteTotal + $addnum;
 	$Model = new Model() ;// 实例化一个model对象 没有对应任何数据表
-	$result3=$Model->execute("UPDATE rfid SET modify_date_time = '$time',rfid_status = 3, waste_total = '$wasteTotal' WHERE rfid_id = '$rfid' AND waste_id = '$wasteid'");
+	$result3=$Model->execute("UPDATE rfid SET modify_date_time = '$time',rfid_status = 3, waste_total = '$wasteTotal' WHERE rfid_id = '$rfid' AND waste_category_id = '$wasteid'");
 
 	$key = 0;
 	if (!$result3)
@@ -489,7 +489,7 @@ function addWaste($json_string){
 		$key++;
 	}else{
 		$data['rfid_id']=$rfid;
-		$data['waste_id']=$wasteid;
+		$data['waste_category_id']=$wasteid;
 		$data['add_date_time']=$time;
 		$data['android_num']=$imei;
 		$data[$column]=$addnum;
@@ -542,7 +542,7 @@ function getRfidWasteName($rfid,$imei){
 		return $resdata;
 		
 	}else{
-		$wasteId = $result1['waste_id'];
+		$wasteId = $result1['waste_category_id'];
 		$wasteWay = $result1['add_method'];
 		$wasteTotal = $result1['waste_total'];
 		$wastable=M('waste_category');
@@ -685,7 +685,7 @@ function wasteIn($json_string){
 			$key++;
 		}else{			
 				$stat = $result2['rfid_status'];
-				$wasteId = $result2['waste_id'];
+				$wasteId = $result2['waste_category_id'];
 				$addWay = $result2['add_method'];
 				$total = $result2['waste_total'];
 			if($stat==2){
@@ -717,7 +717,7 @@ function wasteIn($json_string){
 					$key++;
 				}else{
 					$data['rfid_id']=$rfid;
-					$data['waste_id']=$wasteId;
+					$data['waste_category_id']=$wasteId;
 					$data['receive_date_time']=$time;
 					$data['android_num']=$imei;
 					$data[$column]=$total;
