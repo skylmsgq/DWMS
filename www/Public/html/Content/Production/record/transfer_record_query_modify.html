@@ -152,6 +152,12 @@
                         <td>
                             <input type="text" name="relational_production" class="form-control input-sm" placeholder="{$record.relational_production}" value="{$record.relational_production}">
                         </td>
+                        <td>危废代码</td>
+                        <td>
+                            <select id="waste_category_code" name="waste_category_code" type="text" class="form-control input-sm" placeholder="{$record.waste_category_code}"> 
+                                <option value="{$record.waste_category_code}">{$record.waste_category_code}</option>
+                            </select> 
+                        </td>
                     </tr>
                 </table>
             </div>
@@ -312,6 +318,10 @@
 <script type="text/javascript" src="__PUBLIC__/js/jquery-validate.min.js"></script>
 <script type="text/javascript" src="__PUBLIC__/js/jquery-myvalidate.js"></script>
 <script type="text/javascript">
+for (var idx in waste) {
+    $('#waste_category_code').append('<option value="' + waste[idx].waste_category_code + '">'+ waste[idx].waste_category_code + '</option>');
+}
+
 $('#record_modify').validate();
 var rfid_table_id = "";
 var weight = 0.0;

@@ -55,6 +55,6 @@ class ReceptionDocumentAction extends ReceptionCommonAction{
 		//} else {
 			$this->ajaxReturn( '加载页面失败，请重新点击侧边栏加载页面。' );
 		//}
-	}
+	}	
 }
 ?>

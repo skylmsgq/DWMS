@@ -321,9 +321,15 @@
                                     <td>
                                         <input type="text" class="form-control input-md number-cn" name="production_unit_latitude" id="production_unit_latitude">
                                     </td>
-                                    <td>产生单位主要危废物代码</td>
+                                    <td>主要危废物代码（以逗号分隔）</td>
                                     <td>
                                         <input type="text" class="form-control input-md cnPwdEqual_2" name="production_unit_waste" id="production_unit_waste">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>环评量(单位：公斤)</td>
+                                    <td>
+                                        <input type="text" class="form-control input-md number-cn" name="environment_evaluate_num" id="environment_evaluate_num">
                                     </td>
                                 </tr>
                             </table>
@@ -374,40 +380,6 @@
         </div>
     </div>
     <!-- /container -->
-
-    <!-- Placed at the end of the document so the pages load faster -->
-    <!-- jQuery core JavaScript -->
-    <script type="text/javascript">
-//    function production_submit(){
-//     var form_serialize = "" + $('#productionForm').serialize();
-//     console.log(form_serialize);
-//     $.ajax({
-//         type: "post",
-//         url: "{:U('Home/Register/do_reg',array('id'=>'production'))}",
-//         data: form_serialize,
-//         success: function(data) {
-//             console.log(data);
-//             data = parseInt(data);
-//             switch(data){
-//                 case 0:
-//                     window.location.assign("./index.php/Home/LoginAdmin/homepage.html");
-//                     break;
-//                 case 1:
-//                     window.location.assign("./index.php/Home/LoginCountry/homepage.html");
-//                     break;
-
-//                 default :
-//                     myAlertFail("登录失败");
-//             }
-//         },
-//         error: function(XMLHttpRequest, textStatus, errorThrown) {
-//             console.log("Error:Ajax_Content_Load" + errorThrown);
-//             console.log("XMLHttpRequest.status:" + XMLHttpRequest.status);
-//             console.log("XMLHttpRequest.readyState:" + XMLHttpRequest.readyState);
-//             console.log("textStatus:" + textStatus);
-//         }
-//     });
-// }
 
 </script>
 </body>

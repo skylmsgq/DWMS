@@ -91,9 +91,10 @@
                         </td>
                         <td>危废类别编号</td>
                         <td>
-                            <select type="text" name="waste_category_code" id="waste_category_code" class="form-control input-sm required-cn" placeholder="危废类别编号">
+                            {$record.waste_category_code}
+                           <!--  <select type="text" name="waste_category_code" id="waste_category_code" class="form-control input-sm required-cn" placeholder="危废类别编号">
 
-                            </select>
+                            </select> -->
                         </td>
                     </tr>
                     <tr>
@@ -167,9 +168,9 @@
 $("#manifest_request").validate();
 </script>
 <script type="text/javascript">
-for (var idx in waste_category_code) {
-    $("#waste_category_code").append('<option value="' + waste_category_code[idx] + '">' + waste_category_code[idx] + '</option>');
-}
+// for (var idx in waste_category_code) {
+//     $("#waste_category_code").append('<option value="' + waste_category_code[idx] + '">' + waste_category_code[idx] + '</option>');
+// }
 for (var idx in waste_form) {
     $("#waste_form").append('<option value="' + waste_form[idx] + '">' + waste_form[idx] + '</option>');
 }
@@ -202,7 +203,7 @@ function ajaxAction(actionID, transport_unit_name) {
         url: "transfer_manifest_request_form?record_id=" + record_json.record_id,
         timeout: 2000,
         // data: $('#manifest_request').serialize() + '&manifest_status=' + actionID +'&reception_unit_name=' + + '&transport_unit_name=' + transport_unit_name ,
-        data: $('#manifest_request').serialize() + '&manifest_status=' + actionID + '&transport_unit_id=' + record_json.transport_unit_id + '&reception_unit_id=' + record_json.reception_unit_id + '&waste_weight=' + record_json.predict_output_weight + '&waste_num=' + record_json.predict_output_quantity + '&rfid_table_id=' + record_json.rfid_table_id + '&waste_transport_time=' + record_json.record_date,
+        data: $('#manifest_request').serialize() + '&manifest_status=' + actionID + '&transport_unit_id=' + record_json.transport_unit_id + '&reception_unit_id=' + record_json.reception_unit_id + '&waste_weight=' + record_json.predict_output_weight + '&waste_num=' + record_json.predict_output_quantity + '&rfid_table_id=' + record_json.rfid_table_id + '&waste_transport_time=' + record_json.record_date + '&waste_category_code=' + record_json.waste_category_code,
         success: function(data) {
             switch (actionID) {
                 case 0:

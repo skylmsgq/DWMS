@@ -91,9 +91,7 @@
                         </td>
                         <td>危废类别编号</td>
                         <td>
-                            <select type="text" name="waste_category_code" id="waste_category_code" class="form-control input-sm required-cn" placeholder="{$manifest.waste_category_code}" value="{$manifest.waste_category_code}">
-
-                            </select>
+                            {$manifest.waste_category_code}
                         </td>
                     </tr>
                     <tr>
@@ -166,10 +164,6 @@
 $("#manifest_modify").validate();
 </script>
 <script type="text/javascript">
-$("#waste_category_code").html('<option>' + '{$manifest.waste_category_code}' + '</option>');
-for (var idx in waste_category_code) {
-    $("#waste_category_code").append('<option value="' + waste_category_code[idx] + '">' + waste_category_code[idx] + '</option>')
-}
 
 $("#waste_form").html('<option>' + '{$manifest.waste_form}' + '</option>');
 for (var idx in waste_form) {

@@ -8,7 +8,7 @@ class RegisterAction extends Action{
 		$enterprise_scale = M( 'enterprise_scale' )->getField('enterprise_scale_name',true);
 		$county_code = M( 'county_code' )->where('county_id < 34')->getfield('county_name',true);
 		$enterprise_register_type = M( 'enterprise_register_type' )->getField('enterprise_register_type_name',true);
-		$waste_code = M( 'waste' )->getField('waste_code',true);
+		$waste_code = M( 'waste_category' )->getField('waste_category_code',true);
 		$waste = M( 'waste' )->select();
 		// $tradecode=M('trade_code')->select();
 		
