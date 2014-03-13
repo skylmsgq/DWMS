@@ -46,10 +46,11 @@ class ProductionManifestAction extends ProductionCommonAction{
 
 		$this->record = $record;
 		$this->production_unit = $production_unit;
+		$production_unit_json = json_encode( $production_unit );
 
 		$tmp_content=$this->fetch( './Public/html/Content/Production/manifest/transfer_manifest_request_page.html' );
 
-		$tmp_content = "<script>record_json = $record_json;waste_category_code = $waste_category_code_json;waste_form = $waste_form_json;package_method = $package_method_json;waste_transport_goal = $waste_transport_goal_json; </script> $tmp_content";
+		$tmp_content = "<script>record_json = $record_json; waste_category_code = $waste_category_code_json; waste_form = $waste_form_json;package_method = $package_method_json; waste_transport_goal = $waste_transport_goal_json; production_unit = $production_unit_json</script> $tmp_content";
 
 		$this->ajaxReturn( $tmp_content );
 	}

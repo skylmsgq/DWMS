@@ -117,7 +117,7 @@ if (typeof(playbackTimeout) != 'undefined') {
 var fullScreen = 0;
 
 var path = new Array();
-var route_detail = '';
+var route_detail = new String();
 var routePolicy = [BMAP_DRIVING_POLICY_LEAST_TIME, BMAP_DRIVING_POLICY_LEAST_DISTANCE, BMAP_DRIVING_POLICY_AVOID_HIGHWAYS];
 
 var selectProductionUnitVal;
@@ -127,6 +127,9 @@ var productionUnitMarker;
 var receptionUnitMarker;
 var productionUnitInfoWindow;
 var receptionUnitInfoWindow;
+
+var polylineArray = new Array();
+var markerArray = new Array();
 
 function setBMap() {
     var windowHeight = $(window).height();
@@ -305,78 +308,100 @@ var searchComplete = function(results) {
         var windowHeight = $(window).height();
         $('#route_panel').css("width", "100%").css("height", windowHeight * 0.5 + "px").css("overflow", "auto");
     } else if (transit.getStatus() == BMAP_STATUS_UNKNOWN_ROUTE) { //导航结果未知。对应数值“3”。
+        myAlertFail("导航结果未知。");
         return;
     } else {
+        myAlertFail("导航出现未知错误。");
         return;
     }
 };
 
-function search() {
-    if (fullScreen) {
-        var selectStrategyVal = $('#selectStrategyFull').val();
-    } else {
-        var selectStrategyVal = $('#selectStrategy').val();
+var markersSet = function(pois) {
+    for (var idx in pois) {
+        markerArray[idx] = pois[idx].marker;
     }
-    if (judgeProductionUnit()) {
-        return;
-    }
-    if (judgeReceptionUnit()) {
-        return;
-    }
-
-    if (typeof(transit) != 'undefined') {
-        transit.clearResults(); //清除导航结果
-    }
-
-    path = [];
-    route_detail = '';
-
-    var options = {
-        renderOptions: {
-            map: BaiduMap,
-            panel: "route_panel",
-            autoViewport: true, //启用自动调整地图层级，当指定了搜索结果所展现的地图时有效。
-            enableDragging: true, //起终点可进行拖拽
-            highlightMode: BMAP_HIGHLIGHT_ROUTE, // 驾车结果展现中点击列表后的展现策略。
-        },
-        policy: routePolicy[selectStrategyVal],
-        onSearchComplete: searchComplete
-    };
-
-    transit = new BMap.DrivingRoute(BaiduMap, options);
-
-    var p1_lng, p1_lat;
-    var p2_lng, p2_lat;
-
-    p1_lng = production_unit_json[selectProductionUnitVal].production_unit_longitude;
-    p1_lat = production_unit_json[selectProductionUnitVal].production_unit_latitude;
-
-    p2_lng = reception_unit_json[selectReceptionUnitVal].reception_unit_longitude;
-    p2_lat = reception_unit_json[selectReceptionUnitVal].reception_unit_latitude;
-
-    var p1 = new BMap.Point(p1_lng, p1_lat);
-    var p2 = new BMap.Point(p2_lng, p2_lat);
-    transit.search(p1, p2);
 }
 
-function clearScreen() {
-    BaiduMap.clearOverlays();
-    $('#route_panel').html("");
+var polylinesSet = function(routes) {
+    for (var idx in routes) {
+        polylineArray[idx] = routes[idx].getPolyline();
+    }
 }
 
-function submit() {
-    if (judgeProductionUnit()) {
-        return;
-    }
-    if (judgeReceptionUnit()) {
-        return;
+    function search() {
+        if (fullScreen) {
+            var selectStrategyVal = $('#selectStrategyFull').val();
+        } else {
+            var selectStrategyVal = $('#selectStrategy').val();
+        }
+        if (judgeProductionUnit()) {
+            return;
+        }
+        if (judgeReceptionUnit()) {
+            return;
+        }
+
+        if (typeof(transit) != 'undefined') {
+            transit.clearResults(); //清除导航结果
+        }
+
+        path = [];
+        route_detail = '';
+
+        var options = {
+            renderOptions: {
+                map: BaiduMap,
+                panel: "route_panel",
+                autoViewport: true, //启用自动调整地图层级，当指定了搜索结果所展现的地图时有效。
+                enableDragging: true, //起终点可进行拖拽
+                highlightMode: BMAP_HIGHLIGHT_ROUTE, // 驾车结果展现中点击列表后的展现策略。
+            },
+            policy: routePolicy[selectStrategyVal],
+            onSearchComplete: searchComplete,
+            onMarkersSet: markersSet,
+            onPolylinesSet: polylinesSet,
+        };
+
+        transit = new BMap.DrivingRoute(BaiduMap, options);
+
+        var p1_lng, p1_lat;
+        var p2_lng, p2_lat;
+
+        p1_lng = production_unit_json[selectProductionUnitVal].production_unit_longitude;
+        p1_lat = production_unit_json[selectProductionUnitVal].production_unit_latitude;
+
+        p2_lng = reception_unit_json[selectReceptionUnitVal].reception_unit_longitude;
+        p2_lat = reception_unit_json[selectReceptionUnitVal].reception_unit_latitude;
+
+        var p1 = new BMap.Point(p1_lng, p1_lat);
+        var p2 = new BMap.Point(p2_lng, p2_lat);
+        transit.search(p1, p2);
     }
 
-    if (path == []) {
-        myAlertFail("数据为空，不能提交");
-        return;
+    function clearScreen() {
+        while (marker = markerArray.pop()) {
+            BaiduMap.removeOverlay(marker);
+        }
+        while (polyline = polylineArray.pop()) {
+            BaiduMap.removeOverlay(polyline);
+        }
+
+        $('#route_panel').html("");
     }
-    /*
+
+    function submit() {
+        if (judgeProductionUnit()) {
+            return;
+        }
+        if (judgeReceptionUnit()) {
+            return;
+        }
+
+        if (path == []) {
+            myAlertFail("数据为空，不能提交");
+            return;
+        }
+        /*
     var BMapPointArray = new Array();
     for (var point_idx in path) {
         var BMapPoint = {
@@ -387,41 +412,42 @@ function submit() {
     }
     */
 
-    $.ajax({
-        type: "POST",
-        url: "{:U('Home/DistrictMap/ajax_transfer_route_plan')}",
-        dataType: 'JSON',
-        data: {
-            "production_unit_id": production_unit_json[selectProductionUnitVal].production_unit_id,
-            "reception_unit_id": reception_unit_json[selectReceptionUnitVal].reception_unit_id,
-            "route_lng_lat": JSON.stringify(path),
-            "route_detail": route_detail
-        },
-        success: function(data) {
-            switch (data) {
-                case 'exist':
-                    myAlertFail("此生产单位到此接受单位的路线已存在，需要调整请删除后重新规划");
-                    break;
-                case 'success':
-                    myAlertSucc("提交成功");
-                    clearScreen();
-                    path = [];
-                    break;
-                case 'fail':
-                    myAlertFail("提交失败");
-                    break;
-                default:
-                    myAlertFail("未知错误");
-                    break;
+        $.ajax({
+            type: "POST",
+            url: "{:U('Home/DistrictMap/ajax_transfer_route_plan')}",
+            dataType: 'JSON',
+            data: {
+                "production_unit_id": production_unit_json[selectProductionUnitVal].production_unit_id,
+                "reception_unit_id": reception_unit_json[selectReceptionUnitVal].reception_unit_id,
+                "route_lng_lat": JSON.stringify(path),
+                "route_detail": route_detail
+            },
+            success: function(data) {
+                switch (data) {
+                    case 'exist':
+                        myAlertFail("此生产单位到此接受单位的路线已存在，需要调整请删除后重新规划");
+                        break;
+                    case 'success':
+                        myAlertSucc("提交成功");
+                        clearScreen();
+                        path = [];
+                        route_detail = '';
+                        break;
+                    case 'fail':
+                        myAlertFail("提交失败");
+                        break;
+                    default:
+                        myAlertFail("未知错误");
+                        break;
+                }
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                myAlertFail("提交路线规划ajax请求失败");
+                console.log("Error:Ajax_Content_Load" + errorThrown);
+                console.log("XMLHttpRequest.status:" + XMLHttpRequest.status);
+                console.log("XMLHttpRequest.readyState:" + XMLHttpRequest.readyState);
+                console.log("textStatus:" + textStatus);
             }
-        },
-        error: function(XMLHttpRequest, textStatus, errorThrown) {
-            myAlertFail("提交路线规划ajax请求失败");
-            console.log("Error:Ajax_Content_Load" + errorThrown);
-            console.log("XMLHttpRequest.status:" + XMLHttpRequest.status);
-            console.log("XMLHttpRequest.readyState:" + XMLHttpRequest.readyState);
-            console.log("textStatus:" + textStatus);
-        }
-    });
-}
+        });
+    }
 </script>

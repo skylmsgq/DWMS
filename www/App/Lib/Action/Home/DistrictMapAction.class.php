@@ -303,7 +303,7 @@ class DistrictMapAction extends DistrictCommonAction{
 		$gps_table_name = "gps_" . $device_serial_num;
 		$gps = M( $gps_table_name );
 		//$time = date( 'Y-m-d H:i:s', time() );
-		$time = date( 'Y-m-d H:i:s', strtotime( '2014-03-06 09:00:00' ) );
+		$time = date( 'Y-m-d H:i:s', strtotime( '2014-03-07 17:00:00' ) );
 		for ( $idx = 0; $idx < count( $gps_data_array ); ++$idx ) {
 			$time = date( 'Y-m-d H:i:s', strtotime( $time ) + 10 );
 			$data['datetime'] = $time;
@@ -312,7 +312,7 @@ class DistrictMapAction extends DistrictCommonAction{
 			$data['height'] = rand(-10, 30);
 			$data['speed'] = rand(0, 100);
 			$data['status'] = 0;
-			$data['vehicle_id'] = 0;
+			$data['vehicle_id'] = 24;
 			$data['stay_status'] = 0;
 			$gps->add( $data );
 		}
