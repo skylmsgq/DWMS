@@ -160,7 +160,7 @@
                                 <tr>
                                     <td>电子邮件</td>
                                     <td>
-                                        <input type="email" class="form-control" name="email" id="email" placeholder="电子邮件">
+                                        <input type="email" class="form-control email-cn" name="email" id="email" placeholder="电子邮件">
                                     </td>
                                 </tr>
                                 <tr>
@@ -243,7 +243,8 @@
                                     </td>
                                     <td>接受单位所属行业</td>
                                     <td>
-                                        <input type="text" class="form-control input-md" name="reception_unit_trade" id="reception_unit_trade">   
+                                        <select type="text" class="form-control input-md" name="reception_unit_trade" id="reception_unit_trade">
+                                        </select>   
                                     </td>
                                 </tr>
                                 <tr>
@@ -343,6 +344,7 @@
 
                     <center>
                         <button type="submit" class="btn btn-warning btn-lg">提交</button>
+                        <button class="btn btn-danger btn-lg" onclick="$('input').val('');">重新填</button>                 
                     </center>
                 </form>
                 <script type="text/javascript" src="__PUBLIC__/js/jquery-myvalidate.js"></script>
@@ -354,8 +356,11 @@
                 for (var idx in enterprise_scale) {
                     $('#reception_unit_enterprise_scale').append('<option>' + enterprise_scale[idx] + '</option>');
                 }
-                for (var idx in enterprise_scale) {
+                for (var idx in enterprise_register_type) {
                     $('#reception_unit_registration_type').append('<option>' + enterprise_register_type[idx] + '</option>');
+                }
+                for (var idx in trade) {
+                    $('#reception_unit_trade').append('<option>' + trade[idx] + '</option>');
                 }
                 </script>
 

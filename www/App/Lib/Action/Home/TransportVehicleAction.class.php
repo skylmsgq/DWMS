@@ -61,16 +61,33 @@ class TransportVehicleAction extends TransportCommonAction{
 		}
 	}
 
+	//运输车辆->运输车辆管理->删除确认
+	public function vehicle_management_delete_confirm($vehicle_id=""){
+		$vehicle = M( 'vehicle' )->where( array( 'vehicle_id' => $vehicle_id ) )->find();
+		if($vehicle){
+			$this->vehicle = $vehicle;
+			$vehicle_json = json_encode( $vehicle );
+			$tmp_content = $this->fetch( './Public/html/Content/Transport/vehicle/vehicle_management_delete.html' );
+			$tmp_content = "<script> vehicle_json=$vehicle_json; </script> $tmp_content";
+			$this->ajaxReturn( $tmp_content );
+		} else{
+			$this->ajaxReturn("发生错误");
+		}	
+	}
+
+
 	//运输车辆->运输车辆管理->删除
 	public function vehicle_management_delete($vehicle_id=""){
 		$vehicle = M( 'vehicle' ); // 实例化waste对象
 		$data['vehicle_status'] = 2;
-		$vehicle->where( array('vehicle_id' => $vehicle_id ) )->save( $data ); // 删除waste_id=id的用户数据
+		$time = date( 'Y-m-d H:i:s', time() );
+		$data['vehicle_delete_time'] = $time;
+		$result = M( 'vehicle' )->where( array('vehicle_id' => $vehicle_id ) )->save( $data ); // 删除waste_id=id的用户数据
 
-		if ($vehicle) {
-			$this->ajaxReturn( "删除成功" );
+		if ($result) {
+			$this->ajaxReturn( "success" );
 		} else {
-			$this->ajaxReturn( "代码未找到" );
+			$this->ajaxReturn( "fail" );
 		}
 	}
 

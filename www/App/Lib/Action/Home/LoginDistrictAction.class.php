@@ -1,7 +1,4 @@
 <?php
-/**
- *
- */
 class LoginDistrictAction extends DistrictCommonAction{
 	public function homepage() {
 		if ( session( 'user_type' ) == 4 ) {
@@ -18,5 +15,4 @@ class LoginDistrictAction extends DistrictCommonAction{
 		}
 	}
 }
-
 ?>

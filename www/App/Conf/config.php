@@ -67,8 +67,8 @@ return array(
 	//'DEFAULT_FILTER' => '',
 
 	// 定制系统错误页面模板
-	'TMPL_EXCEPTION_FILE' => './404.html',
+	// 'TMPL_EXCEPTION_FILE' => './404.html',
 	// 设置错误重定向页面
-	'ERROR_PAGE' => './404.html',
+	// 'ERROR_PAGE' => './404.html',
 );
 ?>

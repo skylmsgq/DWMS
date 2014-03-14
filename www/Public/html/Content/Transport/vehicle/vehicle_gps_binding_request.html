@@ -36,9 +36,10 @@ function ajaxAction() {
         timeout: 2000,
         data: $('#gps_request').serialize() + '&vehicle_id=' + vehicle_id,
         success: function(data) {
-            $('#button_submit').button('complete');
-            setTimeout("$('#button_submit').button('reset')", 3000);
-            $('input').val('');
+            $('#myModal').modal('hide');
+            $('#myModal').on('hidden.bs.modal', function(e) {
+                refresh_page();
+            });
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) {
             alert('保存失败，请重新保存。');

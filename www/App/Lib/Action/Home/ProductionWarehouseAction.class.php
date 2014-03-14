@@ -11,16 +11,21 @@ class ProductionWarehouseAction extends ProductionCommonAction{
 
 	// 危废库存->危废入库管理
 	public function storage_input_management() {
-		$rfid = M( 'rfid' )->where( array( 'production_unit_id' => session( 'production_unit_id' ) ) )->select();
-		$rfid_json = json_encode( $rfid );
-		$wasteid=array();
-		foreach ($rfid as  $value) {
-			$id=$value['waste_id'];
-			$wasteid[]=M('waste')->where("waste_id='$id'")->getField('waste_code');
-		}
-		$waste_json=json_encode($wasteid);
+		$rfid = M( 'rfid' );
+		$condition['production_unit_id'] = array('EQ', session( 'production_unit_id' ) );
+		$join = $rfid->join('waste_category ON rfid.waste_category_id = waste_category.waste_category_id')->where($condition)->select();
+		$rfid_json = json_encode($join);
+
+		// $rfid = M( 'rfid' )->where( array( 'production_unit_id' => session( 'production_unit_id' ) ) )->select();
+		// $rfid_json = json_encode( $rfid );
+		// $wasteid=array();
+		// foreach ($rfid as  $value) {
+		// 	$id=$value['waste_id'];
+		// 	$wasteid[]=M('waste')->where("waste_id='$id'")->getField('waste_code');
+		// }
+		// $waste_json=json_encode($wasteid);
 		$tmp_content=$this->fetch( './Public/html/Content/Production/warehouse/storage_input_management.html' );
-		$tmp_content="<script> record_json=$rfid_json; waste_json=$waste_json;</script> $tmp_content";
+		$tmp_content="<script> record_json=$rfid_json;</script> $tmp_content";
 		$this->ajaxReturn( $tmp_content );
 	}
 

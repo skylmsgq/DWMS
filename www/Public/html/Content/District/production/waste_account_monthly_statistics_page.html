@@ -8,7 +8,7 @@
 var tableData = new Array();
 for (var idx in rfid_json) {
     var itemData = new Array();
-    itemData[0] = "" + rfid_json[idx].waste_code;
+    itemData[0] = "" + rfid_json[idx].waste_category_code;
     itemData[1] = "" + rfid_json[idx].add_date_time;
     switch (rfid_json[idx].rfid_status) {
             case '0':

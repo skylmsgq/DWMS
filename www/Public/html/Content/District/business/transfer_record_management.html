@@ -35,13 +35,14 @@ function setTable() {
         itemData[1] = "" + record_json[idx].record_date;
         itemData[2] = "" + record_json[idx].production_unit_name;
         switch (record_json[idx].record_status) {
-            case '0':
+            /*case '0':
                 itemData[3] = "<span class='label label-primary'>已保存未提交</span>";
-                break;
+                break;*/
             case '1':
                 itemData[3] = "<span class='label label-warning'>已提交待审核</span>";
+                itemData[4] = '<a href="#" onclick="fetch_model_page(\'./transfer_record_management_page?record_id=' + record_json[idx].record_id + '\')"><span class="label label-info"><span class="glyphicon glyphicon-wrench"></span> 审核</span><a>';
                 break;
-            case '2':
+            /*case '2':
                 itemData[3] = "<span class='label label-success'>已提交已审核</span>";
                 break;
             case '3':
@@ -52,13 +53,12 @@ function setTable() {
                 break;
             case '5':
                 itemData[3] = "<span class='label label-success'>已提交已审核</span>";
-                break;
+                break;*/
             default:
                 itemData[3] = "<span class='label label-danger'>申请状态错误</span>";
+                itemData[4] = '<a href="#" onclick="fetch_model_page(\'./transfer_record_management_page?record_id=' + record_json[idx].record_id + '\')"><span class="label label-info"><span class="glyphicon glyphicon-wrench"></span> 详情</span><a>';
                 break;
-        }
-
-        itemData[4] = '<a href="#" onclick="fetch_model_page(\'./transfer_record_management_page?record_id=' + record_json[idx].record_id + '\')"><span class="label label-info"><span class="glyphicon glyphicon-wrench"></span> 审核</span><a>';
+        }   
         tableData.push(itemData);
     }
 

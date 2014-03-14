@@ -11,11 +11,17 @@ class ReceptionWarehouseAction extends ReceptionCommonAction{
 
 	// 危废库存->危废库存管理
 	public function storage_input_management() {
-		$rfid = M( 'rfid' )->where( array( 'reception_unit_id' => session( 'reception_unit_id' ),'rfid_status' => 2 ) )->select();
-		$rfid_json = json_encode( $rfid );
+		$rfid = M( 'rfid' );
+		$condition['reception_unit_id'] = array('EQ', session( 'reception_unit_id' ) );
+		$condition['rfid_status'] = array('EQ', 2);
+		$join = $rfid->join('waste_category ON rfid.waste_category_id = waste_category.waste_category_id')->where($condition)->select();
+		$rfid_json = json_encode($join);
+
+		// $rfid = M( 'rfid' )->where( array( 'reception_unit_id' => session( 'reception_unit_id' ),'rfid_status' => 2 ) )->select();
+		// $rfid_json = json_encode( $rfid );
 
 		$pdname=array();
-		foreach ($rfid as $value) {
+		foreach ($join as $value) {
 		$pdu=$value['production_unit_id'];
 		//need to check later
 		$pdname[]=M('production_unit')->where("production_unit_id='$pdu'")->getField('production_unit_name');

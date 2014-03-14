@@ -10,6 +10,12 @@ $.validator.addClassRules("number-cn", {
     cnNumber: true
 });
 
+$.validator.addMethod("cnEmail", $.validator.methods.email, "<span class=\"label label-danger\">请输入正确的Email格式</span>");
+
+$.validator.addClassRules("email-cn", {
+    cnEmail: true
+});
+
 $(".required-cn").each(function() {
     var myprev = $(this).parent().prev();
     myprev.append(" <a style=\"color: red\">*</a>");

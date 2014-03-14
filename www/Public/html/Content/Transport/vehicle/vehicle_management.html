@@ -31,7 +31,7 @@ function setTable() {
     for (var idx in vehicle) {
         var itemDetail = '<a href="#" onclick="fetch_model_page(\'./vehicle_management_detail?vehicle_id=' + vehicle[idx].vehicle_id + '\')"><span class="label label-info"><span class="glyphicon glyphicon-paperclip"></span> 详情</span><a>';
         var itemModify = ' <a href="#" onclick="fetch_model_page(\'./vehicle_management_modify?vehicle_id=' + vehicle[idx].vehicle_id + '\')"><span class="label label-success"><span class="glyphicon glyphicon-paperclip"></span> 修改</span><a>';
-        var itemDelete = ' <a href="#" onclick="vehicle_delete(\'./vehicle_management_delete?vehicle_id=' + vehicle[idx].vehicle_id + '\')"><span class="label label-danger"><span class="glyphicon glyphicon-paperclip"></span> 删除</span><a>';
+        var itemDelete = ' <a href="#" onclick="fetch_model_page(\'./vehicle_management_delete_confirm?vehicle_id=' + vehicle[idx].vehicle_id + '\')"><span class="label label-danger"><span class="glyphicon glyphicon-paperclip"></span> 删除</span><a>';
         var itemData = new Array();
         // itemData[0] = "" + vehicle[idx].vehicle_id;
         if(vehicle[idx].vehicle_status == 0){
@@ -112,7 +112,7 @@ function fetch_model_page(ajaxURL) {
 
 }
 
-function vehicle_delete(ajaxURL){
+/*function vehicle_delete(ajaxURL){
     $.ajax({
         type: "post",
         url: ajaxURL,
@@ -128,6 +128,6 @@ function vehicle_delete(ajaxURL){
         }
 
     })
-}
+}*/
 
 </script>

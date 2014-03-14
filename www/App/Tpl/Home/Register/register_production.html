@@ -169,7 +169,7 @@
                                 <tr>
                                     <td>电子邮件</td>
                                     <td>
-                                        <input type="email" class="form-control" name="email" id="email" placeholder="电子邮件">
+                                        <input type="email" class="form-control email-cn" name="email" id="email" placeholder="电子邮件">
                                     </td>
                                 </tr>
                                 <tr>
@@ -257,7 +257,9 @@
                                 <tr>
                                     <td>产生单位所属行业</td>
                                     <td>
-                                        <input type="text" class="form-control input-md" name="production_unit_trade" id="production_unit_trade">
+                                        <!-- <input type="text" class="form-control input-md" name="production_unit_trade" id="production_unit_trade"> -->
+                                        <select type="text" class="form-control input-md" name="production_unit_trade" id="production_unit_trade">
+                                        </select>
                                     </td>
                                     <td>产生单位乡镇街道</td>
                                     <td>
@@ -327,7 +329,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>环评量(单位：公斤)</td>
+                                    <td>环评量(单位：吨)</td>
                                     <td>
                                         <input type="text" class="form-control input-md number-cn" name="environment_evaluate_num" id="environment_evaluate_num">
                                     </td>
@@ -351,12 +353,13 @@
                 for (var idx in enterprise_scale) {
                     $('#production_unit_enterprise_scale').append('<option>' + enterprise_scale[idx] + '</option>');
                 }
-                for (var idx in enterprise_scale) {
+                for (var idx in enterprise_register_type) {
                     $('#production_unit_registration_type').append('<option>' + enterprise_register_type[idx] + '</option>');
                 }
+                for (var idx in trade) {
+                    $('#production_unit_trade').append('<option>' + trade[idx] + '</option>');
+                }
                 </script>
-
-
             </div>
         </div>
         <div class="panel panel-info" id="login-panel" style="margin-top:20px">

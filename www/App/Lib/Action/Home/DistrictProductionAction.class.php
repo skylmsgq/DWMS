@@ -39,7 +39,7 @@ class DistrictProductionAction extends DistrictCommonAction{
 	public function waste_account_monthly_statistics_page($production_unit_id=""){
 		$rfid = M('rfid');
 		$condition['production_unit_id'] = array('EQ',$production_unit_id);
-		$join = $rfid->join('waste ON rfid.waste_id = waste.waste_id')->where($condition)->select();
+		$join = $rfid->join('waste_category ON rfid.waste_category_id = waste_category.waste_category_id')->where($condition)->select();
 		$rfid_json = json_encode($join);
 		$tmp_content = $this->fetch( './Public/html/Content/District/production/waste_account_monthly_statistics_page.html' );
 		$tmp_content = "<script>rfid_json = $rfid_json;</script> $tmp_content";

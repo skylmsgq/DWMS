@@ -218,7 +218,7 @@ function county_code_jurisdiction(county_name) {
                                 <tr>
                                     <td>电子邮件</td>
                                     <td>
-                                        <input type="email" class="form-control" name="email" id="email" placeholder="电子邮件">
+                                        <input type="email" class="form-control email-cn" name="email" id="email" placeholder="电子邮件">
                                     </td>
                                 </tr>
                                 <tr>
@@ -405,6 +405,7 @@ function county_code_jurisdiction(county_name) {
 
                     <center>
                         <button type="submit" class="btn btn-warning btn-lg">提交</button>
+                        <button class="btn btn-danger btn-lg" onclick="$('input').val('');">重新填</button>                        
                     </center>
                 </form>
 
@@ -417,8 +418,11 @@ function county_code_jurisdiction(county_name) {
                 for (var idx in enterprise_scale) {
                     $('#transport_unit_enterprise_scale').append('<option>' + enterprise_scale[idx] + '</option>');
                 }
-                for (var idx in enterprise_scale) {
+                for (var idx in enterprise_register_type) {
                     $('#transport_unit_registration_type').append('<option>' + enterprise_register_type[idx] + '</option>');
+                }
+                for (var idx in trade) {
+                    $('#reception_unit_trade').append('<option>' + trade[idx] + '</option>');
                 }
                 </script>
 

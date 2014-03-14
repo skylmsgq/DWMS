@@ -54,20 +54,20 @@ function setTable() {
         itemData[4] = '<a href="#" onclick="fetch_model_page(\'./' + tmp_page_name + '?record_id=' + record_json[idx].user_id + '\')"><span class="label label-info"><span class="glyphicon glyphicon-paperclip"></span> 查看</span><a>';
 
         if (record_json[idx].is_verify == "0") {
-            itemData[3] = "未验证";
+            itemData[3] = '<span class="label label-primary">未验证';
             itemData[6] = '<a href="#" onclick="ajaxAction(0,' + record_json[idx].user_type+", "+ record_json[idx].user_id + ',1)"><span class="label label-primary"><span class="glyphicon glyphicon-paperclip"></span> 通过</span><a>';
         } else {
-            itemData[3] = "已验证";
+            itemData[3] = '<span class="label label-warning">已验证';
             itemData[6] = "";
         }
 
 
         if (record_json[idx].lock == "0") {
             //ajaxAction(actionID,itemIdx,actionValue)
-            itemData[3] += "未锁定";
+            itemData[3] += '未锁定</span>';
             itemData[5] = '<a href="#" onclick="ajaxAction(1,' + record_json[idx].user_type+", "+record_json[idx].user_id + ',1)"><span class="label label-danger"><span class="glyphicon glyphicon-paperclip"></span> 锁定</span><a>';
         } else {
-            itemData[3] += "已锁定";
+            itemData[3] += '已锁定</span>';
             itemData[5] = '<a href="#" onclick="ajaxAction(1,' +record_json[idx].user_type+", "+ record_json[idx].user_id + ',0)"><span class="label label-success"><span class="glyphicon glyphicon-paperclip"></span> 解锁</span><a>';
         }
 
