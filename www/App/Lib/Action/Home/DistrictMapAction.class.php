@@ -33,7 +33,15 @@ class DistrictMapAction extends DistrictCommonAction{
 			$tmp_content = $this->fetch( './Public/html/Content/District/map/transfer_map_display.html' );
 			$tmp_content = "<script> route_json=$route_vehicle_join_json; transport_unit_json=$transport_unit_json; alarm_distance_json=$alarm_distance_json; </script> $tmp_content";
 			$this->ajaxReturn( $tmp_content );
-		} else {
+		}elseif( $route_vehicle_join === null ){
+			$route_vehicle_join_json = json_encode( $route_vehicle_join );
+			$alarm_distance_json = json_encode( $alarm_distance );
+			$transport_unit_json = json_encode( $transport_unit_array );
+			$tmp_content = $this->fetch( './Public/html/Content/District/map/transfer_map_display.html' );
+			$tmp_content = "<script> route_json=$route_vehicle_join_json; transport_unit_json=$transport_unit_json; alarm_distance_json=$alarm_distance_json; </script> $tmp_content";
+			$this->ajaxReturn( $tmp_content );
+		}
+		else {
 			$this->ajaxReturn( "加载页面失败，请重新点击侧边栏加载页面。" );
 		}
 	}
