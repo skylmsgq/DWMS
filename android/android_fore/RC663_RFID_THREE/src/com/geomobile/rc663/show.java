@@ -28,7 +28,12 @@ import org.json.*;
 public class show extends ScanActivity implements OnClickListener {
     /** Called when the activity is first created. */	
 	private Button bn_detail;
-	private TextView text_result;
+	private TextView rfid;
+	private TextView wrap;
+	private TextView num;
+	private TextView waste_code;
+	private TextView type;
+	private TextView permission;
 	public String detail;
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -36,13 +41,29 @@ public class show extends ScanActivity implements OnClickListener {
         setContentView(R.layout.result);
         Intent intent = getIntent();
         String message = intent.getStringExtra("result");
+        String [] strlist=message.split("%");
         //this.alertMessage(message);
-         detail=intent.getStringExtra("detail");
+        detail=intent.getStringExtra("detail");
         bn_detail = (Button)findViewById(R.id.button_detail);
         bn_detail.setOnClickListener(this);
-        text_result= (TextView)findViewById(R.id.result);
-        text_result.setText(message);
-        text_result.setMovementMethod(new ScrollingMovementMethod());
+        rfid= (TextView)findViewById(R.id.rfid);
+        wrap= (TextView)findViewById(R.id.wrap);
+        num= (TextView)findViewById(R.id.num);
+        waste_code= (TextView)findViewById(R.id.waste_code);
+        type= (TextView)findViewById(R.id.waste_type);
+        permission= (TextView)findViewById(R.id.permission);
+        if (!strlist[0].equals(""))
+        	rfid.setText(strlist[0]);
+        if (!strlist[1].equals(""))
+        	wrap.setText(strlist[1]);
+        if (!strlist[2].equals(""))
+        	num.setText(strlist[2]);
+        if (!strlist[3].equals(""))
+        	waste_code.setText(strlist[3]);
+        if (!strlist[4].equals(""))
+        	type.setText(strlist[4]);
+        if (!strlist[5].equals(""))
+        	permission.setText(strlist[5]);
     }
 
 	@Override
@@ -56,5 +77,4 @@ public class show extends ScanActivity implements OnClickListener {
 			startActivity(i);
 		} 
 	}
-    
 }
