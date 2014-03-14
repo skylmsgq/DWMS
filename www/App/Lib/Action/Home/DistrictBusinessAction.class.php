@@ -298,28 +298,28 @@ class DistrictBusinessAction extends DistrictCommonAction{
 					' (
  					id int(11) NOT NULL AUTO_INCREMENT,
  					rfid_id varchar(255) DEFAULT NULL,
-  					waste_id int(11) DEFAULT NULL,
+  					waste_category_id int(11) DEFAULT NULL,
   					add_weight double DEFAULT NULL,
   					add_date_time datetime DEFAULT NULL,
   					add_num int(11) DEFAULT NULL,
   					android_num varchar(255) DEFAULT NULL,
   					PRIMARY KEY (id),
-  					KEY fk_waste_id_'.$tablename.' (waste_id) USING BTREE,
-  					CONSTRAINT fk_waste_id_'.$tablename.' FOREIGN KEY (waste_id) REFERENCES waste (waste_id)
+  					KEY fk_waste_category_id_'.$tablename.' (waste_category_id) USING BTREE,
+  					CONSTRAINT fk_waste_category_id_'.$tablename.' FOREIGN KEY (waste_category_id) REFERENCES waste_category (waste_category_id)
 					)';
 					else
 						$sql='create table '. $tablename.
 					' (
  					id int(11) NOT NULL AUTO_INCREMENT,
  					rfid_id varchar(255) DEFAULT NULL,
-  					waste_id int(11) DEFAULT NULL,
+  					waste_category_id int(11) DEFAULT NULL,
   					total_weight double DEFAULT NULL,
   					receive_date_time datetime DEFAULT NULL,
   					total_num int(11) DEFAULT NULL,
   					android_num varchar(255) DEFAULT NULL,
   					PRIMARY KEY (id),
-  					KEY fk_waste_id_'.$tablename.' (waste_id) USING BTREE,
-  					CONSTRAINT fk_waste_id_'.$tablename.' FOREIGN KEY (waste_id) REFERENCES waste (waste_id)
+  					KEY fk_waste_category_id_'.$tablename.' (waste_category_id) USING BTREE,
+  					CONSTRAINT fk_waste_category_id_'.$tablename.' FOREIGN KEY (waste_category_id) REFERENCES waste_category (waste_category_id)
 					)';
 					$model=new Model();
 					$model->execute($sql);

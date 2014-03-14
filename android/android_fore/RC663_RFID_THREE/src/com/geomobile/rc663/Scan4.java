@@ -187,7 +187,7 @@ public class Scan4 extends ScanActivity implements OnClickListener {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		    sn+="\n";
+		    //sn+="\n";
 		   // sn="RFID: "+sn;
 		    if(submitController == null) submitController = new SubmitCallbackController(this, myupload);
 	
