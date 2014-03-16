@@ -429,19 +429,17 @@ class DistrictBusinessAction extends DistrictCommonAction{
 		$tong_num=M('rfid')->where("add_method=0")->sum('waste_total');
 		$dai_num=M('rfid')->where("add_method=1")->sum('waste_total');
 
-		// $rfid=M('rfid');
-		// $join = $rfid->join( 'production_unit ON rfid.production_unit_id = production_unit.production_unit_id' )->select();
-		// $statistics=M('rfid')->where('waste_id>0')->getField('waste_id,waste_total');
-		$categories=M('rfid')->join('waste ON rfid.waste_id = waste.waste_id')->group('waste_category_code')->getField('waste_category_code',true);
+		$categories=M('rfid')->join('waste_category ON rfid.waste_category_id = waste_category.waste_category_id')->where(array('add_method'=>0))->getField('waste_category_code',true);
 		$rfid = M('rfid');
-		$join = $rfid->join('production_unit ON rfid.production_unit_id = production_unit.production_unit_id' )->join('waste ON rfid.waste_id = waste.waste_id')->select();
+		$condition['add_method'] = array('EQ',0);
+		$join = $rfid->join('production_unit ON rfid.production_unit_id = production_unit.production_unit_id' )->join('waste_category ON rfid.waste_category_id = waste_category.waste_category_id')->where($condition)->select();
 
 		$dict=array();
 		$count_waste=0;
 		$wastelist=M('production_unit')->select();
 		foreach ($wastelist as  $value) {
 			$type_list=explode(",", $value['production_unit_waste']);
-			foreach ($type_list as  $val) {
+			foreach ($type_list as $val) {
 				if (!array_key_exists($val, $dict))
 				{
 					$count_waste++;
@@ -450,8 +448,8 @@ class DistrictBusinessAction extends DistrictCommonAction{
 				}
 			}
 		}
-		$result->rfid=$join;
 
+		$result->rfid=$join;
 		$result->categories=$categories;
 		$result->statistics=$statistics;
 		$result->count_waste=$count_waste;

@@ -10,9 +10,9 @@
     <div class="panel panel-primary">
         <div class="panel-heading">RFID 列表</div>
         <div class="panel-body">
-            <div class="table-responsive"
-                <table id="rfid_form" class="table table-striped table-bordered table-hover table-condensed">
-                    
+            <div class="table-responsive">
+                <!-- <table id="rfid_form" class="table table-striped table-bordered table-hover table-condensed"> -->
+                <table id="rfid_form" class="table table-striped table-bordered table-hover table-condensed">   
                 </table>
             </div>
         </div>
@@ -147,7 +147,6 @@
                         <td>主要废物形态</td>
                         <td>
                             <select type="text" name="waste_form" class="form-control input-sm" placeholder="废物形态">
-                            <option>请选择废物形态</option>
                             <option>半固态</option>
                             <option>固态</option>
                             <option>液态</option>
@@ -179,6 +178,18 @@
                         <td>预计危废数量（个）</td>
                         <td id="num_content">
                             <!-- <input type="text" name="predict_output_quantity" class="form-control input-sm" placeholder="预计危废数量（桶）"> -->
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Bak预计危废重量（公斤）</td>
+                        <td>
+                            <input type="text" id="1" class="form-control input-sm" placeholder="预计危废重量（公斤）">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Bak预计危废数量（个）</td>
+                        <td>
+                            <input type="text" id="2" class="form-control input-sm" placeholder="预计危废数量（个）">
                         </td>
                     </tr>
                 </table>
@@ -321,7 +332,6 @@ var weight = 0.0;
 var num = 0.0; 
 var t_length=transport_unit.length;
 var r_length=reception_unit.length;
-$('#waste_category_code').html('<option>请选择主要危废类别代码</option>')
 for (var idx in waste) {
     $('#waste_category_code').append('<option value="' + waste[idx].waste_category_code + '">'+ waste[idx].waste_category_code + '</option>');
 }
@@ -384,46 +394,92 @@ function ajaxAction(actionID) {
     if(!$('#record_request').valid()){
         return;
     }
-    $.ajax({
-        type: "post",
-        url: "transfer_record_request_form",
-        timeout: 2000,
-        data: $('#record_request').serialize() + '&' + $('#record_request_1').serialize() + '&record_status=' + actionID + '&rfid_table_id=' + rfid_table_id + '&predict_output_quantity=' + num + '&predict_output_weight=' + weight,
+    if(document.getElementById('1').value!="" || document.getElementById('2').value!=""){
+        weight = document.getElementById('1').value;
+        num = document.getElementById('2').value;
+    }
 
-        success: function(data) {
-            console.log(data.data);
-            switch (actionID) {
-                case 0:
-                    if(data.data == 1){
-                    myAlertSucc("保存成功！稍后自动刷新。。");
-                    setTimeout(function(){refresh_page();},3000);
-                    } else{
-                        myAlertFail("保存失败！");
-                    }
-                    break;
-                case 1:
-                    if(data.data == 1){
-                    myAlertSucc("提交成功！稍后自动刷新。。");
-                    setTimeout(function(){refresh_page();},3000);
-                    } else{
-                        myAlertFail("提交失败！");
-                    }
-                    break;
-                default:
-                    break;
+    /*if(document.form.predict_output_weight.value=="" && document.form.predict_output_quantity.value==""){
+        $.ajax({
+            type: "post",
+            url: "transfer_record_request_form",
+            timeout: 2000,
+            data: $('#record_request').serialize() + '&' + $('#record_request_1').serialize() + '&record_status=' + actionID + '&rfid_table_id=' + rfid_table_id,
+
+            success: function(data) {
+                console.log(data.data);
+                switch (actionID) {
+                    case 0:
+                        if(data.data == 1){
+                        myAlertSucc("保存成功！稍后自动刷新。。");
+                        setTimeout(function(){refresh_page();},3000);
+                        } else{
+                            myAlertFail("保存失败！");
+                        }
+                        break;
+                    case 1:
+                        if(data.data == 1){
+                        myAlertSucc("提交成功！稍后自动刷新。。");
+                        setTimeout(function(){refresh_page();},3000);
+                        } else{
+                            myAlertFail("提交失败！");
+                        }
+                        break;
+                    default:
+                        break;
+                }
+                // $('input').val('');
+                // setTimeout(function(){refresh_page();},3000);
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                alert('保存失败，请重新保存。');
+                console.log("Error: Ajax_Content_Load " + errorThrown);
+                console.log("XMLHttpRequest.status: " + XMLHttpRequest.status);
+                console.log("XMLHttpRequest.readyState: " + XMLHttpRequest.readyState);
+                console.log("textStatus: " + textStatus);
             }
-            // $('input').val('');
-            // setTimeout(function(){refresh_page();},3000);
-        },
-        error: function(XMLHttpRequest, textStatus, errorThrown) {
-            alert('保存失败，请重新保存。');
-            console.log("Error: Ajax_Content_Load " + errorThrown);
-            console.log("XMLHttpRequest.status: " + XMLHttpRequest.status);
-            console.log("XMLHttpRequest.readyState: " + XMLHttpRequest.readyState);
-            console.log("textStatus: " + textStatus);
-        }
-    });
+        });
+    } else{*/
+        $.ajax({
+            type: "post",
+            url: "transfer_record_request_form",
+            timeout: 2000,
+            data: $('#record_request').serialize() + '&' + $('#record_request_1').serialize() + '&record_status=' + actionID + '&rfid_table_id=' + rfid_table_id + '&predict_output_quantity=' + num + '&predict_output_weight=' + weight,
 
+            success: function(data) {
+                console.log(data.data);
+                switch (actionID) {
+                    case 0:
+                        if(data.data == 1){
+                        myAlertSucc("保存成功！稍后自动刷新。。");
+                        setTimeout(function(){refresh_page();},3000);
+                        } else{
+                            myAlertFail("保存失败！");
+                        }
+                        break;
+                    case 1:
+                        if(data.data == 1){
+                        myAlertSucc("提交成功！稍后自动刷新。。");
+                        setTimeout(function(){refresh_page();},3000);
+                        } else{
+                            myAlertFail("提交失败！");
+                        }
+                        break;
+                    default:
+                        break;
+                }
+                // $('input').val('');
+                // setTimeout(function(){refresh_page();},3000);
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                alert('保存失败，请重新保存。');
+                console.log("Error: Ajax_Content_Load " + errorThrown);
+                console.log("XMLHttpRequest.status: " + XMLHttpRequest.status);
+                console.log("XMLHttpRequest.readyState: " + XMLHttpRequest.readyState);
+                console.log("textStatus: " + textStatus);
+            }
+        });
+    // }
 }
 
 
