@@ -158,7 +158,7 @@ function setBMap() {
         }, {
             "sTitle": "偏移距离(千米)"
         }, {
-            "sTitle": "状态"
+            "sTitle": "停留状态"
         }],
         "bPaginate": true, //翻页功能
         "bLengthChange": true, //改变每页显示数据数量
@@ -415,7 +415,7 @@ function getVehicleRoutes() {
                         gpsRouteArray[gpsIdx][dataIdx].offset_distance = -1;
                     }
                     if ((!gpsRouteArray[gpsIdx][dataIdx].stay_status) || (gpsRouteArray[gpsIdx][dataIdx].stay_status == null) || (typeof(gpsRouteArray[gpsIdx][dataIdx].stay_status) == 'undefined')) {
-                        gpsRouteArray[gpsIdx][dataIdx].stay_status = 0;
+                        gpsRouteArray[gpsIdx][dataIdx].stay_status = '0';
                     }
                     var dateTime = gpsRouteArray[gpsIdx][dataIdx].datetime;
                     var dateTimeObj = new Date(dateTime);
@@ -502,10 +502,10 @@ function getVehicleRoutes() {
                     itemData[0] = gpsIdx;
                     itemData[1] = gpsRouteTimeArray[gpsIdx][dataIdx].speed;
                     itemData[2] = offsetDistance;
-                    if (!stay_status) {
+                    if (stay_status == '0') {
                         itemData[3] = "正常";
                     } else {
-                        itemData[3] = "<span style='color:red'>停留超时<span>";
+                        itemData[3] = "<span style='color:red'>超时<span>";
                     }
                     tableData.push(itemData);
                     var dataTable = $('#vehicle_panel').dataTable();
@@ -516,13 +516,13 @@ function getVehicleRoutes() {
                     vehicleMarkerList[gpsIdx].setPosition(newPoint);
 
                     if (offsetDistance < alarm_distance_json.warning_distance) {
-                        if (!stay_status) {
+                        if (stay_status == '0') {
                             vehicleMarkerList[gpsIdx].setIcon(lorryIconGreen);
                         } else {
                             vehicleMarkerList[gpsIdx].setIcon(lorryIconRed);
                         }
                     } else if ((offsetDistance >= alarm_distance_json.warning_distance) && (offsetDistance < alarm_distance_json.alarm_distance)) {
-                        if (!stay_status) {
+                        if (stay_status == '0') {
                             vehicleMarkerList[gpsIdx].setIcon(lorryIconYellow);
                         } else {
                             vehicleMarkerList[gpsIdx].setIcon(lorryIconRed);
