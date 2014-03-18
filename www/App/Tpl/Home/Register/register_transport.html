@@ -301,7 +301,7 @@ function county_code_jurisdiction(county_name) {
                                     </td>
                                     <td>运输单位所属行业</td>
                                     <td>
-                                        <select type="text" class="form-control input-md" name="production_unit_trade" id="production_unit_trade">
+                                        <select type="text" class="form-control input-md" name="transport_unit_trade" id="transport_unit_trade">
                                         </select>
                                         <!-- <input type="text" class="form-control input-md" name="transport_unit_trade" id="transport_unit_trade">    -->
 
@@ -423,10 +423,7 @@ function county_code_jurisdiction(county_name) {
                     $('#transport_unit_registration_type').append('<option>' + enterprise_register_type[idx] + '</option>');
                 }
                 for (var idx in trade) {
-                    $('#reception_unit_trade').append('<option>' + trade[idx] + '</option>');
-                }
-                for (var idx in trade) {
-                    $('#reception_unit_trade').append('<option>' + trade[idx] + '</option>');
+                    $('#transport_unit_trade').append('<option>' + trade[idx] + '</option>');
                 }
                 </script>
 
