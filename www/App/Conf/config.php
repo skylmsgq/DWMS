@@ -19,10 +19,10 @@ return array(
 	// 添加数据库配置信息
 	'DB_TYPE'   => 'mysql',   // 数据库类型
 
-	// 'DB_HOST'   => '202.120.58.100', // 服务器地址
-	'DB_HOST'   => 'localhost', // 本地服务器地址
+	'DB_HOST'   => '202.120.58.100', // 服务器地址
+	// 'DB_HOST'   => 'localhost', // 本地服务器地址
 	'DB_USER'   => 'root',    // 用户名
-	// 'DB_PWD'    => 'root1234',  // 本地密码
+	// 'DB_PWD'    => 'sky363738',  // 本地密码
 	'DB_PWD'    => 'omnilab',
 	'DB_PORT'   => 3306,    // 端口
 	'DB_NAME'   => 'dwms',  // 数据库名
@@ -66,8 +66,8 @@ return array(
 	//'DEFAULT_FILTER' => '',
 
 	// 定制系统错误页面模板
-	'TMPL_EXCEPTION_FILE' => './404.html',
+	// 'TMPL_EXCEPTION_FILE' => './404.html',
 	// 设置错误重定向页面
-	'ERROR_PAGE' => './404.html',
+	// 'ERROR_PAGE' => './404.html',
 );
 ?>
