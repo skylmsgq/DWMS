@@ -80,13 +80,13 @@ class test{
 	}
 	function test()
 	{
-		$con = mysql_connect('localhost', 'root', 'omnilab');
+		$con = mysql_connect('202.120.58.100', 'root', 'omnilab');
 			if (!$con)
 			{
 			 die('Could not connect: ' . mysql_error());
 			}
 			mysql_select_db("dwms", $con);
-			$id = 308001150931;
+			$id = 308033501795;
 			
 			$result = mysql_query("SELECT device_id FROM device WHERE device_serial_num='".$id."'");
 				while($row = mysql_fetch_array($result))
@@ -108,7 +108,7 @@ class test{
 				//	 $routeId = $row['route_id'];
 				//	echo $routeId."\n";
 				//}
-				$routeId = 74;
+				$routeId = 78;
 				$result3 = mysql_query("SELECT route_lng_lat FROM route WHERE route_id='".$routeId."'");
 				while($row = mysql_fetch_array($result3))
 				{
