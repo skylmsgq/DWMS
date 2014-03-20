@@ -135,7 +135,7 @@ class DistrictBusinessAction extends DistrictCommonAction{
 		$result = M( 'manifest' )->save( $current_manifest_status );
 
 		if(I( 'post.manifest_status' )==4){
-			$route = M( 'route' )->where( array( 'production_unit_id' => I( 'post.production_unit_id' ),'reception_unit_id' => I( 'post.reception_unit_id' ) ) )->find();
+			$route = M( 'route' )->where( array( 'production_unit_id' => I( 'post.production_unit_id' ),'reception_unit_id' => I( 'post.reception_unit_id' ),'route_status' => 0 ) )->find();
 			$route_id = $route['route_id'];
 			$manifest = M('manifest')->where( array( 'manifest_id' => $manifest_id ) )->find();
 			$route_vehicle = M('route_vehicle');
