@@ -320,7 +320,7 @@ class DistrictMapAction extends DistrictCommonAction{
 			$data['height'] = rand(-10, 30);
 			$data['speed'] = rand(0, 100);
 			$data['status'] = 0;
-			$data['vehicle_id'] = 24;
+			$data['vehicle_id'] = 44;
 			$data['stay_status'] = 0;
 			$gps->add( $data );
 		}
