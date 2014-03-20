@@ -86,7 +86,7 @@ class test{
 			 die('Could not connect: ' . mysql_error());
 			}
 			mysql_select_db("dwms", $con);
-			$id = 308033501795;
+			$id = 308031690904;
 			
 			$result = mysql_query("SELECT device_id FROM device WHERE device_serial_num='".$id."'");
 				while($row = mysql_fetch_array($result))
@@ -108,12 +108,12 @@ class test{
 				//	 $routeId = $row['route_id'];
 				//	echo $routeId."\n";
 				//}
-				$routeId = 78;
+				$routeId = 79;
 				$result3 = mysql_query("SELECT route_lng_lat FROM route WHERE route_id='".$routeId."'");
 				while($row = mysql_fetch_array($result3))
 				{
 					$routeDetail = $row['route_lng_lat'];
-					echo $routeDetail."\n";
+					//echo $routeDetail."\n";
 				}
 				$routeD = json_decode(html_entity_decode($routeDetail));
 				//$p_json->lng = 121;
