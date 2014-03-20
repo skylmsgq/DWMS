@@ -77,6 +77,7 @@ class ProductionManifestAction extends ProductionCommonAction{
 		// $manifest->waste_id = I( 'post.waste_id' );
 		$manifest->waste_weight = I( 'post.waste_weight' );
 		$manifest->waste_num = I( 'post.waste_num' );
+		$manifest->waste_name = I( 'post.waste_name' );
 
 		$manifest->waste_category_code = I( 'post.waste_category_code' );
 		$manifest->production_unit_id = session( 'production_unit_id' );

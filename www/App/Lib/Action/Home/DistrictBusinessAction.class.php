@@ -12,7 +12,7 @@ class DistrictBusinessAction extends DistrictCommonAction{
 	// 业务办理->待办业务->转移备案管理
 	public function transfer_record_management() {
 		$record = M( 'record' );
-		$condition['jurisdiction_id'] = array('EQ', session( 'jurisdiction_id' ) );
+		// $condition['jurisdiction_id'] = array('EQ', session( 'jurisdiction_id' ) );
 		$condition['record_status'] = array('EQ', 1);
 		$join = $record->join( 'production_unit ON record.production_unit_id = production_unit.production_unit_id' )->where( $condition )->select();
 		$record_json = json_encode( $join );
@@ -84,12 +84,12 @@ class DistrictBusinessAction extends DistrictCommonAction{
 	// 业务办理->待办业务->转移联单管理
 	public function transfer_manifest_management() {
 		$manifest = M( 'manifest' );
-		$condition['jurisdiction_id'] = array('EQ', session( 'jurisdiction_id' ) );
+		// $condition['jurisdiction_id'] = array('EQ', session( 'jurisdiction_id' ) );
 		$condition['manifest_status'] = array('EQ', 3);
 		$production_manifest = $manifest->join( 'production_unit ON manifest.production_unit_id = production_unit.production_unit_id' )->where( $condition )->select();
 		$production_manifest_json = json_encode( $production_manifest );
 
-		$condition['jurisdiction_id'] = array('EQ', session( 'jurisdiction_id' ) );
+		// $condition['jurisdiction_id'] = array('EQ', session( 'jurisdiction_id' ) );
 		$condition['manifest_status'] = array('EQ', 10);
 		$reception_manifest = $manifest->join( 'reception_unit ON manifest.reception_unit_id = reception_unit.reception_unit_id' )->where( $condition )->select();
 		$reception_manifest_json = json_encode( $reception_manifest );
@@ -354,7 +354,7 @@ class DistrictBusinessAction extends DistrictCommonAction{
 	// 业务办理->待办业务->联单编号绑定
 		public function manifest_serial_num_binding(){
 		$manifest = M( 'manifest' );
-		$condition['jurisdiction_id'] = array('EQ', session( 'jurisdiction_id' ) );
+		// $condition['jurisdiction_id'] = array('EQ', session( 'jurisdiction_id' ) );
 		$condition['manifest_status'] = array('EQ', 11);
 		$condition['_string'] = 'manifest_serial_num is null';
 		$join = $manifest->join( 'production_unit ON manifest.production_unit_id = production_unit.production_unit_id' )->where( $condition )->select();
