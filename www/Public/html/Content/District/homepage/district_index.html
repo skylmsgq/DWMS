@@ -133,6 +133,46 @@ $.ajax({
     var colors = Highcharts.getOptions().colors,
         name = '危废代码';
     var data = new Array();
+    // for (var idx in categories){     
+    //     var unit_name = new Array();
+    //     var total_num = new Array();
+    //     var waste_total = 0;
+    //     var i = 0; 
+    //     for(var x in rfid){
+    //         if(rfid[x]['waste_category_code']==categories[idx]){
+    //             var z = true;
+    //             waste_total = waste_total + parseFloat(rfid[x]['waste_total']);
+    //             for(var a in unit_name){
+    //                 if(rfid[x]['production_unit_name']==unit_name[a]){
+    //                     total_num[a] = total_num[a] + parseFloat(rfid[x]['waste_total']);
+    //                     z = false;
+    //                     break;
+    //                 } 
+    //             }    
+    //             if(z == false){
+    //                 continue;
+    //             } else{
+    //                 unit_name[i] = rfid[x]['production_unit_name'];
+    //                 total_num[i] = parseFloat(rfid[x]['waste_total']);
+    //                 i++;  
+    //             }    
+    //         }   
+    //     }
+
+    //     waste_total = parseInt(waste_total*100)/100;
+    //     data[idx] = {
+    //         y: waste_total,
+    //         color: colors[idx],
+    //         drilldown: {
+    //                     name: categories[idx],
+    //                     categories: unit_name,
+    //                     data: total_num,
+    //                     color: colors[0]
+    //                 }
+    //     }
+          
+    // };
+
     for (var idx in categories){     
         var unit_name = new Array();
         var total_num = new Array();
@@ -141,10 +181,10 @@ $.ajax({
         for(var x in rfid){
             if(rfid[x]['waste_category_code']==categories[idx]){
                 var z = true;
-                waste_total = waste_total + parseFloat(rfid[x]['waste_total']);
+                waste_total = waste_total + parseFloat(rfid[x]['waste_weight']);
                 for(var a in unit_name){
                     if(rfid[x]['production_unit_name']==unit_name[a]){
-                        total_num[a] = total_num[a] + parseFloat(rfid[x]['waste_total']);
+                        total_num[a] = total_num[a] + parseFloat(rfid[x]['waste_weight']);
                         z = false;
                         break;
                     } 
@@ -153,7 +193,7 @@ $.ajax({
                     continue;
                 } else{
                     unit_name[i] = rfid[x]['production_unit_name'];
-                    total_num[i] = parseFloat(rfid[x]['waste_total']);
+                    total_num[i] = parseFloat(rfid[x]['waste_weight']);
                     i++;  
                 }    
             }   
