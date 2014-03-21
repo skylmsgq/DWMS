@@ -53,6 +53,14 @@ class LoginAction extends CommonAction{
 	public function show_page()
 	{
 		switch ( session('user_type') ) {
+			case 2:
+				$unit_name = M('agency')->where( array( 'user_id' => session( 'user_id' ) ) )->getField('agency_name');
+				$this->unit_name = $unit_name;
+				break;
+			case 3:
+				$unit_name = M('agency')->where( array( 'user_id' => session( 'user_id' ) ) )->getField('agency_name');
+				$this->unit_name = $unit_name;
+				break;
 			case 4:
 				$unit_name = M('agency')->where( array( 'user_id' => session( 'user_id' ) ) )->getField('agency_name');
 				$this->unit_name = $unit_name;
