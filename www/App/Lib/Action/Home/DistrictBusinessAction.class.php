@@ -369,6 +369,26 @@ class DistrictBusinessAction extends DistrictCommonAction{
 	public function manifest_serial_num_binding_page($manifest_id=""){
 		$manifest_id_json = json_encode($manifest_id);
 
+		$manifest = M('manifest')->where( array( 'manifest_id' => $manifest_id ) )->find();
+
+		$vehicle_num_1 = M( 'vehicle' )->where( array( 'vehicle_id' => $manifest['vehicle_id_1'] ) )->getField('vehicle_num');
+		$this->vehicle_num_1 = $vehicle_num_1;
+
+		if($manifest['vehicle_id_2']){
+			$vehicle_num_2 = M( 'vehicle' )->where( array( 'vehicle_id' => $manifest['vehicle_id_2'] ) )->getField('vehicle_num');
+			$this->vehicle_num_2 = $vehicle_num_2;
+		}
+		$p_id=M('manifest')->where("manifest_id='$manifest_id'")->getField('production_unit_id');
+		$t_id=M('manifest')->where("manifest_id='$manifest_id'")->getField('transport_unit_id');
+		$r_id=M('manifest')->where("manifest_id='$manifest_id'")->getField('reception_unit_id');
+		$p_name=M('production_unit')->where("production_unit_id='$p_id'")->getField('production_unit_name');
+		$t_name=M('transport_unit')->where("transport_unit_id='$t_id'")->getField('transport_unit_name');
+		$r_name=M('reception_unit')->where("reception_unit_id='$r_id'")->getField('reception_unit_name');
+		$this->p_name=$p_name;
+		$this->t_name=$t_name;
+		$this->r_name=$r_name;
+		$this->manifest	= $manifest;
+
 		$tmp_content=$this->fetch( './Public/html/Content/District/business/manifest_serial_num_binding_page.html' );
 		$tmp_content="<script>manifest_id = $manifest_id_json; </script> $tmp_content";
 		$this->ajaxReturn( $tmp_content );
@@ -419,9 +439,9 @@ class DistrictBusinessAction extends DistrictCommonAction{
 	public function get_chart()
 	{
 		$str="";
-		$pnum=M('production_unit')->where( array( 'jurisdiction_id' => session('jurisdiction_id') ))->count();
-		$tnum=M('transport_unit')->where( array( 'jurisdiction_id' => session('jurisdiction_id') ))->count();
-		$rnum=M('reception_unit')->where( array( 'jurisdiction_id' => session('jurisdiction_id') ))->count();
+		$pnum=M('production_unit')->count();
+		$tnum=M('transport_unit')->count();
+		$rnum=M('reception_unit')->count();
 		$manifestnum=M('manifest')->count();
 		$recordnum=M('record')->count();
 		$devicenum=M('device')->count();
