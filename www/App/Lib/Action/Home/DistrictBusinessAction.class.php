@@ -439,9 +439,9 @@ class DistrictBusinessAction extends DistrictCommonAction{
 	public function get_chart()
 	{
 		$str="";
-		$pnum=M('production_unit')->where( array( 'jurisdiction_id' => session('jurisdiction_id') ))->count();
-		$tnum=M('transport_unit')->where( array( 'jurisdiction_id' => session('jurisdiction_id') ))->count();
-		$rnum=M('reception_unit')->where( array( 'jurisdiction_id' => session('jurisdiction_id') ))->count();
+		$pnum=M('production_unit')->count();
+		$tnum=M('transport_unit')->count();
+		$rnum=M('reception_unit')->count();
 		$manifestnum=M('manifest')->count();
 		$recordnum=M('record')->count();
 		$devicenum=M('device')->count();
