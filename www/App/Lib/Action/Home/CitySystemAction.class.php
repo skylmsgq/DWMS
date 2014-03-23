@@ -523,93 +523,93 @@ class CitySystemAction extends CityCommonAction{
 	}
 
 	// 系统管理->设备管理->添加设备
-	public function device_add() {
-		$agency = M( 'agency' )->where( array( 'user_id' => session( 'user_id' ) ) )->field( 'agency_id, agency_name' )->select();
-		$condition['jurisdiction_id'] = array( 'EQ', session( 'jurisdiction_id' ) );
-		$production_unit = M( 'production_unit' )->where( $condition )->field( 'production_unit_id, production_unit_name' )->select();
-		$transport_unit = M( 'transport_unit' )->where( $condition )->field( 'transport_unit_id, transport_unit_name' )->select();
-		$reception_unit = M( 'reception_unit' )->where( $condition )->field( 'reception_unit_id, reception_unit_name' )->select();
-		if ( $agency && $production_unit && $transport_unit && $reception_unit ) {
-			$agency_json = json_encode( $agency );
-			$production_unit_json = json_encode( $production_unit );
-			$transport_unit_json = json_encode( $transport_unit );
-			$reception_unit_json = json_encode( $reception_unit );
-			$tmp_content=$this->fetch( './Public/html/Content/City/system/device_add.html' );
-			$tmp_content = "<script> agency_json=$agency_json; production_unit_json=$production_unit_json; transport_unit_json=$transport_unit_json; reception_unit_json=$reception_unit_json; </script> $tmp_content";
-			$this->ajaxReturn( $tmp_content );
-		} else {
-			$this->ajaxReturn( "加载页面失败，请重新点击侧边栏加载页面。" );
-		}
-	}
+	// public function device_add() {
+	// 	$agency = M( 'agency' )->where( array( 'user_id' => session( 'user_id' ) ) )->field( 'agency_id, agency_name' )->select();
+	// 	$condition['jurisdiction_id'] = array( 'EQ', session( 'jurisdiction_id' ) );
+	// 	$production_unit = M( 'production_unit' )->where( $condition )->field( 'production_unit_id, production_unit_name' )->select();
+	// 	$transport_unit = M( 'transport_unit' )->where( $condition )->field( 'transport_unit_id, transport_unit_name' )->select();
+	// 	$reception_unit = M( 'reception_unit' )->where( $condition )->field( 'reception_unit_id, reception_unit_name' )->select();
+	// 	if ( $agency && $production_unit && $transport_unit && $reception_unit ) {
+	// 		$agency_json = json_encode( $agency );
+	// 		$production_unit_json = json_encode( $production_unit );
+	// 		$transport_unit_json = json_encode( $transport_unit );
+	// 		$reception_unit_json = json_encode( $reception_unit );
+	// 		$tmp_content=$this->fetch( './Public/html/Content/City/system/device_add.html' );
+	// 		$tmp_content = "<script> agency_json=$agency_json; production_unit_json=$production_unit_json; transport_unit_json=$transport_unit_json; reception_unit_json=$reception_unit_json; </script> $tmp_content";
+	// 		$this->ajaxReturn( $tmp_content );
+	// 	} else {
+	// 		$this->ajaxReturn( "加载页面失败，请重新点击侧边栏加载页面。" );
+	// 	}
+	// }
 
 	// 系统管理->设备管理->添加设备：接收添加设备信息
-	public function device_add_form() {
-		$device = M( 'device' );
-		$device_serial_num = I( 'post.device_serial_num' );
-		$result = $device->where( array( 'device_serial_num' => $device_serial_num ) )->find();
-		if ( $result ) {
-			$this->ajaxReturn( 'exist' );
-		}
-		$device_type_id = I( 'post.device_type_id' );
-		switch ( $device_type_id ) {
-		case '0':
-			$device_name = '全球定位仪';
-			$device_type = 'GPS';
-			$device_status = 0;
+	// public function device_add_form() {
+	// 	$device = M( 'device' );
+	// 	$device_serial_num = I( 'post.device_serial_num' );
+	// 	$result = $device->where( array( 'device_serial_num' => $device_serial_num ) )->find();
+	// 	if ( $result ) {
+	// 		$this->ajaxReturn( 'exist' );
+	// 	}
+	// 	$device_type_id = I( 'post.device_type_id' );
+	// 	switch ( $device_type_id ) {
+	// 	case '0':
+	// 		$device_name = '全球定位仪';
+	// 		$device_type = 'GPS';
+	// 		$device_status = 0;
 
-			$gps_table_name = 'gps_' . $device_serial_num;
-			$create_table = 'CREATE TABLE `' . $gps_table_name . '` (
-				`id` int(11) NOT NULL AUTO_INCREMENT,
-				`datetime` datetime DEFAULT NULL,
-				`longitude` double DEFAULT NULL,
-				`latitude` double DEFAULT NULL,
-				`bmap_longitude` double DEFAULT NULL,
-				`bmap_latitude` double DEFAULT NULL,
-				`height` double DEFAULT NULL,
-				`speed` double DEFAULT NULL,
-				`status` tinyint(4) DEFAULT NULL,
-				`vehicle_id` int(11) DEFAULT NULL,
-				`offset_distance` double DEFAULT NULL,
-				`stay_status` int(11) DEFAULT NULL,
-				PRIMARY KEY (`id`),
-				KEY `fk_vehicle_id_' . $gps_table_name .'` (`vehicle_id`),
-				CONSTRAINT `fk_vehicle_id_' . $gps_table_name . '` FOREIGN KEY (`vehicle_id`) REFERENCES `vehicle` (`vehicle_id`)
-				) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;';
-			$model = new Model();
-			$model->execute($create_table);
+	// 		$gps_table_name = 'gps_' . $device_serial_num;
+	// 		$create_table = 'CREATE TABLE `' . $gps_table_name . '` (
+	// 			`id` int(11) NOT NULL AUTO_INCREMENT,
+	// 			`datetime` datetime DEFAULT NULL,
+	// 			`longitude` double DEFAULT NULL,
+	// 			`latitude` double DEFAULT NULL,
+	// 			`bmap_longitude` double DEFAULT NULL,
+	// 			`bmap_latitude` double DEFAULT NULL,
+	// 			`height` double DEFAULT NULL,
+	// 			`speed` double DEFAULT NULL,
+	// 			`status` tinyint(4) DEFAULT NULL,
+	// 			`vehicle_id` int(11) DEFAULT NULL,
+	// 			`offset_distance` double DEFAULT NULL,
+	// 			`stay_status` int(11) DEFAULT NULL,
+	// 			PRIMARY KEY (`id`),
+	// 			KEY `fk_vehicle_id_' . $gps_table_name .'` (`vehicle_id`),
+	// 			CONSTRAINT `fk_vehicle_id_' . $gps_table_name . '` FOREIGN KEY (`vehicle_id`) REFERENCES `vehicle` (`vehicle_id`)
+	// 			) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;';
+	// 		$model = new Model();
+	// 		$model->execute($create_table);
 
-			break;
-		case '1':
-			$device_name = '手持读写器';
-			$device_type = 'Android';
-			$device_status = 1;
-			break;
-		default:
-			$this->ajaxReturn( 'fail' );
-			break;
-		}
-		$data['device_name'] = $device_name;
-		$data['device_type_id'] = $device_type_id;
-		$data['device_type'] = $device_type;
-		$data['device_serial_num'] = $device_serial_num;
-		$data['jurisdiction_id'] = session( 'jurisdiction_id' );
-		$data['ownership_type'] = I( 'post.ownership_type' );
-		$data['ownership_id'] = I( 'post.ownership_id' );
-		$data['device_status'] = $device_status;
-		$time = date( 'Y-m-d H:i:s', time() );
-		$data['device_add_time'] = $time;
-		$data['device_modify_time'] = $time;
-		$result = $device->add( $data );
-		if ( $result ) {
-			$this->ajaxReturn( 'success' );
-		} else {
-			$this->ajaxReturn( 'fail' );
-		}
-	}
+	// 		break;
+	// 	case '1':
+	// 		$device_name = '手持读写器';
+	// 		$device_type = 'Android';
+	// 		$device_status = 1;
+	// 		break;
+	// 	default:
+	// 		$this->ajaxReturn( 'fail' );
+	// 		break;
+	// 	}
+	// 	$data['device_name'] = $device_name;
+	// 	$data['device_type_id'] = $device_type_id;
+	// 	$data['device_type'] = $device_type;
+	// 	$data['device_serial_num'] = $device_serial_num;
+	// 	$data['jurisdiction_id'] = session( 'jurisdiction_id' );
+	// 	$data['ownership_type'] = I( 'post.ownership_type' );
+	// 	$data['ownership_id'] = I( 'post.ownership_id' );
+	// 	$data['device_status'] = $device_status;
+	// 	$time = date( 'Y-m-d H:i:s', time() );
+	// 	$data['device_add_time'] = $time;
+	// 	$data['device_modify_time'] = $time;
+	// 	$result = $device->add( $data );
+	// 	if ( $result ) {
+	// 		$this->ajaxReturn( 'success' );
+	// 	} else {
+	// 		$this->ajaxReturn( 'fail' );
+	// 	}
+	// }
 
 	// 系统管理->设备管理->管理设备
 	public function device_management() {
-		$condition['jurisdiction_id'] = array( 'EQ', session( 'jurisdiction_id' ) );
+		$condition['jurisdiction_id'] = array( 'GT', 1 );
 		$condition['device_status'] = array( 'LT', 3 );
 		$device = M( 'device' )->where( $condition )->select();
 		if ( $device ) {
@@ -662,7 +662,7 @@ class CitySystemAction extends CityCommonAction{
 		$device = M( 'device' )->where( array( 'device_id' => $record_id ) )->find();
 		$this->device = $device;
 		$agency = M( 'agency' )->where( array( 'user_id' => session( 'user_id' ) ) )->field( 'agency_id, agency_name' )->select();
-		$condition['jurisdiction_id'] = array( 'EQ', session( 'jurisdiction_id' ) );
+		$condition['jurisdiction_id'] = array( 'GT', 1 );
 		$production_unit = M( 'production_unit' )->where( $condition )->field( 'production_unit_id, production_unit_name' )->select();
 		$transport_unit = M( 'transport_unit' )->where( $condition )->field( 'transport_unit_id, transport_unit_name' )->select();
 		$reception_unit = M( 'reception_unit' )->where( $condition )->field( 'reception_unit_id, reception_unit_name' )->select();
@@ -751,7 +751,7 @@ class CitySystemAction extends CityCommonAction{
 	public function upload_law(){
 		$condition['document_type'] = 0;
 		$condition['document_status'] = 0;
-		$condition['jurisdiction_id'] = session( 'jurisdiction_id' );
+		$condition['jurisdiction_id'] = array('GT',1);
 		$document = M( 'document' )->where( $condition )->select();
 		// if ( $document ) {
 			$document_json = json_encode( $document );
@@ -835,7 +835,7 @@ class CitySystemAction extends CityCommonAction{
 	public function upload_manual(){
 		$condition['document_type'] = 1;
 		$condition['document_status'] = 0;
-		$condition['jurisdiction_id'] = session( 'jurisdiction_id' );
+		$condition['jurisdiction_id'] = array('GT',1);
 		$document = M( 'document' )->where( $condition )->select();
 		// if ( $document ) {
 			$document_json = json_encode( $document );
@@ -918,7 +918,7 @@ class CitySystemAction extends CityCommonAction{
 	public function upload_announcement(){
 		$condition['document_type'] = 2;
 		$condition['document_status'] = 0;
-		$condition['jurisdiction_id'] = session( 'jurisdiction_id' );
+		$condition['jurisdiction_id'] = array('GT',1);
 		$document = M( 'document' )->where( $condition )->select();
 		// if ( $document ) {
 			$document_json = json_encode( $document );

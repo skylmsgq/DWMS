@@ -1,0 +1,291 @@
+<div class="row">
+    <div class="col-md-12">
+         <div class="panel panel-primary">
+          <div class="panel-heading">
+            <h3 class="panel-title">危废数量统计图</h3>
+          </div>
+          <div class="panel-body">   
+            <div id="statistics_graph_waste_container" style="width: 800px; height: 400px; margin: 0 auto"></div>
+          </div>
+</div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+         <div class="panel panel-primary">
+          <div class="panel-heading">
+            <h3 class="panel-title">2013年度危废数据统计图</h3>
+          </div>
+          <div class="panel-body">   
+            <div id="container" style="width: 800px; height: 400px; margin: 0 auto"></div>
+          </div>
+</div>
+    </div>
+</div>
+<script type="text/javascript">
+	    
+    var colors = Highcharts.getOptions().colors,
+        categories = ['MSIE', 'Firefox', 'Chrome', 'Safari', 'Opera'],
+        name = 'Browser brands',
+        data = [{
+                y: 55.11,
+                color: colors[0],
+                drilldown: {
+                    name: 'MSIE versions',
+                    categories: ['MSIE 6.0', 'MSIE 7.0', 'MSIE 8.0', 'MSIE 9.0'],
+                    data: [10.85, 7.35, 33.06, 2.81],
+                    color: colors[0]
+                }
+            }, {
+                y: 21.63,
+                color: colors[1],
+                drilldown: {
+                    name: 'Firefox versions',
+                    categories: ['Firefox 2.0', 'Firefox 3.0', 'Firefox 3.5', 'Firefox 3.6', 'Firefox 4.0'],
+                    data: [0.20, 0.83, 1.58, 13.12, 5.43],
+                    color: colors[1]
+                }
+            }, {
+                y: 11.94,
+                color: colors[2],
+                drilldown: {
+                    name: 'Chrome versions',
+                    categories: ['Chrome 5.0', 'Chrome 6.0', 'Chrome 7.0', 'Chrome 8.0', 'Chrome 9.0',
+                        'Chrome 10.0', 'Chrome 11.0', 'Chrome 12.0'],
+                    data: [0.12, 0.19, 0.12, 0.36, 0.32, 9.91, 0.50, 0.22],
+                    color: colors[2]
+                }
+            }, {
+                y: 7.15,
+                color: colors[3],
+                drilldown: {
+                    name: 'Safari versions',
+                    categories: ['Safari 5.0', 'Safari 4.0', 'Safari Win 5.0', 'Safari 4.1', 'Safari/Maxthon',
+                        'Safari 3.1', 'Safari 4.1'],
+                    data: [4.55, 1.42, 0.23, 0.21, 0.20, 0.19, 0.14],
+                    color: colors[3]
+                }
+            }, {
+                y: 2.14,
+                color: colors[4],
+                drilldown: {
+                    name: 'Opera versions',
+                    categories: ['Opera 9.x', 'Opera 10.x', 'Opera 11.x'],
+                    data: [ 0.12, 0.37, 1.65],
+                    color: colors[4]
+                }
+            }];
+
+    function setChart(name, categories, data, color) {
+	chart.xAxis[0].setCategories(categories, false);
+	chart.series[0].remove(false);
+	chart.addSeries({
+		name: name,
+		data: data,
+		color: color || 'white'
+	}, false);
+	chart.redraw();
+    }
+
+    var chart = $('#statistics_graph_waste_container').highcharts({
+        chart: {
+            type: 'column'
+        },
+        title: {
+            text: 'Browser market share, April, 2011'
+        },
+        subtitle: {
+            text: 'Click the columns to view versions. Click again to view brands.'
+        },
+        xAxis: {
+            categories: categories
+        },
+        yAxis: {
+            title: {
+                text: 'Total percent market share'
+            }
+        },
+        plotOptions: {
+            column: {
+                cursor: 'pointer',
+                point: {
+                    events: {
+                        click: function() {
+                            var drilldown = this.drilldown;
+                            if (drilldown) { // drill down
+                                setChart(drilldown.name, drilldown.categories, drilldown.data, drilldown.color);
+                            } else { // restore
+                                setChart(name, categories, data);
+                            }
+                        }
+                    }
+                },
+                dataLabels: {
+                    enabled: true,
+                    color: colors[0],
+                    style: {
+                        fontWeight: 'bold'
+                    },
+                    formatter: function() {
+                        return this.y +'%';
+                    }
+                }
+            }
+        },
+        tooltip: {
+            formatter: function() {
+                var point = this.point,
+                    s = this.x +':<b>'+ this.y +'% market share</b><br/>';
+                if (point.drilldown) {
+                    s += 'Click to view '+ point.category +' versions';
+                } else {
+                    s += 'Click to return to browser brands';
+                }
+                return s;
+            }
+        },
+        series: [{
+            name: name,
+            data: data,
+            color: 'white'
+        }],
+        exporting: {
+            enabled: false
+        }
+    })
+    .highcharts(); // return chart
+
+$('#container').highcharts({
+      chart: {
+          type: 'spline'
+      },
+      title: {
+          text: 'Wind speed during two days'
+      },
+      subtitle: {
+          text: 'October 6th and 7th 2009 at two locations in Vik i Sogn, Norway'
+      },
+      xAxis: {
+          type: 'datetime'
+      },
+      yAxis: {
+          title: {
+              text: 'Wind speed (m/s)'
+          },
+          min: 0,
+          minorGridLineWidth: 0,
+          gridLineWidth: 0,
+          alternateGridColor: null,
+          plotBands: [{ // Light air
+              from: 0.3,
+              to: 1.5,
+              color: 'rgba(68, 170, 213, 0.1)',
+              label: {
+                  text: 'Light air',
+                  style: {
+                      color: '#606060'
+                  }
+              }
+          }, { // Light breeze
+              from: 1.5,
+              to: 3.3,
+              color: 'rgba(0, 0, 0, 0)',
+              label: {
+                  text: 'Light breeze',
+                  style: {
+                      color: '#606060'
+                  }
+              }
+          }, { // Gentle breeze
+              from: 3.3,
+              to: 5.5,
+              color: 'rgba(68, 170, 213, 0.1)',
+              label: {
+                  text: 'Gentle breeze',
+                  style: {
+                      color: '#606060'
+                  }
+              }
+          }, { // Moderate breeze
+              from: 5.5,
+              to: 8,
+              color: 'rgba(0, 0, 0, 0)',
+              label: {
+                  text: 'Moderate breeze',
+                  style: {
+                      color: '#606060'
+                  }
+              }
+          }, { // Fresh breeze
+              from: 8,
+              to: 11,
+              color: 'rgba(68, 170, 213, 0.1)',
+              label: {
+                  text: 'Fresh breeze',
+                  style: {
+                      color: '#606060'
+                  }
+              }
+          }, { // Strong breeze
+              from: 11,
+              to: 14,
+              color: 'rgba(0, 0, 0, 0)',
+              label: {
+                  text: 'Strong breeze',
+                  style: {
+                      color: '#606060'
+                  }
+              }
+          }, { // High wind
+              from: 14,
+              to: 15,
+              color: 'rgba(68, 170, 213, 0.1)',
+              label: {
+                  text: 'High wind',
+                  style: {
+                      color: '#606060'
+                  }
+              }
+          }]
+      },
+      tooltip: {
+          valueSuffix: ' m/s'
+      },
+      plotOptions: {
+          spline: {
+              lineWidth: 4,
+              states: {
+                  hover: {
+                      lineWidth: 5
+                  }
+              },
+              marker: {
+                  enabled: false
+              },
+              pointInterval: 3600000, // one hour
+              pointStart: Date.UTC(2009, 9, 6, 0, 0, 0)
+          }
+      },
+      series: [{
+          name: 'Hestavollane',
+          data: [4.3, 5.1, 4.3, 5.2, 5.4, 4.7, 3.5, 4.1, 5.6, 7.4, 6.9, 7.1,
+              7.9, 7.9, 7.5, 6.7, 7.7, 7.7, 7.4, 7.0, 7.1, 5.8, 5.9, 7.4,
+              8.2, 8.5, 9.4, 8.1, 10.9, 10.4, 10.9, 12.4, 12.1, 9.5, 7.5,
+              7.1, 7.5, 8.1, 6.8, 3.4, 2.1, 1.9, 2.8, 2.9, 1.3, 4.4, 4.2,
+              3.0, 3.0]
+
+      }, {
+          name: 'Voll',
+          data: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.1, 0.0, 0.3, 0.0,
+              0.0, 0.4, 0.0, 0.1, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+              0.0, 0.6, 1.2, 1.7, 0.7, 2.9, 4.1, 2.6, 3.7, 3.9, 1.7, 2.3,
+              3.0, 3.3, 4.8, 5.0, 4.8, 5.0, 3.2, 2.0, 0.9, 0.4, 0.3, 0.5, 0.4]
+      }]
+      ,
+      navigation: {
+          menuItemStyle: {
+              fontSize: '10px'
+          }
+      }
+  });
+</script>

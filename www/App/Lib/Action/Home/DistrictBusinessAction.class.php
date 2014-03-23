@@ -439,33 +439,33 @@ class DistrictBusinessAction extends DistrictCommonAction{
 	public function get_chart()
 	{
 		$str="";
-		$pnum=M('production_unit')->count();
-		$tnum=M('transport_unit')->count();
-		$rnum=M('reception_unit')->count();
-		$manifestnum=M('manifest')->count();
-		$recordnum=M('record')->count();
-		$devicenum=M('device')->count();
-		$vehiclenum=M('vehicle')->count();
+		$pnum=M('production_unit')->where( array( 'jurisdiction_id' => session('jurisdiction_id') ) )->count();
+		$tnum=M('transport_unit')->where( array( 'jurisdiction_id' => session('jurisdiction_id') ) )->count();
+		$rnum=M('reception_unit')->where( array( 'jurisdiction_id' => session('jurisdiction_id') ) )->count();
+		$manifestnum=M('manifest')->join('production_unit ON production_unit.production_unit_id = manifest.production_unit_id')->where( array( 'jurisdiction_id' => session('jurisdiction_id') ) )->count();
+		$recordnum=M('record')->join('production_unit ON production_unit.production_unit_id = record.production_unit_id')->where( array( 'jurisdiction_id' => session('jurisdiction_id') ) )->count();
+		$devicenum=M('device')->where( array('jurisdiction_id' => session('jurisdiction_id') ) )->count();
+		$vehiclenum=M('vehicle')->join('transport_unit ON transport_unit.transport_unit_id = vehicle.transport_unit_id')->where( array( 'jurisdiction_id' => session('jurisdiction_id') ) )->count();
 		
 		// $tong_num=M('rfid')->where("add_method=0")->sum('waste_total');
 		// $dai_num=M('rfid')->where("add_method=1")->sum('waste_total');
 
-		$tong_num=M('manifest')->where('manifest_status>0')->sum('waste_weight');
-		$dai_num=M('manifest')->where('manifest_status>0')->sum('waste_num');
+		$tong_num=M('manifest')->join('production_unit ON production_unit.production_unit_id = manifest.production_unit_id')->where( array( 'jurisdiction_id' => session('jurisdiction_id') ) )->sum('waste_weight');
+		$dai_num=M('manifest')->join('production_unit ON production_unit.production_unit_id = manifest.production_unit_id')->where( array( 'jurisdiction_id' => session('jurisdiction_id') ) )->sum('waste_num');
 
 		// $categories=M('rfid')->join('waste_category ON rfid.waste_category_id = waste_category.waste_category_id')->group('waste_category_code')->where(array('add_method'=>0))->getField('waste_category_code',true);
 		// $rfid = M('rfid');
 		// $condition['add_method'] = array('EQ',0);
 		// $join = $rfid->join('production_unit ON rfid.production_unit_id = production_unit.production_unit_id' )->join('waste_category ON rfid.waste_category_id = waste_category.waste_category_id')->where($condition)->select();
 
-		$categories = M('manifest')->group('waste_category_code')->getField('waste_category_code',true);
+		$categories = M('manifest')->join('production_unit ON production_unit.production_unit_id = manifest.production_unit_id')->where( array( 'jurisdiction_id' => session('jurisdiction_id') ) )->group('waste_category_code')->getField('waste_category_code',true);
 		$manifest = M('manifest');
-		$join = $manifest->join( 'production_unit ON manifest.production_unit_id = production_unit.production_unit_id' )->where('manifest_status>0')->select();
+		$join = $manifest->join( 'production_unit ON manifest.production_unit_id = production_unit.production_unit_id' )->where( array( 'jurisdiction_id' => session('jurisdiction_id') ) )->select();
 
 
 		$dict=array();
 		$count_waste=0;
-		$wastelist=M('production_unit')->select();
+		$wastelist=M('production_unit')->where( array('jurisdiction_id' => session('jurisdiction_id') ) )->select();
 		foreach ($wastelist as  $value) {
 			$type_list=explode(",", $value['production_unit_waste']);
 			foreach ($type_list as $val) {

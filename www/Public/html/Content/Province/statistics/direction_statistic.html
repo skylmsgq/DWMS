@@ -1,0 +1,83 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-primary">
+    <div class="panel-heading">
+        <h3 class="panel-title">转移去向统计图</h3>
+    </div>
+    <div class="panel-body">
+        <div id="container" style="width: 800px; height: 400px; margin: 0 auto"></div>
+    </div>
+</div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$('#container').highcharts({
+        chart: {
+            type: 'column',
+            margin: [ 50, 50, 100, 80]
+        },
+        title: {
+            text: '危废转移去向'
+        },
+        xAxis: {
+            categories: [
+                '合肥市',
+                '芜湖市',
+                '安庆市',
+                '蚌埠市',
+                '淮南市',
+                '马鞍山市',
+                '淮北市',
+                '铜陵市',
+                '黄山市',
+                '滁州市',
+                '阜阳市',
+                '宿州市',
+                '六安市',
+                '宣城市',
+                '池州市',
+                '跨省',
+                '境外'
+            ],
+            labels: {
+                rotation: -30,
+                align: 'right',
+                style: {
+                    fontSize: '13px',
+                    fontFamily: 'Verdana, sans-serif'
+                }
+            }
+        },
+        yAxis: {
+            min: 0,
+            title: {
+                text: '危废重量（单位：公斤）'
+            }
+        },
+        legend: {
+            enabled: false
+        },
+        tooltip: {
+            pointFormat: '运入危废重量: <b>{point.y:.1f} 公斤</b>',
+        },
+        series: [{
+            name: 'Population',
+            data: [34.4, 21.8, 20.1, 20, 19.6, 19.5, 19.1, 18.4, 18, 20, 11,
+                17.3, 16.8, 15, 14.7, 14.5, 15],
+            dataLabels: {
+                enabled: true,
+                rotation: -90,
+                color: '#FFFFFF',
+                align: 'right',
+                x: 4,
+                y: 10,
+                style: {
+                    fontSize: '13px',
+                    fontFamily: 'Verdana, sans-serif',
+                    textShadow: '0 0 3px black'
+                }
+            }
+        }]
+    });
+</script>

@@ -10,8 +10,88 @@ class CityProductionAction extends CityCommonAction{
 	}
 
 	// 危废产生单位->企业基本信息->企业基本信息
-	public function production_basic_information(){
-		$production_unit = M( 'production_unit' )->where( array( 'jurisdiction_id' => session( 'jurisdiction_id' ) ) )->getField('production_unit_id,production_unit_name,production_unit_address,waste_location_county');
+	public function production_basic_information_2(){
+		$production_unit = M( 'production_unit' )->where( array( 'jurisdiction_id' => 2 ) )->getField('production_unit_id,production_unit_name,production_unit_address,waste_location_county');
+		$production_unit_json = json_encode( $production_unit );
+		$tmp_content = $this->fetch('./Public/html/Content/City/production/production_basic_information.html');
+		$tmp_content = "<script>production_unit_json = $production_unit_json;</script> $tmp_content";
+		$this->ajaxReturn($tmp_content);
+	}
+
+	public function production_basic_information_3(){
+		$production_unit = M( 'production_unit' )->where( array( 'jurisdiction_id' => 3 ) )->getField('production_unit_id,production_unit_name,production_unit_address,waste_location_county');
+		$production_unit_json = json_encode( $production_unit );
+		$tmp_content = $this->fetch('./Public/html/Content/City/production/production_basic_information.html');
+		$tmp_content = "<script>production_unit_json = $production_unit_json;</script> $tmp_content";
+		$this->ajaxReturn($tmp_content);
+	}
+
+	public function production_basic_information_4(){
+		$production_unit = M( 'production_unit' )->where( array( 'jurisdiction_id' => 4 ) )->getField('production_unit_id,production_unit_name,production_unit_address,waste_location_county');
+		$production_unit_json = json_encode( $production_unit );
+		$tmp_content = $this->fetch('./Public/html/Content/City/production/production_basic_information.html');
+		$tmp_content = "<script>production_unit_json = $production_unit_json;</script> $tmp_content";
+		$this->ajaxReturn($tmp_content);
+	}
+
+	public function production_basic_information_5(){
+		$production_unit = M( 'production_unit' )->where( array( 'jurisdiction_id' => 5 ) )->getField('production_unit_id,production_unit_name,production_unit_address,waste_location_county');
+		$production_unit_json = json_encode( $production_unit );
+		$tmp_content = $this->fetch('./Public/html/Content/City/production/production_basic_information.html');
+		$tmp_content = "<script>production_unit_json = $production_unit_json;</script> $tmp_content";
+		$this->ajaxReturn($tmp_content);
+	}
+
+	public function production_basic_information_6(){
+		$production_unit = M( 'production_unit' )->where( array( 'jurisdiction_id' => 6 ) )->getField('production_unit_id,production_unit_name,production_unit_address,waste_location_county');
+		$production_unit_json = json_encode( $production_unit );
+		$tmp_content = $this->fetch('./Public/html/Content/City/production/production_basic_information.html');
+		$tmp_content = "<script>production_unit_json = $production_unit_json;</script> $tmp_content";
+		$this->ajaxReturn($tmp_content);
+	}
+
+	public function production_basic_information_7(){
+		$production_unit = M( 'production_unit' )->where( array( 'jurisdiction_id' => 7 ) )->getField('production_unit_id,production_unit_name,production_unit_address,waste_location_county');
+		$production_unit_json = json_encode( $production_unit );
+		$tmp_content = $this->fetch('./Public/html/Content/City/production/production_basic_information.html');
+		$tmp_content = "<script>production_unit_json = $production_unit_json;</script> $tmp_content";
+		$this->ajaxReturn($tmp_content);
+	}
+
+	public function production_basic_information_8(){
+		$production_unit = M( 'production_unit' )->where( array( 'jurisdiction_id' => 8 ) )->getField('production_unit_id,production_unit_name,production_unit_address,waste_location_county');
+		$production_unit_json = json_encode( $production_unit );
+		$tmp_content = $this->fetch('./Public/html/Content/City/production/production_basic_information.html');
+		$tmp_content = "<script>production_unit_json = $production_unit_json;</script> $tmp_content";
+		$this->ajaxReturn($tmp_content);
+	}
+
+	public function production_basic_information_9(){
+		$production_unit = M( 'production_unit' )->where( array( 'jurisdiction_id' => 9 ) )->getField('production_unit_id,production_unit_name,production_unit_address,waste_location_county');
+		$production_unit_json = json_encode( $production_unit );
+		$tmp_content = $this->fetch('./Public/html/Content/City/production/production_basic_information.html');
+		$tmp_content = "<script>production_unit_json = $production_unit_json;</script> $tmp_content";
+		$this->ajaxReturn($tmp_content);
+	}
+
+	public function production_basic_information_10(){
+		$production_unit = M( 'production_unit' )->where( array( 'jurisdiction_id' => 10 ) )->getField('production_unit_id,production_unit_name,production_unit_address,waste_location_county');
+		$production_unit_json = json_encode( $production_unit );
+		$tmp_content = $this->fetch('./Public/html/Content/City/production/production_basic_information.html');
+		$tmp_content = "<script>production_unit_json = $production_unit_json;</script> $tmp_content";
+		$this->ajaxReturn($tmp_content);
+	}
+
+	public function production_basic_information_11(){
+		$production_unit = M( 'production_unit' )->where( array( 'jurisdiction_id' => 11 ) )->getField('production_unit_id,production_unit_name,production_unit_address,waste_location_county');
+		$production_unit_json = json_encode( $production_unit );
+		$tmp_content = $this->fetch('./Public/html/Content/City/production/production_basic_information.html');
+		$tmp_content = "<script>production_unit_json = $production_unit_json;</script> $tmp_content";
+		$this->ajaxReturn($tmp_content);
+	}
+
+	public function production_basic_information_12(){
+		$production_unit = M( 'production_unit' )->where( array( 'jurisdiction_id' => 12 ) )->getField('production_unit_id,production_unit_name,production_unit_address,waste_location_county');
 		$production_unit_json = json_encode( $production_unit );
 		$tmp_content = $this->fetch('./Public/html/Content/City/production/production_basic_information.html');
 		$tmp_content = "<script>production_unit_json = $production_unit_json;</script> $tmp_content";
@@ -27,8 +107,88 @@ class CityProductionAction extends CityCommonAction{
 	}
 
 	// 危废产生单位->危险废物台账->危废产生统计
-	public function waste_account_monthly_statistics(){
-		$production_unit = M( 'production_unit' )->where( array( 'jurisdiction_id' =>session('jurisdiction_id') ) )->select();
+	public function waste_account_monthly_statistics_2(){
+		$production_unit = M( 'production_unit' )->where( array( 'jurisdiction_id' => 2 ) )->select();
+		$production_unit_json = json_encode($production_unit);
+		$tmp_content = $this->fetch( './Public/html/Content/City/production/waste_account_monthly_statistics.html' );
+		$tmp_content = "<script>production_unit_json = $production_unit_json;</script> $tmp_content";
+		$this->ajaxReturn( $tmp_content );
+	}
+
+	public function waste_account_monthly_statistics_3(){
+		$production_unit = M( 'production_unit' )->where( array( 'jurisdiction_id' => 3 ) )->select();
+		$production_unit_json = json_encode($production_unit);
+		$tmp_content = $this->fetch( './Public/html/Content/City/production/waste_account_monthly_statistics.html' );
+		$tmp_content = "<script>production_unit_json = $production_unit_json;</script> $tmp_content";
+		$this->ajaxReturn( $tmp_content );
+	}
+
+	public function waste_account_monthly_statistics_4(){
+		$production_unit = M( 'production_unit' )->where( array( 'jurisdiction_id' => 4 ) )->select();
+		$production_unit_json = json_encode($production_unit);
+		$tmp_content = $this->fetch( './Public/html/Content/City/production/waste_account_monthly_statistics.html' );
+		$tmp_content = "<script>production_unit_json = $production_unit_json;</script> $tmp_content";
+		$this->ajaxReturn( $tmp_content );
+	}
+
+	public function waste_account_monthly_statistics_5(){
+		$production_unit = M( 'production_unit' )->where( array( 'jurisdiction_id' => 5 ) )->select();
+		$production_unit_json = json_encode($production_unit);
+		$tmp_content = $this->fetch( './Public/html/Content/City/production/waste_account_monthly_statistics.html' );
+		$tmp_content = "<script>production_unit_json = $production_unit_json;</script> $tmp_content";
+		$this->ajaxReturn( $tmp_content );
+	}
+
+	public function waste_account_monthly_statistics_6(){
+		$production_unit = M( 'production_unit' )->where( array( 'jurisdiction_id' => 6 ) )->select();
+		$production_unit_json = json_encode($production_unit);
+		$tmp_content = $this->fetch( './Public/html/Content/City/production/waste_account_monthly_statistics.html' );
+		$tmp_content = "<script>production_unit_json = $production_unit_json;</script> $tmp_content";
+		$this->ajaxReturn( $tmp_content );
+	}
+
+	public function waste_account_monthly_statistics_7(){
+		$production_unit = M( 'production_unit' )->where( array( 'jurisdiction_id' => 7 ) )->select();
+		$production_unit_json = json_encode($production_unit);
+		$tmp_content = $this->fetch( './Public/html/Content/City/production/waste_account_monthly_statistics.html' );
+		$tmp_content = "<script>production_unit_json = $production_unit_json;</script> $tmp_content";
+		$this->ajaxReturn( $tmp_content );
+	}
+
+	public function waste_account_monthly_statistics_8(){
+		$production_unit = M( 'production_unit' )->where( array( 'jurisdiction_id' => 8 ) )->select();
+		$production_unit_json = json_encode($production_unit);
+		$tmp_content = $this->fetch( './Public/html/Content/City/production/waste_account_monthly_statistics.html' );
+		$tmp_content = "<script>production_unit_json = $production_unit_json;</script> $tmp_content";
+		$this->ajaxReturn( $tmp_content );
+	}
+
+	public function waste_account_monthly_statistics_9(){
+		$production_unit = M( 'production_unit' )->where( array( 'jurisdiction_id' => 9 ) )->select();
+		$production_unit_json = json_encode($production_unit);
+		$tmp_content = $this->fetch( './Public/html/Content/City/production/waste_account_monthly_statistics.html' );
+		$tmp_content = "<script>production_unit_json = $production_unit_json;</script> $tmp_content";
+		$this->ajaxReturn( $tmp_content );
+	}
+
+	public function waste_account_monthly_statistics_10(){
+		$production_unit = M( 'production_unit' )->where( array( 'jurisdiction_id' => 10 ) )->select();
+		$production_unit_json = json_encode($production_unit);
+		$tmp_content = $this->fetch( './Public/html/Content/City/production/waste_account_monthly_statistics.html' );
+		$tmp_content = "<script>production_unit_json = $production_unit_json;</script> $tmp_content";
+		$this->ajaxReturn( $tmp_content );
+	}
+
+	public function waste_account_monthly_statistics_11(){
+		$production_unit = M( 'production_unit' )->where( array( 'jurisdiction_id' => 11 ) )->select();
+		$production_unit_json = json_encode($production_unit);
+		$tmp_content = $this->fetch( './Public/html/Content/City/production/waste_account_monthly_statistics.html' );
+		$tmp_content = "<script>production_unit_json = $production_unit_json;</script> $tmp_content";
+		$this->ajaxReturn( $tmp_content );
+	}
+
+	public function waste_account_monthly_statistics_12(){
+		$production_unit = M( 'production_unit' )->where( array( 'jurisdiction_id' => 12 ) )->select();
 		$production_unit_json = json_encode($production_unit);
 		$tmp_content = $this->fetch( './Public/html/Content/City/production/waste_account_monthly_statistics.html' );
 		$tmp_content = "<script>production_unit_json = $production_unit_json;</script> $tmp_content";

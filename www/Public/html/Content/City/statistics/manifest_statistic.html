@@ -1,0 +1,196 @@
+<div class="row">
+    <div class="col-md-12">
+       <div class="panel panel-primary">
+    <div class="panel-heading">
+        <h3 class="panel-title">转移申请，转移联单数据统计图</h3>
+    </div>
+    <div class="panel-body">
+        <div id="container" style="width: 800px; height: 400px; margin: 0 auto"></div>
+    </div>
+</div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+       <div class="panel panel-primary">
+    <div class="panel-heading">
+        <h3 class="panel-title">联单信息统计表</h3>
+    </div>
+    <div class="panel-body">
+        <table class="table" id="statistics_table_manifest_container">
+        </table>
+    </div>
+</div>
+    </div>
+</div>
+
+<script type="text/javascript">
+var record_number = 10,
+    manifest_number = 10,
+    delete_record_num = 3,
+    delete_manifest_num = 5,
+    count_waste = 100,
+    tong_num = 100,
+    dai_num = 100;
+    $('#statistics_table_manifest_container').dataTable({
+        "aaData": [
+            /* Reduced data set */
+            ["转移申请总数", record_number ],
+            ["转移联单总数", manifest_number],
+            ["已作废申请数目", delete_record_num],
+            ["已作废联单数目", delete_manifest_num],
+            ["废物类型总数", count_waste+" 种"],
+            ["桶装废物总量", tong_num+" 公斤"], 
+            ["袋装废物总量", dai_num+" 个"],
+        ],
+        "aoColumns": [{
+            "sTitle": "统计类型"
+        }, {
+            "sTitle": "统计总数"
+        }],
+        "iDisplayLength": 10,
+        "sPaginationType": "full_numbers",
+        "bLengthChange": false,
+        "bInfo": false,
+        "bFilter": false,
+        "bSort": false,
+        "oLanguage": {
+                "oPaginate": {
+                    "sFirst": "首页",
+                    "sPrevious": "前一页",
+                    "sNext": "后一页",
+                    "sLast": "尾页"
+                },
+                // "sZeroRecords": "没有检索到数据"
+                /*"sProcessing": "<img src='./loading.gif' />"*/
+            }
+
+    });
+
+var options = ({
+        chart: {
+            type: 'spline',
+            renderTo:'container'
+        },
+        title: {
+            text: '转移申请，转移联单数据统计'
+        },
+        subtitle: {
+            text: '来源：2013年度本市联单数据'
+        },
+        xAxis: {
+            categories: ['一月', '二月', '三月', '四月', '五月', '六月',
+                '七月', '八月', '九月', '十月', '十一月', '十二月'],
+            labels:{
+                enabled:true
+            }
+        },
+        yAxis: {
+            title: {
+                text: '数目'
+            },
+            labels: {
+                formatter: function() {
+                    return this.value +'°'
+                },
+                enabled:true
+            },
+            gridLineWidth:1
+        },
+        credits:{
+            enabled:true,
+            position:{
+                align:'left',
+                x:50
+            },
+            style:{
+                color:'red',
+                fontWeight:'bold'
+            }
+        },
+        tooltip: {
+            crosshairs: true,
+            shared: true
+        },
+        legend:{
+            enabled:true
+        },
+        plotOptions: {
+            spline: {
+                marker: {
+                    radius: 4,
+                    lineColor: '#666666',
+                    lineWidth: 1
+                },
+                animation:false
+            }
+        },
+        series: [{
+            name: '转移申请',
+            marker: {
+                symbol: 'square'
+            },
+            data: [7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, {
+                y: 26.5,
+            }, 23.3, 18.3, 13.9, 9.6]
+
+        }, {
+            name: '转移联单',
+            marker: {
+                symbol: 'diamond'
+            },
+            data: [{
+                y: 3.9,
+            }, 4.2, 5.7, 8.5, 11.9, 15.2, 17.0, 16.6, 14.2, 10.3, 6.6, 4.8]
+        }]
+    });
+    
+    var chart = new Highcharts.Chart(options);
+    
+    var creditsEnabled = false;
+    var legendEnabled  = false;
+    var xLabelsEnabled = false;
+    var yLabelsEnabled = false;
+    var yTitleEnabled  = "数量";
+    var yGridLinesEnabled = 1;
+ 
+    
+    $("button.update").click(function(){
+        var target = $(this).attr("target"); 
+            
+        if(target == "credits") {
+            options.credits.enabled = creditsEnabled;
+            creditsEnabled = !creditsEnabled;
+        }
+        
+        if(target == "legend") {
+            options.legend.enabled = legendEnabled;
+            legendEnabled = !legendEnabled;
+        }
+        
+        if(target == "xLabels") {
+            options.xAxis.labels.enabled = xLabelsEnabled;
+            xLabelsEnabled = !xLabelsEnabled;
+        }
+        
+        if(target == "yLabels") {
+            options.yAxis.labels.enabled = yLabelsEnabled;
+            yLabelsEnabled = !yLabelsEnabled;
+        }
+        
+        if(target == "yTitle") {
+            options.yAxis.title.text = (yTitleEnabled=="数目" ? null : '数目');
+            yTitleEnabled = (yTitleEnabled=="数目" ? null : '数目');
+        }
+        
+        if(target == "gridLines") {
+            options.yAxis.gridLineWidth = (yGridLinesEnabled==1 ? 0 :1);
+            yGridLinesEnabled = (yGridLinesEnabled==1 ? 0 :1);
+        }
+        
+        
+        chart = new Highcharts.Chart(options);
+        
+    });
+    
+</script>

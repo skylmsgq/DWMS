@@ -292,6 +292,26 @@ $.ajax({
         })
         .highcharts(); // return chart
 
+    var data_2 = new Array();
+    for (var idx in categories){     
+        var waste_total_2 = 0;
+        var i = 0; 
+        for(var x in rfid){
+            if(rfid[x]['waste_category_code']==categories[idx]){
+                waste_total_2 = waste_total_2 + parseFloat(rfid[x]['waste_weight']);   
+            }   
+        }
+        // waste_total_2 = parseInt(waste_total_2*100)/100;
+        data_2[idx] = {
+            name: categories[idx],
+            y: waste_total_2,
+            sliced: true,
+            selected: true
+        }
+          
+    };
+    console.log(data_2);
+
     $('#statistics_graph_waste_container_2').highcharts({
         chart: {
             plotBackgroundColor: null,
@@ -319,24 +339,7 @@ $.ajax({
         series: [{
             type: 'pie',
             name: '比例',
-            data: [
-                        
-                        {
-                            name: 'HW01',
-                            y: 0.1,
-                            sliced: true,
-                            selected: true
-                        },
-                        ['HW09',    0.3],
-                        ['HW13',     0.2 ],
-                        ['HW19',    0.1],
-                        ['HW23',     0.1 ],
-                        ['HW24',    0.05],
-                        ['HW27',     0.05 ],
-                        ['HW38',    0.05],
-                        ['HW30',     0.05],
-                      
-            ]
+            data: data_2
         }]
 
     });

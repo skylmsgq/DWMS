@@ -15,18 +15,10 @@ DWMS_sidebar_config = {
         "sidebar_group_title": "危废联单查询",
         "sidebar_group_content": [{
             "id": 0,
-            "name": "生产单位转移联单",
-            "url": "{:U('Home/CityTransfer/production_transfer_manifest')}"
-        }, {
-            "id": 1,
-            "name": "运输单位转移联单",
-            "url": "{:U('Home/CityTransfer/transport_transfer_manifest')}"
-        }, {
-            "id": 2,
-            "name": "接受单位转移联单",
-            "url": "{:U('Home/CityTransfer/reception_transfer_manifest')}"
+            "name": "危废联单",
+            "url": "{:U('Home/CityTransfer/transfer_manifest')}"
         }]
-    }, {
+    }/*, {
         "sidebar_group_id": 2,
         "sidebar_group_title": "统计分析",
         "sidebar_group_content": [{
@@ -42,7 +34,7 @@ DWMS_sidebar_config = {
             "name": "转移专题定制",
             "url": "{:U('Home/CityTransfer/transfer_topic_customize')}"
         }]
-    }]
+    }*/]
 }
 </script>
 <div class="row">

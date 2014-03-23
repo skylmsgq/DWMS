@@ -1,0 +1,453 @@
+<div class="panel panel-primary" style="margin-bottom:0px;">
+    <div class="panel panel-heading" style="margin-bottom:0px; height:40px;">
+        <h3 class="panel-title" style="float:left;">运输路线规划</h3>
+        <button type="button" class="btn btn-default btn-xs" id="toFullScreen" onclick="toFullScreen(); fullScreen=1;" style="float:right;">全屏</button>
+        <div id="exitFullScreen" style="display:none; float:right;">
+            <button type="button" class="btn btn-default btn-xs" id="showSidebar" onclick="showSidebar();">
+                <span class="glyphicon glyphicon-chevron-left"></span>显示右侧边栏
+            </button>
+            <button type="button" class="btn btn-default btn-xs" id="hideSidebar" onclick="hideSidebar();" style="display:none">
+                <span class="glyphicon glyphicon-chevron-right"></span>隐藏右侧边栏
+            </button>
+            <button type="button" class="btn btn-default btn-xs" onclick="exitFullScreen(); fullScreen=0;">退出全屏</button>
+        </div>
+    </div>
+    <div class="panel panel-body" id="map_parent" style="margin-bottom:0px">
+
+        <div id="div_input-group">
+            <div id="myAlert"></div>
+            <div class="row" style="position:absolute; z-index:1;">
+                <div class="col-md-1">
+                </div>
+                <div class="col-md-10">
+                    <table style="background-color:#FFFFFF; border-radius:5px;">
+                        <tr>
+                            <td>
+                                <select class="form-control input-sm" id="selectProductionUnit" onchange="showProductionUnit();">
+                                    <option value="-1">请选择生产单位</option>
+                                </select>
+                            </td>
+                            <td>
+                                <select class="form-control input-sm" id="selectReceptionUnit" onchange="showReceptionUnit();">
+                                    <option value="-1">请选择接受单位</option>
+                                </select>
+                            </td>
+                            <td>
+                                <select class="form-control input-sm" id="selectStrategy">
+                                    <option value="0">最小时间</option>
+                                    <option value="1">最短距离</option>
+                                    <option value="2">避开高速</option>
+                                </select>
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-info btn-sm" onclick="search();">查询</button>
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-warning btn-sm" onclick="clearScreen();">清除</button>
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-success btn-sm" onclick="submit();">提交</button>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="col-md-1">
+                </div>
+            </div>
+        </div>
+
+        <div id="map_panel" style="display:none; width:350px; float:right; position:absolute; right:0px; z-index:1; ">
+            <div id="myAlertFull"></div>
+            <table class="table table-bordered table-hover table-condensed table-responsive" style="margin-bottom:0px; background-color:#FFFFFF;">
+                <tr>
+                    <td colspan="3">
+                        <select class="form-control input-sm" id="selectProductionUnitFull" onchange="showProductionUnit();">
+                            <option value="-1">请选择生产单位</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <select class="form-control input-sm" id="selectReceptionUnitFull" onchange="showReceptionUnit();">
+                            <option value="-1">请选择接受单位</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <select class="form-control input-sm" id="selectStrategyFull">
+                            <option value="0">最小时间</option>
+                            <option value="1">最短距离</option>
+                            <option value="2">避开高速</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="text-align:center;">
+                        <button type="button" class="btn btn-info btn-sm" onclick="search();">查询</button>
+                    </td>
+                    <td style="text-align:center;">
+
+                        <button type="button" class="btn btn-warning btn-sm" onclick="clearScreen();">清除</button>
+                    </td>
+                    <td style="text-align:center;">
+                        <button type="button" class="btn btn-success btn-sm" onclick="submit();">提交</button>
+                    </td>
+                </tr>
+            </table>
+            <div class="blank_div"></div>
+            <div id="route_panel" style="border-radius:5px;"></div>
+        </div>
+
+        <div id="map_container" style="width:100%;float:left;"></div>
+
+    </div>
+</div>
+
+<script type="text/javascript" src="__PUBLIC__/js/fullscreen.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/myAlert.js"></script>
+
+<script type="text/javascript">
+if (typeof(intervalWarning) != 'undefined') {
+    clearInterval(intervalWarning);
+}
+if (typeof(playbackTimeout) != 'undefined') {
+    clearTimeout(playbackTimeout);
+}
+var fullScreen = 0;
+
+var path = new Array();
+var route_detail = new String();
+var routePolicy = [BMAP_DRIVING_POLICY_LEAST_TIME, BMAP_DRIVING_POLICY_LEAST_DISTANCE, BMAP_DRIVING_POLICY_AVOID_HIGHWAYS];
+
+var selectProductionUnitVal;
+var selectReceptionUnitVal;
+
+var productionUnitMarker;
+var receptionUnitMarker;
+var productionUnitInfoWindow;
+var receptionUnitInfoWindow;
+
+var polylineArray = new Array();
+var markerArray = new Array();
+
+function setBMap() {
+    var windowHeight = $(window).height();
+    $("#map_container").css("height", "" + windowHeight - 350 + "px");
+
+    BaiduMap = new BMap.Map("map_container"); // 创建Map实例
+    BaiduMap.centerAndZoom("安庆", 14); // 初始化地图,设置中心点坐标和地图级别
+    BaiduMap.addControl(new BMap.NavigationControl()); // 添加默认缩放平移控件
+    BaiduMap.addControl(new BMap.ScaleControl()); // 添加默认比例尺控件
+    BaiduMap.addControl(new BMap.OverviewMapControl()); //添加默认缩略地图控件
+    BaiduMap.enableScrollWheelZoom(); //启用滚轮放大缩小
+    BaiduMap.addControl(new BMap.MapTypeControl({
+        anchor: BMAP_ANCHOR_BOTTOM_RIGHT
+    })); // 添加默认地图控件
+    BaiduMap.setCurrentCity("上海"); // 设置地图显示的城市 此项是必须设置的
+    var mapStyle = {
+        features: ["road", "building", "water", "land", "point"],
+        style: "light"
+    };
+    BaiduMap.setMapStyle(mapStyle);
+
+    var selectProductionUnit = $('#selectProductionUnit');
+    var selectProductionUnitFull = $('#selectProductionUnitFull');
+    for (var idx in production_unit_json) {
+        selectProductionUnit.append('<option value="' + idx + '">' + production_unit_json[idx].production_unit_name + '</option>');
+        selectProductionUnitFull.append('<option value="' + idx + '">' + production_unit_json[idx].production_unit_name + '</option>');
+    }
+
+    var selectReceptionUnit = $('#selectReceptionUnit');
+    var selectReceptionUnitFull = $('#selectReceptionUnitFull');
+    for (var idx in reception_unit_json) {
+        selectReceptionUnit.append('<option value="' + idx + '">' + reception_unit_json[idx].reception_unit_name + '</option>');
+        selectReceptionUnitFull.append('<option value="' + idx + '">' + reception_unit_json[idx].reception_unit_name + '</option>');
+    }
+
+    var iconPoint = new BMap.Point(production_unit_json[0].production_unit_longitude, production_unit_json[0].production_unit_latitude);
+    var productionUnitIcon = new BMap.Icon("__PUBLIC__/image/06red.png", new BMap.Size(32, 32), {
+        anchor: new BMap.Size(16, 16),
+        imageOffset: new BMap.Size(0, 0) // 设置图片偏移
+    });
+    // 创建标注对象并添加到地图
+    productionUnitMarker = new BMap.Marker(iconPoint, {
+        icon: productionUnitIcon,
+        title: "危废产生单位"
+    });
+
+    var infoWindowContent = "危废产生单位";
+    var infoWindowOption = {
+        width: 0, // 信息窗口宽度
+        height: 0, // 信息窗口高度
+        title: "", // 信息窗口标题
+    };
+    productionUnitInfoWindow = new BMap.InfoWindow(infoWindowContent, infoWindowOption);
+    productionUnitMarker.addEventListener("click", function(e) {
+        BaiduMap.openInfoWindow(productionUnitInfoWindow, this.getPosition());
+    });
+
+    var iconPoint = new BMap.Point(reception_unit_json[0].reception_unit_longitude, reception_unit_json[0].reception_unit_latitude);
+    var receptionUnitIcon = new BMap.Icon("__PUBLIC__/image/03black_32.png", new BMap.Size(32, 32), {
+        anchor: new BMap.Size(16, 16),
+        imageOffset: new BMap.Size(0, 0) // 设置图片偏移
+    });
+    // 创建标注对象并添加到地图
+    receptionUnitMarker = new BMap.Marker(iconPoint, {
+        icon: receptionUnitIcon,
+        title: "危废接受单位"
+    });
+    var infoWindowContent = "危废接受单位";
+    var infoWindowOption = {
+        width: 0, // 信息窗口宽度
+        height: 0, // 信息窗口高度
+        title: "", // 信息窗口标题
+    };
+    receptionUnitInfoWindow = new BMap.InfoWindow(infoWindowContent, infoWindowOption);
+    receptionUnitMarker.addEventListener("click", function(e) {
+        BaiduMap.openInfoWindow(receptionUnitInfoWindow, this.getPosition());
+    });
+
+    $(".anchorBL").hide();
+}
+
+function loadScript() {
+    var script = document.createElement("script");
+    script.src = "http://api.map.baidu.com/api?v=2.0&ak=KDdzQZSRLv89h4yrti56L5Gy&callback=setBMap";
+    document.body.appendChild(script);
+}
+
+loadScript();
+
+function judgeProductionUnit() {
+    if (fullScreen) {
+        selectProductionUnitVal = $('#selectProductionUnitFull').val();
+    } else {
+        selectProductionUnitVal = $('#selectProductionUnit').val();
+    }
+    if (selectProductionUnitVal == '-1') {
+        myAlertFail("请先选择生产单位");
+        return 1;
+    }
+    return 0;
+}
+
+function judgeReceptionUnit() {
+    if (fullScreen) {
+        selectReceptionUnitVal = $('#selectReceptionUnitFull').val();
+    } else {
+        selectReceptionUnitVal = $('#selectReceptionUnit').val();
+    }
+    if (selectReceptionUnitVal == '-1') {
+        myAlertFail("请先选择接受单位");
+        return 1;
+    }
+    return 0;
+}
+
+function showProductionUnit() {
+    judgeProductionUnit();
+
+    if (productionUnitMarker) {
+        BaiduMap.removeOverlay(productionUnitMarker);
+    }
+    if (polylineRoute) {
+        BaiduMap.removeOverlay(polylineRoute);
+    }
+
+    productionUnitMarker.setPosition(new BMap.Point(production_unit_json[selectProductionUnitVal].production_unit_longitude, production_unit_json[selectProductionUnitVal].production_unit_latitude));
+    productionUnitInfoWindow.setContent("<table class='table table-striped table-bordered table-hover table-condensed table-responsive' style='margin-top:10px; margin-bottom:0px;'><tr><td>接受单位名称：</td><td>" + production_unit_json[selectProductionUnitVal].production_unit_name + "</td></tr><tr><td>接受单位电话：</td><td>" + production_unit_json[selectProductionUnitVal].production_unit_phone + "</td></tr><tr><td>接受单位地址：</td><td>" + production_unit_json[selectProductionUnitVal].production_unit_address + "</td></tr><tr><td>环保联系人姓名：</td><td>" + production_unit_json[selectProductionUnitVal].production_unit_contacts_name + "</td></tr><tr><td>环保联系人电话：</td><td>" + production_unit_json[selectProductionUnitVal].production_unit_contacts_phone + "</td></tr></table>");
+
+    BaiduMap.addOverlay(productionUnitMarker);
+}
+
+function showReceptionUnit() {
+    judgeReceptionUnit();
+
+    if (receptionUnitMarker) {
+        BaiduMap.removeOverlay(receptionUnitMarker);
+    }
+    if (polylineRoute) {
+        BaiduMap.removeOverlay(polylineRoute);
+    }
+
+    receptionUnitMarker.setPosition(new BMap.Point(reception_unit_json[selectReceptionUnitVal].reception_unit_longitude, reception_unit_json[selectReceptionUnitVal].reception_unit_latitude));
+    receptionUnitInfoWindow.setContent("<table class='table table-striped table-bordered table-hover table-condensed table-responsive' style='margin-top:10px; margin-bottom:0px;'><tr><td>接受单位名称：</td><td>" + reception_unit_json[selectReceptionUnitVal].reception_unit_name + "</td></tr><tr><td>接受单位电话：</td><td>" + reception_unit_json[selectReceptionUnitVal].reception_unit_phone + "</td></tr><tr><td>接受单位地址：</td><td>" + reception_unit_json[selectReceptionUnitVal].reception_unit_address + "</td></tr><tr><td>环保联系人姓名：</td><td>" + reception_unit_json[selectReceptionUnitVal].reception_unit_contacts_name + "</td></tr><tr><td>环保联系人电话：</td><td>" + reception_unit_json[selectReceptionUnitVal].reception_unit_contacts_phone + "</td></tr></table>");
+
+    BaiduMap.addOverlay(receptionUnitMarker);
+}
+
+var searchComplete = function(results) {
+    path = [];
+    route_detail = '';
+    if (transit.getStatus() == BMAP_STATUS_SUCCESS) { //检索成功。对应数值“0”。
+        // 获取第一个方案，目前仅有一条驾车方案，但是以后可能会同时给出多条方案
+        var plan = results.getPlan(0);
+        /*
+        // 获取方案的驾车线路，索引0表示第一条线路。
+        var route = plan.getRoute(0);
+        // 获取驾车路线的经纬度坐标
+        path = route.getPath();
+        */
+        var steps = new Array();
+        steps.push('<table style="font:12px arial,sans-serif;border-collapse:collapse" cellpadding="0" cellspacing="0" border="0"><tbody>');
+        for (var routeIdx = 0; routeIdx < plan.getNumRoutes(); ++routeIdx) {
+            var route = plan.getRoute(routeIdx);
+            var tmpPath = route.getPath();
+            path = path.concat(tmpPath);
+            for (var stepIdx = 0; stepIdx < route.getNumSteps(); ++stepIdx) {
+                var step = route.getStep(stepIdx);
+                steps.push('<tr style="cursor:pointer"><td style="border-bottom:1px solid #ccc;width:20px;vertical-align:top;text-align:right;padding:4px 3px">' + (routeIdx + 1) + '.' + (stepIdx + 1) + '</td><td style="border-bottom:1px solid #ccc;padding:2px;line-height:18px">' + step.getDescription() + '</td></tr>');
+            }
+        }
+        steps.push('</tbody></table><div style="border-bottom:1px solid #ccc;margin-bottom:10px;color:#7777cc;background:#e5ecf9;overflow:hidden;padding:2px;text-align:right"><span style="float:left;padding-left:6px">全程：' + plan.getDistance() + ' / 预计：' + plan.getDuration() + '</span></div>');
+        route_detail = steps.join('');
+        /*setTimeout(function(){
+            BaiduMap.setViewport([p1,p2]);   //调整到最佳视野
+        },1000);*/
+        var windowHeight = $(window).height();
+        $('#route_panel').css("width", "100%").css("height", windowHeight * 0.5 + "px").css("overflow", "auto");
+    } else if (transit.getStatus() == BMAP_STATUS_UNKNOWN_ROUTE) { //导航结果未知。对应数值“3”。
+        myAlertFail("导航结果未知。");
+        return;
+    } else {
+        myAlertFail("导航出现未知错误。");
+        return;
+    }
+};
+
+var markersSet = function(pois) {
+    for (var idx in pois) {
+        markerArray[idx] = pois[idx].marker;
+    }
+}
+
+var polylinesSet = function(routes) {
+    for (var idx in routes) {
+        polylineArray[idx] = routes[idx].getPolyline();
+    }
+}
+
+    function search() {
+        if (fullScreen) {
+            var selectStrategyVal = $('#selectStrategyFull').val();
+        } else {
+            var selectStrategyVal = $('#selectStrategy').val();
+        }
+        if (judgeProductionUnit()) {
+            return;
+        }
+        if (judgeReceptionUnit()) {
+            return;
+        }
+
+        if (typeof(transit) != 'undefined') {
+            transit.clearResults(); //清除导航结果
+        }
+
+        path = [];
+        route_detail = '';
+
+        var options = {
+            renderOptions: {
+                map: BaiduMap,
+                panel: "route_panel",
+                autoViewport: true, //启用自动调整地图层级，当指定了搜索结果所展现的地图时有效。
+                enableDragging: true, //起终点可进行拖拽
+                highlightMode: BMAP_HIGHLIGHT_ROUTE, // 驾车结果展现中点击列表后的展现策略。
+            },
+            policy: routePolicy[selectStrategyVal],
+            onSearchComplete: searchComplete,
+            onMarkersSet: markersSet,
+            onPolylinesSet: polylinesSet,
+        };
+
+        transit = new BMap.DrivingRoute(BaiduMap, options);
+
+        var p1_lng, p1_lat;
+        var p2_lng, p2_lat;
+
+        p1_lng = production_unit_json[selectProductionUnitVal].production_unit_longitude;
+        p1_lat = production_unit_json[selectProductionUnitVal].production_unit_latitude;
+
+        p2_lng = reception_unit_json[selectReceptionUnitVal].reception_unit_longitude;
+        p2_lat = reception_unit_json[selectReceptionUnitVal].reception_unit_latitude;
+
+        var p1 = new BMap.Point(p1_lng, p1_lat);
+        var p2 = new BMap.Point(p2_lng, p2_lat);
+        transit.search(p1, p2);
+    }
+
+    function clearScreen() {
+        while (marker = markerArray.pop()) {
+            BaiduMap.removeOverlay(marker);
+        }
+        while (polyline = polylineArray.pop()) {
+            BaiduMap.removeOverlay(polyline);
+        }
+
+        $('#route_panel').html("");
+    }
+
+    function submit() {
+        if (judgeProductionUnit()) {
+            return;
+        }
+        if (judgeReceptionUnit()) {
+            return;
+        }
+
+        if (path == []) {
+            myAlertFail("数据为空，不能提交");
+            return;
+        }
+        /*
+    var BMapPointArray = new Array();
+    for (var point_idx in path) {
+        var BMapPoint = {
+            "lng": path[point_idx].lng,
+            "lat": path[point_idx].lat
+        };
+        BMapPointArray.push(BMapPoint);
+    }
+    */
+
+        $.ajax({
+            type: "POST",
+            url: "{:U('Home/DistrictMap/ajax_transfer_route_plan')}",
+            dataType: 'JSON',
+            data: {
+                "production_unit_id": production_unit_json[selectProductionUnitVal].production_unit_id,
+                "reception_unit_id": reception_unit_json[selectReceptionUnitVal].reception_unit_id,
+                "route_lng_lat": JSON.stringify(path),
+                "route_detail": route_detail
+            },
+            success: function(data) {
+                switch (data) {
+                    case 'exist':
+                        myAlertFail("此生产单位到此接受单位的路线已存在，需要调整请删除后重新规划");
+                        break;
+                    case 'success':
+                        myAlertSucc("提交成功");
+                        clearScreen();
+                        path = [];
+                        route_detail = '';
+                        break;
+                    case 'fail':
+                        myAlertFail("提交失败");
+                        break;
+                    default:
+                        myAlertFail("未知错误");
+                        break;
+                }
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                myAlertFail("提交路线规划ajax请求失败");
+                console.log("Error:Ajax_Content_Load" + errorThrown);
+                console.log("XMLHttpRequest.status:" + XMLHttpRequest.status);
+                console.log("XMLHttpRequest.readyState:" + XMLHttpRequest.readyState);
+                console.log("textStatus:" + textStatus);
+            }
+        });
+    }
+</script>
