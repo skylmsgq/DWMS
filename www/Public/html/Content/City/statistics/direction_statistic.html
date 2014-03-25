@@ -12,6 +12,48 @@
 </div>
 
 <script type="text/javascript">
+var data = new Array(0,0,0,0,0,0,0,0,0,0,0,0,0,0);
+for(var idx in manifest){
+    switch(parseInt(manifest[idx]['jurisdiction_id'])) {
+        case 2:
+            data[0] = data[0] + parseFloat(manifest[idx]['waste_weight']);
+            break;
+        case 3:
+            data[1] = data[1] + parseFloat(manifest[idx]['waste_weight']);
+            break;
+        case 4:
+            data[2] = data[2] + parseFloat(manifest[idx]['waste_weight']);
+            break;
+        case 5:
+            data[3] = data[3] + parseFloat(manifest[idx]['waste_weight']);
+            break;
+        case 6:
+            data[4] = data[4] + parseFloat(manifest[idx]['waste_weight']);
+            break;
+        case 7:
+            data[5] = data[5] + parseFloat(manifest[idx]['waste_weight']);
+            break;
+        case 8:
+            data[6] = data[6] + parseFloat(manifest[idx]['waste_weight']);
+            break;
+        case 9:
+            data[7] = data[7] + parseFloat(manifest[idx]['waste_weight']);
+            break;
+        case 10:
+            data[8] = data[8] + parseFloat(manifest[idx]['waste_weight']);
+            break;
+        case 11:
+            data[9] = data[9] + parseFloat(manifest[idx]['waste_weight']);
+            break;
+        case 12:
+            data[10] = data[10] + parseFloat(manifest[idx]['waste_weight']);
+            break;
+        default:
+            data[11] = data[11] + parseFloat(manifest[idx]['waste_weight']);
+            break;
+    }
+}
+// console.log(data);
 $('#container').highcharts({
         chart: {
             type: 'column',
@@ -60,8 +102,7 @@ $('#container').highcharts({
         },
         series: [{
             name: 'Population',
-            data: [34.4, 21.8, 20.1, 20, 19.6, 19.5, 19.1, 18.4, 18,
-                17.3, 16.8, 15, 14.7, 14.5],
+            data: data,
             dataLabels: {
                 enabled: true,
                 rotation: -90,

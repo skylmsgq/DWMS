@@ -54,17 +54,36 @@ $('#statistics_graph_enterprise_container').highcharts({
                         
                         {
                             name: '生产企业',
-                            y: 40,
+                            y: parseInt(pnum),
                             sliced: true,
                             selected: true
                         },
-                        ['运输企业',    30],
-                        ['接受企业',    30 ],
+                        ['运输企业',    parseInt(tnum)],
+                        ['接受企业',    parseInt(rnum)],
                       
             ]
         }]
 
     });
+
+var data_2 = new Array();
+    for (var idx in categories){     
+        var waste_total_2 = 0;
+        var i = 0; 
+        for(var x in rfid){
+            if(rfid[x]['waste_category_code']==categories[idx]){
+                waste_total_2 = waste_total_2 + parseFloat(rfid[x]['waste_weight']);   
+            }   
+        }
+
+        data_2[idx] = {
+            name: categories[idx],
+            y: waste_total_2,
+            sliced: true,
+            selected: true
+        }
+          
+    };
 $('#statistics_graph_waste_container').highcharts({
         chart: {
             plotBackgroundColor: null,
@@ -92,24 +111,7 @@ $('#statistics_graph_waste_container').highcharts({
         series: [{
             type: 'pie',
             name: '比例',
-            data: [
-                        
-                        {
-                            name: 'HW01',
-                            y: 10,
-                            sliced: true,
-                            selected: true
-                        },
-                        ['HW09',    30],
-                        ['HW13',     20 ],
-                        ['HW19',    10],
-                        ['HW23',     10 ],
-                        ['HW24',    5],
-                        ['HW27',     5 ],
-                        ['HW38',    5],
-                        ['HW30',     5],
-                      
-            ]
+            data: data_2
         }]
 
     });

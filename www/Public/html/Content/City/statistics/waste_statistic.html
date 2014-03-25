@@ -22,226 +22,294 @@
 </div>
     </div>
 </div>
+
 <script type="text/javascript">
-	    
     var colors = Highcharts.getOptions().colors,
-        categories = ['MSIE', 'Firefox', 'Chrome', 'Safari', 'Opera'],
-        name = 'Browser brands',
-        data = [{
-                y: 55.11,
-                color: colors[0],
-                drilldown: {
-                    name: 'MSIE versions',
-                    categories: ['MSIE 6.0', 'MSIE 7.0', 'MSIE 8.0', 'MSIE 9.0'],
-                    data: [10.85, 7.35, 33.06, 2.81],
-                    color: colors[0]
-                }
-            }, {
-                y: 21.63,
-                color: colors[1],
-                drilldown: {
-                    name: 'Firefox versions',
-                    categories: ['Firefox 2.0', 'Firefox 3.0', 'Firefox 3.5', 'Firefox 3.6', 'Firefox 4.0'],
-                    data: [0.20, 0.83, 1.58, 13.12, 5.43],
-                    color: colors[1]
-                }
-            }, {
-                y: 11.94,
-                color: colors[2],
-                drilldown: {
-                    name: 'Chrome versions',
-                    categories: ['Chrome 5.0', 'Chrome 6.0', 'Chrome 7.0', 'Chrome 8.0', 'Chrome 9.0',
-                        'Chrome 10.0', 'Chrome 11.0', 'Chrome 12.0'],
-                    data: [0.12, 0.19, 0.12, 0.36, 0.32, 9.91, 0.50, 0.22],
-                    color: colors[2]
-                }
-            }, {
-                y: 7.15,
-                color: colors[3],
-                drilldown: {
-                    name: 'Safari versions',
-                    categories: ['Safari 5.0', 'Safari 4.0', 'Safari Win 5.0', 'Safari 4.1', 'Safari/Maxthon',
-                        'Safari 3.1', 'Safari 4.1'],
-                    data: [4.55, 1.42, 0.23, 0.21, 0.20, 0.19, 0.14],
-                    color: colors[3]
-                }
-            }, {
-                y: 2.14,
-                color: colors[4],
-                drilldown: {
-                    name: 'Opera versions',
-                    categories: ['Opera 9.x', 'Opera 10.x', 'Opera 11.x'],
-                    data: [ 0.12, 0.37, 1.65],
-                    color: colors[4]
-                }
-            }];
+        name = '危废代码';
+    var data = new Array();
+    for (var idx in categories){     
+        var unit_name = new Array();
+        var total_num = new Array();
+        var waste_total = 0;
+        var i = 0; 
+        for(var x in rfid){
+            if(rfid[x]['waste_category_code']==categories[idx]){
+                var z = true;
+                waste_total = waste_total + parseFloat(rfid[x]['waste_weight']);
+                for(var a in unit_name){
+                    if(rfid[x]['production_unit_name']==unit_name[a]){
+                        total_num[a] = total_num[a] + parseFloat(rfid[x]['waste_weight']);
+                        z = false;
+                        break;
+                    } 
+                }    
+                if(z == false){
+                    continue;
+                } else{
+                    unit_name[i] = rfid[x]['production_unit_name'];
+                    total_num[i] = parseFloat(rfid[x]['waste_weight']);
+                    i++;  
+                }    
+            }   
+        }
+
+        waste_total = parseInt(waste_total*100)/100;
+        data[idx] = {
+            y: waste_total,
+            color: colors[idx],
+            drilldown: {
+                        name: categories[idx],
+                        categories: unit_name,
+                        data: total_num,
+                        color: colors[0]
+                    }
+        }
+          
+    };
 
     function setChart(name, categories, data, color) {
-	chart.xAxis[0].setCategories(categories, false);
-	chart.series[0].remove(false);
-	chart.addSeries({
-		name: name,
-		data: data,
-		color: color || 'white'
-	}, false);
-	chart.redraw();
-    }
+            chart.xAxis[0].setCategories(categories, false);
+            chart.series[0].remove(false);
+            chart.addSeries({
+                name: name,
+                data: data,
+                color: color || 'white'
+            }, false);
+            chart.redraw();
+        }
 
     var chart = $('#statistics_graph_waste_container').highcharts({
-        chart: {
-            type: 'column'
-        },
-        title: {
-            text: 'Browser market share, April, 2011'
-        },
-        subtitle: {
-            text: 'Click the columns to view versions. Click again to view brands.'
-        },
-        xAxis: {
-            categories: categories
-        },
-        yAxis: {
+            chart: {
+                type: 'column'
+            },
             title: {
-                text: 'Total percent market share'
-            }
-        },
-        plotOptions: {
-            column: {
-                cursor: 'pointer',
-                point: {
-                    events: {
-                        click: function() {
-                            var drilldown = this.drilldown;
-                            if (drilldown) { // drill down
-                                setChart(drilldown.name, drilldown.categories, drilldown.data, drilldown.color);
-                            } else { // restore
-                                setChart(name, categories, data);
+                text: '危废数据统计，2014 年3 月'
+            },
+            subtitle: {
+                text: '点击柱状查看生产单位产废详细信息'
+            },
+            xAxis: {
+                categories: categories
+            },
+            yAxis: {
+                title: {
+                    text: '重量（单位：吨）'
+                }
+            },
+            plotOptions: {
+                column: {
+                    cursor: 'pointer',
+                    point: {
+                        events: {
+                            click: function() {
+                                var drilldown = this.drilldown;
+                                if (drilldown) { // drill down
+                                    setChart(drilldown.name, drilldown.categories, drilldown.data, drilldown.color);
+                                } else { // restore
+                                    setChart(name, categories, data);
+                                }
                             }
                         }
-                    }
-                },
-                dataLabels: {
-                    enabled: true,
-                    color: colors[0],
-                    style: {
-                        fontWeight: 'bold'
                     },
-                    formatter: function() {
-                        return this.y +'%';
+                    dataLabels: {
+                        enabled: true,
+                        color: colors[0],
+                        style: {
+                            fontWeight: 'bold'
+                        },
+                        formatter: function() {
+                            return this.y;
+                        }
                     }
                 }
-            }
-        },
-        tooltip: {
-            formatter: function() {
-                var point = this.point,
-                    s = this.x +':<b>'+ this.y +'% market share</b><br/>';
-                if (point.drilldown) {
-                    s += 'Click to view '+ point.category +' versions';
-                } else {
-                    s += 'Click to return to browser brands';
+            },
+            tooltip: {
+                formatter: function() {
+                    var point = this.point,
+                        s = this.x +':<b>'+ this.y +' 公斤</b><br/>';
+                    if (point.drilldown) {
+                        s += '点击查看'+ point.category +' 详细统计信息';
+                    } else {
+                        s += '点击查看产废总体信息';
+                    }
+                    return s;
                 }
-                return s;
+            },
+            series: [{
+                name: name,
+                data: data,
+                color: 'green'
+            }],
+            exporting: {
+                enabled: false
             }
-        },
-        series: [{
-            name: name,
-            data: data,
-            color: 'white'
-        }],
-        exporting: {
-            enabled: false
+        })
+        .highcharts(); 
+
+var fun = function(date){
+    var str = date.split("-");
+    if(str.length!=3){
+        return false;
+    } else {
+        return str[1];
+    }
+}
+var fun_year = function(date){
+    var str = date.split("-");
+    if(str.length!=3){
+        return false;
+    } else {
+        return str[0];
+    }
+}
+
+var data_waste = new Array(0,0,0,0,0,0,0,0,0,0,0,0);
+for(var idx in rfid){
+    if(parseInt(fun_year(rfid[idx]['waste_transport_time']))==2013){
+        switch(parseInt(fun(rfid[idx]['waste_transport_time']))){
+            case 1:
+                data_waste[0] = data_waste[0] + parseFloat(rfid[idx]['waste_weight']);
+                break;
+            case 2:
+                data_waste[1] = data_waste[1] + parseFloat(rfid[idx]['waste_weight']);
+                break;
+            case 3:
+                data_waste[2] = data_waste[2] + parseFloat(rfid[idx]['waste_weight']);
+                break;
+            case 4:
+                data_waste[3] = data_waste[3] + parseFloat(rfid[idx]['waste_weight']);
+                break;
+            case 5:
+                data_waste[4] = data_waste[4] + parseFloat(rfid[idx]['waste_weight']);
+                break;
+            case 6:
+                data_waste[5] = data_waste[5] + parseFloat(rfid[idx]['waste_weight']);
+                break;
+            case 7:
+                data_waste[6] = data_waste[6] + parseFloat(rfid[idx]['waste_weight']);
+                break;
+            case 8:
+                data_waste[7] = data_waste[7] + parseFloat(rfid[idx]['waste_weight']);
+                break;
+            case 9:
+                data_waste[8] = data_waste[8] + parseFloat(rfid[idx]['waste_weight']);
+                break;
+            case 10:
+                data_waste[9] = data_waste[9] + parseFloat(rfid[idx]['waste_weight']);
+                break;
+            case 11:
+                data_waste[10] = data_waste[10] + parseFloat(rfid[idx]['waste_weight']);
+                break;
+            case 12:
+                data_waste[11] = data_waste[11] + parseFloat(rfid[idx]['waste_weight']);
+                break;
+            default:
+                break;
         }
-    })
-    .highcharts(); // return chart
+    }
+}
 
 $('#container').highcharts({
       chart: {
           type: 'spline'
       },
       title: {
-          text: 'Wind speed during two days'
+          text: '2013年度危废数据统计'
       },
       subtitle: {
-          text: 'October 6th and 7th 2009 at two locations in Vik i Sogn, Norway'
+          text: '来源：2013年度本市联单数据'
       },
       xAxis: {
-          type: 'datetime'
-      },
+            categories: ['一月', '二月', '三月', '四月', '五月', '六月',
+                '七月', '八月', '九月', '十月', '十一月', '十二月'],
+            labels:{
+                enabled:true
+            }
+        },
       yAxis: {
           title: {
-              text: 'Wind speed (m/s)'
+              text: '产生危废重量（单位：公斤）'
           },
           min: 0,
           minorGridLineWidth: 0,
           gridLineWidth: 0,
           alternateGridColor: null,
           plotBands: [{ // Light air
-              from: 0.3,
-              to: 1.5,
+              from: 0,
+              to: 40000,
               color: 'rgba(68, 170, 213, 0.1)',
               label: {
-                  text: 'Light air',
+                  text: '0 ~ 40000',
                   style: {
                       color: '#606060'
                   }
               }
           }, { // Light breeze
-              from: 1.5,
-              to: 3.3,
+              from: 40000,
+              to: 80000,
               color: 'rgba(0, 0, 0, 0)',
               label: {
-                  text: 'Light breeze',
+                  text: '40000 ~ 80000',
                   style: {
                       color: '#606060'
                   }
               }
           }, { // Gentle breeze
-              from: 3.3,
-              to: 5.5,
+              from: 80000,
+              to: 120000,
               color: 'rgba(68, 170, 213, 0.1)',
               label: {
-                  text: 'Gentle breeze',
+                  text: '80000 ~ 120000',
                   style: {
                       color: '#606060'
                   }
               }
           }, { // Moderate breeze
-              from: 5.5,
-              to: 8,
+              from: 120000,
+              to: 160000,
               color: 'rgba(0, 0, 0, 0)',
               label: {
-                  text: 'Moderate breeze',
+                  text: '120000 ~ 160000',
                   style: {
                       color: '#606060'
                   }
               }
           }, { // Fresh breeze
-              from: 8,
-              to: 11,
+              from: 160000,
+              to: 200000,
               color: 'rgba(68, 170, 213, 0.1)',
               label: {
-                  text: 'Fresh breeze',
+                  text: '160000 ~ 200000',
                   style: {
                       color: '#606060'
                   }
               }
           }, { // Strong breeze
-              from: 11,
-              to: 14,
+              from: 200000,
+              to: 240000,
               color: 'rgba(0, 0, 0, 0)',
               label: {
-                  text: 'Strong breeze',
+                  text: '200000 ~ 240000',
                   style: {
                       color: '#606060'
                   }
               }
           }, { // High wind
-              from: 14,
-              to: 15,
+              from: 240000,
+              to: 280000,
               color: 'rgba(68, 170, 213, 0.1)',
               label: {
-                  text: 'High wind',
+                  text: '240000 ~ 280000',
+                  style: {
+                      color: '#606060'
+                  }
+              }
+          }, { // High wind
+              from: 280000,
+              to: 320000,
+              color: 'rgba(0, 0, 0, 0)',
+              label: {
+                  text: '280000 ~ 320000',
                   style: {
                       color: '#606060'
                   }
@@ -252,8 +320,8 @@ $('#container').highcharts({
           valueSuffix: ' m/s'
       },
       plotOptions: {
-          spline: {
-              lineWidth: 4,
+            spline: {
+                lineWidth: 4,
               states: {
                   hover: {
                       lineWidth: 5
@@ -262,13 +330,31 @@ $('#container').highcharts({
               marker: {
                   enabled: false
               },
-              pointInterval: 3600000, // one hour
-              pointStart: Date.UTC(2009, 9, 6, 0, 0, 0)
-          }
-      },
+                animation:false
+            }
+        },
+      // plotOptions: {
+      //     spline: {
+      //         lineWidth: 4,
+      //         states: {
+      //             hover: {
+      //                 lineWidth: 5
+      //             }
+      //         },
+      //         marker: {
+      //             enabled: false
+      //         },
+      //         pointInterval: 3600000*24, // one hour
+      //         pointStart: Date.UTC(2013, 0, 1, 0, 0, 0)
+      //     }
+      // },
       series: [{
+          name: '危废重量',
+          data: data_waste
+
+      }/*, {
           name: 'Hestavollane',
-          data: [4.3, 5.1, 4.3, 5.2, 5.4, 4.7, 3.5, 4.1, 5.6, 7.4, 6.9, 7.1,
+          data: [6, 5.1, 4.3, 5.2, 5.4, 4.7, 3.5, 4.1, 5.6, 7.4, 6.9, 7.1,
               7.9, 7.9, 7.5, 6.7, 7.7, 7.7, 7.4, 7.0, 7.1, 5.8, 5.9, 7.4,
               8.2, 8.5, 9.4, 8.1, 10.9, 10.4, 10.9, 12.4, 12.1, 9.5, 7.5,
               7.1, 7.5, 8.1, 6.8, 3.4, 2.1, 1.9, 2.8, 2.9, 1.3, 4.4, 4.2,
@@ -280,7 +366,7 @@ $('#container').highcharts({
               0.0, 0.4, 0.0, 0.1, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
               0.0, 0.6, 1.2, 1.7, 0.7, 2.9, 4.1, 2.6, 3.7, 3.9, 1.7, 2.3,
               3.0, 3.3, 4.8, 5.0, 4.8, 5.0, 3.2, 2.0, 0.9, 0.4, 0.3, 0.5, 0.4]
-      }]
+      }*/]
       ,
       navigation: {
           menuItemStyle: {
