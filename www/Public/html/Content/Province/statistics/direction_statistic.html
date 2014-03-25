@@ -12,6 +12,11 @@
 </div>
 
 <script type="text/javascript">
+var data = new Array(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
+for(var idx in manifest){
+    data[2]=data[2]+parseFloat(manifest[idx]['waste_weight']);
+}
+// console.log(data);
 $('#container').highcharts({
         chart: {
             type: 'column',
@@ -33,10 +38,11 @@ $('#container').highcharts({
                 '黄山市',
                 '滁州市',
                 '阜阳市',
-                '宿州市',
+                '苏州市',
                 '六安市',
-                '宣城市',
+                '亳州市',
                 '池州市',
+                '宣城市',
                 '跨省',
                 '境外'
             ],
@@ -63,8 +69,7 @@ $('#container').highcharts({
         },
         series: [{
             name: 'Population',
-            data: [34.4, 21.8, 20.1, 20, 19.6, 19.5, 19.1, 18.4, 18, 20, 11,
-                17.3, 16.8, 15, 14.7, 14.5, 15],
+            data: data,
             dataLabels: {
                 enabled: true,
                 rotation: -90,

@@ -26,7 +26,7 @@ return array(
 	// 'DB_PWD'    => 'sky363738',  // 本地密码
 	'DB_PWD'    => 'omnilab',
 	'DB_PORT'   => 3306,    // 端口
-	'DB_NAME'   => 'dwms',  // 数据库名
+	'DB_NAME'   => 'dwmss',  // 数据库名
 	'DB_PREFIX' => '',  // 数据库表前缀
 
 	// 显示页面Trace信息
