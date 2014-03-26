@@ -246,7 +246,7 @@ function getVehicleRoutes() {
     }
     $.ajax({
         type: "POST",
-        url: "{:U('Home/DistrictMap/ajax_get_vehicles_gps_data')}",
+        url: "{:U('Home/CityMap/ajax_get_vehicles_gps_data')}",
         dataType: 'JSON',
         data: {
             "beginDate": beginDateVal,
@@ -305,7 +305,7 @@ function getVehicleRoutes() {
                     var markerIdx = this.getTitle() - '0';
                     $.ajax({
                         type: 'POST',
-                        url: "{:U('Home/DistrictMap/ajax_get_vehicle_transport_unit')}",
+                        url: "{:U('Home/CityMap/ajax_get_vehicle_transport_unit')}",
                         dataType: 'JSON',
                         data: {
                             "vehicle_id": gpsRouteArray[markerIdx][0].vehicle_id,
@@ -345,7 +345,7 @@ function getVehicleRoutes() {
                     var markerIdx = this.getTitle() - '0';
                     $.ajax({
                         type: "POST",
-                        url: "{:U('Home/DistrictMap/ajax_get_vehicle_route')}",
+                        url: "{:U('Home/CityMap/ajax_get_vehicle_route')}",
                         dataType: 'JSON',
                         data: {
                             "vehicle_id": gpsRouteArray[markerIdx][0].vehicle_id,

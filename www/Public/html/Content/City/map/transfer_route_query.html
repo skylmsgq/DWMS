@@ -263,7 +263,7 @@ function searchRoute() {
 
     $.ajax({
         type: 'POST',
-        url: "{:U('Home/DistrictMap/ajax_search_route')}",
+        url: "{:U('Home/CityMap/ajax_search_route')}",
         dataType: 'JSON',
         data: {
             "production_unit_id": production_unit_json[selectProductionUnitVal].production_unit_id,
@@ -318,7 +318,7 @@ function deleteRoute() {
 
     $.ajax({
         type: 'POST',
-        url: "{:U('Home/DistrictMap/ajax_delete_route')}",
+        url: "{:U('Home/CityMap/ajax_delete_route')}",
         dataType: 'JSON',
         data: {
             "route_id": route_id

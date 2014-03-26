@@ -414,7 +414,7 @@ var polylinesSet = function(routes) {
 
         $.ajax({
             type: "POST",
-            url: "{:U('Home/DistrictMap/ajax_transfer_route_plan')}",
+            url: "{:U('Home/ProvinceMap/ajax_transfer_route_plan')}",
             dataType: 'JSON',
             data: {
                 "production_unit_id": production_unit_json[selectProductionUnitVal].production_unit_id,

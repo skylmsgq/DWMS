@@ -233,9 +233,10 @@ function loadScript() {
 loadScript();
 
 function transferWarning() {
+    // console.log(ajaxSendData);
     $.ajax({
         type: "POST",
-        url: "{:U('Home/DistrictMap/ajax_get_gps_data')}",
+        url: "{:U('Home/CityMap/ajax_get_gps_data')}",
         dataType: 'JSON',
         data: {
             'ajaxSendData': JSON.stringify(ajaxSendData),
@@ -433,7 +434,7 @@ function settingAlarmDistance() {
     if ((warningDistance != alarm_distance_json.warning_distance) || (alarmDistance != alarm_distance_json.alarm_distance)) {
         $.ajax({
             type: "POST",
-            url: "{:U('Home/DistrictMap/ajax_setting_alarm_distance')}",
+            url: "{:U('Home/CityMap/ajax_setting_alarm_distance')}",
             dataType: 'JSON',
             data: {
                 "id": alarm_distance_json.id,
