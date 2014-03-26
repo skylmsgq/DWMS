@@ -35,7 +35,9 @@ class TransportManifestAction extends TransportCommonAction{
 		$manifest_id_json = json_encode($manifest_id);
 		$manifest_status_json = json_encode($manifest['manifest_status']);
 
-		$vehicle = M('vehicle')->where( array( 'transport_unit_id' => session('transport_unit_id') ) )->select();
+		$condition['transport_unit_id'] = session('transport_unit_id');
+		$condition['_string'] = 'vehicle_status!=2';
+		$vehicle = M('vehicle')->where($condition)->select();
 		$vehicle_json = json_encode($vehicle);
 
 
@@ -88,8 +90,10 @@ class TransportManifestAction extends TransportCommonAction{
 
 		$this->manifest = $manifest;
 		$this->transport_unit = $transport_unit;
-
-		$vehicle = M('vehicle')->where( array( 'transport_unit_id' => session('transport_unit_id') ) )->select();
+		
+		$condition['transport_unit_id'] = session('transport_unit_id');
+		$condition['_string'] = 'vehicle_status!=2';
+		$vehicle = M('vehicle')->where($condition)->select();
 		$vehicle_json = json_encode($vehicle);
 
 		$vehicle_num_1 = M('vehicle')->where( array('vehicle_id' => $manifest['vehicle_id_1'] ) )->find();

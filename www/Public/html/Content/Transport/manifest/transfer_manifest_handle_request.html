@@ -154,14 +154,14 @@
                     </td>
                     <td>车辆1 牌照</td>
                     <td>
-                        <select type="text" name="vehicle_id_1" class="form-control input-sm required-cn" placeholder="车辆1 牌照" id="vehicle_1">
+                        <select type="text" name="vehicle_id_1" class="form-control input-sm required-cn" placeholder="车辆1 牌照" id="vehicle_1" onchange="vehicle_select(this.options[this.options.selectedIndex].value)">
                         </select>  
                     </td>
                 </tr>
                 <tr>
                     <td>道路运输证号</td>
-                    <td>
-                        <input type="text" name="transport_license_num_1" class="form-control input-sm required-cn" placeholder="道路运输证号">  
+                    <td id="transport_license_num_1">
+                         
                     </td>
                     <td>运输起点</td>
                     <td>
@@ -201,8 +201,8 @@
                 </tr>
                 <tr>
                     <td>道路运输证号</td>
-                    <td>
-                        <input type="text" name="transport_license_num_2" class="form-control input-sm" placeholder="道路运输证号">  
+                    <td id="transport_license_num_2">
+                        <!-- <input type="text" name="transport_license_num_2" class="form-control input-sm" placeholder="道路运输证号">  --> 
                     </td>
                     <td>运输起点</td>
                     <td>
@@ -246,7 +246,21 @@ for(var idx in vehicle){
     $('#vehicle_2').append('<option value = "' + vehicle[idx].vehicle_id + '">' + vehicle[idx].vehicle_num + '</option>');
 }
 
+$('#transport_license_num_1').html(vehicle[0].transport_license_num);
+
 // function vehicle_2_change()
+var transport_license_num_1 = "";
+function vehicle_select(vehicle_id){
+    var index=0;
+    for (var i in vehicle)
+    {
+        if (vehicle[i].vehicle_id==vehicle_id)
+            {index=i;break;}
+    }
+    // console.log(vehicle[index].transport_license_num);
+    $('#transport_license_num_1').html(vehicle[index].transport_license_num);
+    transport_license_num_1 = vehicle[index].transport_license_num;
+}
 
 function ajaxAction() {
 
@@ -277,7 +291,7 @@ function ajaxAction() {
         type: "post",
         url: "transfer_manifest_handle_request_form?manifest_id=" + manifest_id_json,
         timeout: 2000,
-        data: form_serialize + '&manifest_status_old=' + manifest_status_json,
+        data: form_serialize + '&manifest_status_old=' + manifest_status_json + "&transport_license_num_1=" +transport_license_num_1,
         success: function(data) {
             $('#myModal').modal('hide');
             $('#myModal').on('hidden.bs.modal', function(e) {
