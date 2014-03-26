@@ -316,8 +316,8 @@
 </form>
 <div id="myAlert"></div>
 <center>
-    <button class="btn btn-info btn-lg" id="button_save" onclick="ajaxAction(0)">保存</button>
-    <button class="btn btn-warning btn-lg" id="button_submit" onclick="ajaxAction(1)">提交</button>
+    <button class="btn btn-info btn-lg" id="button_save" data-loading-text="正在保存..." data-complete-text="保存成功！" onclick="ajaxAction(0)">保存</button>
+    <button class="btn btn-warning btn-lg" id="button_submit" data-loading-text="正在提交..." data-complete-text="提交成功！" onclick="ajaxAction(1)">提交</button>
 </center>
 <script type="text/javascript" src="__PUBLIC__/js/jquery-validate.min.js"></script>
 <script type="text/javascript" src="__PUBLIC__/js/jquery-myvalidate.js"></script>
@@ -398,6 +398,18 @@ function ajaxAction(actionID) {
         weight = document.getElementById('1').value;
         num = document.getElementById('2').value;
     }
+    switch (actionID) {
+        case 0:
+            $('#button_save').button('loading');
+            $('#button_submit').addClass('disabled');
+            break;
+        case 1:
+            $('#button_save').addClass('disabled');
+            $('#button_submit').button('loading');
+            break;
+        default:
+            break;
+    }
 
     /*if(document.form.predict_output_weight.value=="" && document.form.predict_output_quantity.value==""){
         $.ajax({
@@ -451,6 +463,10 @@ function ajaxAction(actionID) {
                 switch (actionID) {
                     case 0:
                         if(data.data == 1){
+                        $('#button_save').button('complete');
+                        $('#button_submit').removeClass('disabled');
+                        setTimeout("$('#button_save').button('reset')", 2000);
+                        $('input').val('');
                         myAlertSucc("保存成功！稍后自动刷新。。");
                         setTimeout(function(){refresh_page();},3000);
                         } else{
@@ -459,6 +475,10 @@ function ajaxAction(actionID) {
                         break;
                     case 1:
                         if(data.data == 1){
+                        $('#button_save').removeClass('disabled');
+                        $('#button_submit').button('complete');
+                        setTimeout("$('#button_submit').button('reset')", 2000);
+                        $('input').val('');
                         myAlertSucc("提交成功！稍后自动刷新。。");
                         setTimeout(function(){refresh_page();},3000);
                         } else{

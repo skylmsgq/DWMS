@@ -14,7 +14,7 @@
     <div class="col-md-12">
          <div class="panel panel-primary">
           <div class="panel-heading">
-            <h3 class="panel-title">2013年度危废数据统计图</h3>
+            <h3 class="panel-title">2012~2014年度危废数据统计图</h3>
           </div>
           <div class="panel-body">   
             <div id="container" style="width: 800px; height: 400px; margin: 0 auto"></div>
@@ -52,8 +52,11 @@
                 }    
             }   
         }
+        for(var y in total_num){
+            total_num[y] = parseInt(total_num[y]*100)/100000;
+        }
 
-        waste_total = parseInt(waste_total*100)/100;
+        waste_total = parseInt(waste_total*100)/100000;
         data[idx] = {
             y: waste_total,
             color: colors[idx],
@@ -83,7 +86,7 @@
                 type: 'column'
             },
             title: {
-                text: '危废数据统计，2014 年3 月'
+                text: '危废数据统计，至 2014 年3 月'
             },
             subtitle: {
                 text: '点击柱状查看生产单位产废详细信息'
@@ -126,7 +129,7 @@
             tooltip: {
                 formatter: function() {
                     var point = this.point,
-                        s = this.x +':<b>'+ this.y +' 公斤</b><br/>';
+                        s = this.x +':<b>'+ this.y +' 吨</b><br/>';
                     if (point.drilldown) {
                         s += '点击查看'+ point.category +' 详细统计信息';
                     } else {
@@ -164,8 +167,10 @@ var fun_year = function(date){
 }
 
 var data_waste = new Array(0,0,0,0,0,0,0,0,0,0,0,0);
+    data_waste_2 = new Array(0,0,0,0,0,0,0,0,0,0,0,0);
+    data_waste_3 = new Array(0,0,0,0,0,0,0,0,0,0,0,0);
 for(var idx in rfid){
-    if(parseInt(fun_year(rfid[idx]['waste_transport_time']))==2013){
+    if(parseInt(fun_year(rfid[idx]['waste_transport_time']))==2012){
         switch(parseInt(fun(rfid[idx]['waste_transport_time']))){
             case 1:
                 data_waste[0] = data_waste[0] + parseFloat(rfid[idx]['waste_weight']);
@@ -207,17 +212,137 @@ for(var idx in rfid){
                 break;
         }
     }
+    if(parseInt(fun_year(rfid[idx]['waste_transport_time']))==2013){
+        switch(parseInt(fun(rfid[idx]['waste_transport_time']))){
+            case 1:
+                data_waste_2[0] = data_waste_2[0] + parseFloat(rfid[idx]['waste_weight']);
+                break;
+            case 2:
+                data_waste_2[1] = data_waste_2[1] + parseFloat(rfid[idx]['waste_weight']);
+                break;
+            case 3:
+                data_waste_2[2] = data_waste_2[2] + parseFloat(rfid[idx]['waste_weight']);
+                break;
+            case 4:
+                data_waste_2[3] = data_waste_2[3] + parseFloat(rfid[idx]['waste_weight']);
+                break;
+            case 5:
+                data_waste_2[4] = data_waste_2[4] + parseFloat(rfid[idx]['waste_weight']);
+                break;
+            case 6:
+                data_waste_2[5] = data_waste_2[5] + parseFloat(rfid[idx]['waste_weight']);
+                break;
+            case 7:
+                data_waste_2[6] = data_waste_2[6] + parseFloat(rfid[idx]['waste_weight']);
+                break;
+            case 8:
+                data_waste_2[7] = data_waste_2[7] + parseFloat(rfid[idx]['waste_weight']);
+                break;
+            case 9:
+                data_waste_2[8] = data_waste_2[8] + parseFloat(rfid[idx]['waste_weight']);
+                break;
+            case 10:
+                data_waste_2[9] = data_waste_2[9] + parseFloat(rfid[idx]['waste_weight']);
+                break;
+            case 11:
+                data_waste_2[10] = data_waste_2[10] + parseFloat(rfid[idx]['waste_weight']);
+                break;
+            case 12:
+                data_waste_2[11] = data_waste_2[11] + parseFloat(rfid[idx]['waste_weight']);
+                break;
+            default:
+                break;
+        }
+    }
+    if(parseInt(fun_year(rfid[idx]['waste_transport_time']))==2014){
+        switch(parseInt(fun(rfid[idx]['waste_transport_time']))){
+            case 1:
+                data_waste_3[0] = data_waste_3[0] + parseFloat(rfid[idx]['waste_weight']);
+                break;
+            case 2:
+                data_waste_3[1] = data_waste_3[1] + parseFloat(rfid[idx]['waste_weight']);
+                break;
+            case 3:
+                data_waste_3[2] = data_waste_3[2] + parseFloat(rfid[idx]['waste_weight']);
+                break;
+            case 4:
+                data_waste_3[3] = data_waste_3[3] + parseFloat(rfid[idx]['waste_weight']);
+                break;
+            case 5:
+                data_waste_3[4] = data_waste_3[4] + parseFloat(rfid[idx]['waste_weight']);
+                break;
+            case 6:
+                data_waste_3[5] = data_waste_3[5] + parseFloat(rfid[idx]['waste_weight']);
+                break;
+            case 7:
+                data_waste_3[6] = data_waste_3[6] + parseFloat(rfid[idx]['waste_weight']);
+                break;
+            case 8:
+                data_waste_3[7] = data_waste_3[7] + parseFloat(rfid[idx]['waste_weight']);
+                break;
+            case 9:
+                data_waste_3[8] = data_waste_3[8] + parseFloat(rfid[idx]['waste_weight']);
+                break;
+            case 10:
+                data_waste_3[9] = data_waste_3[9] + parseFloat(rfid[idx]['waste_weight']);
+                break;
+            case 11:
+                data_waste_3[10] = data_waste_3[10] + parseFloat(rfid[idx]['waste_weight']);
+                break;
+            case 12:
+                data_waste_3[11] = data_waste_3[11] + parseFloat(rfid[idx]['waste_weight']);
+                break;
+            default:
+                break;
+        }
+    }
 }
+data_waste[0] = data_waste[0]/1000;
+data_waste[1] = data_waste[1]/1000;
+data_waste[2] = data_waste[2]/1000;
+data_waste[3] = data_waste[3]/1000;
+data_waste[4] = data_waste[4]/1000;
+data_waste[5] = data_waste[5]/1000;
+data_waste[6] = data_waste[6]/1000;
+data_waste[7] = data_waste[7]/1000;
+data_waste[8] = data_waste[8]/1000;
+data_waste[9] = data_waste[9]/1000;
+data_waste[10] = data_waste[10]/1000;
+data_waste[11] = data_waste[11]/1000;
+data_waste_2[0] = data_waste_2[0]/1000;
+data_waste_2[1] = data_waste_2[1]/1000;
+data_waste_2[2] = data_waste_2[2]/1000;
+data_waste_2[3] = data_waste_2[3]/1000;
+data_waste_2[4] = data_waste_2[4]/1000;
+data_waste_2[5] = data_waste_2[5]/1000;
+data_waste_2[6] = data_waste_2[6]/1000;
+data_waste_2[7] = data_waste_2[7]/1000;
+data_waste_2[8] = data_waste_2[8]/1000;
+data_waste_2[9] = data_waste_2[9]/1000;
+data_waste_2[10] = data_waste_2[10]/1000;
+data_waste_2[11] = data_waste_2[11]/1000;
+data_waste_3[0] = data_waste_3[0]/1000;
+data_waste_3[1] = data_waste_3[1]/1000;
+data_waste_3[2] = data_waste_3[2]/1000;
+data_waste_3[3] = data_waste_3[3]/1000;
+data_waste_3[4] = data_waste_3[4]/1000;
+data_waste_3[5] = data_waste_3[5]/1000;
+data_waste_3[6] = data_waste_3[6]/1000;
+data_waste_3[7] = data_waste_3[7]/1000;
+data_waste_3[8] = data_waste_3[8]/1000;
+data_waste_3[9] = data_waste_3[9]/1000;
+data_waste_3[10] = data_waste_3[10]/1000;
+data_waste_3[11] = data_waste_3[11]/1000;
 
 $('#container').highcharts({
       chart: {
           type: 'spline'
       },
       title: {
-          text: '2013年度危废数据统计'
+          text: '2012~2014年度危废数据统计'
       },
       subtitle: {
-          text: '来源：2013年度本市联单数据'
+          text: '来源：2012~2014年度本市联单数据'
       },
       xAxis: {
             categories: ['一月', '二月', '三月', '四月', '五月', '六月',
@@ -228,7 +353,7 @@ $('#container').highcharts({
         },
       yAxis: {
           title: {
-              text: '产生危废重量（单位：公斤）'
+              text: '产生危废重量（单位：吨）'
           },
           min: 0,
           minorGridLineWidth: 0,
@@ -236,80 +361,50 @@ $('#container').highcharts({
           alternateGridColor: null,
           plotBands: [{ // Light air
               from: 0,
-              to: 40000,
+              to: 10000,
               color: 'rgba(68, 170, 213, 0.1)',
               label: {
-                  text: '0 ~ 40000',
+                  text: '0 ~ 1000',
                   style: {
                       color: '#606060'
                   }
               }
           }, { // Light breeze
-              from: 40000,
-              to: 80000,
+              from: 1000,
+              to: 2000,
               color: 'rgba(0, 0, 0, 0)',
               label: {
-                  text: '40000 ~ 80000',
+                  text: '1000 ~ 2000',
                   style: {
                       color: '#606060'
                   }
               }
           }, { // Gentle breeze
-              from: 80000,
-              to: 120000,
+              from: 2000,
+              to: 3000,
               color: 'rgba(68, 170, 213, 0.1)',
               label: {
-                  text: '80000 ~ 120000',
+                  text: '2000 ~ 3000',
                   style: {
                       color: '#606060'
                   }
               }
           }, { // Moderate breeze
-              from: 120000,
-              to: 160000,
+              from: 3000,
+              to: 4000,
               color: 'rgba(0, 0, 0, 0)',
               label: {
-                  text: '120000 ~ 160000',
+                  text: '3000 ~ 4000',
                   style: {
                       color: '#606060'
                   }
               }
           }, { // Fresh breeze
-              from: 160000,
-              to: 200000,
+              from: 4000,
+              to: 5000,
               color: 'rgba(68, 170, 213, 0.1)',
               label: {
-                  text: '160000 ~ 200000',
-                  style: {
-                      color: '#606060'
-                  }
-              }
-          }, { // Strong breeze
-              from: 200000,
-              to: 240000,
-              color: 'rgba(0, 0, 0, 0)',
-              label: {
-                  text: '200000 ~ 240000',
-                  style: {
-                      color: '#606060'
-                  }
-              }
-          }, { // High wind
-              from: 240000,
-              to: 280000,
-              color: 'rgba(68, 170, 213, 0.1)',
-              label: {
-                  text: '240000 ~ 280000',
-                  style: {
-                      color: '#606060'
-                  }
-              }
-          }, { // High wind
-              from: 280000,
-              to: 320000,
-              color: 'rgba(0, 0, 0, 0)',
-              label: {
-                  text: '280000 ~ 320000',
+                  text: '5000 ~ 6000',
                   style: {
                       color: '#606060'
                   }
@@ -317,7 +412,7 @@ $('#container').highcharts({
           }]
       },
       tooltip: {
-          valueSuffix: ' m/s'
+          valueSuffix: ' 吨'
       },
       plotOptions: {
             spline: {
@@ -349,10 +444,16 @@ $('#container').highcharts({
       //     }
       // },
       series: [{
-          name: '危废重量',
+          name: '2013年危废重量',
+          data: data_waste_2
+      }, {
+          name: '2014年危废重量',
+          data: data_waste_3        
+      }, {
+          name: '2012年危废重量',
           data: data_waste
-
-      }/*, {
+      }
+      /*, {
           name: 'Hestavollane',
           data: [6, 5.1, 4.3, 5.2, 5.4, 4.7, 3.5, 4.1, 5.6, 7.4, 6.9, 7.1,
               7.9, 7.9, 7.5, 6.7, 7.7, 7.7, 7.4, 7.0, 7.1, 5.8, 5.9, 7.4,
