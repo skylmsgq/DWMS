@@ -220,7 +220,7 @@ function getVehicleList() {
     }
     $.ajax({
         type: "POST",
-        url: "{:U('Home/DistrictMap/ajax_get_vehicle_list')}",
+        url: "{:U('Home/ProvinceMap/ajax_get_vehicle_list')}",
         dataType: 'JSON',
         data: {
             "transport_unit_id": transport_unit_json[selectTransportUnitVal].transport_unit_id,
@@ -307,7 +307,7 @@ function getVehicleRoute() {
     }
     $.ajax({
         type: "POST",
-        url: "{:U('Home/DistrictMap/ajax_get_vehicle_gps_data')}",
+        url: "{:U('Home/ProvinceMap/ajax_get_vehicle_gps_data')}",
         dataType: 'JSON',
         data: {
             "vehicle_id": vehicle_json[selectVehicleVal].vehicle_id,
@@ -353,7 +353,7 @@ function getVehicleRoute() {
             vehicleMarker.addEventListener("rightclick", function(e) {
                 $.ajax({
                     type: "POST",
-                    url: "{:U('Home/DistrictMap/ajax_get_vehicle_route')}",
+                    url: "{:U('Home/ProvinceMap/ajax_get_vehicle_route')}",
                     dataType: 'JSON',
                     data: {
                         "vehicle_id": vehicle_json[selectVehicleVal].vehicle_id,

@@ -13,10 +13,10 @@ class CityMapAction extends CityCommonAction{
 	public function transfer_map_display() {
 		$condition['transport_date'] = date( 'Y-m-d', strtotime( '2014-03-07' ) );
 		//$condition['transport_date'] = date( 'Y-m-d', time() );
-		$condition['jurisdiction_id'] = array( 'EQ', session( 'jurisdiction_id' ) );
+		$condition['jurisdiction_up_id'] = array( 'EQ', session( 'jurisdiction_id' ) );
 		$condition['route_status'] = array( 'EQ', 0 ); // 0:路线可用
 		$condition['vehicle_status'] = array( 'EQ', 1 ); // 车辆添加并已绑定设备
-		$route_vehicle_join = M( 'route_vehicle' )->join( 'route ON route_vehicle.route_id = route.route_id' )->join( 'vehicle ON route_vehicle.vehicle_id = vehicle.vehicle_id' )->where( $condition )->select();
+		$route_vehicle_join = M( 'route_vehicle' )->join( 'route ON route_vehicle.route_id = route.route_id' )->join( 'vehicle ON route_vehicle.vehicle_id = vehicle.vehicle_id' )->join('jurisdiction ON route.jurisdiction_id = jurisdiction.jurisdiction_id')->where( $condition )->select();
 
 		for ( $idx = 0; $idx < count( $route_vehicle_join ); ++$idx ) {
 			$transport_unit = M( 'transport_unit' )->where( array( 'transport_unit_id' => $route_vehicle_join[$idx]['transport_unit_id'] ) )->find();
@@ -24,7 +24,7 @@ class CityMapAction extends CityCommonAction{
 			$transport_unit_array[$idx] = $transport_unit_data;
 		}
 
-		$alarm_distance = M( 'alarm_distance' )->where( array( 'jurisdiction_id' => session( 'jurisdiction_id' ) ) )->find();
+		$alarm_distance = M( 'alarm_distance' )->join('jurisdiction ON alarm_distance.jurisdiction_id = jurisdiction.jurisdiction_id')->where( array( 'jurisdiction_up_id' => session( 'jurisdiction_id' ) ) )->find();
 
 		if ( $route_vehicle_join && $alarm_distance ) {
 			$route_vehicle_join_json = json_encode( $route_vehicle_join );
@@ -46,7 +46,7 @@ class CityMapAction extends CityCommonAction{
 		}
 	}
 
-	// 转移地图->地图展示->转移地图展示：获取实时GPS数据
+	// 转移地图->地图展示->转移地图展示：获取实时
 	public function ajax_get_gps_data() {
 		$ajax_send_data = I( 'post.ajaxSendData' );
 		$ajax_send_data = htmlspecialchars_decode( $ajax_send_data );
@@ -84,10 +84,10 @@ class CityMapAction extends CityCommonAction{
 
 	// 转移地图->地图展示->指定车辆历史回放
 	public function designate_vehicle_playback() {
-		$condition['jurisdiction_id'] = array( 'EQ', session( 'jurisdiction_id' ) );
-		$transport_unit = M( 'transport_unit' )->where( $condition )->select();
+		$condition['jurisdiction_up_id'] = array( 'EQ', session( 'jurisdiction_id' ) );
+		$transport_unit = M( 'transport_unit' )->join('jurisdiction ON transport_unit.jurisdiction_id = jurisdiction.jurisdiction_id')->where( $condition )->select();
 
-		$alarm_distance = M( 'alarm_distance' )->where( array( 'jurisdiction_id' => session( 'jurisdiction_id' ) ) )->find();
+		$alarm_distance = M( 'alarm_distance' )->join('jurisdiction ON alarm_distance.jurisdiction_id = jurisdiction.jurisdiction_id')->where( array( 'jurisdiction_up_id' => session( 'jurisdiction_id' ) ) )->find();
 
 		if ( $transport_unit && $alarm_distance ) {
 			$transport_unit_json = json_encode( $transport_unit );
@@ -132,7 +132,7 @@ class CityMapAction extends CityCommonAction{
 
 	// 转移地图->地图展示->转移地图历史回放
 	public function transfer_map_playback() {
-		$alarm_distance = M( 'alarm_distance' )->where( array( 'jurisdiction_id' => session( 'jurisdiction_id' ) ) )->find();
+		$alarm_distance = M( 'alarm_distance' )->join('jurisdiction ON alarm_distance.jurisdiction_id = jurisdiction.jurisdiction_id')->where( array( 'jurisdiction_up_id' => session( 'jurisdiction_id' ) ) )->find();
 
 		if ( $alarm_distance ) {
 			$alarm_distance_json = json_encode( $alarm_distance );
@@ -146,8 +146,8 @@ class CityMapAction extends CityCommonAction{
 
 	// 转移地图->地图展示->转移地图历史回放：获取所有车辆历史GPS路线
 	public function ajax_get_vehicles_gps_data() {
-		$condition['jurisdiction_id'] = array( 'EQ', session( 'jurisdiction_id' ) );
-		$vehicle_device = M( 'vehicle' )->join( 'device ON vehicle.device_id = device.device_id' )->where( $condition )->select();
+		$condition['jurisdiction_up_id'] = array( 'EQ', session( 'jurisdiction_id' ) );
+		$vehicle_device = M( 'vehicle' )->join( 'device ON vehicle.device_id = device.device_id' )->join('jurisdiction ON device.jurisdiction_id = jurisdiction.jurisdiction_id')->where( $condition )->select();
 		for ( $idx = 0; $idx < count( $vehicle_device ); ++$idx ) {
 			$gps_table_name = 'gps_' . $vehicle_device[$idx]['device_serial_num'];
 			$gps = M( $gps_table_name );
@@ -185,9 +185,9 @@ class CityMapAction extends CityCommonAction{
 
 	// 转移地图->地图展示->仓库地图展示
 	public function warehouse_map_display() {
-		$condition['jurisdiction_id'] = array( 'EQ', session( 'jurisdiction_id' ) );
-		$production_unit = M( 'production_unit' )->where( $condition )->select();
-		$reception_unit = M( 'reception_unit' )->where( $condition )->select();
+		$condition['jurisdiction_up_id'] = array( 'EQ', session( 'jurisdiction_id' ) );
+		$production_unit = M( 'production_unit' )->join('jurisdiction ON production_unit.jurisdiction_id = jurisdiction.jurisdiction_id')->where( $condition )->select();
+		$reception_unit = M( 'reception_unit' )->join('jurisdiction ON reception_unit.jurisdiction_id = jurisdiction.jurisdiction_id')->where( $condition )->select();
 
 		if ( ( $production_unit ) && ( $reception_unit ) ) {
 			$production_unit_json = json_encode( $production_unit );
@@ -248,8 +248,8 @@ class CityMapAction extends CityCommonAction{
 
 	// 转移地图->路线管理->运输路线查询
 	public function transfer_route_query() {
-		$production_unit = M( 'production_unit' )->where( array( 'jurisdiction_id' => session( 'jurisdiction_id' ) ) )->select();
-		$reception_unit = M( 'reception_unit' )->where( array( 'jurisdiction_id' => session( 'jurisdiction_id' ) ) )->select();
+		$production_unit = M( 'production_unit' )->join('jurisdiction ON production_unit.jurisdiction_id = jurisdiction.jurisdiction_id')->where( array( 'jurisdiction_up_id' => session( 'jurisdiction_id' ) ) )->select();
+		$reception_unit = M( 'reception_unit' )->join('jurisdiction ON reception_unit.jurisdiction_id = jurisdiction.jurisdiction_id')->where( array( 'jurisdiction_up_id' => session( 'jurisdiction_id' ) ) )->select();
 		$production_unit_json = json_encode( $production_unit );
 		$reception_unit_json = json_encode( $reception_unit );
 		if ( $production_unit_json && $reception_unit_json ) {
