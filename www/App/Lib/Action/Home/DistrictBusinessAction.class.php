@@ -45,9 +45,11 @@ class DistrictBusinessAction extends DistrictCommonAction{
 	public function transfer_record_management_audit($record_id="") {
 		$record_status = I( 'post.record_status' );
 		// $record_comment = I( 'post.record_comment' );
+		$time = date( 'Y-m-d H:i:s', time() );
 		$current_record_status = array(
 			'record_id' => $record_id,
 			'record_status' => $record_status,
+			'record_modify_time' => $time,
 			// 'record_production_unit_comment' => $record_comment,
 		);
 		if($record_status == 2 ){
