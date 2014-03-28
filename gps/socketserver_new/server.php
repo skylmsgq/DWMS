@@ -233,6 +233,7 @@ function onConnect( $client ) {
 		}
 	}
 	$client->close();
+	mysql_close($con);
 	printf( "[%s] Disconnected\n", $client->getAddress() );
 	
 }
