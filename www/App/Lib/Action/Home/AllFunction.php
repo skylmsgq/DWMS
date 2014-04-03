@@ -17,7 +17,7 @@ function login($json_string)
 	{$User=M("user");}
 	catch (Exception $e)
 	{$code=1; return $code;}
-	$query1=$User->where("username='$username' and password='$password'")->find();
+	$query1=$User->where("username='$username' and password='$password' and is_verify = 1 and lock = 0")->find();
 	if($query1)// no such user
 	{
 		$user_id=$query1['user_id'];
